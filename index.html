@@ -1,0 +1,277 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="node_modules/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <!-- <script src="main.js"></script> -->
+    <style type='text/css'>
+            .embeddedServiceHelpButton .helpButton .uiButton { background-color: #005290; font-family: "Salesforce Sans", sans-serif; }
+            .embeddedServiceHelpButton .helpButton .uiButton:focus { outline: 1px solid #005290; }
+            @font-face {
+            font-family: 'Salesforce Sans';
+            src: url('https://www.sfdcstatic.com/system/shared/common/assets/fonts/SalesforceSans/SalesforceSans-Regular.woff') format('woff'),
+    url('https://www.sfdcstatic.com/system/shared/common/assets/fonts/SalesforceSans/SalesforceSans-Regular.ttf') format('truetype');
+            }
+    </style>
+
+</head>
+<body>
+    <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+            <img src="assets/DellTech_Logo_Prm_Blue.jpg" class="d-inline-block align-top" alt="">
+        </a>
+    </nav>
+    <div class="container">
+        <div class="resume-chat-msg hide">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="jumbotron">
+                        <h1 class="display-4">Welcome Back</h1>
+                    </div>
+                </div>
+                <div class="live-agent-resume-button hide">
+                    <script type='text/javascript' src='https://c.la4-c1cs-phx.salesforceliveagent.com/content/g/js/43.0/deployment.js'></script>
+                <a id="liveagent_button_online_5733B0000004D95" class="btn btn-primary" href="javascript://Chat" onclick="liveagent.startChat('5733B0000004D95')" style="display: none;">Start Chat</a><div id="liveagent_button_offline_5733B0000004D95" style="display: none;"><!-- Offline Chat Content --></div><script type="text/javascript">
+                    if (!window._laq) { window._laq = []; }
+                    window._laq.push(function(){liveagent.showWhenOnline('5733B0000004D95', document.getElementById('liveagent_button_online_5733B0000004D95'));
+                    liveagent.showWhenOffline('5733B0000004D95', document.getElementById('liveagent_button_offline_5733B0000004D95'));
+                    });</script> 
+                </div>
+            </div>
+            <div class="offline-msg hide">
+                <!-- <p>Oh Sorry :(</p>
+                <p>Looks like all agents are offline. Please come back some other time</p> -->
+            </div>
+        </div>
+        <div class="new-chat">
+            <div class="row">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8">
+                    <form>
+                        <div class="form-group">
+                            <label for="serviceTag">Service Tag</label>
+                            <input type="text" class="form-control"  id="serviceTag" aria-describedby="serviceTag" placeholder="Enter Service Tag" onblur="showIssue()">
+                            <p>Based on asset warranty contact channel will be displayed</p>
+                        </div>
+                        <!-- <div class="form-group">
+                            <label for="exampleFormControlTextarea1">Description</label>
+                            <textarea class="form-control" id="description-textarea" rows="5"></textarea>
+                        </div> -->
+                        <div class="dropdown hide">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Select Issue Type
+                            </button>
+                            <div id="issueDropdown" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#">Slow Performance</a>
+                                <a class="dropdown-item" href="#">Keyboard not working</a>
+                                <a class="dropdown-item" href="#">Touch pad not working</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div id="contact-row" class="row hide">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8">
+                    <h3 class="non-live-agent">Contact Options</h3>
+                    <h3 class="live-agent-heading">Contact Options for Live Agent</h3>
+                    <div class="call-us">
+                        <h5>Call Us</h5>
+                        <p class="phone-no">1-855-305-9057</p>
+                        <p>24/7</p>
+                        <p>Please Note: You will be asked to enter your Express Service Code: <strong>34285956052</strong></p>
+                    </div>
+                    <div class="chat-with-us">
+                        <h5>Chat with us</h5>
+                        <p>Start a chat session with one of our technical support experts.</p>
+                        <button type="button" id="chatButton" class="btn btn-primary" onclick="initChat()">Start Chat</button>
+                        <div class="live-agent-button">
+                                <!-- 
+                                <script type='text/javascript'>
+                                liveagent.init('https://d.la4-c1cs-phx.salesforceliveagent.com/chat', '5723B0000004Crz', '00Dm0000000DQXs');
+                                </script> -->
+                            <a id="liveagent_button_online_5733B0000004D90" class="btn btn-primary" href="javascript://Chat" onclick="startLiveAgentChat('5733B0000004D90')">Start Chat</a><div id="liveagent_button_offline_5733B0000004D90" style="display: none;"><!-- Offline Chat Content --></div>
+                            <!-- <script type="text/javascript">
+                                if (!window._laq) { window._laq = []; }
+                                window._laq.push(function(){liveagent.showWhenOnline('5733B0000004D90', document.getElementById('liveagent_button_online_5733B0000004D90'));
+                                liveagent.showWhenOffline('5733B0000004D90', document.getElementById('liveagent_button_offline_5733B0000004D90'));
+                                });</script>  -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="pages/page2/index.html">Page 2</a>
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
+    <script src="main.js"></script>
+    <script>
+
+        (function() {
+            if( window.location.href.split("?").length > 1 ) {
+                var urlParameters = window.location.href.split("?")[1];
+                var serviceTag = urlParameters.split("&")[0].split("=")[1].toLowerCase();
+                var srNumber = urlParameters.split("&")[1].split("=")[1].toLowerCase();
+                var FirstName = urlParameters.split("&")[2].split("=")[1].toLowerCase();
+                var lastName = urlParameters.split("&")[3].split("=")[1].toLowerCase();
+                if( serviceTag === '10cy091' ) {
+                    resumeChat("5733B0000004D95", "00Dm0000000DQXs", serviceTag, srNumber, FirstName, lastName, 'liveAgent');
+                    $('.resume-chat-msg').removeClass('hide');
+                    $('.new-chat').addClass('hide');
+                } else {
+                    if( serviceTag != '' ) {
+                        resumeChat("573m00000004DCd", "572m00000004Cl7", serviceTag, srNumber, FirstName, lastName, 'snapIn');
+                        // resumeChat("573m00000004DCE", "572m00000004Cl2", serviceTag, srNumber, FirstName, lastName, 'snapIn');
+                        eleExist('#helpButtonSpan > .message', chatClick);
+                    }
+                    $('.resume-chat-msg').removeClass('hide');
+                    $('.new-chat').addClass('hide');
+                }
+            } else {
+                $('.resume-chat-msg').addClass('hide');
+                $('.new-chat').removeClass('hide');
+            }
+        })();
+
+        $('#issueDropdown > a').click(function() {
+            var val = $(this).text();
+            if( val != 'Select Issue Type' ) {
+                $('#dropdownMenuButton').text(val);
+                $('#contact-row').removeClass('hide');
+                if( document.getElementById('serviceTag').value.toLowerCase() === 'dtb4pc2' ) {
+                    $('.call-us').hide();
+                    $('.live-agent-button').hide();
+                    $('#chatButton').show();
+                    $('.non-live-agent').show();
+                    $('.live-agent-heading').hide();
+                } else if( document.getElementById('serviceTag').value.toLowerCase() === '10cy091' ) {
+                    $('.call-us').show();
+                    $('.live-agent-button').show();
+                    $('#chatButton').hide();
+                    $('.non-live-agent').hide();
+                    $('.live-agent-heading').show();
+                } else {
+                    $('.call-us').show();
+                    $('.live-agent-button').hide();
+                    $('#chatButton').show();
+                    $('.non-live-agent').show();
+                    $('.live-agent-heading').hide();
+                }
+
+                //var isBusinessActive = checkBusinessHrAvilability();
+            }
+        });
+
+        function showIssue() {
+            if( $('#serviceTag').val().length != 0 ) {
+                $('.dropdown').removeClass('hide');
+            } else {
+                $('.dropdown').addClass('hide');
+                $('#dropdownMenuButton').text('Select Issue Type');
+                $('#contact-row').addClass("hide");
+            }
+        }
+        
+        function resumeChat(buttonId, deploymentId, serviceTag, srNumber, FirstName, lastName, resumeType) {
+            if( resumeType === 'snapIn' ) {
+                var initESW = function(gslbBaseURL) {
+                embedded_svc.settings.displayHelpButton = true; //Or false
+                embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
+                // embedded_svc.settings.initialInteractionState = "WAITING";
+                embedded_svc.settings.enabledFeatures = ['LiveAgent'];
+                embedded_svc.settings.entryFeature = 'LiveAgent';
+                embedded_svc.settings.storageDomain = "bishav.github.io"; //localhost
+                
+                embedded_svc.settings.extraPrechatFormDetails = [{
+                    "label":"Delta Sr",
+                    "value": srNumber,
+                    "transcriptFields":[ "Delta_SR__c" ]
+                },
+                { "label":"First Name", "name":"FirstName", "value":FirstName, "displayToAgent":true },
+                { "label":"Last Name", "value":lastName, "displayToAgent":true }];
+                
+                // embedded_svc.settings.extraPrechatInfo = [{
+                //         "entityFieldMaps": [{
+                //             "doCreate":false,
+                //             "doFind":false,
+                //             "fieldName":"Delta_SR__c",
+                //             "isExactMatch":true,
+                //             "label":"Delta Sr"
+                //         }
+                //         ],
+                //         "entityName":"LiveChatTranscript",
+                //         "saveToTranscript": "Delta_SR__c"
+                //     }];
+
+                // embedded_svc.settings.extraPrechatFormDetails = [{ "label":"First Name", "name":"FirstName", "value":FirstName, "displayToAgent":true }, { "label":"Last Name", "value":lastName, "displayToAgent":true } ];
+                //'https://dellservices--SIT2.cs18.my.salesforce.com', 'https://sit2-dellservices.cs18.force.com/LASnapIn'
+                //'https://dellservices--DEV4.cs19.my.salesforce.com', 'https://dev4-dellservices.cs19.force.com/LASnapIn'
+                embedded_svc.init('https://dellservices--DEV4.cs19.my.salesforce.com', 'https://dev4-dellservices.cs19.force.com/LASnapIn', gslbBaseURL, '00Dm0000000DQXs', 'Test_snapin_resumechat', { baseLiveAgentContentURL: 'https://c.la4-c1cs-phx.salesforceliveagent.com/content', deploymentId: deploymentId, buttonId: buttonId, baseLiveAgentURL: 'https://d.la4-c1cs-phx.salesforceliveagent.com/chat', eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04Im0000000001xEAA_1638222454e', isOfflineSupportEnabled: false}); };if (!window.embedded_svc) { var s = document.createElement('script'); s.setAttribute('src', 'https://dellservices--DEV3.cs20.my.salesforce.com/embeddedservice/5.0/esw.min.js'); s.onload = function() { initESW(null, srNumber); }; document.body.appendChild(s); } else { initESW('https://dellservices--DEV3.cs20.my.salesforce.com', srNumber); }
+            } else { 
+                liveagent.addCustomDetail('deltaSr', srNumber).saveToTranscript('Delta_Sr__c');
+                liveagent.findOrCreate("Case").map("Delta_SR__c","deltaSr",true, false, true).showOnCreate();
+                liveagent.init('https://d.la4-c1cs-phx.salesforceliveagent.com/chat', '5723B0000004Crz', '00Dm0000000DQXs');
+                liveagent.setName(FirstName + ' ' + lastName);
+                $('.live-agent-resume-button').removeClass('hide');
+                // eleExist('#liveagent_button_online_5733B0000004D95', liveAgentResume);
+                setInterval(function() {
+                    var onlineStatus = $('#liveagent_button_online_5733B0000004D95').attr('style').split(":")[1].replace(/ /g,'').split(";")[0];
+                    var offlineStatus = $('#liveagent_button_online_5733B0000004D95').attr('style').split(":")[1].replace(/ /g,'').split(";")[0];
+                    if( onlineStatus === 'none' ) {
+                        $('.offline-msg').removeClass('hide');
+                    } else if( offlineStatus === 'none' ) {
+                        $('.offline-msg').addClass('hide');
+                    }
+                }, 1000);
+            } 
+        }
+        
+        function chatClick(eleSelector, findingEle) {
+            if( $(eleSelector).text() === 'Chat with an Expert' ) {
+                $('#helpButtonSpan > .message').click();
+                clearInterval(findingEle);
+            }
+        }
+
+        function initChat() {
+            var serviceTag = $('#serviceTag').val().toUpperCase();
+            var issueVal = $('#dropdownMenuButton').text();
+            var widgetSizeVal = detectScreen();
+            var snapInObject = {
+                widgetSize: widgetSizeVal,
+                serviceTag: serviceTag,
+                issueVal: issueVal,
+                buttonId: '5730b000000CbhT',
+                deploymentId: '57211000000Carz',
+                baseLiveAgentURL: 'https://d.la1-c2cs-ord.salesforceliveagent.com/chat',
+                baseLiveAgentContentURL: 'https://c.la1-c2cs-ord.salesforceliveagent.com/content'
+            }
+
+            triggerSnapin(snapInObject);
+            initSnapIn();
+            eleExist('#helpButtonSpan > .message', chatClick);
+        }
+
+        function liveAgent() {
+            var liveAgentObject = {
+                deploymentUrl: 'https://c.la4-c1cs-phx.salesforceliveagent.com/content/g/js/43.0/deployment.js',
+                liveAgentInitUrl: 'https://d.la4-c1cs-phx.salesforceliveagent.com/chat',
+                buttonId: '5733B0000004D90',
+                deploymentId: '5723B0000004Crz',
+                organizationId: '00Dm0000000DQXs'
+            }
+            initLiveAgent(liveAgentObject);
+        }        
+
+        // calling live agent
+        liveAgent()
+    </script>     
+</body>
+</html>
