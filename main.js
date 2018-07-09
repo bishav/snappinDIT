@@ -11,16 +11,16 @@
     },false);
 })();
 
-function initSnapIn() {
+function initSnapIn(snapInObject) {
     if (!window.embedded_svc) { 
         var s = document.createElement('script'); 
-        s.setAttribute('src', 'https://dellservices--DEV3.cs20.my.salesforce.com/embeddedservice/5.0/esw.min.js'); 
+        s.setAttribute('src', snapInObject.snapInJs); 
         s.onload = function() { 
             initESW(null); 
         }; 
         document.body.appendChild(s); 
     } else { 
-        initESW('https://service.force.com'); 
+        initESW(snapInObject.serviceForceURL); 
     }
 }
 
@@ -28,7 +28,7 @@ function triggerSnapin(snapInObject) {
     initESW = function(gslbBaseURL) {
         embedded_svc.settings.displayHelpButton = true; //Or false
         embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
-        embedded_svc.settings.storageDomain = "bishav.github.io"; //localhost
+        embedded_svc.settings.storageDomain = snapInObject.domainName; //localhost
         embedded_svc.settings.widgetWidth = snapInObject.widgetSize.width;
         embedded_svc.settings.widgetHeight = snapInObject.widgetSize.height;
 
@@ -99,11 +99,14 @@ function triggerSnapin(snapInObject) {
 
         //'https://dellservices--SIT2.cs18.my.salesforce.com', 'https://sit2-dellservices.cs18.force.com/LASnapIn'
         //'https://dellservices--DEV4.cs19.my.salesforce.com', 'https://dev4-dellservices.cs19.force.com/LASnapIn'
-        embedded_svc.init('https://dellservices--DEV4.cs19.my.salesforce.com', 'https://dev4-dellservices.cs19.force.com/LASnapIn', gslbBaseURL, '00D2900000096py', 'Snap_Ins_Chat_Deployment', { baseLiveAgentContentURL: 'https://c.la4-c1cs-phx.salesforceliveagent.com/content', deploymentId: '572290000008OcD', buttonId: '5730b000000CbhT', baseLiveAgentURL: 'https://d.la4-c1cs-phx.salesforceliveagent.com/chat', eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I290000004CBTEA2_1641ccdd070', isOfflineSupportEnabled: false}); }; 
-}
+        //embedded_svc.init('https://dellservices--DEV4.cs19.my.salesforce.com', 'https://dev4-dellservices.cs19.force.com/LASnapIn', gslbBaseURL, '00D2900000096py', 'Snap_Ins_Chat_Deployment', { baseLiveAgentContentURL: 'https://c.la4-c1cs-phx.salesforceliveagent.com/content', deploymentId: '572290000008OcD', buttonId: '5730b000000CbhT', baseLiveAgentURL: 'https://d.la4-c1cs-phx.salesforceliveagent.com/chat', eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I290000004CBTEA2_1641ccdd070', isOfflineSupportEnabled: false}); }; 
+        embedded_svc.init(snapInObject.SFDCURL, snapInObject.snapInLAURL, gslbBaseURL, snapInObject.organizationId, snapInObject.componentName, { baseLiveAgentContentURL: snapInObject.baseLiveAgentContentURL, deploymentId:  snapInObject.deploymentId, buttonId: snapInObject.buttonId, baseLiveAgentURL: snapInObject.baseLiveAgentURL, eswLiveAgentDevName: snapInObject.LiveAgentDevName, isOfflineSupportEnabled: false}); }; 
+        initSnapIn(snapInObject);        
+    }
 
 function initLiveAgent(liveAgentObject) {
     $.getScript(liveAgentObject.deploymentUrl, function() {
+        liveagent.enableLogging(); //Bishav new code to create log in console need to create a finction form our end as well.
         liveagent.init(liveAgentObject.liveAgentInitUrl, liveAgentObject.deploymentId, liveAgentObject.organizationId);
         if (!window._laq) { 
             window._laq = []; 
