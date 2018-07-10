@@ -22,10 +22,12 @@ function initSnapIn(snapInObject) {
     } else { 
         initESW(snapInObject.serviceForceURL); 
     }
+
 }
 
 function triggerSnapin(snapInObject) {
     initESW = function(gslbBaseURL) {
+        debugger;
         embedded_svc.settings.displayHelpButton = true; //Or false
         embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
         //embedded_svc.settings.storageDomain = snapInObject.domainName; //localhost

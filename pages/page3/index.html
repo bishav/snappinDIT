@@ -24,11 +24,28 @@
     <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
     <script src="../../main.js"></script>   
     <script>
+        var snapInObject = {
+                SFDCURL: 'https://dellservices--DIT4.cs11.my.salesforce.com',  
+                snapInLAURL: 'https://dit4-dellservices.cs11.force.com/LaSnapIn',
+                organizationId: '00DZ000000NE2eh',
+                componentName: 'Snap_Ins_Chat_Deployment',
+                baseLiveAgentContentURL: 'https://c.la3-c2cs-phx.salesforceliveagent.com/content',
+                deploymentId: '572Z000000000KC',
+                buttonId: '5730b000000CbhT',
+                baseLiveAgentURL: 'https://d.la3-c2cs-phx.salesforceliveagent.com/chat',
+                LiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04IZ00000008OIKMA2_1647fbd242d',
+                domainName: "bishav.github.io",//"localhost", //
+                serviceForceURL: "https://service.force.com",
+                snapInJs: "https://service.force.com/embeddedservice/5.0/esw.min.js" ,
+                issueVal: "keyborad not working",
+                serviceTag: "Q17A027"
+            }
         // 261KZ72 - dev4
         // 00CJLVX - SIT2
        //Q17A027 -  DIT4
-        triggerSnapin("Q17A027", "keyborad not working");
-        initSnapIn();
+       triggerSnapin(snapInObject);
+       // triggerSnapin("Q17A027", "keyborad not working");
+       // initSnapIn();
     </script>     
 </body>
 </html>
