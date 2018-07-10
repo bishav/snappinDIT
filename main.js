@@ -96,10 +96,10 @@ function triggerSnapin(snapInObject) {
 
         embedded_svc.settings.enabledFeatures = ['LiveAgent'];
         embedded_svc.settings.entryFeature = 'LiveAgent';
-        console.log("Issue value Length: "+snapInObject.issueVal.length);
+        
         if(snapInObject.issueVal.length > 0)
             embedded_svc.settings.prepopulatedPrechatFields = {Issue_Description__c: snapInObject.issueVal}; 
-            
+
         //'https://dellservices--SIT2.cs18.my.salesforce.com', 'https://sit2-dellservices.cs18.force.com/LASnapIn'
         //'https://dellservices--DEV4.cs19.my.salesforce.com', 'https://dev4-dellservices.cs19.force.com/LASnapIn'
         //embedded_svc.init('https://dellservices--DEV4.cs19.my.salesforce.com', 'https://dev4-dellservices.cs19.force.com/LASnapIn', gslbBaseURL, '00D2900000096py', 'Snap_Ins_Chat_Deployment', { baseLiveAgentContentURL: 'https://c.la4-c1cs-phx.salesforceliveagent.com/content', deploymentId: '572290000008OcD', buttonId: '5730b000000CbhT', baseLiveAgentURL: 'https://d.la4-c1cs-phx.salesforceliveagent.com/chat', eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I290000004CBTEA2_1641ccdd070', isOfflineSupportEnabled: false}); }; 

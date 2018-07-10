@@ -239,7 +239,21 @@
             if( $(eleSelector).text() === 'Chat with an Expert' ) {
                 $('#helpButtonSpan > .message').click();
                 clearInterval(findingEle);
+               //BNR 
+               eleExist(".embeddedServiceSidebarFeature .embeddedServiceLiveAgentStatePrechatDefaultUI .embeddedServiceSidebarForm .embeddedServiceSidebarFormField .Issue_Description__c",addCharectorRemaining);
             }
+        }
+
+        //BNR
+        function addCharectorRemaining(eleSelector, findingEle){
+            var currentCharLength =  $(eleSelector).val.length;
+            var maxCharLength = 255;
+            $(eleSelector).after("<div id='snappinCharCounter' style='position:relative;font-size:.75em;line-height: 1.5;margin-right: .75em;margin-left: .5em;margin-bottom: 2px;color: #333333;margin-top: 4px;'>Total character remaining "+(maxCharLength - currentCharLength)+"</div>")
+            $(eleSelector).on('keyup', function() {
+                currentCharLength = this.value.length
+                $("#snappinCharCounter").text("Total character remaining "+ (maxCharLength - currentCharLength));
+            });
+            clearInterval(findingEle);
         }
 
         function initChat() {
