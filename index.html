@@ -214,7 +214,7 @@
                 //'https://dellservices--SIT2.cs18.my.salesforce.com', 'https://sit2-dellservices.cs18.force.com/LASnapIn'
                 //'https://dellservices--DEV4.cs19.my.salesforce.com', 'https://dev4-dellservices.cs19.force.com/LASnapIn'
                //embedded_svc.init('https://dellservices--DEV4.cs19.my.salesforce.com', 'https://dev4-dellservices.cs19.force.com/LASnapIn', gslbBaseURL, '00Dm0000000DQXs', 'Test_snapin_resumechat', { baseLiveAgentContentURL: 'https://c.la4-c1cs-phx.salesforceliveagent.com/content', deploymentId: deploymentId, buttonId: buttonId, baseLiveAgentURL: 'https://d.la4-c1cs-phx.salesforceliveagent.com/chat', eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04Im0000000001xEAA_1638222454e', isOfflineSupportEnabled: false}); };if (!window.embedded_svc) { var s = document.createElement('script'); s.setAttribute('src', 'https://dellservices--DEV3.cs20.my.salesforce.com/embeddedservice/5.0/esw.min.js'); s.onload = function() { initESW(null, srNumber); }; document.body.appendChild(s); } else { initESW('https://dellservices--DEV3.cs20.my.salesforce.com', srNumber); }
-                embedded_svc.init('https://dellservices--DEV4.cs9.my.salesforce.com', 'https://dev4-dellservices.cs9.force.com/LASnapIn', gslbBaseURL, '00DK000000XJrqP', 'Snap_Ins_Chat_Deployment', { baseLiveAgentContentURL: 'https://c.la3-c1cs-phx.salesforceliveagent.com/content', deploymentId: '572K0000000CaiT', buttonId: '5730b000000CbhT', baseLiveAgentURL: 'https://d.la3-c1cs-phx.salesforceliveagent.com/chat', eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04IK00000008OIeMAM_16469bfe8aa', isOfflineSupportEnabled: false}); };if (!window.embedded_svc) { var s = document.createElement('script'); s.setAttribute('src', 'https://dellservices--DEV4.cs9.my.salesforce.com/embeddedservice/5.0/esw.min.js'); s.onload = function() { initESW(null); }; document.body.appendChild(s); } else { initESW('https://service.force.com'); }
+                 embedded_svc.init('https://dellservices--DIT4.cs11.my.salesforce.com', 'https://dit4-dellservices.cs11.force.com/LaSnapIn', gslbBaseURL, '00DZ000000NE2eh', 'Snap_Ins_Chat_Deployment', { baseLiveAgentContentURL: 'https://c.la3-c2cs-phx.salesforceliveagent.com/content', deploymentId: '572Z000000000KC', buttonId: '5730b000000CbhT', baseLiveAgentURL: 'https://d.la3-c2cs-phx.salesforceliveagent.com/chat', eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04IZ00000008OIKMA2_1647fbd242d', isOfflineSupportEnabled: false}); };if (!window.embedded_svc) { var s = document.createElement('script'); s.setAttribute('src', 'https://dellservices--DIT4.cs11.my.salesforce.com/embeddedservice/5.0/esw.min.js'); s.onload = function() { initESW(null); }; document.body.appendChild(s); } else { initESW('https://service.force.com'); }       
             } else { 
                 liveagent.addCustomDetail('deltaSr', srNumber).saveToTranscript('Delta_Sr__c');
                 liveagent.findOrCreate("Case").map("Delta_SR__c","deltaSr",true, false, true).showOnCreate();
@@ -249,16 +249,16 @@
                 widgetSize: widgetSizeVal,
                 serviceTag: serviceTag,
                 issueVal: issueVal,
-                SFDCURL: 'https://dellservices--DEV3.cs20.my.salesforce.com',  
-                snapInLAURL: 'https://dev3-dev2-dellservices--dev2.cs20.force.com/LASI1', 
-                organizationId: '00Dm0000000DQXs', 
-                componentName: 'Test_Snap_In',
-                baseLiveAgentContentURL: 'https://c.la4-c1cs-phx.salesforceliveagent.com/content',
-                deploymentId: '572m00000004Ckx',
-                buttonId: '573m00000004DC9',
-                baseLiveAgentURL: 'https://d.la4-c1cs-phx.salesforceliveagent.com/chat',
-                LiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04Im0000000001iEAA_16369f295e6', 
-                domainName: "bishav.github.io",//"localhost", //
+                SFDCURL: 'https://dellservices--DIT4.cs11.my.salesforce.com',  
+                snapInLAURL: 'https://dit4-dellservices.cs11.force.com/LaSnapIn',
+                organizationId: '00DZ000000NE2eh',
+                componentName: 'Snap_Ins_Chat_Deployment',
+                baseLiveAgentContentURL: 'https://c.la3-c2cs-phx.salesforceliveagent.com/content',
+                deploymentId: '572Z000000000KC',
+                buttonId: '5730b000000CbhT',
+                baseLiveAgentURL: 'https://d.la3-c2cs-phx.salesforceliveagent.com/chat',
+                LiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04IZ00000008OIKMA2_1647fbd242d',
+                domainName: "localhost", //"bishav.github.io",//
                 serviceForceURL: "https://service.force.com",
                 snapInJs: "https://service.force.com/embeddedservice/5.0/esw.min.js" 
             }

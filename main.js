@@ -28,9 +28,9 @@ function triggerSnapin(snapInObject) {
     initESW = function(gslbBaseURL) {
         embedded_svc.settings.displayHelpButton = true; //Or false
         embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
-        embedded_svc.settings.storageDomain = snapInObject.domainName; //localhost
-        embedded_svc.settings.widgetWidth = snapInObject.widgetSize.width;
-        embedded_svc.settings.widgetHeight = snapInObject.widgetSize.height;
+        //embedded_svc.settings.storageDomain = snapInObject.domainName; //localhost
+       // embedded_svc.settings.widgetWidth = snapInObject.widgetSize.width;
+       // embedded_svc.settings.widgetHeight = snapInObject.widgetSize.height;
 
         embedded_svc.settings.extraPrechatFormDetails = [
                                                     {"label":"First Name", "transcriptFields":["FirstName__c"]},
