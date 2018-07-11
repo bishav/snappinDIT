@@ -104,8 +104,25 @@ function triggerSnapin(snapInObject) {
         //'https://dellservices--DEV4.cs19.my.salesforce.com', 'https://dev4-dellservices.cs19.force.com/LASnapIn'
         //embedded_svc.init('https://dellservices--DEV4.cs19.my.salesforce.com', 'https://dev4-dellservices.cs19.force.com/LASnapIn', gslbBaseURL, '00D2900000096py', 'Snap_Ins_Chat_Deployment', { baseLiveAgentContentURL: 'https://c.la4-c1cs-phx.salesforceliveagent.com/content', deploymentId: '572290000008OcD', buttonId: '5730b000000CbhT', baseLiveAgentURL: 'https://d.la4-c1cs-phx.salesforceliveagent.com/chat', eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I290000004CBTEA2_1641ccdd070', isOfflineSupportEnabled: false}); }; 
         embedded_svc.init(snapInObject.SFDCURL, snapInObject.snapInLAURL, gslbBaseURL, snapInObject.organizationId, snapInObject.componentName, { baseLiveAgentContentURL: snapInObject.baseLiveAgentContentURL, deploymentId:  snapInObject.deploymentId, buttonId: snapInObject.buttonId, baseLiveAgentURL: snapInObject.baseLiveAgentURL, eswLiveAgentDevName: snapInObject.LiveAgentDevName, isOfflineSupportEnabled: false}); }; 
-        initSnapIn(snapInObject);        
+        initSnapIn(snapInObject); 
     }
+
+//BNR
+$("body").on("click", "#helpButtonSpan > .message", function(){
+    eleExist(".embeddedServiceSidebarFeature .embeddedServiceLiveAgentStatePrechatDefaultUI .embeddedServiceSidebarForm .embeddedServiceSidebarFormField .Issue_Description__c",addCharectorRemaining);
+});
+
+//BNR
+function addCharectorRemaining(eleSelector, findingEle){
+    var currentCharLength =  $(eleSelector).val().length;
+    var maxCharLength = 255;
+    $(eleSelector).after("<div id='snappinCharCounter' style='position:relative;font-size:.75em;line-height: 1.5;margin-right: .75em;margin-left: .5em;margin-bottom: 2px;color: #333333;margin-top: 4px;'>Total character remaining "+(maxCharLength - currentCharLength)+"</div>")
+    $(eleSelector).on('keyup', function() {
+        currentCharLength = this.value.length
+        $("#snappinCharCounter").text("Total character remaining "+ (maxCharLength - currentCharLength));
+    });
+    clearInterval(findingEle);
+}
 
 function initLiveAgent(liveAgentObject) {
     $.getScript(liveAgentObject.deploymentUrl, function() {
