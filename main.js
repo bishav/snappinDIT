@@ -1,3 +1,4 @@
+var issueType, serviceTag;
 (function() {
     var initESW;
 
@@ -27,11 +28,13 @@ function initSnapIn(snapInObject) {
 
 function triggerSnapin(snapInObject) {
     initESW = function(gslbBaseURL) {
+        issueType = snapInObject.issueVal;
+        serviceTag = snapInObject.serviceTag;
         embedded_svc.settings.displayHelpButton = true; //Or false
-        embedded_svc.settings.language = "";//snapInObject.language; //For example, enter 'en' or 'en-US'
+        embedded_svc.settings.language = snapInObject.language; //"";//For example, enter 'en' or 'en-US'
         //embedded_svc.settings.storageDomain = snapInObject.domainName; //localhost
        // embedded_svc.settings.widgetWidth = snapInObject.widgetSize.width;
-       // embedded_svc.settings.widgetHeight = snapInObject.widgetSize.height;
+       embedded_svc.settings.widgetHeight = "532px";//snapInObject.widgetSize.height;
         embedded_svc.settings.extraPrechatFormDetails = [
                                                     {"label":"First Name", "transcriptFields":["FirstName__c"]},
                                                     {"label":"Last Name", "transcriptFields":["LastName__c"]},
@@ -118,7 +121,12 @@ function addCharectorRemaining(eleSelector, findingEle){
         currentCharLength = this.value.length
         $("#snappinCharCounter").text(currentCharLength+" / "+maxCharLength+" characters");
     });
+    showAdditionalDetailsInUi();
     clearInterval(findingEle);
+}
+
+function showAdditionalDetailsInUi(){
+    $(".sidebarBody .prechatUI  .embeddedServiceSidebarForm ul.fieldList").prepend('<div class="readonlyContainer" style="margin: 1.5em; text-align: left;position: relative;font-size: .75em;color: #444;"><div><b>Service Tag:</b> '+serviceTag+'</div><div><b>Issue:</b> '+issueType+'</div></div>');
 }
 
 function initLiveAgent(liveAgentObject) {
