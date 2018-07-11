@@ -89,6 +89,14 @@
                         <h5>Chat with us</h5>
                         <p>Start a chat session with one of our technical support experts.</p>
                         <button type="button" id="chatButton" class="btn btn-primary" onclick="initChat()">Start Chat</button>
+                        <span id="selectLanguage" style="float: right;">
+                            <span>Select Language</span>
+                                <select id="selectLanguageOption">
+                                    <option>en</option>
+                                    <option>ja</option>
+                                    <option>ch</option>
+                                </select>
+                            </span>
                         <div class="live-agent-button">
                                 <!-- 
                                 <script type='text/javascript'>
@@ -151,18 +159,21 @@
                     $('.call-us').hide();
                     $('.live-agent-button').hide();
                     $('#chatButton').show();
+                    $('#selectLanguage').show();
                     $('.non-live-agent').show();
                     $('.live-agent-heading').hide();
                 } else if( document.getElementById('serviceTag').value.toLowerCase() === '10cy091' ) {
                     $('.call-us').show();
                     $('.live-agent-button').show();
                     $('#chatButton').hide();
+                    $('#selectLanguage').hide();
                     $('.non-live-agent').hide();
                     $('.live-agent-heading').show();
                 } else {
                     $('.call-us').show();
                     $('.live-agent-button').hide();
                     $('#chatButton').show();
+                    $('#selectLanguage').show();
                     $('.non-live-agent').show();
                     $('.live-agent-heading').hide();
                 }
@@ -245,14 +256,16 @@
         
 
         function initChat() {
+            var language = $("#selectLanguageOption option:selected").val();
             var serviceTag = $('#serviceTag').val().toUpperCase();
             var issueVal = $('#dropdownMenuButton').text();
             var widgetSizeVal = detectScreen();
             var snapInObject = {
+                language: language,
                 widgetSize: widgetSizeVal,
                 serviceTag: serviceTag,
                 issueVal: issueVal,
-                SFDCURL: 'https://dellservices--DIT4.cs11.my.salesforce.com',  
+                snapInInitURL: 'https://dellservices--DIT4.cs11.my.salesforce.com',  
                 snapInLAURL: 'https://dit4-dellservices.cs11.force.com/LaSnapIn',
                 organizationId: '00DZ000000NE2eh',
                 componentName: 'Snap_Ins_Chat_Deployment',

@@ -28,7 +28,7 @@ function initSnapIn(snapInObject) {
 function triggerSnapin(snapInObject) {
     initESW = function(gslbBaseURL) {
         embedded_svc.settings.displayHelpButton = true; //Or false
-        embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
+        embedded_svc.settings.language = "";//snapInObject.language; //For example, enter 'en' or 'en-US'
         //embedded_svc.settings.storageDomain = snapInObject.domainName; //localhost
        // embedded_svc.settings.widgetWidth = snapInObject.widgetSize.width;
        // embedded_svc.settings.widgetHeight = snapInObject.widgetSize.height;
@@ -100,10 +100,7 @@ function triggerSnapin(snapInObject) {
         if(snapInObject.issueVal.length > 0)
             embedded_svc.settings.prepopulatedPrechatFields = {Issue_Description__c: snapInObject.issueVal}; 
 
-        //'https://dellservices--SIT2.cs18.my.salesforce.com', 'https://sit2-dellservices.cs18.force.com/LASnapIn'
-        //'https://dellservices--DEV4.cs19.my.salesforce.com', 'https://dev4-dellservices.cs19.force.com/LASnapIn'
-        //embedded_svc.init('https://dellservices--DEV4.cs19.my.salesforce.com', 'https://dev4-dellservices.cs19.force.com/LASnapIn', gslbBaseURL, '00D2900000096py', 'Snap_Ins_Chat_Deployment', { baseLiveAgentContentURL: 'https://c.la4-c1cs-phx.salesforceliveagent.com/content', deploymentId: '572290000008OcD', buttonId: '5730b000000CbhT', baseLiveAgentURL: 'https://d.la4-c1cs-phx.salesforceliveagent.com/chat', eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I290000004CBTEA2_1641ccdd070', isOfflineSupportEnabled: false}); }; 
-        embedded_svc.init(snapInObject.SFDCURL, snapInObject.snapInLAURL, gslbBaseURL, snapInObject.organizationId, snapInObject.componentName, { baseLiveAgentContentURL: snapInObject.baseLiveAgentContentURL, deploymentId:  snapInObject.deploymentId, buttonId: snapInObject.buttonId, baseLiveAgentURL: snapInObject.baseLiveAgentURL, eswLiveAgentDevName: snapInObject.LiveAgentDevName, isOfflineSupportEnabled: false}); }; 
+       embedded_svc.init(snapInObject.snapInInitURL, snapInObject.snapInLAURL, gslbBaseURL, snapInObject.organizationId, snapInObject.componentName, { baseLiveAgentContentURL: snapInObject.baseLiveAgentContentURL, deploymentId:  snapInObject.deploymentId, buttonId: snapInObject.buttonId, baseLiveAgentURL: snapInObject.baseLiveAgentURL, eswLiveAgentDevName: snapInObject.LiveAgentDevName, isOfflineSupportEnabled: false}); }; 
         initSnapIn(snapInObject); 
     }
 
@@ -116,10 +113,10 @@ $("body").on("click", "#helpButtonSpan > .message", function(){
 function addCharectorRemaining(eleSelector, findingEle){
     var currentCharLength =  $(eleSelector).val().length;
     var maxCharLength = 255;
-    $(eleSelector).after("<div id='snappinCharCounter' style='position:relative;font-size:.75em;line-height: 1.5;margin-right: .75em;margin-left: .5em;margin-bottom: 2px;color: #333333;margin-top: 4px;'>Total character remaining "+(maxCharLength - currentCharLength)+"</div>")
+    $(eleSelector).after("<div id='snappinCharCounter' style='text-align:right; position:relative;font-size:.75em;line-height: 1.5;margin-right: .75em;margin-left: .5em;margin-bottom: 2px;color: #333333;margin-top: 4px;'>"+currentCharLength+" / "+maxCharLength+" characters</div>")
     $(eleSelector).on('keyup', function() {
         currentCharLength = this.value.length
-        $("#snappinCharCounter").text("Total character remaining "+ (maxCharLength - currentCharLength));
+        $("#snappinCharCounter").text(currentCharLength+" / "+maxCharLength+" characters");
     });
     clearInterval(findingEle);
 }
