@@ -35,6 +35,7 @@ function triggerSnapin(snapInObject) {
         //embedded_svc.settings.storageDomain = snapInObject.domainName; //localhost
        // embedded_svc.settings.widgetWidth = snapInObject.widgetSize.width;
        embedded_svc.settings.widgetHeight = "532px";//snapInObject.widgetSize.height;
+       embedded_svc.settings.defaultMinimizedText = 'Chat Now';//Chat with an expert
         embedded_svc.settings.extraPrechatFormDetails = [
                                                     {"label":"First Name", "transcriptFields":["FirstName__c"]},
                                                     {"label":"Last Name", "transcriptFields":["LastName__c"]},
