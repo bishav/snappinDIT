@@ -115,7 +115,8 @@ function triggerSnapin(snapInObject) {
 function triggerResumeSnapin(snapInObject) {  
     var initESW = function(gslbBaseURL) {
         embedded_svc.settings.displayHelpButton = true; //Or false
-        embedded_svc.settings.language = snapInObject.language; //For example, enter 'en' or 'en-US'
+        translatedLabels = translation(snapInObject.language);
+        embedded_svc.settings.language = translatedLabels.language; //"";//For example, enter 'en' or 'en-US'
        // embedded_svc.settings.initialInteractionState = "WAITING";
         embedded_svc.settings.enabledFeatures = ['LiveAgent'];
         embedded_svc.settings.entryFeature = 'LiveAgent';
