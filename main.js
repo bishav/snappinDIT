@@ -239,43 +239,43 @@ function translation(language){
     }else if(language == "pt"){
         this.serviceTag = "Service Tag";
         this.issue = "Issue";
-        this.firstName = "First Name";
-        this.lastName = "Last Name";
-        this.emailAdd = "Email Address";
-        this.primPhone = "Primary Phone Number";
-        this.issueDesc = "Issue Description";
+        this.firstName = "Nome";
+        this.lastName = "Sobrenome";
+        this.emailAdd = "Email";
+        this.primPhone = "Número de Telefone Principal";
+        this.issueDesc = "descrição do problema";
         this.characters = "characters";
         this.language = "pt";
     }else if(language == "pt_BR"){
         this.serviceTag = "Service Tag";
         this.issue = "Issue";
-        this.firstName = "First Name";
-        this.lastName = "Last Name";
-        this.emailAdd = "Email Address";
-        this.primPhone = "Primary Phone Number";
-        this.issueDesc = "Issue Description";
+        this.firstName = "Nome";
+        this.lastName = "Sobrenome";
+        this.emailAdd = "Email";
+        this.primPhone = "Número de Telefone Principal";
+        this.issueDesc = "descrição do problema";
         this.characters = "characters";
-        this.language = "pt_BR";
+        this.language = "pt";
     }else if(language == "nl"){
         this.serviceTag = "Service Tag";
         this.issue = "Issue";
-        this.firstName = "First Name";
-        this.lastName = "Last Name";
-        this.emailAdd = "Email Address";
-        this.primPhone = "Primary Phone Number";
-        this.issueDesc = "Issue Description";
+        this.firstName = "Voornaam";
+        this.lastName = "Achternaam";
+        this.emailAdd = "E-mail";
+        this.primPhone = "Primair telefoonnummer";
+        this.issueDesc = "Probleem Beschrijving";
         this.characters = "characters";
         this.language = "nl";
     }else if(language == "nl_NL"){
         this.serviceTag = "Service Tag";
         this.issue = "Issue";
-        this.firstName = "First Name";
-        this.lastName = "Last Name";
-        this.emailAdd = "Email Address";
-        this.primPhone = "Primary Phone Number";
-        this.issueDesc = "Issue Description";
+        this.firstName = "Voornaam";
+        this.lastName = "Achternaam";
+        this.emailAdd = "E-mail";
+        this.primPhone = "Primair telefoonnummer";
+        this.issueDesc = "Probleem Beschrijving";
         this.characters = "characters";
-        this.language = "nl_NL";
+        this.language = "nl";
     }else{
         this.serviceTag = "Service Tag";
         this.issue = "Issue";
