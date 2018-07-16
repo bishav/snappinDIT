@@ -192,8 +192,8 @@ function translation(language){
         this.firstName = "Nombre";
         this.lastName = "Apellidos";
         this.emailAdd = "Correo electrónico";
-        this.primPhone = "Primary Phone Number";
-        this.issueDesc = "Issue Description";
+        this.primPhone = "Número de teléfono primario";
+        this.issueDesc = "descripcion del problema";
         this.characters = "characters";
         this.language = "es";
     }else if(language == "es_MX"){
