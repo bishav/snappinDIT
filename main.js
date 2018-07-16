@@ -31,19 +31,23 @@ function triggerSnapin(snapInObject) {
         issueType = snapInObject.issueVal;
         serviceTag = snapInObject.serviceTag;
         embedded_svc.settings.displayHelpButton = true; //Or false
-        embedded_svc.settings.language = snapInObject.language; //"";//For example, enter 'en' or 'en-US'
+        translatedLabels = translation(snapInObject.language);
+        embedded_svc.settings.language = translatedLabels.language; //"";//For example, enter 'en' or 'en-US'
         //embedded_svc.settings.storageDomain = snapInObject.domainName; //localhost
        // embedded_svc.settings.widgetWidth = snapInObject.widgetSize.width;
        embedded_svc.settings.widgetHeight = "532px";//snapInObject.widgetSize.height;
        embedded_svc.settings.defaultMinimizedText = 'Chat Now';//Chat with an expert
+       
+       
+      
         embedded_svc.settings.extraPrechatFormDetails = [
-                                                    {"label":"First Name", "transcriptFields":["FirstName__c"]},
-                                                    {"label":"Last Name", "transcriptFields":["LastName__c"]},
-                                                    {"label":"Primary Phone Number", "transcriptFields":["ContactNumber__c"]},
-                                                    {"label":"Email Address", "transcriptFields":["Email__c"]},
+                                                    {"label": translatedLabels.firstName, "transcriptFields":["FirstName__c"]},
+                                                    {"label": translatedLabels.lastName, "transcriptFields":["LastName__c"]},
+                                                    {"label": translatedLabels.primPhone, "transcriptFields":["ContactNumber__c"]},
+                                                    {"label":translatedLabels.emailAdd, "transcriptFields":["Email__c"]},
                                                     {"label":"Subject", "value": snapInObject.issueVal, "transcriptFields":["Issue__c"]},
                                                     {"label":"Service Tag", "value": snapInObject.serviceTag, "transcriptFields":["Service_Tag__c"]},
-                                                    {"label":"Issue Description", "transcriptFields":["Description__c"]},
+                                                    {"label": translatedLabels.issueDesc, "transcriptFields":["Description__c"]},
                                                     {"label":"AccountNumber", "transcriptFields":["CustomerNumber__c"]},
                                                     {"label":"Account BUID", "transcriptFields":["CustomerBUID__c"]}
                                                     ]; 
@@ -154,6 +158,92 @@ function addCharectorRemaining(eleSelector, findingEle){
 function showAdditionalDetailsInUi(){
     $(".sidebarBody .prechatUI  .embeddedServiceSidebarForm ul.fieldList").prepend('<div class="readonlyContainer" style="margin: 1.5em; text-align: left;position: relative;font-size: .75em;color: #444;"><div><b>Service Tag:</b> '+serviceTag+'</div><div><b>Issue:</b> '+issueType+'</div></div>');
 }
+
+function translation(language){
+    if(language == "ja"){
+        this.serviceTag = "Service Tag";
+        this.issue = "Issue";
+        this.firstName = "名";
+        this.lastName = "姓";
+        this.emailAdd = "メール";
+        this.primPhone = "主に使う電話番号";
+        this.issueDesc = "問題の説明";
+        this.characters = "characters";
+        this.language = "ja";
+    }else if(language == "ko"){
+        this.serviceTag = "Service Tag";
+        this.issue = "Issue";
+        this.firstName = "이름";
+        this.lastName = "성";
+        this.emailAdd = "이메일";
+        this.primPhone = "기본 전화 번호";
+        this.issueDesc = "문제 설명";
+        this.characters = "characters";
+        this.language = "ko";
+    }else if(language == "es"){
+        this.serviceTag = "Service Tag";
+        this.issue = "Issue";
+        this.firstName = "Nombre";
+        this.lastName = "Apellidos";
+        this.emailAdd = "Correo electrónico";
+        this.primPhone = "Primary Phone Number";
+        this.issueDesc = "Issue Description";
+        this.characters = "characters";
+        this.language = "es";
+    }else if(language == "zh_TW"){
+        this.serviceTag = "Service Tag";
+        this.issue = "Issue";
+        this.firstName = "First Name";
+        this.lastName = "Last Name";
+        this.emailAdd = "Email Address";
+        this.primPhone = "Primary Phone Number";
+        this.issueDesc = "Issue Description";
+        this.characters = "characters";
+        this.language = "zh_TW";
+    }else if(language == "zh_CN"){
+        this.serviceTag = "Service Tag";
+        this.issue = "Issue";
+        this.firstName = "First Name";
+        this.lastName = "Last Name";
+        this.emailAdd = "Email Address";
+        this.primPhone = "Primary Phone Number";
+        this.issueDesc = "Issue Description";
+        this.characters = "characters";
+        this.language = "zh_CN";
+    }else if(language == "pt_BR"){
+        this.serviceTag = "Service Tag";
+        this.issue = "Issue";
+        this.firstName = "First Name";
+        this.lastName = "Last Name";
+        this.emailAdd = "Email Address";
+        this.primPhone = "Primary Phone Number";
+        this.issueDesc = "Issue Description";
+        this.characters = "characters";
+        this.language = "pt_BR";
+    }else if(language == "nl_NL"){
+        this.serviceTag = "Service Tag";
+        this.issue = "Issue";
+        this.firstName = "First Name";
+        this.lastName = "Last Name";
+        this.emailAdd = "Email Address";
+        this.primPhone = "Primary Phone Number";
+        this.issueDesc = "Issue Description";
+        this.characters = "characters";
+        this.language = "nl_NL";
+    }else{
+        this.serviceTag = "Service Tag";
+        this.issue = "Issue";
+        this.firstName = "First Name";
+        this.lastName = "Last Name";
+        this.emailAdd = "Email Address";
+        this.primPhone = "Primary Phone Number";
+        this.issueDesc = "Issue Description";
+        this.characters = "characters";
+        this.language = "en";
+    }
+    return this;
+}
+
 
 function initLiveAgent(liveAgentObject) {
     $.getScript(liveAgentObject.deploymentUrl, function() {
