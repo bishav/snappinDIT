@@ -206,7 +206,17 @@ function translation(language){
         this.issueDesc = "Issue Description";
         this.characters = "characters";
         this.language = "es_MX";
-    }else if(language == "zh_TW"){
+    }else if(language == "zh"){
+        this.serviceTag = "Service Tag";
+        this.issue = "Issue";
+        this.firstName = "First Name";
+        this.lastName = "Last Name";
+        this.emailAdd = "Email Address";
+        this.primPhone = "Primary Phone Number";
+        this.issueDesc = "Issue Description";
+        this.characters = "characters";
+        this.language = "zh_TW";
+    }else if(language == "zh"){
         this.serviceTag = "Service Tag";
         this.issue = "Issue";
         this.firstName = "First Name";
@@ -226,6 +236,16 @@ function translation(language){
         this.issueDesc = "Issue Description";
         this.characters = "characters";
         this.language = "zh_CN";
+    }else if(language == "pt"){
+        this.serviceTag = "Service Tag";
+        this.issue = "Issue";
+        this.firstName = "First Name";
+        this.lastName = "Last Name";
+        this.emailAdd = "Email Address";
+        this.primPhone = "Primary Phone Number";
+        this.issueDesc = "Issue Description";
+        this.characters = "characters";
+        this.language = "pt";
     }else if(language == "pt_BR"){
         this.serviceTag = "Service Tag";
         this.issue = "Issue";
@@ -236,6 +256,16 @@ function translation(language){
         this.issueDesc = "Issue Description";
         this.characters = "characters";
         this.language = "pt_BR";
+    }else if(language == "nl"){
+        this.serviceTag = "Service Tag";
+        this.issue = "Issue";
+        this.firstName = "First Name";
+        this.lastName = "Last Name";
+        this.emailAdd = "Email Address";
+        this.primPhone = "Primary Phone Number";
+        this.issueDesc = "Issue Description";
+        this.characters = "characters";
+        this.language = "nl";
     }else if(language == "nl_NL"){
         this.serviceTag = "Service Tag";
         this.issue = "Issue";
