@@ -108,6 +108,28 @@ function triggerSnapin(snapInObject) {
         initSnapIn(snapInObject); 
     }
 
+function triggerResumeSnapin(snapInObject) {  
+    var initESW = function(gslbBaseURL) {
+        embedded_svc.settings.displayHelpButton = true; //Or false
+        embedded_svc.settings.language = snapInObject.language; //For example, enter 'en' or 'en-US'
+       // embedded_svc.settings.initialInteractionState = "WAITING";
+        embedded_svc.settings.enabledFeatures = ['LiveAgent'];
+        embedded_svc.settings.entryFeature = 'LiveAgent';
+        embedded_svc.settings.storageDomain = snapInObject.domainName;
+        embedded_svc.settings.defaultMinimizedText = 'Chat Now';//Chat with an expert
+        embedded_svc.settings.extraPrechatFormDetails = [{
+            "label":"Delta Sr",
+            "value": snapInObject.srNumber,
+            "transcriptFields":[ "Delta_SR__c" ]
+        },
+        { "label":"First Name", "name":"FirstName", "value":snapInObject.firstName, "displayToAgent":true },
+        { "label":"Last Name", "value":snapInObject.lastName, "displayToAgent":true }];
+        
+        //embedded_svc.init('https://dellservices--DEV3.cs20.my.salesforce.com', 'https://dev3-dev2-dellservices--dev2.cs20.force.com/LASI1', gslbBaseURL, '00Dm0000000DQXs', 'Test_snapin_resumechat', { baseLiveAgentContentURL: 'https://c.la4-c1cs-phx.salesforceliveagent.com/content', deploymentId: deploymentId, buttonId: buttonId, baseLiveAgentURL: 'https://d.la4-c1cs-phx.salesforceliveagent.com/chat', eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04Im0000000001xEAA_1638222454e', isOfflineSupportEnabled: false}); };if (!window.embedded_svc) { var s = document.createElement('script'); s.setAttribute('src', 'https://dellservices--DEV3.cs20.my.salesforce.com/embeddedservice/5.0/esw.min.js'); s.onload = function() { initESW(null, srNumber); }; document.body.appendChild(s); } else { initESW('https://dellservices--DEV3.cs20.my.salesforce.com', srNumber); }
+       // embedded_svc.init('https://dellservices--DIT4.cs11.my.salesforce.com','https://dit4-dellservices.cs11.force.com/LaSnapIn',gslbBaseURL,'00DZ000000NE2eh','Snap_Ins_Resume_chat',{baseLiveAgentContentURL:'https://c.la3-c2cs-phx.salesforceliveagent.com/content',deploymentId:deploymentId,buttonId:buttonId,baseLiveAgentURL:'https://d.la3-c2cs-phx.salesforceliveagent.com/chat',eswLiveAgentDevName:'EmbeddedServiceLiveAgent_Parent04IZ00000008OIUMA2_1648e3b61a5',isOfflineSupportEnabled:false});};if(!window.embedded_svc){var s=document.createElement('script');s.setAttribute('src','https://service.force.com/embeddedservice/5.0/esw.min.js');s.onload=function(){initESW(null,srNumber);};document.body.appendChild(s);}else{initESW('https://service.force.com',srNumber);}
+        embedded_svc.init(snapInObject.snapInInitURL, snapInObject.snapInLAURL, gslbBaseURL, snapInObject.organizationId, snapInObject.resumeChatComponentName, { baseLiveAgentContentURL: snapInObject.baseLiveAgentContentURL, deploymentId:  snapInObject.deploymentId, buttonId: snapInObject.resumeChatButtonId, baseLiveAgentURL: snapInObject.baseLiveAgentURL, eswLiveAgentDevName: snapInObject.resumeChatLiveAgentDevName, isOfflineSupportEnabled: false}); }; if(!window.embedded_svc){var s=document.createElement('script');s.setAttribute('src',snapInObject.snapInJs);s.onload=function(){initESW(null,snapInObject.srNumber);};document.body.appendChild(s);}else{initESW(snapInObject.serviceForceURL,snapInObject.srNumber);}
+}
+
 //BNR
 $("body").on("click", "#helpButtonSpan > .message", function(){
     eleExist(".embeddedServiceSidebarFeature .embeddedServiceLiveAgentStatePrechatDefaultUI .embeddedServiceSidebarForm .embeddedServiceSidebarFormField .Issue_Description__c",addCharectorRemaining);
@@ -115,14 +137,17 @@ $("body").on("click", "#helpButtonSpan > .message", function(){
 
 //BNR
 function addCharectorRemaining(eleSelector, findingEle){
-    var currentCharLength =  $(eleSelector).val().length;
-    var maxCharLength = 255;
-    $(eleSelector).after("<div id='snappinCharCounter' style='text-align:right; position:relative;font-size:.75em;line-height: 1.5;margin-right: .75em;margin-left: .5em;margin-bottom: 2px;color: #333333;margin-top: 4px;'>"+currentCharLength+" / "+maxCharLength+" characters</div>")
-    $(eleSelector).on('keyup', function() {
-        currentCharLength = this.value.length
-        $("#snappinCharCounter").text(currentCharLength+" / "+maxCharLength+" characters");
-    });
-    showAdditionalDetailsInUi();
+    if($("#snappinCharCounter").length == 0){
+        var currentCharLength =  $(eleSelector).val().length;
+        var maxCharLength = 255;
+        $(eleSelector).after("<div id='snappinCharCounter' style='text-align:right; position:relative;font-size:.75em;line-height: 1.5;margin-right: .75em;margin-left: .5em;margin-bottom: 2px;color: #333333;margin-top: 4px;'>"+currentCharLength+" / "+maxCharLength+" characters</div>")
+        $(eleSelector).on('keyup', function() {
+            currentCharLength = this.value.length
+            $("#snappinCharCounter").text(currentCharLength+" / "+maxCharLength+" characters");
+        });
+        showAdditionalDetailsInUi();
+    }
+    
     clearInterval(findingEle);
 }
 
@@ -177,17 +202,12 @@ function detectScreen() {
 function checkBusinessHrAvilability(){
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
-    console.log('changed');
-    console.log(this);
       if (this.readyState == 4 && this.status == 200) {
-        //document.getElementById("demo").innerHTML =
-       // this.responseText;
-       console.log(this.responseText);
-       return this.response.BusinessHours;
+        //document.getElementById("demo").innerHTML = this.responseText;
+        alert(this.responseText);
       }
     };
-    xhttp.open("GET", "http://svc4-osb-sit4.us.dell.com/ServiceCloudCase/ChatQueueBusinessHours?buttonId=5733F000000001n", true);
-    xhttp.setRequestHeader("Authorization", "Basic U0ZEQ0RldlBpbG90VXNlcjpTZXJ2aWNlQCMzMTk5IQ==");
-    //xhttp.setRequestHeader("OAuthToken", "Bearer 00D4F0000008jtf!AQcAQHQhhvMyZO.dbEYX11EvSDubCv8G4AlPElgmdeEBES.NuKHq8FthDPQzguAArDP.uh_iXkZZZVtjC0HgS2vuDz3TYbLt");
-    xhttp.send();
+    xhttp.open("POST", "https://esupportchatroute-ge4.ausvdc02.pcf.dell.com/servicecloud/chat/v1.0/route", true);
+    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.send("country=USA&language=EN&premierType=PROSUPPORT&buid=11&shippedDate=&localChannel=26&companyNumber=26&containsValidServiceLevel=&familyName=Latitude&productCode=4LT&serviceTag=&oow=N&extra1=US");
 }
