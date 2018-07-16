@@ -196,6 +196,16 @@ function translation(language){
         this.issueDesc = "Issue Description";
         this.characters = "characters";
         this.language = "es";
+    }else if(language == "es_MX"){
+        this.serviceTag = "Service Tag";
+        this.issue = "Issue";
+        this.firstName = "Nombre";
+        this.lastName = "Apellidos";
+        this.emailAdd = "Correo electrónico";
+        this.primPhone = "Primary Phone Number";
+        this.issueDesc = "Issue Description";
+        this.characters = "characters";
+        this.language = "es_MX";
     }else if(language == "zh_TW"){
         this.serviceTag = "Service Tag";
         this.issue = "Issue";
