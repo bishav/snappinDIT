@@ -206,36 +206,16 @@ function translation(language){
         this.issueDesc = "Issue Description";
         this.characters = "characters";
         this.language = "es_MX";
-    }else if(language == "zh"){
+    }else if(language == "zh-CN"){
         this.serviceTag = "Service Tag";
         this.issue = "Issue";
-        this.firstName = "First Name";
-        this.lastName = "Last Name";
-        this.emailAdd = "Email Address";
-        this.primPhone = "Primary Phone Number";
-        this.issueDesc = "Issue Description";
+        this.firstName = "名";
+        this.lastName = "姓";
+        this.emailAdd = "电子邮件";
+        this.primPhone = "最常用的电话号码";
+        this.issueDesc = "问题说明";
         this.characters = "characters";
-        this.language = "zh_TW";
-    }else if(language == "zh"){
-        this.serviceTag = "Service Tag";
-        this.issue = "Issue";
-        this.firstName = "First Name";
-        this.lastName = "Last Name";
-        this.emailAdd = "Email Address";
-        this.primPhone = "Primary Phone Number";
-        this.issueDesc = "Issue Description";
-        this.characters = "characters";
-        this.language = "zh_TW";
-    }else if(language == "zh_CN"){
-        this.serviceTag = "Service Tag";
-        this.issue = "Issue";
-        this.firstName = "First Name";
-        this.lastName = "Last Name";
-        this.emailAdd = "Email Address";
-        this.primPhone = "Primary Phone Number";
-        this.issueDesc = "Issue Description";
-        this.characters = "characters";
-        this.language = "zh_CN";
+        this.language = "zh-CN";
     }else if(language == "pt"){
         this.serviceTag = "Service Tag";
         this.issue = "Issue";
