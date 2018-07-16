@@ -136,7 +136,12 @@ function triggerResumeSnapin(snapInObject) {
 }
 
 //BNR
+/*
 $("body").on("click", "#helpButtonSpan > .message", function(){
+    eleExist(".embeddedServiceSidebarFeature .embeddedServiceLiveAgentStatePrechatDefaultUI .embeddedServiceSidebarForm .embeddedServiceSidebarFormField .Issue_Description__c",addCharectorRemaining);
+});
+*/
+$("body").on("click", ".embeddedServiceHelpButton > .helpButton", function(){
     eleExist(".embeddedServiceSidebarFeature .embeddedServiceLiveAgentStatePrechatDefaultUI .embeddedServiceSidebarForm .embeddedServiceSidebarFormField .Issue_Description__c",addCharectorRemaining);
 });
 
