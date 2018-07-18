@@ -33,7 +33,7 @@ function triggerSnapin(snapInObject) {
         embedded_svc.settings.displayHelpButton = true; //Or false
         translatedLabels = translation(snapInObject.language);
         embedded_svc.settings.language = translatedLabels.language; //"";//For example, enter 'en' or 'en-US'
-        //embedded_svc.settings.storageDomain = snapInObject.domainName; //localhost
+        embedded_svc.settings.storageDomain = snapInObject.domainName; //localhost
        // embedded_svc.settings.widgetWidth = snapInObject.widgetSize.width;
        embedded_svc.settings.widgetHeight = "532px";//snapInObject.widgetSize.height;
        embedded_svc.settings.defaultMinimizedText = 'Chat Now';//Chat with an expert
