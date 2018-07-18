@@ -335,7 +335,7 @@ function detectScreen() {
 }
 
 function checkBusinessHrAvilability(){
-   /*  var data = JSON.stringify({
+    var data = JSON.stringify({
         "country": "USA",
         "language": "EN",
         "region": "1",
@@ -355,13 +355,13 @@ function checkBusinessHrAvilability(){
       xhr.addEventListener("readystatechange", function () {
         if (this.readyState === 4) {
           console.log(this.responseText);
-         jsonObject = JSON.parse(this.responseText);
+         /* jsonObject = JSON.parse(this.responseText);
           console.log(jsonObject.isChatButtonInBusinessHours);
           if (jsonObject.isChatButtonInBusinessHours === "N"){
               //send responce back to Esupport
           }else if(jsonObject.isChatButtonInBusinessHours === "Y"){
               //Call Snapin
-          }
+          }*/
         }
       });
       
@@ -369,5 +369,5 @@ function checkBusinessHrAvilability(){
       xhr.setRequestHeader("content-type", "application/json");
       xhr.setRequestHeader("cache-control", "no-cache");
       
-      xhr.send(data);   */                   
+      xhr.send(data);                       
 }
