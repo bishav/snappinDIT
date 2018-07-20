@@ -1,4 +1,4 @@
-var issueType, serviceTag;
+var issueType, serviceTag, triggerChatButtonId=null;
 (function() {
     var initESW;
 
@@ -11,6 +11,8 @@ var issueType, serviceTag;
         e.preventDefault();
     },false);
 })();
+
+eleExist('.helpButtonLabel .message', checkAgentOffline);
 
 function initSnapIn(snapInObject) {
     if (!window.embedded_svc) { 
@@ -30,13 +32,18 @@ function triggerSnapin(snapInObject) {
     initESW = function(gslbBaseURL) {
         issueType = snapInObject.issueVal;
         serviceTag = snapInObject.serviceTag;
+        triggerChatButtonId = snapInObject.triggerChatButtonId;
+
+        //Open chat box without clicking on the button
+        eleExist('.helpButtonEnabled #helpButtonSpan > .message', chatClick);
+
         embedded_svc.settings.displayHelpButton = true; //Or false
         translatedLabels = translation(snapInObject.language);
         embedded_svc.settings.language = translatedLabels.language; //"";//For example, enter 'en' or 'en-US'
         embedded_svc.settings.storageDomain = snapInObject.domainName; //localhost
        // embedded_svc.settings.widgetWidth = snapInObject.widgetSize.width;
        embedded_svc.settings.widgetHeight = "532px";//snapInObject.widgetSize.height;
-       embedded_svc.settings.defaultMinimizedText = 'Chat Now';//Chat with an expert
+       //embedded_svc.settings.defaultMinimizedText = 'Chat Now';//Chat with an expert
        
        
       
@@ -48,8 +55,8 @@ function triggerSnapin(snapInObject) {
                                                     {"label":"Subject", "value": snapInObject.issueVal, "transcriptFields":["Issue__c"]},
                                                     {"label":"Service Tag", "value": snapInObject.serviceTag, "transcriptFields":["Service_Tag__c"]},
                                                     {"label": translatedLabels.issueDesc, "transcriptFields":["Description__c"]},
-                                                    {"label":"AccountNumber", "transcriptFields":["CustomerNumber__c"]},
-                                                    {"label":"Account BUID", "transcriptFields":["CustomerBUID__c"]}
+                                                    {"label":"AccountNumber", "value": snapInObject.customernumber, "transcriptFields":["CustomerNumber__c"]},
+                                                    {"label":"Account BUID", "value": snapInObject.BUID, "transcriptFields":["CustomerBUID__c"]}
                                                     ]; 
 
         embedded_svc.settings.extraPrechatInfo = [{
@@ -114,6 +121,13 @@ function triggerSnapin(snapInObject) {
 
 function triggerResumeSnapin(snapInObject) {  
     var initESW = function(gslbBaseURL) {
+        issueType = snapInObject.issueVal;
+        serviceTag = snapInObject.serviceTag;
+        triggerChatButtonId = snapInObject.triggerChatButtonId;
+
+        //Open chat box without clicking on the button
+        eleExist('.helpButtonEnabled #helpButtonSpan > .message', chatClick);
+
         embedded_svc.settings.displayHelpButton = true; //Or false
         translatedLabels = translation(snapInObject.language);
         embedded_svc.settings.language = translatedLabels.language; //"";//For example, enter 'en' or 'en-US'
@@ -121,7 +135,7 @@ function triggerResumeSnapin(snapInObject) {
         embedded_svc.settings.enabledFeatures = ['LiveAgent'];
         embedded_svc.settings.entryFeature = 'LiveAgent';
         embedded_svc.settings.storageDomain = snapInObject.domainName;
-        embedded_svc.settings.defaultMinimizedText = 'Chat Now';//Chat with an expert
+        //embedded_svc.settings.defaultMinimizedText = 'Chat Now';//Chat with an expert
         embedded_svc.settings.extraPrechatFormDetails = [{
             "label":"Delta Sr",
             "value": snapInObject.srNumber,
@@ -135,17 +149,29 @@ function triggerResumeSnapin(snapInObject) {
         embedded_svc.init(snapInObject.snapInInitURL, snapInObject.snapInLAURL, gslbBaseURL, snapInObject.organizationId, snapInObject.resumeChatComponentName, { baseLiveAgentContentURL: snapInObject.baseLiveAgentContentURL, deploymentId:  snapInObject.deploymentId, buttonId: snapInObject.resumeChatButtonId, baseLiveAgentURL: snapInObject.baseLiveAgentURL, eswLiveAgentDevName: snapInObject.resumeChatLiveAgentDevName, isOfflineSupportEnabled: false}); }; if(!window.embedded_svc){var s=document.createElement('script');s.setAttribute('src',snapInObject.snapInJs);s.onload=function(){initESW(null,snapInObject.srNumber);};document.body.appendChild(s);}else{initESW(snapInObject.serviceForceURL,snapInObject.srNumber);}
 }
 
+//Open chat box without clicking on the button
+eleExist('.helpButtonEnabled #helpButtonSpan > .message', chatClick);
+
 //BNR
-/*
-$("body").on("click", "#helpButtonSpan > .message", function(){
-    eleExist(".embeddedServiceSidebarFeature .embeddedServiceLiveAgentStatePrechatDefaultUI .embeddedServiceSidebarForm .embeddedServiceSidebarFormField .Issue_Description__c",addCharectorRemaining);
-});
-*/
 $("body").on("click", ".embeddedServiceHelpButton > .helpButton", function(){
     eleExist(".embeddedServiceSidebarFeature .embeddedServiceLiveAgentStatePrechatDefaultUI .embeddedServiceSidebarForm .embeddedServiceSidebarFormField .Issue_Description__c",addCharectorRemaining);
 });
 
 //BNR
+function chatClick(eleSelector, findingEle) {
+    if( $(eleSelector).text() === 'Chat with an Expert' ) {
+        $(eleSelector).click();
+        clearInterval(findingEle);
+    }
+}
+function checkAgentOffline(eleSelector, findingEle){
+    if($(eleSelector).text() === 'Agent Offline'){
+        $("#"+triggerChatButtonId).attr("disabled", "disabled");
+    }else{
+        $("#"+triggerChatButtonId).attr("disabled", false);
+    }
+}
+
 function addCharectorRemaining(eleSelector, findingEle){
     if($("#snappinCharCounter").length == 0){
         var currentCharLength =  $(eleSelector).val().length;
@@ -157,17 +183,19 @@ function addCharectorRemaining(eleSelector, findingEle){
         });
         showAdditionalDetailsInUi();
     }
-    
+    $("#"+triggerChatButtonId).attr("disabled", false);
+    //eleExist('.helpButtonDisabled #helpButtonSpan > .message', chatClick);
     clearInterval(findingEle);
 }
 
+
 function showAdditionalDetailsInUi(){
     $(".sidebarBody .prechatUI  .embeddedServiceSidebarForm ul.fieldList").prepend('<div class="readonlyContainer" style="margin: 1.5em; text-align: left;position: relative;font-size: .75em;color: #444;"><div><b>Service Tag:</b> '+serviceTag+'</div><div><b>Issue:</b> '+issueType+'</div></div>');
+   
 }
 
 function translation(language){
     if(language == "ja"){
-        this.serviceTag = "Service Tag";
         this.issue = "Issue";
         this.firstName = "名";
         this.lastName = "姓";
@@ -177,7 +205,6 @@ function translation(language){
         this.characters = "characters";
         this.language = "ja";
     }else if(language == "ko"){
-        this.serviceTag = "Service Tag";
         this.issue = "Issue";
         this.firstName = "이름";
         this.lastName = "성";
@@ -187,7 +214,6 @@ function translation(language){
         this.characters = "characters";
         this.language = "ko";
     }else if(language == "es"){
-        this.serviceTag = "Service Tag";
         this.issue = "Issue";
         this.firstName = "Nombre";
         this.lastName = "Apellidos";
@@ -197,7 +223,6 @@ function translation(language){
         this.characters = "characters";
         this.language = "es";
     }else if(language == "es_MX"){
-        this.serviceTag = "Service Tag";
         this.issue = "Issue";
         this.firstName = "Nombre";
         this.lastName = "Apellidos";
@@ -207,7 +232,6 @@ function translation(language){
         this.characters = "characters";
         this.language = "es_MX";
     }else if(language == "zh-CN"){
-        this.serviceTag = "Service Tag";
         this.issue = "Issue";
         this.firstName = "名";
         this.lastName = "姓";
@@ -217,7 +241,6 @@ function translation(language){
         this.characters = "characters";
         this.language = "zh-CN";
     }else if(language == "pt"){
-        this.serviceTag = "Service Tag";
         this.issue = "Issue";
         this.firstName = "Nome";
         this.lastName = "Sobrenome";
@@ -227,7 +250,6 @@ function translation(language){
         this.characters = "characters";
         this.language = "pt";
     }else if(language == "pt_BR"){
-        this.serviceTag = "Service Tag";
         this.issue = "Issue";
         this.firstName = "Nome";
         this.lastName = "Sobrenome";
@@ -237,7 +259,6 @@ function translation(language){
         this.characters = "characters";
         this.language = "pt";
     }else if(language == "nl"){
-        this.serviceTag = "Service Tag";
         this.issue = "Issue";
         this.firstName = "Voornaam";
         this.lastName = "Achternaam";
@@ -247,7 +268,6 @@ function translation(language){
         this.characters = "characters";
         this.language = "nl";
     }else if(language == "nl_NL"){
-        this.serviceTag = "Service Tag";
         this.issue = "Issue";
         this.firstName = "Voornaam";
         this.lastName = "Achternaam";
@@ -257,7 +277,6 @@ function translation(language){
         this.characters = "characters";
         this.language = "nl";
     }else{
-        this.serviceTag = "Service Tag";
         this.issue = "Issue";
         this.firstName = "First Name";
         this.lastName = "Last Name";
@@ -359,8 +378,12 @@ function checkBusinessHrAvilability(){
           console.log(jsonObject.isChatButtonInBusinessHours);
           if (jsonObject.isChatButtonInBusinessHours === "N"){
               //send responce back to Esupport
+              alert("Value Is No");
+              return jsonObject;
           }else if(jsonObject.isChatButtonInBusinessHours === "Y"){
               //Call Snapin
+              alert("Value Is Yes");
+              
           }
         }
       });
