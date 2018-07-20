@@ -353,44 +353,48 @@ function detectScreen() {
     }
 }
 
-function checkBusinessHrAvilability(){
-   /*  var data = JSON.stringify({
-        "country": "USA",
-        "language": "EN",
-        "region": "1",
-        "premierType": "PROSUPPORT",
-        "buid": "11",
-        "localChannel": "26",
-        "companyNumber": "26",
-        "familyName": "Latitude",
-        "productCode": "4LT",
-        "oow": "N",
-        "extra1": "US"
-      });
-      
-      var xhr = new XMLHttpRequest();
-      xhr.withCredentials = true;
-      
-      xhr.addEventListener("readystatechange", function () {
-        if (this.readyState === 4) {
-          console.log(this.responseText);
-         jsonObject = JSON.parse(this.responseText);
-          console.log(jsonObject.isChatButtonInBusinessHours);
-          if (jsonObject.isChatButtonInBusinessHours === "N"){
-              //send responce back to Esupport
-              alert("Value Is No");
-              return jsonObject;
-          }else if(jsonObject.isChatButtonInBusinessHours === "Y"){
-              //Call Snapin
-              alert("Value Is Yes");
-              
-          }
-        }
-      });
-      
-      xhr.open("POST", "https://esupportchatroute-ge4.ausvdc02.pcf.dell.com/servicecloud/chat/v1.0/route");
-      xhr.setRequestHeader("content-type", "application/json");
-      xhr.setRequestHeader("cache-control", "no-cache");
-      
-      xhr.send(data);   */                   
+
+function triggerChatBot(chatBotObject){
+    debugger;
+    var initESW = function(gslbBaseURL) {
+        embedded_svc.settings.displayHelpButton = true; //Or false
+        embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
+    
+        //embedded_svc.settings.defaultMinimizedText = '...'; //(Defaults to Chat with an Expert)
+        //embedded_svc.settings.disabledMinimizedText = '...'; //(Defaults to Agent Offline)
+    
+        //embedded_svc.settings.loadingText = ''; //(Defaults to Loading)
+        //embedded_svc.settings.storageDomain = 'yourdomain.com'; //(Sets the domain for your deployment so that visitors can navigate subdomains during a chat session)
+    
+        // Settings for Live Agent
+        embedded_svc.settings.avatarImgURL = '';
+        embedded_svc.settings.prechatBackgroundImgURL = '';
+        embedded_svc.settings.waitingStateBackgroundImgURL = '';
+        embedded_svc.settings.smallCompanyLogoImgURL = '';
+        //embedded_svc.settings.directToButtonRouting = function(prechatFormData) {
+        // Dynamically changes the button ID based on what the visitor enters in the pre-chat form.
+        //Returns a valid button ID.
+        //};
+
+        /*embedded_svc.settings.prepopulatedPrechatFields = {
+            Issue_Description__c: snapInObject.issueVal,
+            FirstName: snapInObject.firstName,
+            LastName: snapInObject.lastName,
+            Primary_Phone__c: snapInObject.primPhone,
+            Email: snapInObject.emailAdd
+        };*/
+    
+        embedded_svc.settings.enabledFeatures = ['LiveAgent'];
+        embedded_svc.settings.entryFeature = 'LiveAgent';
+        //embedded_svc.settings.prepopulatedPrechatFields = {}; //Sets the auto-population of pre-chat form fields
+    
+        embedded_svc.init(chatBotObject.chatBotInitURL, chatBotObject.chatBotLAURL, gslbBaseURL, chatBotObject.organizationId, chatBotObject.componentName, { 
+            baseLiveAgentContentURL: chatBotObject.baseLiveAgentContentURL,
+            deploymentId: chatBotObject.deploymentId, 
+            buttonId: chatBotObject.buttonId, 
+            baseLiveAgentURL: chatBotObject.baseLiveAgentURL, 
+            eswLiveAgentDevName: chatBotObject.LiveAgentDevName, 
+            isOfflineSupportEnabled: false}); };
+            if (!window.embedded_svc) { var s = document.createElement('script'); s.setAttribute('src',  chatBotObject.snapInJs); s.onload = function() { initESW(null); }; document.body.appendChild(s); } else {
+                initESW(chatBotObject.serviceForceURL); }
 }

@@ -89,6 +89,7 @@
                         <h5>Chat with us</h5>
                         <p>Start a chat session with one of our technical support experts.</p>
                         <button type="button" id="chatButton" class="btn btn-primary" onclick="initChat()">Start Chat</button>
+                        <button type="button" id="chatBotButton" class="btn btn-primary" onclick="initChatBot()">Start Chat With Bot</button>
                         <span id="selectLanguage" style="float: right;">
                             <span>Select Language</span>
                                 <select id="selectLanguageOption">
@@ -174,8 +175,6 @@
                     $('.non-live-agent').show();
                     $('.live-agent-heading').hide();
                 }
-
-                checkBusinessHrAvilability();
             }
         });
 
@@ -325,7 +324,7 @@
 
 
 
-                 snapInInitURL: 'https://dellservices--SIT2.cs93.my.salesforce.com',
+                snapInInitURL: 'https://dellservices--SIT2.cs93.my.salesforce.com',
                 snapInLAURL: 'https://sit2-dellservices.cs93.force.com/LaSnapIn',
                 organizationId: '00D4F0000000TPX',
                 componentName: 'Snap_Ins_Chat_Deployment',
@@ -353,6 +352,41 @@
 
             triggerSnapin(snapInObject);
             
+        }
+
+        function initChatBot(){
+            var chatBotObject = {
+               /* chatBotInitURL: 'https://dellchatbots-org1-apr2018.my.salesforce.com', 
+                chatBotLAURL: 'https://sdodemo-main-162914e0cd7.force.com/consumer', 
+                organizationId: '00D6A000002zvYi', 
+                componentName: 'Snap_ins_Einstein_Bot',
+                baseLiveAgentContentURL: 'https://c.la1-c1-iad.salesforceliveagent.com/content',
+                deploymentId: '5726A000000DiLp', 
+                buttonId: '5736A000000DUkg', 
+                baseLiveAgentURL: 'https://d.la1-c1-iad.salesforceliveagent.com/chat', 
+                LiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I1N000000000VUAQ_161f777bdfa',
+                domainName: "localhost", //"bishav.github.io",//
+                serviceForceURL: "https://service.force.com",
+                snapInJs: "https://dellchatbots-org1-apr2018.my.salesforce.com/embeddedservice/4.1/esw.min.js" ,
+                srNumber:'',
+                firstName:'',
+                lastName:''*/
+                chatBotInitURL: 'https://dellservices--SIT2.cs93.my.salesforce.com',
+                chatBotLAURL: 'https://sit2-dellservices.cs93.force.com/LaSnapIn',
+                organizationId: '00D4F0000000TPX',
+                componentName: 'DellChatBot',
+                baseLiveAgentContentURL: 'https://c.la2-c1cs-ord.salesforceliveagent.com/content',
+                deploymentId: '5724F0000008OKB',
+                buttonId: '5734F000000CaTc',
+                baseLiveAgentURL: 'https://d.la2-c1cs-ord.salesforceliveagent.com/chat',
+                LiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I4F000000CaRRUA0_164929267be',
+                serviceForceURL: "https://service.force.com",
+                snapInJs: 'https://dellservices--SIT2.cs93.my.salesforce.com/embeddedservice/5.0/esw.min.js',
+                domainName: "localhost" //"bishav.github.io",//
+            }
+            console.log(chatBotObject);
+            debugger;
+            triggerChatBot(chatBotObject);
         }
 
         function liveAgent() {
