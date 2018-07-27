@@ -45,7 +45,7 @@ function triggerSnapin(snapInObject) {
     initESW = function(gslbBaseURL) {
         issueType = snapInObject.issueVal;
         serviceTag = snapInObject.serviceTag;
-        if("firstName" in snapInObject)productName = snapInObject.productName;
+        if("productName" in snapInObject)productName = snapInObject.productName;
         //triggerChatButtonId = snapInObject.triggerChatButtonId;//Removing code for temp
         
         //Open chat box without clicking on the button
@@ -74,25 +74,25 @@ function triggerSnapin(snapInObject) {
         embedded_svc.settings.extraPrechatInfo = [{
                         "entityFieldMaps": [{
                             "doCreate":false,
-                            "doFind":true,
+                            "doFind":false,
                             "fieldName":"LastName",
                             "isExactMatch":true,
                             "label":"Last Name"
                         }, {
                             "doCreate":false,
-                            "doFind":true,
+                            "doFind":false,
                             "fieldName":"FirstName",
                             "isExactMatch":true,
                             "label":"First Name"
-                        },/* {
+                        }, {
                             "doCreate":false,
-                            "doFind":true,
+                            "doFind":false,
                             "fieldName":"Email",
                             "isExactMatch":true,
                             "label":"Email"
-                        }, */{
+                        },{
                             "doCreate":false,
-                            "doFind":true,
+                            "doFind":false,
                             "fieldName":"Primary_Phone__c",
                             "isExactMatch":true,
                             "label":"Primary Phone Number"
@@ -111,7 +111,7 @@ function triggerSnapin(snapInObject) {
                     },{
                         "entityFieldMaps": [{
                             "doCreate":false,
-                            "doFind":true,
+                            "doFind":false,
                             "fieldName":"Issue_Description__c",
                             "isExactMatch":true,
                             "label":"Issue Description"
@@ -127,7 +127,7 @@ function triggerSnapin(snapInObject) {
         //prePopulate Fields
         var firstNameVal = null, lastNameVal = null, emailAddVal=null, primePhoneVal=null;
         if("firstName" in snapInObject)firstNameVal = snapInObject.firstName;
-        if("firstName" in snapInObject)lastNameVal = snapInObject.lastName;
+        if("lastName" in snapInObject)lastNameVal = snapInObject.lastName;
         if("email" in snapInObject)emailAddVal = snapInObject.email;
         if("phoneNo" in snapInObject)primePhoneVal = snapInObject.phoneNo;
         embedded_svc.settings.prepopulatedPrechatFields = {
@@ -148,7 +148,7 @@ function triggerResumeSnapin(snapInObject) {
     var initESW = function(gslbBaseURL) {
         issueType = snapInObject.issueVal;
         serviceTag = snapInObject.serviceTag;
-        if("firstName" in snapInObject)productName = snapInObject.productName;
+        if("productName" in snapInObject)productName = snapInObject.productName;
         //triggerChatButtonId = snapInObject.triggerChatButtonId;//Removing code for temp
 
         //Open chat box without clicking on the button

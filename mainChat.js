@@ -45,7 +45,7 @@ function triggerSnapin(snapInObject) {
     initESW = function(gslbBaseURL) {
         issueType = snapInObject.issueVal;
         serviceTag = snapInObject.serviceTag;
-        if("firstName" in snapInObject)productName = snapInObject.productName;
+        if("productName" in snapInObject)productName = snapInObject.productName;
         //triggerChatButtonId = snapInObject.triggerChatButtonId;//Removing code for temp
         
         //Open chat box without clicking on the button
@@ -90,7 +90,7 @@ function triggerSnapin(snapInObject) {
                             "fieldName":"Email",
                             "isExactMatch":true,
                             "label":"Email"
-                        }, {
+                        },{
                             "doCreate":false,
                             "doFind":true,
                             "fieldName":"Primary_Phone__c",
@@ -127,7 +127,7 @@ function triggerSnapin(snapInObject) {
         //prePopulate Fields
         var firstNameVal = null, lastNameVal = null, emailAddVal=null, primePhoneVal=null;
         if("firstName" in snapInObject)firstNameVal = snapInObject.firstName;
-        if("firstName" in snapInObject)lastNameVal = snapInObject.lastName;
+        if("lastName" in snapInObject)lastNameVal = snapInObject.lastName;
         if("email" in snapInObject)emailAddVal = snapInObject.email;
         if("phoneNo" in snapInObject)primePhoneVal = snapInObject.phoneNo;
         embedded_svc.settings.prepopulatedPrechatFields = {
@@ -148,7 +148,7 @@ function triggerResumeSnapin(snapInObject) {
     var initESW = function(gslbBaseURL) {
         issueType = snapInObject.issueVal;
         serviceTag = snapInObject.serviceTag;
-        if("firstName" in snapInObject)productName = snapInObject.productName;
+        if("productName" in snapInObject)productName = snapInObject.productName;
         //triggerChatButtonId = snapInObject.triggerChatButtonId;//Removing code for temp
 
         //Open chat box without clicking on the button
