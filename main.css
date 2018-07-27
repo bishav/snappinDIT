@@ -98,3 +98,16 @@
   .embeddedServiceSidebarForm.formContent{
       background: #f7f7f7 !important;
   }
+
+  #userActivityConsole p {
+    border-bottom: 1px solid #5a6268;
+    padding: 3px;
+    margin: 0px;
+    background: #FFFFE0;
+    color:grey;
+}
+
+#userActivityConsole {
+    overflow-y: auto;
+    max-height: 400px;
+}

@@ -1,4 +1,4 @@
-var issueType, serviceTag, triggerChatButtonId=null;
+var issueType, serviceTag, productName=null, triggerChatButtonId=null;
 (function() {
     var initESW;
 
@@ -29,23 +29,35 @@ function initSnapIn(snapInObject) {
 }
 
 function triggerSnapin(snapInObject) {
+
+    //Retain objects for retain chat
+    if(snapInObject == undefined) {
+        var snapInObjectGlobal = sessionStorage.getItem("snapInObjectSession");
+        snapInObject = JSON.parse(snapInObjectGlobal);
+    }else{
+        var snapInObjectGlobal = JSON.stringify(snapInObject);
+        sessionStorage.setItem("snapInObjectSession",snapInObjectGlobal);
+
+    }
+       
+    console.log(snapInObjectGlobal);
+    console.log(snapInObject);
     initESW = function(gslbBaseURL) {
         issueType = snapInObject.issueVal;
         serviceTag = snapInObject.serviceTag;
-        triggerChatButtonId = snapInObject.triggerChatButtonId;
-
+        if("firstName" in snapInObject)productName = snapInObject.productName;
+        //triggerChatButtonId = snapInObject.triggerChatButtonId;//Removing code for temp
+        
         //Open chat box without clicking on the button
         eleExist('.helpButtonEnabled #helpButtonSpan > .message', chatClick);
 
         embedded_svc.settings.displayHelpButton = true; //Or false
-        translatedLabels = translation(snapInObject.language);
+        translatedLabels = translation("en");//translation(snapInObject.language);//Removing code for temp
         embedded_svc.settings.language = translatedLabels.language; //"";//For example, enter 'en' or 'en-US'
         embedded_svc.settings.storageDomain = snapInObject.domainName; //localhost
        // embedded_svc.settings.widgetWidth = snapInObject.widgetSize.width;
-       embedded_svc.settings.widgetHeight = "532px";//snapInObject.widgetSize.height;
-       //embedded_svc.settings.defaultMinimizedText = 'Chat Now';//Chat with an expert
-       
-       
+      // embedded_svc.settings.widgetHeight = "646px";//snapInObject.widgetSize.height;
+       embedded_svc.settings.defaultMinimizedText = 'Chat Now';//Chat with an expert
       
         embedded_svc.settings.extraPrechatFormDetails = [
                                                     {"label": translatedLabels.firstName, "transcriptFields":["FirstName__c"]},
@@ -112,8 +124,21 @@ function triggerSnapin(snapInObject) {
         embedded_svc.settings.enabledFeatures = ['LiveAgent'];
         embedded_svc.settings.entryFeature = 'LiveAgent';
         
-        if(snapInObject.issueVal.length > 0)
-            embedded_svc.settings.prepopulatedPrechatFields = {Issue_Description__c: snapInObject.issueVal}; 
+        //prePopulate Fields
+        var firstNameVal = null, lastNameVal = null, emailAddVal=null, primePhoneVal=null;
+        if("firstName" in snapInObject)firstNameVal = snapInObject.firstName;
+        if("firstName" in snapInObject)lastNameVal = snapInObject.lastName;
+        if("email" in snapInObject)emailAddVal = snapInObject.email;
+        if("phoneNo" in snapInObject)primePhoneVal = snapInObject.phoneNo;
+        embedded_svc.settings.prepopulatedPrechatFields = {
+            FirstName: firstNameVal,
+            LastName: lastNameVal,
+            Email: emailAddVal,
+            Primary_Phone__c: primePhoneVal
+        };    
+        
+        // if(snapInObject.issueVal.length > 0)
+        //  embedded_svc.settings.prepopulatedPrechatFields = {Issue_Description__c: snapInObject.issueVal}; 
 
        embedded_svc.init(snapInObject.snapInInitURL, snapInObject.snapInLAURL, gslbBaseURL, snapInObject.organizationId, snapInObject.componentName, { baseLiveAgentContentURL: snapInObject.baseLiveAgentContentURL, deploymentId:  snapInObject.deploymentId, buttonId: snapInObject.buttonId, baseLiveAgentURL: snapInObject.baseLiveAgentURL, eswLiveAgentDevName: snapInObject.LiveAgentDevName, isOfflineSupportEnabled: false}); }; 
         initSnapIn(snapInObject); 
@@ -123,19 +148,21 @@ function triggerResumeSnapin(snapInObject) {
     var initESW = function(gslbBaseURL) {
         issueType = snapInObject.issueVal;
         serviceTag = snapInObject.serviceTag;
-        triggerChatButtonId = snapInObject.triggerChatButtonId;
+        if("firstName" in snapInObject)productName = snapInObject.productName;
+        //triggerChatButtonId = snapInObject.triggerChatButtonId;//Removing code for temp
 
         //Open chat box without clicking on the button
         eleExist('.helpButtonEnabled #helpButtonSpan > .message', chatClick);
 
         embedded_svc.settings.displayHelpButton = true; //Or false
-        translatedLabels = translation(snapInObject.language);
+        translatedLabels = translation("en");//translation(snapInObject.language);//Removing code for temp
         embedded_svc.settings.language = translatedLabels.language; //"";//For example, enter 'en' or 'en-US'
        // embedded_svc.settings.initialInteractionState = "WAITING";
         embedded_svc.settings.enabledFeatures = ['LiveAgent'];
         embedded_svc.settings.entryFeature = 'LiveAgent';
         embedded_svc.settings.storageDomain = snapInObject.domainName;
-        //embedded_svc.settings.defaultMinimizedText = 'Chat Now';//Chat with an expert
+        //embedded_svc.settings.widgetHeight = "646px";//snapInObject.widgetSize.height;
+       embedded_svc.settings.defaultMinimizedText = 'Chat Now';//Chat with an expert
         embedded_svc.settings.extraPrechatFormDetails = [{
             "label":"Delta Sr",
             "value": snapInObject.srNumber,
@@ -144,10 +171,10 @@ function triggerResumeSnapin(snapInObject) {
         { "label":"First Name", "name":"FirstName", "value":snapInObject.firstName, "displayToAgent":true },
         { "label":"Last Name", "value":snapInObject.lastName, "displayToAgent":true }];
         
-        //embedded_svc.init('https://dellservices--DEV3.cs20.my.salesforce.com', 'https://dev3-dev2-dellservices--dev2.cs20.force.com/LASI1', gslbBaseURL, '00Dm0000000DQXs', 'Test_snapin_resumechat', { baseLiveAgentContentURL: 'https://c.la4-c1cs-phx.salesforceliveagent.com/content', deploymentId: deploymentId, buttonId: buttonId, baseLiveAgentURL: 'https://d.la4-c1cs-phx.salesforceliveagent.com/chat', eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04Im0000000001xEAA_1638222454e', isOfflineSupportEnabled: false}); };if (!window.embedded_svc) { var s = document.createElement('script'); s.setAttribute('src', 'https://dellservices--DEV3.cs20.my.salesforce.com/embeddedservice/5.0/esw.min.js'); s.onload = function() { initESW(null, srNumber); }; document.body.appendChild(s); } else { initESW('https://dellservices--DEV3.cs20.my.salesforce.com', srNumber); }
-       // embedded_svc.init('https://dellservices--DIT4.cs11.my.salesforce.com','https://dit4-dellservices.cs11.force.com/LaSnapIn',gslbBaseURL,'00DZ000000NE2eh','Snap_Ins_Resume_chat',{baseLiveAgentContentURL:'https://c.la3-c2cs-phx.salesforceliveagent.com/content',deploymentId:deploymentId,buttonId:buttonId,baseLiveAgentURL:'https://d.la3-c2cs-phx.salesforceliveagent.com/chat',eswLiveAgentDevName:'EmbeddedServiceLiveAgent_Parent04IZ00000008OIUMA2_1648e3b61a5',isOfflineSupportEnabled:false});};if(!window.embedded_svc){var s=document.createElement('script');s.setAttribute('src','https://service.force.com/embeddedservice/5.0/esw.min.js');s.onload=function(){initESW(null,srNumber);};document.body.appendChild(s);}else{initESW('https://service.force.com',srNumber);}
-        embedded_svc.init(snapInObject.snapInInitURL, snapInObject.snapInLAURL, gslbBaseURL, snapInObject.organizationId, snapInObject.resumeChatComponentName, { baseLiveAgentContentURL: snapInObject.baseLiveAgentContentURL, deploymentId:  snapInObject.deploymentId, buttonId: snapInObject.resumeChatButtonId, baseLiveAgentURL: snapInObject.baseLiveAgentURL, eswLiveAgentDevName: snapInObject.resumeChatLiveAgentDevName, isOfflineSupportEnabled: false}); }; if(!window.embedded_svc){var s=document.createElement('script');s.setAttribute('src',snapInObject.snapInJs);s.onload=function(){initESW(null,snapInObject.srNumber);};document.body.appendChild(s);}else{initESW(snapInObject.serviceForceURL,snapInObject.srNumber);}
-}
+        embedded_svc.init(snapInObject.snapInInitURL, snapInObject.snapInLAURL, gslbBaseURL, snapInObject.organizationId, snapInObject.componentName, { baseLiveAgentContentURL: snapInObject.baseLiveAgentContentURL, deploymentId:  snapInObject.deploymentId, buttonId: snapInObject.buttonId, baseLiveAgentURL: snapInObject.baseLiveAgentURL, eswLiveAgentDevName: snapInObject.LiveAgentDevName, isOfflineSupportEnabled: false}); }; if(!window.embedded_svc){var s=document.createElement('script');s.setAttribute('src',snapInObject.snapInJs);s.onload=function(){initESW(null,snapInObject.srNumber);};document.body.appendChild(s);}else{initESW(snapInObject.serviceForceURL,snapInObject.srNumber);}
+       //embedded_svc.init(snapInObject.snapInInitURL, snapInObject.snapInLAURL, gslbBaseURL, snapInObject.organizationId, snapInObject.resumeChatComponentName, { baseLiveAgentContentURL: snapInObject.baseLiveAgentContentURL, deploymentId:  snapInObject.deploymentId, buttonId: snapInObject.resumeChatButtonId, baseLiveAgentURL: snapInObject.baseLiveAgentURL, eswLiveAgentDevName: snapInObject.resumeChatLiveAgentDevName, isOfflineSupportEnabled: false}); }; if(!window.embedded_svc){var s=document.createElement('script');s.setAttribute('src',snapInObject.snapInJs);s.onload=function(){initESW(null,snapInObject.srNumber);};document.body.appendChild(s);}else{initESW(snapInObject.serviceForceURL,snapInObject.srNumber);}
+
+    }
 
 //Open chat box without clicking on the button
 eleExist('.helpButtonEnabled #helpButtonSpan > .message', chatClick);
@@ -159,7 +186,7 @@ $("body").on("click", ".embeddedServiceHelpButton > .helpButton", function(){
 
 //BNR
 function chatClick(eleSelector, findingEle) {
-    if( $(eleSelector).text() === 'Chat with an Expert' ) {
+    if( $(eleSelector).text() === 'Chat Now' ) {
         $(eleSelector).click();
         clearInterval(findingEle);
     }
@@ -176,11 +203,16 @@ function addCharectorRemaining(eleSelector, findingEle){
     if($("#snappinCharCounter").length == 0){
         var currentCharLength =  $(eleSelector).val().length;
         var maxCharLength = 255;
-        $(eleSelector).after("<div id='snappinCharCounter' style='text-align:right; position:relative;font-size:.75em;line-height: 1.5;margin-right: .75em;margin-left: .5em;margin-bottom: 2px;color: #333333;margin-top: 4px;'>"+currentCharLength+" / "+maxCharLength+" characters</div>")
-        $(eleSelector).on('keyup', function() {
+        $(eleSelector).after("<div id='snappinCharCounter' style='text-align:right;position:relative;font-size:.75em;line-height: 1.5;margin-right: .75em;margin-left: .5em;margin-top: 8px;color: #767676;float: right;'>"+currentCharLength+" / "+maxCharLength+" characters</div>")
+         $(eleSelector).on('keyup', function() {
             currentCharLength = this.value.length
             $("#snappinCharCounter").text(currentCharLength+" / "+maxCharLength+" characters");
         });
+
+        $(".formContent.embeddedServiceSidebarForm").append("<div style='font-size: .75em;color:#767676;text-align: left;margin: 2em 1.75em'><b>Your privacy is important to us.</b> We will only use your information to process your request. We will not share it with anyone. To learn more about how we use and protect your data, see the <a href='https://www.dell.com/learn/policies-privacy?s=corp'>Dell Privacy Statement</a>.</div>");
+
+        keypressFieldValidation();
+        
         showAdditionalDetailsInUi();
     }
     $("#"+triggerChatButtonId).attr("disabled", false);
@@ -190,10 +222,41 @@ function addCharectorRemaining(eleSelector, findingEle){
 
 
 function showAdditionalDetailsInUi(){
-    $(".sidebarBody .prechatUI  .embeddedServiceSidebarForm ul.fieldList").prepend('<div class="readonlyContainer" style="margin: 1.5em; text-align: left;position: relative;font-size: .75em;color: #444;"><div><b>Service Tag:</b> '+serviceTag+'</div><div><b>Issue:</b> '+issueType+'</div></div>');
-   
-}
+    if(productName == null)
+        $(".sidebarBody .prechatUI  .embeddedServiceSidebarForm ul.fieldList").prepend('<div class="readonlyContainer" style="margin: 1.5em; text-align: left;position: relative;font-size: .75em;color: #767676;"><div><b>Service Tag:</b> '+serviceTag+'</div><div><b>Issue:</b> '+issueType+'</div></div>');
+    else
+        $(".sidebarBody .prechatUI  .embeddedServiceSidebarForm ul.fieldList").prepend('<div class="readonlyContainer" style="margin: 1.5em; text-align: left;position: relative;font-size: .75em;color: #767676;"><div style="font-size: 1.2em;">'+productName+'</div><div><b>Service Tag:</b> '+serviceTag+'</div><div><b>Issue:</b> '+issueType+'</div></div>');
 
+}
+function keypressFieldValidation(){
+    //User can put only numbers
+    $('.sidebarBody .Primary_Phone__c').keypress(function(e) {
+        var a = [];
+        var k = e.which;
+
+        for (i = 48; i < 58; i++)
+            a.push(i);
+        
+            a.push(45);
+            //a.push(40);
+            //a.push(41);
+
+        if (!(a.indexOf(k)>=0))
+            e.preventDefault();
+    });
+    $('.sidebarBody .FirstName, .sidebarBody .LastName').keypress(function(e) {
+        var a = [];
+        var k = e.which;
+        if (!((k > 64 && k < 91) || (k > 96 && k < 123)))
+            e.preventDefault();
+    });
+    $('.sidebarBody .Email.slds-style-inputtext').keypress(function(e) {
+        var a = [];
+        var k = e.which;
+        if (!((k > 63 && k < 91) || (k > 96 && k < 123) || (k > 48 && k < 58) || (k == 45) || (k == 46) || (k == 95)))
+            e.preventDefault();
+    });
+}
 function translation(language){
     if(language == "ja"){
         this.issue = "Issue";
@@ -354,3 +417,47 @@ function detectScreen() {
 }
 
 
+function triggerChatBot(chatBotObject){
+    debugger;
+    var initESW = function(gslbBaseURL) {
+        embedded_svc.settings.displayHelpButton = true; //Or false
+        embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
+    
+        //embedded_svc.settings.defaultMinimizedText = '...'; //(Defaults to Chat with an Expert)
+        //embedded_svc.settings.disabledMinimizedText = '...'; //(Defaults to Agent Offline)
+    
+        //embedded_svc.settings.loadingText = ''; //(Defaults to Loading)
+        //embedded_svc.settings.storageDomain = 'yourdomain.com'; //(Sets the domain for your deployment so that visitors can navigate subdomains during a chat session)
+    
+        // Settings for Live Agent
+        embedded_svc.settings.avatarImgURL = '';
+        embedded_svc.settings.prechatBackgroundImgURL = '';
+        embedded_svc.settings.waitingStateBackgroundImgURL = '';
+        embedded_svc.settings.smallCompanyLogoImgURL = '';
+        //embedded_svc.settings.directToButtonRouting = function(prechatFormData) {
+        // Dynamically changes the button ID based on what the visitor enters in the pre-chat form.
+        //Returns a valid button ID.
+        //};
+
+        /*embedded_svc.settings.prepopulatedPrechatFields = {
+            Issue_Description__c: snapInObject.issueVal,
+            FirstName: snapInObject.firstName,
+            LastName: snapInObject.lastName,
+            Primary_Phone__c: snapInObject.primPhone,
+            Email: snapInObject.emailAdd
+        };*/
+    
+        embedded_svc.settings.enabledFeatures = ['LiveAgent'];
+        embedded_svc.settings.entryFeature = 'LiveAgent';
+        //embedded_svc.settings.prepopulatedPrechatFields = {}; //Sets the auto-population of pre-chat form fields
+    
+        embedded_svc.init(chatBotObject.chatBotInitURL, chatBotObject.chatBotLAURL, gslbBaseURL, chatBotObject.organizationId, chatBotObject.componentName, { 
+            baseLiveAgentContentURL: chatBotObject.baseLiveAgentContentURL,
+            deploymentId: chatBotObject.deploymentId, 
+            buttonId: chatBotObject.buttonId, 
+            baseLiveAgentURL: chatBotObject.baseLiveAgentURL, 
+            eswLiveAgentDevName: chatBotObject.LiveAgentDevName, 
+            isOfflineSupportEnabled: false}); };
+            if (!window.embedded_svc) { var s = document.createElement('script'); s.setAttribute('src',  chatBotObject.snapInJs); s.onload = function() { initESW(null); }; document.body.appendChild(s); } else {
+                initESW(chatBotObject.serviceForceURL); }
+}
