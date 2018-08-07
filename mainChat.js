@@ -303,6 +303,10 @@ function keypressFieldValidation() {
         }
     });
     $(".sidebarBody .FirstName, .sidebarBody .LastName").bind("paste", function (e) {
+        console.log("Windoe.clipboard");
+        console.log(window.clipboardData);
+        console.log("e.originalEvent");
+        console.log(e.originalEvent);
         var pastedData = e.originalEvent.clipboardData.getData('text');
         console.log("getdata return value");
         console.log(window.clipboardData);
