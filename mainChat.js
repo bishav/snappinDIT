@@ -293,16 +293,9 @@ function keypressFieldValidation() {
         if (k == 62 || k == 60)
             e.preventDefault();
     });
-
-    $(".sidebarBody .Primary_Phone__c").bind("paste", function (e) {
-        var pastedData = e.originalEvent.clipboardData.getData('text');
-        if (/^[0-9-]*$/.test(pastedData) == false) {
-            e = e || event;
-            e.preventDefault();
-            alert("You are trying to paste an invalid text.");
-        }
-    });
-    $(".sidebarBody .FirstName, .sidebarBody .LastName").bind("paste", function (e) {
+    
+    $(window).bind("paste", function(e){
+        var elementId = e.target.id;
         var pastedData;
         if (window.clipboardData && window.clipboardData.getData) { // IE
             pastedData = window.clipboardData.getData('Text');
@@ -310,19 +303,34 @@ function keypressFieldValidation() {
         else if (e.originalEvent.clipboardData && e.originalEvent.clipboardData.getData) { // other browsers
             pastedData = e.originalEvent.clipboardData.getData('text/plain');
         }
-       // var pastedData = e.originalEvent.clipboardData.getData('text');
-        if (/^[a-zA-Z ]*$/.test(pastedData) == false) {
-            e = e || event;
-            e.preventDefault();
-            alert("You are trying to paste an invalid text.");
-        }
-    });
-    $(".sidebarBody .Issue_Description__c").bind("paste", function (e) {
-        var pastedData = e.originalEvent.clipboardData.getData('text');
-        if (pastedData.includes('<') || pastedData.includes('>')) {
-            e = e || event;
-            e.preventDefault();
-            alert("You are trying to paste an invalid text.");
+        switch (elementId){
+            case "FirstName":
+            case "LastName":
+                if (/^[a-zA-Z ]*$/.test(pastedData) == false) {
+                    e.preventDefault();
+                    alert("You are trying to paste an invalid text.");
+                }
+                break; 
+            case "Primary_Phone__c":
+                if (/^[0-9-]*$/.test(pastedData) == false) {
+                    e.preventDefault();
+                    alert("You are trying to paste an invalid text.");
+                }
+                break; 
+            case "Issue_Description__c":
+                if (pastedData.includes('<') || pastedData.includes('>')) {
+                    e.preventDefault();
+                    alert("You are trying to paste an invalid text.");
+                }
+                break;
+            case "Email":
+                if (/^[a-zA-Z0-9%()#@_& -]*$/.test(pastedData) == false) {
+                    e.preventDefault();
+                    alert("You are trying to paste an invalid text.");
+                }
+                break;
+            default:
+                break; 
         }
     });
 }
