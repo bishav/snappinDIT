@@ -53,7 +53,10 @@ function triggerSnapin(snapInObject) {
             eleExist('.helpButtonEnabled #helpButtonSpan > .message', chatClick);
 
             embedded_svc.settings.displayHelpButton = true; //Or false
-            translatedLabels = translation("en");//translation(snapInObject.language);//Removing code for temp
+            if ("language" in snapInObject)
+                translatedLabels = translation(snapInObject.language);
+            else
+                translatedLabels = translation("en");//translation(snapInObject.language);//Removing code for temp//
             embedded_svc.settings.language = translatedLabels.language; //"";//For example, enter 'en' or 'en-US'
             embedded_svc.settings.storageDomain = snapInObject.domainName; //localhost
             // embedded_svc.settings.widgetWidth = snapInObject.widgetSize.width;
