@@ -303,13 +303,14 @@ function keypressFieldValidation() {
         }
     });
     $(".sidebarBody .FirstName, .sidebarBody .LastName").bind("paste", function (e) {
-        console.log("Windoe.clipboard");
-        console.log(window.clipboardData);
-        console.log("e.originalEvent");
-        console.log(e.originalEvent);
-        var pastedData = e.originalEvent.clipboardData.getData('text');
-        console.log("getdata return value");
-        console.log(window.clipboardData);
+        var pastedData;
+        if (window.clipboardData && window.clipboardData.getData) { // IE
+            pastedData = window.clipboardData.getData('Text');
+        }
+        else if (event.originalEvent.clipboardData && event.originalEvent.clipboardData.getData) { // other browsers
+            pastedData = event.originalEvent.clipboardData.getData('text/plain');
+        }
+       // var pastedData = e.originalEvent.clipboardData.getData('text');
         if (/^[a-zA-Z ]*$/.test(pastedData) == false) {
             e = e || event;
             e.preventDefault();
