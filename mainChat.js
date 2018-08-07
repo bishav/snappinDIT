@@ -307,8 +307,8 @@ function keypressFieldValidation() {
         if (window.clipboardData && window.clipboardData.getData) { // IE
             pastedData = window.clipboardData.getData('Text');
         }
-        else if (event.originalEvent.clipboardData && event.originalEvent.clipboardData.getData) { // other browsers
-            pastedData = event.originalEvent.clipboardData.getData('text/plain');
+        else if (e.originalEvent.clipboardData && e.originalEvent.clipboardData.getData) { // other browsers
+            pastedData = e.originalEvent.clipboardData.getData('text/plain');
         }
        // var pastedData = e.originalEvent.clipboardData.getData('text');
         if (/^[a-zA-Z ]*$/.test(pastedData) == false) {
