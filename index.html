@@ -120,7 +120,7 @@
     <script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
-    <script src="main.js"></script>
+    <script src="mainChat.js"></script>
     <script>
 
         (function() {
@@ -272,7 +272,7 @@
                 }, 1000);
             } 
         }
-
+        triggerSnapin();
         function initChat() {
                 var language = $("#selectLanguageOption option:selected").val();
                 var serviceTag = $('#serviceTag').val().toUpperCase();
@@ -283,7 +283,7 @@
                     widgetSize: widgetSizeVal,
                     serviceTag: serviceTag,
                     issueVal: issueVal,
-                     snapInInitURL: 'https://dellservices--DEV4.cs9.my.salesforce.com', 
+ /*                    snapInInitURL: 'https://dellservices--DEV4.cs9.my.salesforce.com', 
                     snapInLAURL: 'https://dev4-dellservices.cs9.force.com/LaSnapIn', 
                     organizationId: '00DK000000XGNNE', 
                     componentName: 'Snap_Ins_Chat_Deployment',
@@ -296,7 +296,7 @@
                     serviceForceURL: "https://service.force.com",
                     snapInJs: "https://service.force.com/embeddedservice/5.0/esw.min.js" ,
                     
-/*
+*/ 
    
                     snapInInitURL: 'https://dellservices--DIT4.cs11.my.salesforce.com',  
                     snapInLAURL: 'https://dit4-dellservices.cs11.force.com/LaSnapIn',
@@ -307,10 +307,10 @@
                     buttonId: '5730b000000CbhT',
                     baseLiveAgentURL: 'https://d.la3-c2cs-phx.salesforceliveagent.com/chat',
                     LiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04IZ00000008OIKMA2_1647fbd242d',
-                    domainName: "localhost", //"bishav.github.io",//
+                    domainName: "bishav.github.io",//"localhost", //
                     serviceForceURL: "https://service.force.com",
                     snapInJs: "https://service.force.com/embeddedservice/5.0/esw.min.js",
-   */               resumeChat:false,
+                    resumeChat:false,
                     resumeChatComponentName: 'Snap_Ins_Resume_chat',
                     resumeChatButtonId: '5730b000000CbhY',
                     resumeChatLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04IZ00000008OIUMA2_1648e3b61a5',
@@ -319,8 +319,8 @@
                     lastName:'',
                     customernumber: '510000041953',
                     BUID:'11',
-                    triggerChatButtonId:'chatButton',
-                    productName:"POWER Cable"
+                    triggerChatButtonId:'chatButton'//,
+                   // productName:"POWER Cable"
 
 
     /*
@@ -396,13 +396,18 @@
                 liveAgentInitUrl: 'https://d.la4-c1cs-phx.salesforceliveagent.com/chat',
                 buttonId: '5733B0000004D90',
                 deploymentId: '5723B0000004Crz',
-                organizationId: '00Dm0000000DQXs'
+                organizationId: '00Dm0000000DQXs',
+                serviceTag: "12335"
             }
             initLiveAgent(liveAgentObject);
         }        
 
         // calling live agent
         liveAgent()
+
+        function dellmetricsTrack(elementId,Message){
+            alert("Element Id = "+elementId+" and Message is '"+Message+"'");
+        }
     </script>     
 </body>
 </html>

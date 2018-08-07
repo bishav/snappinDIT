@@ -1,4 +1,4 @@
-var issueType, serviceTag, productName=null, triggerChatButtonId=null;
+var snapinChatIssueType, snapinChatServiceTag, snapinChatProductName=null/*, triggerChatButtonId=null*/;
 (function() {
     var initESW;
 
@@ -35,23 +35,24 @@ function triggerSnapin(snapInObject) {
         var snapInObjectGlobal = localStorage.getItem("snapInObjectSession");
         snapInObject = JSON.parse(snapInObjectGlobal);
     }else{
+        snapInObject["snapinSessionAvailable"] = true;
         var snapInObjectGlobal = JSON.stringify(snapInObject);
         localStorage.setItem("snapInObjectSession",snapInObjectGlobal);
     }
-    if(snapInObject != undefined) {
+    if((snapInObject != undefined) && (snapInObject.snapinSessionAvailable)) {
         console.log(snapInObjectGlobal);
         console.log(snapInObject);
         initESW = function(gslbBaseURL) {
-            issueType = snapInObject.issueVal;
-            serviceTag = snapInObject.serviceTag;
-            if("productName" in snapInObject)productName = snapInObject.productName;
+            snapinChatIssueType = snapInObject.issueVal;
+            snapinChatServiceTag = snapInObject.serviceTag;
+            if("productName" in snapInObject)snapinChatProductName = snapInObject.productName;
             //triggerChatButtonId = snapInObject.triggerChatButtonId;//Removing code for temp
             
             //Open chat box without clicking on the button
             eleExist('.helpButtonEnabled #helpButtonSpan > .message', chatClick);
     
             embedded_svc.settings.displayHelpButton = true; //Or false
-            translatedLabels = translation("en");//translation(snapInObject.language);//Removing code for temp
+            translatedLabels = "en";//translation(snapInObject.language);//Removing code for temp
             embedded_svc.settings.language = translatedLabels.language; //"";//For example, enter 'en' or 'en-US'
             embedded_svc.settings.storageDomain = snapInObject.domainName; //localhost
            // embedded_svc.settings.widgetWidth = snapInObject.widgetSize.width;
@@ -96,8 +97,8 @@ function triggerSnapin(snapInObject) {
                                 "isExactMatch":true,
                                 "label":"Primary Phone Number"
                             }],
-                            "entityName":"Contact",
-                            "saveToTranscript": "" 
+                            "entityName":"Contact", 
+                            "saveToTranscript": ""
                         },{
                             "entityFieldMaps": [{
                             "doCreate": false,
@@ -149,9 +150,9 @@ function triggerSnapin(snapInObject) {
 
 function triggerResumeSnapin(snapInObject) {  
     var initESW = function(gslbBaseURL) {
-        issueType = snapInObject.issueVal;
-        serviceTag = snapInObject.serviceTag;
-        if("productName" in snapInObject)productName = snapInObject.productName;
+        snapinChatIssueType = snapInObject.issueVal;
+        snapinChatServiceTag = snapInObject.serviceTag;
+        if("productName" in snapInObject)snapinChatProductName = snapInObject.productName;
         //triggerChatButtonId = snapInObject.triggerChatButtonId;//Removing code for temp
 
         //Open chat box without clicking on the button
@@ -194,24 +195,38 @@ $("body").on("click", ".embeddedServiceHelpButton > .helpButton", function(){
 function chatClick(eleSelector, findingEle) {
     if( $(eleSelector).text() === 'Chat Now' ) {
         $(eleSelector).click();
+        eleExist(".embeddedServiceSidebarFeature .embeddedServiceLiveAgentStatePrechatDefaultUI .embeddedServiceSidebarForm .embeddedServiceSidebarFormField .Issue_Description__c",addCharectorRemaining);
+
         clearInterval(findingEle);
     }
 }
 function chatEndedOnWaiting(eleSelector, findingEle){
-    $(this).click(function(){localStorage.removeItem("snapInObjectSession");});
+    $(eleSelector).click(function(){
+        removeVirtualSnapInObjectSession();
+        //localStorage.removeItem("snapInObjectSession");
+    });
     clearInterval(findingEle);
 }
 function chatEnded(eleSelector, findingEle){
-    localStorage.removeItem("snapInObjectSession");
+    removeVirtualSnapInObjectSession();
+    //localStorage.removeItem("snapInObjectSession");
     clearInterval(findingEle);
 }
-function checkAgentOffline(eleSelector, findingEle){
+
+function removeVirtualSnapInObjectSession(){
+    var snapInObjectGlobal = localStorage.getItem("snapInObjectSession");
+    snapInObject = JSON.parse(snapInObjectGlobal);
+    snapInObject["snapinSessionAvailable"] = false;
+    snapInObjectGlobal = JSON.stringify(snapInObject);
+    localStorage.setItem("snapInObjectSession",snapInObjectGlobal);
+}
+/*function checkAgentOffline(eleSelector, findingEle){
     if($(eleSelector).text() === 'Agent Offline'){
         $("#"+triggerChatButtonId).attr("disabled", "disabled");
     }else{
         $("#"+triggerChatButtonId).attr("disabled", false);
     }
-}
+}*/
 
 function addCharectorRemaining(eleSelector, findingEle){
     if($("#snappinCharCounter").length == 0){
@@ -229,17 +244,17 @@ function addCharectorRemaining(eleSelector, findingEle){
         
         showAdditionalDetailsInUi();
     }
-    $("#"+triggerChatButtonId).attr("disabled", false);
-    //eleExist('.helpButtonDisabled #helpButtonSpan > .message', chatClick);
+    /*$("#"+triggerChatButtonId).attr("disabled", false);*/
+    eleExist('.helpButtonDisabled #helpButtonSpan > .message', chatClick);
     clearInterval(findingEle);
 }
 
 
 function showAdditionalDetailsInUi(){
-    if(productName == null)
-        $(".sidebarBody .prechatUI  .embeddedServiceSidebarForm ul.fieldList").prepend('<div class="readonlyContainer" style="margin: 1.5em; text-align: left;position: relative;font-size: .75em;color: #767676;"><div><b>Service Tag:</b> '+serviceTag+'</div><div><b>Issue:</b> '+issueType+'</div></div>');
+    if(snapinChatProductName == null)
+        $(".sidebarBody .prechatUI  .embeddedServiceSidebarForm ul.fieldList").prepend('<div class="readonlyContainer" style="margin: 1.5em; text-align: left;position: relative;font-size: .75em;color: #767676;"><div><b>Service Tag:</b> '+snapinChatServiceTag+'</div><div><b>Issue:</b> '+snapinChatIssueType+'</div></div>');
     else
-        $(".sidebarBody .prechatUI  .embeddedServiceSidebarForm ul.fieldList").prepend('<div class="readonlyContainer" style="margin: 1.5em; text-align: left;position: relative;font-size: .75em;color: #767676;"><div style="font-size: 1.2em;">'+productName+'</div><div><b>Service Tag:</b> '+serviceTag+'</div><div><b>Issue:</b> '+issueType+'</div></div>');
+        $(".sidebarBody .prechatUI  .embeddedServiceSidebarForm ul.fieldList").prepend('<div class="readonlyContainer" style="margin: 1.5em; text-align: left;position: relative;font-size: .75em;color: #767676;"><div style="font-size: 1.2em;">'+snapinChatProductName+'</div><div><b>Service Tag:</b> '+snapinChatServiceTag+'</div><div><b>Issue:</b> '+snapinChatIssueType+'</div></div>');
 
 }
 function keypressFieldValidation(){
@@ -270,12 +285,19 @@ function keypressFieldValidation(){
         if (!((k > 63 && k < 91) || (k > 96 && k < 123) || (k > 48 && k < 58) || (k == 45) || (k == 46) || (k == 95)))
             e.preventDefault();
     });
+    $('.sidebarBody .Issue_Description__c').keypress(function(e) {
+        var a = [];
+        var k = e.which;
+        if (k == 62 || k == 60)
+            e.preventDefault();
+    });
+     
     $(".sidebarBody .Primary_Phone__c").bind("paste", function(e){
         var pastedData = e.originalEvent.clipboardData.getData('text');
         if(/^[0-9-]*$/.test(pastedData) == false){
             e = e || event;
             e.preventDefault();
-            alert("You are trying to past an invalid text");
+            alert("You are trying to paste an invalid text.");
         }
     });
     $(".sidebarBody .FirstName, .sidebarBody .LastName").bind("paste", function(e){
@@ -283,8 +305,16 @@ function keypressFieldValidation(){
         if(/^[a-zA-Z ]*$/.test(pastedData) == false){
             e = e || event;
             e.preventDefault();
-            alert("You are trying to past an invalid text");
+            alert("You are trying to paste an invalid text.");
         }	
+    });
+    $(".sidebarBody .Issue_Description__c").bind("paste", function(e){
+        var pastedData = e.originalEvent.clipboardData.getData('text');
+        if(pastedData.includes('<') || pastedData.includes('>') ){
+            e = e || event;
+            e.preventDefault();
+            alert("You are trying to paste an invalid text.");
+        }
     });
 }
 function translation(language){
