@@ -53,9 +53,8 @@ function triggerSnapin(snapInObject) {
 		else{
 			$(".embeddedServiceHelpButton").show();
 
-			var htmlLoader= "<div id='loadingSnapinMsg' style='z-index:2000000; background-color:red;color:black;height:50px; wight:200px; position:fixed; top:20px; left:50px;'>Loading...</div>";
+			var htmlLoader= "<div id='loadingSnapinMsg'  class ='1' style='min-width: 11em;max-width: 14em;width: 192px;position: fixed;left: auto;bottom: 0;right: 20px;margin: 0;height: 46px;width: 90px;max-height: 100%;border-radius: 8px 8px 0 0;text-align: center;text-decoration: none;display: inline-block;box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.5);pointer-events: all;overflow: hidden;background-color: #005290;border-color: #005290;font-size: 14px;color: #fff;padding-top: 11px;z-index: 998;'>Loading</div>";
 			$('body').append(htmlLoader);
-			//eleExist('.embeddedServiceSidebar', removeLoadingSnapinMsg);
 		}
 	
 		var snapInObjectGlobal = sessionStorage.getItem("snapInObjectSession");
@@ -261,6 +260,14 @@ $("body").on("click", ".embeddedServiceHelpButton > .helpButton", function () {
 function chatClick(eleSelector, findingEle) {
 	if ($(eleSelector).text() === 'Chat Now') {
 		$(eleSelector).click();
+		
+		var snapInObjectGlobal = sessionStorage.getItem("snapInObjectSession");
+		snapInObject = JSON.parse(snapInObjectGlobal);
+		if(snapInObject.snapinButtonClicked){
+			var htmlLoader= "<div id='loadingSnapinMsg' class ='12' style='min-width: 11em;max-width: 14em;width: 192px;position: fixed;left: auto;bottom: 0;right: 20px;margin: 0;height: 46px;width: 90px;max-height: 100%;border-radius: 8px 8px 0 0;text-align: center;text-decoration: none;display: inline-block;box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.5);pointer-events: all;overflow: hidden;background-color: #005290;border-color: #005290;font-size: 14px;color: #fff;padding-top: 11px;z-index: 998;'>Loading</div>";
+			$('body').append(htmlLoader);
+		}
+		
 	}
 	clearInterval(findingEle);
 }
@@ -290,6 +297,7 @@ function checkAgentOffline(eleSelector, findingEle) {
 	clearInterval(findingEle);
 }
 function addCharectorRemaining(eleSelector, findingEle) {
+	document.getElementById("loadingSnapinMsg").remove();
 	if ($("#snappinCharCounter").length == 0) {
 		var currentCharLength = $(eleSelector).val().length;
 		var maxCharLength = 255;
@@ -301,7 +309,6 @@ function addCharectorRemaining(eleSelector, findingEle) {
 		$(".formContent.embeddedServiceSidebarForm").append("<div style='font-size: .75em;color:#767676;text-align: left;margin: 2em 1.75em'><b>Your privacy is important to us.</b> We will only use your information to process your request. We will not share it with anyone. To learn more about how we use and protect your data, see the <a href='https://www.dell.com/learn/policies-privacy?s=corp'>Dell Privacy Statement</a>.</div>");
 		keypressFieldValidation();
 		showAdditionalDetailsInUi();
-		$("#loadingSnapinMsg").remove();
 	}
 	$("#" + triggerChatButtonId).attr("disabled", false);
 	clearInterval(findingEle);
@@ -516,6 +523,13 @@ window.addEventListener("click", function (event) {
 				break;
 			case "uiButton helpButtonEnabled":
 				dellmetricsTrack("890.220.001", "StartsChat for " + snapinChatGlobalServiceTag + "|" + snapinChatGlobalIssueType + "|" + snapinChatGlobalProductName);
+				
+				var snapInObjectGlobal = sessionStorage.getItem("snapInObjectSession");
+				snapInObject = JSON.parse(snapInObjectGlobal);
+				if(snapInObject.snapinButtonClicked){
+					var htmlLoader= "<div id='loadingSnapinMsg' class ='123' style='min-width: 11em;max-width: 14em;width: 192px;position: fixed;left: auto;bottom: 0;right: 20px;margin: 0;height: 46px;width: 90px;max-height: 100%;border-radius: 8px 8px 0 0;text-align: center;text-decoration: none;display: inline-block;box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.5);pointer-events: all;overflow: hidden;background-color: #005290;border-color: #005290;font-size: 14px;color: #fff;padding-top: 11px;z-index: 998;'>Loading</div>";
+					$('body').append(htmlLoader);
+				}
 				break;
 			default:
 				if ($(clickedElement).closest('a').attr('class') == "chatOption embeddedServiceLiveAgentStateChatHeaderOption") {
