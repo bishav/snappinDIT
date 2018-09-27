@@ -95,9 +95,9 @@
     font-size: 25px;
   }
 
-  .embeddedServiceSidebarForm.formContent{
+ /* .embeddedServiceSidebarForm.formContent{
       background: #f7f7f7 !important;
-  }
+  }*/
 
   #userActivityConsole p {
     border-bottom: 1px solid #5a6268;
