@@ -11,7 +11,7 @@
 	}, false);
 	
 	if(!document.getElementById('snapinStyle')){
-		var css = '@font-face{font-family: "Salesforce Sans";src: url("https://www.sfdcstatic.com/system/shared/common/assets/fonts/SalesforceSans/SalesforceSans-Regular.woff") format("woff"),url("https://www.sfdcstatic.com/system/shared/common/assets/fonts/SalesforceSans/SalesforceSans-Regular.ttf") format("truetype")}.embeddedServiceSidebarMinimizedDefaultUI, .embeddedServiceSidebarHeader{background-color: #00447C !important}.embeddedServiceSidebarFormField .uiInput .uiLabel-left{padding-top: 0px !important;margin-top: 11px;font-size: 14px !important;color: #444 !important}.embeddedServiceSidebarForm.formContent{background: #f1f1f1 !important}.embeddedServiceHelpButton .helpButton .uiButton{background-color: #005290 !important;font-family: "Salesforce Sans", sans-serif}.embeddedServiceHelpButton .helpButton .uiButton:focus{outline: 1px solid #005290}.embeddedServiceSidebarForm .uiButton{border-radius: 0 !important}.embeddedServiceSidebarFormField .slds-style-inputtext{border-radius: 0 !important}.embeddedServiceSidebarFormField .slds-style-inputtext{border-radius: 0 !important;border: none !important}.embeddedServiceSidebarForm.buttonWrapper{background: linear-gradient(to bottom, rgba(247, 247, 247, 0) 0%, rgba(247, 247, 247, 1) calc(100% - 77px), rgba(247, 247, 247, 1) 100%)}.embeddedServiceSidebarButton.uiButton--inverse{background: #f7f7f7 !important;border-radius: 0px !important;border: 1px solid #ccc !important}.embeddedServiceSidebarButton.uiButton--inverse:not(:disabled):focus{box-shadow: 0 0 3px 0 #dddddd !important}.embeddedServiceSidebarDialogState .dialogButton{border-radius: 0 !important}.embeddedServiceSidebarDialogState .dialogButton:not(:disabled):focus{text-decoration: none !important}.embeddedServiceSidebarFormField .slds-style-inputtext, .embeddedServiceSidebarFormField .slds-style-select{color: #444 !important}.embeddedServiceSidebarForm .fieldList{margin: 12px 12px 0 0px !important}.embeddedServiceLiveAgentStateChatHeaderOption .optionName{color: #fff !important;text-decoration: none !important}.embeddedServiceSidebarHeader .headerText{margin-bottom: 0px !important}',
+		var css = '@font-face{font-family: "Salesforce Sans";src: url("https://www.sfdcstatic.com/system/shared/common/assets/fonts/SalesforceSans/SalesforceSans-Regular.woff") format("woff"),url("https://www.sfdcstatic.com/system/shared/common/assets/fonts/SalesforceSans/SalesforceSans-Regular.ttf") format("truetype")}.embeddedServiceSidebarMinimizedDefaultUI, .embeddedServiceSidebarHeader{background-color: #00447C !important}.embeddedServiceSidebarFormField .uiInput .uiLabel-left{padding-top: 0px !important;margin-top: 11px;color: #444 !important}.embeddedServiceSidebarForm.formContent{background: #f1f1f1 !important}.embeddedServiceHelpButton .helpButton .uiButton{background-color: #005290 !important;font-family: "Salesforce Sans", sans-serif}.embeddedServiceHelpButton .helpButton .uiButton:focus{outline: 1px solid #005290}.embeddedServiceSidebarForm .uiButton{border-radius: 0 !important}.embeddedServiceSidebarFormField .slds-style-inputtext{border-radius: 0 !important}.embeddedServiceSidebarFormField .slds-style-inputtext{border-radius: 0 !important;border: none !important}.embeddedServiceSidebarForm.buttonWrapper{background: linear-gradient(to bottom, rgba(247, 247, 247, 0) 0%, rgba(247, 247, 247, 1) calc(100% - 77px), rgba(247, 247, 247, 1) 100%)}.embeddedServiceSidebarButton.uiButton--inverse{background: #f7f7f7 !important;border-radius: 0px !important;border: 1px solid #ccc !important}.embeddedServiceSidebarButton.uiButton--inverse:not(:disabled):focus{box-shadow: 0 0 3px 0 #dddddd !important}.embeddedServiceSidebarDialogState .dialogButton{border-radius: 0 !important}.embeddedServiceSidebarDialogState .dialogButton:not(:disabled):focus{text-decoration: none !important}.embeddedServiceSidebarFormField .slds-style-inputtext, .embeddedServiceSidebarFormField .slds-style-select{color: #444 !important}.embeddedServiceSidebarForm .fieldList{margin: 12px 12px 0 0px !important}.embeddedServiceLiveAgentStateChatHeaderOption .optionName{color: #fff !important;text-decoration: none !important}.embeddedServiceSidebarHeader .headerText{margin-bottom: 0px !important}.embeddedServiceSidebarMinimizedDefaultUI .minimizedImage {display: none !important;}',
 		head = document.head || document.getElementsByTagName('head')[0],
 		style = document.createElement('style');
 		style.type = 'text/css';
@@ -62,10 +62,12 @@ function triggerSnapin(snapInObject) {
 		var snapInObjectGlobal = JSON.stringify(snapInObject);
 		sessionStorage.setItem("snapInObjectSession", snapInObjectGlobal);
 	} else {
-		document.querySelector(".helpButtonEnabled #helpButtonSpan > .message").click();
+		if(document.querySelector(".helpButtonEnabled #helpButtonSpan > .message"))
+			document.querySelector(".helpButtonEnabled #helpButtonSpan > .message").click();
 		if (document.querySelector(".embeddedServiceSidebar")){
 			document.querySelector(".embeddedServiceSidebar").style.display = 'block';
-			document.querySelector(".embeddedServiceSidebar .minimizedContainer").click();
+			if(document.querySelector(".embeddedServiceSidebar .minimizedContainer"))
+				document.querySelector(".embeddedServiceSidebar .minimizedContainer").click();
 		}
 		else{
 			document.querySelector(".embeddedServiceHelpButton").style.display = 'block';
@@ -76,7 +78,10 @@ function triggerSnapin(snapInObject) {
 		var snapInObjectGlobal = sessionStorage.getItem("snapInObjectSession");
 		snapInObject = JSON.parse(snapInObjectGlobal);
 		snapInObject["snapinButtonClicked"] = true;
-		snapInObject["snapinSessionAvailable"] = false;
+		if(document.querySelector(".embeddedServiceSidebar .embeddedServiceLiveAgentStateChat .messageArea"))
+			snapInObject["snapinSessionAvailable"] = true;
+		else
+			snapInObject["snapinSessionAvailable"] = false;
 		snapInObject["applicationClicked"] = true;
 		runApplication = false;
 		var snapInObjectGlobal = JSON.stringify(snapInObject);
@@ -284,9 +289,10 @@ function chatClick(eleSelector, findingEle) {
 	clearInterval(findingEle);
 }
 function chatEndedOnWaiting(eleSelector, findingEle) {
-	document.querySelector(eleSelector).click(function () {
+	document.querySelector(eleSelector).addEventListener('click', function(e) {virtualSnapInObjectSession(false);});
+	/*document.querySelector(eleSelector).click(function () {
 		virtualSnapInObjectSession(false);
-	});
+	});*/
 	clearInterval(findingEle);
 }
 function chatEnded(eleSelector, findingEle) {
@@ -309,7 +315,7 @@ function virtualSnapInObjectSession(value) {
 	clearInterval(findingEle);
 }*/
 function addCharectorRemaining(eleSelector, findingEle) {
-	snapinPrechatLoaded();
+	//snapinPrechatLoaded();
 	if (!document.getElementById("snappinCharCounter")) {
 		var currentCharLength = document.querySelector(eleSelector).value.length;
 		var maxCharLength = 255;
@@ -506,12 +512,14 @@ function translation(language) {
 var closestByTagName = function(el, closedElement) {
 	var elParent = el;
 	var tagedVal = elParent.tagName;
-    while (tagedVal.toLowerCase() != closedElement) {
-        elParent = elParent.parentNode;
-        if (!elParent) {
-            return el;
-        }
-    }
+	if(tagedVal)
+		while (tagedVal.toLowerCase() != closedElement) {
+			elParent = elParent.parentNode;
+			tagedVal = elParent.tagName;
+			if (!tagedVal) {
+				return el;
+			}
+		}
     return elParent;
 }
 //jquery to JS function [END]
@@ -520,7 +528,7 @@ window.addEventListener("click", function (event) {
 			if (closestByTagName(clickedElement, 'button') != null){
 				switch (closestByTagName(clickedElement, 'button').className) {
 					case "startButton uiButton--default uiButton embeddedServiceSidebarButton":
-						if (document.querySelector('.sidebarBody .FirstName').val() == undefined && document.querySelector('.sidebarBody .LastName').val() == undefined && document.querySelector('.sidebarBody .Email.slds-style-inputtext').val() == undefined && document.querySelector('.sidebarBody .Primary_Phone__c').val() == undefined && document.querySelector('.sidebarBody .Issue_Description__c').val() == undefined) {
+						if (!document.querySelector('.sidebarBody .FirstName')) {
 							var snapInObjectGlobal = sessionStorage.getItem("snapInObjectSession");
 							var snapInObject = JSON.parse(snapInObjectGlobal);
 							var prechatValues = JSON.stringify(snapInObject.snapinPreChatFormValues);
@@ -553,6 +561,7 @@ window.addEventListener("click", function (event) {
 						callDellmetricsTrack("890.220.001", "StartsChat for " + snapinChatGlobalServiceTag + "|" + snapinChatGlobalIssueType + "|" + snapinChatGlobalProductName);
 						snapinLoading();
 						eleExist(".embeddedServiceSidebarFeature .embeddedServiceLiveAgentStatePrechatDefaultUI .embeddedServiceSidebarForm .embeddedServiceSidebarFormField .Issue_Description__c", addCharectorRemaining);
+						
 						break;
 					default:
 						if (closestByTagName(clickedElement, 'a').className == "chatOption embeddedServiceLiveAgentStateChatHeaderOption") {
@@ -624,12 +633,14 @@ function snapinLoading(){
 							if(snapInObject.snapinButtonClicked){
 								var htmlLoader= "<div id='loadingSnapinMsg' class ='12' style='min-width: 11em;max-width: 14em;width: 192px;position: fixed;left: auto;bottom: 0;right: 20px;margin: 0;height: 46px;width: 90px;max-height: 100%;border-radius: 8px 8px 0 0;text-align: center;text-decoration: none;display: inline-block;box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.5);pointer-events: all;overflow: hidden;background-color: #005290;border-color: #005290;font-size: 14px;color: #fff;padding-top: 11px;z-index: 998;'>Loading</div>";
 								document.querySelector('body').insertAdjacentHTML('afterend', htmlLoader);
+								eleExist(".modalContainer.sidebarMaximized.embeddedServiceSidebar .dockableContainer", snapinPrechatLoaded);
 							}
 
 }
-function snapinPrechatLoaded(){
+function snapinPrechatLoaded(eleSelector, findingEle){
 	if(document.getElementById("loadingSnapinMsg"))
-	document.getElementById("loadingSnapinMsg").remove();
+		document.getElementById("loadingSnapinMsg").remove();
+	clearInterval(findingEle);
 }
 	
 function initLiveAgent(liveAgentObject) {
