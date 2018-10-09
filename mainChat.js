@@ -1,4 +1,4 @@
-﻿var snapinChatGlobalIssueType, snapinChatGlobalServiceTag, snapinChatGlobalProductName = null;
+﻿var snapinChatGlobalIssueType, snapinChatGlobalServiceTag, snapinChatGlobalProductName = null, snapInCurrentPage = null;
 (function () {
 	var initESW;
 	window.addEventListener("dragover", function (e) {
@@ -11,7 +11,7 @@
 	}, false);
 	
 	if(!document.getElementById('snapinStyle')){
-		var css = '@font-face{font-family: "Salesforce Sans";src: url("https://www.sfdcstatic.com/system/shared/common/assets/fonts/SalesforceSans/SalesforceSans-Regular.woff") format("woff"),url("https://www.sfdcstatic.com/system/shared/common/assets/fonts/SalesforceSans/SalesforceSans-Regular.ttf") format("truetype")}.embeddedServiceSidebarMinimizedDefaultUI, .embeddedServiceSidebarHeader{background-color: #00447C !important}.embeddedServiceSidebarFormField .uiInput .uiLabel-left{padding-top: 0px !important;margin-top: 11px;color: #444 !important}.embeddedServiceSidebarForm.formContent{background: #f1f1f1 !important}.embeddedServiceHelpButton .helpButton .uiButton{background-color: #005290 !important;font-family: "Salesforce Sans", sans-serif}.embeddedServiceHelpButton .helpButton .uiButton:focus{outline: 1px solid #005290}.embeddedServiceSidebarForm .uiButton{border-radius: 0 !important}.embeddedServiceSidebarFormField .slds-style-inputtext{border-radius: 0 !important}.embeddedServiceSidebarFormField .slds-style-inputtext{border-radius: 0 !important;border: none !important}.embeddedServiceSidebarForm.buttonWrapper{background: linear-gradient(to bottom, rgba(247, 247, 247, 0) 0%, rgba(247, 247, 247, 1) calc(100% - 77px), rgba(247, 247, 247, 1) 100%)}.embeddedServiceSidebarButton.uiButton--inverse{background: #f7f7f7 !important;border-radius: 0px !important;border: 1px solid #ccc !important}.embeddedServiceSidebarButton.uiButton--inverse:not(:disabled):focus{box-shadow: 0 0 3px 0 #dddddd !important}.embeddedServiceSidebarDialogState .dialogButton{border-radius: 0 !important}.embeddedServiceSidebarDialogState .dialogButton:not(:disabled):focus{text-decoration: none !important}.embeddedServiceSidebarFormField .slds-style-inputtext, .embeddedServiceSidebarFormField .slds-style-select{color: #444 !important}.embeddedServiceSidebarForm .fieldList{margin: 12px 12px 0 0px !important}.embeddedServiceLiveAgentStateChatHeaderOption .optionName{color: #fff !important;text-decoration: none !important}.embeddedServiceSidebarHeader .headerText{margin-bottom: 0px !important}.embeddedServiceSidebarMinimizedDefaultUI .minimizedImage {display: none !important;}',
+		var css = '@font-face{font-family: "Salesforce Sans";src: url("https://www.sfdcstatic.com/system/shared/common/assets/fonts/SalesforceSans/SalesforceSans-Regular.woff") format("woff"),url("https://www.sfdcstatic.com/system/shared/common/assets/fonts/SalesforceSans/SalesforceSans-Regular.ttf") format("truetype")}.embeddedServiceSidebarMinimizedDefaultUI, .embeddedServiceSidebarHeader{background-color: #00447C !important; border: 1px !important;}.embeddedServiceSidebarFormField .uiInput .uiLabel-left{padding-top: 0px !important;margin-top: 11px;color: #444 !important; font-weight: 300 !important;}.embeddedServiceSidebarForm.formContent{background: #f1f1f1 !important}.embeddedServiceHelpButton .helpButton .uiButton{background-color: #005290 !important;font-family: "Salesforce Sans", sans-serif}.embeddedServiceHelpButton .helpButton .uiButton:focus{outline: 1px solid #005290}.embeddedServiceSidebarForm .uiButton{border-radius: 0 !important}.embeddedServiceSidebarFormField .slds-style-inputtext{border-radius: 0 !important}.embeddedServiceSidebarFormField .slds-style-inputtext{border-radius: 0 !important;border: none !important}.embeddedServiceSidebarForm.buttonWrapper{background: linear-gradient(to bottom, rgba(247, 247, 247, 0) 0%, rgba(247, 247, 247, 1) calc(100% - 77px), rgba(247, 247, 247, 1) 100%)}.embeddedServiceSidebarButton.uiButton--inverse{background: #f7f7f7 !important;border-radius: 0px !important;border: 1px solid #ccc !important}.embeddedServiceSidebarButton.uiButton--inverse:not(:disabled):focus{box-shadow: 0 0 3px 0 #dddddd !important}.embeddedServiceSidebarDialogState .dialogButton{border-radius: 0 !important}.embeddedServiceSidebarDialogState .dialogButton:not(:disabled):focus{text-decoration: none !important}.embeddedServiceSidebarFormField .slds-style-inputtext, .embeddedServiceSidebarFormField .slds-style-select{color: #444 !important}.embeddedServiceSidebarForm .fieldList{margin: 12px 12px 0 0px !important}.embeddedServiceLiveAgentStateChatHeaderOption .optionName{color: #fff !important;text-decoration: none !important}.embeddedServiceSidebarHeader .headerText{margin-bottom: 0px !important}.embeddedServiceSidebarMinimizedDefaultUI .minimizedImage {display: none !important;}.embeddedServiceLiveAgentStateChatHeader.reconnecting.alert {background-color: #cb2b19 !important;padding-top: 46px !important;}',
 		head = document.head || document.getElementsByTagName('head')[0],
 		style = document.createElement('style');
 		style.type = 'text/css';
@@ -62,19 +62,19 @@ function triggerSnapin(snapInObject) {
 		var snapInObjectGlobal = JSON.stringify(snapInObject);
 		sessionStorage.setItem("snapInObjectSession", snapInObjectGlobal);
 	} else {
-		if(document.querySelector(".helpButtonEnabled #helpButtonSpan > .message"))
-			document.querySelector(".helpButtonEnabled #helpButtonSpan > .message").click();
 		if (document.querySelector(".embeddedServiceSidebar")){
 			document.querySelector(".embeddedServiceSidebar").style.display = 'block';
 			if(document.querySelector(".embeddedServiceSidebar .minimizedContainer"))
 				document.querySelector(".embeddedServiceSidebar .minimizedContainer").click();
 		}
 		else{
+			if(document.querySelector(".helpButtonEnabled #helpButtonSpan > .message"))
+				document.querySelector(".helpButtonEnabled #helpButtonSpan > .message").click();
 			document.querySelector(".embeddedServiceHelpButton").style.display = 'block';
 			var htmlLoader= "<div id='loadingSnapinMsg' class ='12' style='min-width: 11em;max-width: 14em;width: 192px;position: fixed;left: auto;bottom: 0;right: 20px;margin: 0;height: 46px;width: 90px;max-height: 100%;border-radius: 8px 8px 0 0;text-align: center;text-decoration: none;display: inline-block;box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.5);pointer-events: all;overflow: hidden;background-color: #00447C;border-color: #005290;font-size: 14px;color: #fff;padding-top: 11px;z-index: 998;'>Loading</div>";
 			document.querySelector('body').insertAdjacentHTML('afterend', htmlLoader);
 		}
-	
+		
 		var snapInObjectGlobal = sessionStorage.getItem("snapInObjectSession");
 		snapInObject = JSON.parse(snapInObjectGlobal);
 		snapInObject["snapinButtonClicked"] = true;
@@ -209,6 +209,7 @@ function triggerSnapin(snapInObject) {
 				Email: emailAddVal,
 				Primary_Phone__c: primePhoneVal
 			};
+			pageObserverForProp20("body");
 			embedded_svc.init(snapInObject.snapInInitURL, snapInObject.snapInLAURL, gslbBaseURL, snapInObject.organizationId, snapInObject.componentName, {
 				baseLiveAgentContentURL: snapInObject.baseLiveAgentContentURL,
 				deploymentId: snapInObject.deploymentId,
@@ -250,6 +251,8 @@ function triggerResumeSnapin(snapInObject) {
 				"displayToAgent": true
 			}
 		];
+		pageObserverForProp20("body");
+		
 		embedded_svc.init(snapInObject.snapInInitURL, snapInObject.snapInLAURL, gslbBaseURL, snapInObject.organizationId, snapInObject.componentName, {
 			baseLiveAgentContentURL: snapInObject.baseLiveAgentContentURL,
 			deploymentId: snapInObject.deploymentId,
@@ -316,6 +319,8 @@ function virtualSnapInObjectSession(value) {
 }*/
 function addCharectorRemaining(eleSelector, findingEle) {
 	//snapinPrechatLoaded();
+	if(document.getElementById("loadingSnapinMsg"))
+		document.getElementById("loadingSnapinMsg").remove();
 	if (!document.getElementById("snappinCharCounter")) {
 		var currentCharLength = document.querySelector(eleSelector).value.length;
 		var maxCharLength = 255;
@@ -511,19 +516,23 @@ function translation(language) {
 //jquery to JS function [START]
 var closestByTagName = function(el, closedElement) {
 	var elParent = el;
-	var tagedVal = elParent.tagName;
-	if(tagedVal)
-		while (tagedVal.toLowerCase() != closedElement) {
-			elParent = elParent.parentNode;
-			tagedVal = elParent.tagName;
-			if (!tagedVal) {
-				return el;
+	if(elParent){
+		var tagedVal = elParent.tagName;
+		if(tagedVal)
+			while (tagedVal.toLowerCase() != closedElement) {
+				elParent = elParent.parentNode;
+				tagedVal = elParent.tagName;
+				if (!tagedVal) {
+					return el;
+				}
 			}
-		}
+	}
+		
     return elParent;
 }
 //jquery to JS function [END]
 window.addEventListener("click", function (event) {
+		if(document.querySelector(".embeddedServiceSidebar") || document.querySelector(".embeddedServiceHelpButton")){
 			var clickedElement = event.target || event.srcElement;
 			if (closestByTagName(clickedElement, 'button') != null){
 				switch (closestByTagName(clickedElement, 'button').className) {
@@ -554,14 +563,23 @@ window.addEventListener("click", function (event) {
 					case "minimizeButton headerItem":
 						callDellmetricsTrack("890.220.007", "ClickedOn Minimize button");
 						break;
+					case "sidebarHeader minimizedContainer helpButton embeddedServiceSidebarMinimizedDefaultUI":
+						snapInPrechatForm = document.querySelector(".modalContainer  .dockableContainer .sidebarBody .activeFeature .featureBody .embeddedServiceSidebarState .prechatUI");
+						callDellmetricsTrack("890.220.008", "ClickedOn Maximize button");
+						if(snapInPrechatForm)
+							callDellmetricsTrack("890.220.010");
+						break;
 					case "sidebarHeader minimizedContainer embeddedServiceSidebarMinimizedDefaultUI":
 						callDellmetricsTrack("890.220.008", "ClickedOn Maximize button");
 						break;
 					case "uiButton helpButtonEnabled":
-						callDellmetricsTrack("890.220.001", "StartsChat for " + snapinChatGlobalServiceTag + "|" + snapinChatGlobalIssueType + "|" + snapinChatGlobalProductName);
-						snapinLoading();
-						eleExist(".embeddedServiceSidebarFeature .embeddedServiceLiveAgentStatePrechatDefaultUI .embeddedServiceSidebarForm .embeddedServiceSidebarFormField .Issue_Description__c", addCharectorRemaining);
-						
+						if(document.querySelector(".helpButtonEnabled #helpButtonSpan > .message").innerText == "Chat Now"){
+							snapInCurrentPage = null;
+							callDellmetricsTrack("890.220.001", "StartsChat for " + snapinChatGlobalServiceTag + "|" + snapinChatGlobalIssueType + "|" + snapinChatGlobalProductName);
+							snapinLoading();
+							eleExist(".embeddedServiceSidebarFeature .embeddedServiceLiveAgentStatePrechatDefaultUI .embeddedServiceSidebarForm .embeddedServiceSidebarFormField .Issue_Description__c", addCharectorRemaining);
+						}else
+							callDellmetricsTrack("890.220.001", "AgentOffline for " + snapinChatGlobalServiceTag + "|" + snapinChatGlobalIssueType + "|" + snapinChatGlobalProductName);
 						break;
 					default:
 						if (closestByTagName(clickedElement, 'a').className == "chatOption embeddedServiceLiveAgentStateChatHeaderOption") {
@@ -577,15 +595,117 @@ window.addEventListener("click", function (event) {
 				callDellmetricsTrack("890.220.009", "ClickedOn " + closestByTagName(clickedElement, 'a').text);
 				
 			}
+		}
 });
 
-function callDellmetricsTrack(prop20Value, message){
+function callDellmetricsTrack(propValue, message){
 	if (typeof(dellmetricsTrack) == "function"){
-		if (dellmetricsTrack)
-		dellmetricsTrack(prop20Value, message);
+		if (dellmetricsTrack){
+			if(message)
+				dellmetricsTrack(propValue, message);
+			else
+				dellmetricsTrack(propValue);
+		}	
 	}
 }
 
+function pageObserverForProp20(eleSelector){
+	try{
+		snapInPrechatForm = document.querySelector(".modalContainer  .dockableContainer .sidebarBody .activeFeature .featureBody .embeddedServiceSidebarState .prechatUI");
+		snapInWaiting = document.querySelector(".dockableContainer .embeddedServiceLiveAgentStateWaiting .waitingStateContainer");
+		snapInChatStarted = document.querySelector(".dockableContainer .activeFeature .embeddedServiceLiveAgentStateChat .chasitorControls .chasitorText");
+		snapInConfirmationDialoug = document.querySelector(".dockableContainer .activeFeature .stateBody .dialogState .dialogTextContainer");
+		if(snapInPrechatForm)
+			snapInCurrentPage = "snapInPrechatForm";
+		else if(snapInWaiting)
+			snapInCurrentPage = "snapInWaiting";
+		else if(snapInChatStarted)
+			snapInCurrentPage = "snapInChatStarted";
+		else if(snapInConfirmationDialoug)
+			snapInCurrentPage = "snapInConfirmationDialoug";
+		else
+			snapInCurrentPage = null;
+		var MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
+		var attributeChangeCallback = function( mutations ){ 
+			mutations.forEach(function( mutation )  { 
+				if(mutation.addedNodes.length>0){
+					snapInPrechatForm = document.querySelector(".modalContainer  .dockableContainer .sidebarBody .activeFeature .featureBody .embeddedServiceSidebarState .prechatUI");
+					snapInWaiting = document.querySelector(".dockableContainer .embeddedServiceLiveAgentStateWaiting .waitingStateContainer");
+					snapInChatStarted = document.querySelector(".dockableContainer .activeFeature .embeddedServiceLiveAgentStateChat .chasitorControls .chasitorText");
+					snapInConfirmationDialoug = document.querySelector(".dockableContainer .activeFeature .stateBody .dialogState .dialogTextContainer");
+					if(snapInPrechatForm && snapInCurrentPage != "snapInPrechatForm"){
+						prechatformHeader = document.querySelector(".embeddedServiceSidebar");
+						if(window.getComputedStyle(prechatformHeader).display === 'block'){
+							snapInCurrentPage = "snapInPrechatForm";
+							callDellmetricsTrack("890.220.010");
+						}
+					}else if(snapInWaiting && snapInCurrentPage != "snapInWaiting"){
+						snapInCurrentPage = "snapInWaiting";
+						callDellmetricsTrack("890.220.011");
+						eleExistWithVariable('.dockableContainer .embeddedServiceLiveAgentStateWaiting .waitingStateContainer .waitingStateContent .queuePositionContent .header', waitChatCounter, 0);
+					}else if(snapInChatStarted && snapInCurrentPage != "snapInChatStarted"){
+						snapInCurrentPage = "snapInChatStarted";
+						callDellmetricsTrack("890.220.013");
+					}else if(snapInConfirmationDialoug && snapInCurrentPage != "snapInConfirmationDialoug"){
+						snapInCurrentPage = "snapInConfirmationDialoug";
+						callDellmetricsTrack("890.220.016",document.querySelector(".dockableContainer .activeFeature .stateBody .dialogState .dialogTextContainer").innerText);
+					}
+					
+				}                       
+			}); 
+		} 
+		var observer =  new MutationObserver ( attributeChangeCallback ); 
+		var domElement = document.querySelector (eleSelector);
+		observer.observe (domElement, { 
+			childList: true,
+			subtree: true
+		});
+	}catch(e){console.log('Error in Observer - '+e)}
+}
+
+/*function pageCheckerForProp20(){
+	snapInPrechatForm = document.querySelector(".modalContainer  .dockableContainer .sidebarBody .activeFeature .featureBody .embeddedServiceSidebarState .prechatUI");
+	snapInWaiting = document.querySelector(".dockableContainer .embeddedServiceLiveAgentStateWaiting .waitingStateContainer");
+	snapInChatStarted = document.querySelector(".dockableContainer .activeFeature .embeddedServiceLiveAgentStateChat .chasitorControls .chasitorText");
+	snapInConfirmationDialoug = document.querySelector(".dockableContainer .activeFeature .stateBody .dialogState .dialogTextContainer");
+	var snapInCurrentPage;
+	if(snapInPrechatForm)
+		snapInCurrentPage = "snapInPrechatForm";
+	else if(snapInWaiting)
+		snapInCurrentPage = "snapInWaiting";
+	else if(snapInChatStarted)
+		snapInCurrentPage = "snapInChatStarted";
+	else if(snapInConfirmationDialoug)
+		snapInCurrentPage = "snapInConfirmationDialoug";
+	else
+		snapInCurrentPage = null;
+	setProp13Value = setInterval(function(){
+		try{
+			snapInPrechatForm = document.querySelector(".modalContainer  .dockableContainer .sidebarBody .activeFeature .featureBody .embeddedServiceSidebarState .prechatUI");
+			snapInWaiting = document.querySelector(".dockableContainer .embeddedServiceLiveAgentStateWaiting .waitingStateContainer");
+			snapInChatStarted = document.querySelector(".dockableContainer .activeFeature .embeddedServiceLiveAgentStateChat .chasitorControls .chasitorText");
+			snapInConfirmationDialoug = document.querySelector(".dockableContainer .activeFeature .stateBody .dialogState .dialogTextContainer");
+			if(snapInPrechatForm && snapInCurrentPage != "snapInPrechatForm"){
+				callDellmetricsTrack("890.220.010");
+				snapInCurrentPage = "snapInPrechatForm";
+			}else if(snapInWaiting && snapInCurrentPage != "snapInWaiting"){
+				callDellmetricsTrack("890.220.011");
+				snapInCurrentPage = "snapInWaiting";
+				eleExistWithVariable('.dockableContainer .embeddedServiceLiveAgentStateWaiting .waitingStateContainer .waitingStateContent .queuePositionContent .header', waitChatCounter, 0);
+			}else if(snapInChatStarted && snapInCurrentPage != "snapInChatStarted"){
+				callDellmetricsTrack("890.220.013");
+				snapInCurrentPage = "snapInChatStarted";
+			}else if(snapInConfirmationDialoug && snapInCurrentPage != "snapInConfirmationDialoug"){
+				callDellmetricsTrack("890.220.016",document.querySelector(".dockableContainer .activeFeature .stateBody .dialogState .dialogTextContainer").innerText);
+				snapInCurrentPage = "snapInConfirmationDialoug";
+			}
+		}catch(e){
+			console.log("Error at: "+e);
+			clearInterval(setProp13Value);
+		}
+	}, 1000);
+}
+*/
 window.addEventListener("blur", function (event) {
 	var elementId = event.target.id;
 	if (elementId == "FirstName" || elementId == "LastName" || elementId == "Email" || elementId == "Primary_Phone__c" || elementId == "Issue_Description__c") {
@@ -597,15 +717,15 @@ window.addEventListener("blur", function (event) {
 		sessionStorage.setItem("snapInObjectSession", snapInObjectGlobal);
 	}
 }, true);
-eleExistWithVariable('.waitingStateContainer .header.queuePositionNumber', waitChatCounter, 0);
+
 function waitChatCounter(eleSelector, findingEle, counterValue) {
 	if (typeof(dellmetricsTrack) == "function") {
 		if (dellmetricsTrack) {
 			if (counterValue != document.querySelector(eleSelector).innerText) {
-				dellmetricsTrack("890.220.010", "WaitingOnQueue where his queue number is:'" + document.querySelector(eleSelector).innerText);
+				dellmetricsTrack("890.220.012", "Queue number: " + document.querySelector(eleSelector).innerText);
 				clearInterval(findingEle);
-				if (document.querySelector(eleSelector).innerText > 1) {
-					eleExistWithVariable('.waitingStateContainer .header.queuePositionNumber', waitChatCounter, document.querySelector(eleSelector).innerText);
+				if (document.querySelector(eleSelector).innerText > 0 && document.querySelector(eleSelector).innerText != "You're up next!") {
+					eleExistWithVariable('.dockableContainer .embeddedServiceLiveAgentStateWaiting .waitingStateContainer .waitingStateContent .queuePositionContent .header', waitChatCounter, document.querySelector(eleSelector).innerText);
 				}
 			}
 		} else {

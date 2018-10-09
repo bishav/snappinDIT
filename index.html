@@ -499,6 +499,10 @@ domainName: "localhost", //"bishav.github.io",//
 
        function dellmetricsTrack(elementId,Message){
            // alert("Element Id = "+elementId+" and Message is '"+Message+"'");
+           if(Message)
+				console.log("PropValue = "+elementId+": "+Message);
+			else
+                console.log("PropValue = "+elementId);
         }
     </script>    
 </body>
