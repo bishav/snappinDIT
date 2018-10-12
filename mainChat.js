@@ -815,5 +815,6 @@ function triggerChatBot(chatBotObject) {
 		document.body.appendChild(s);
 	} else {
 		initESW(chatBotObject.serviceForceURL);
+		console.log("yes");
 	}
 }
