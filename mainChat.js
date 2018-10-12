@@ -541,8 +541,8 @@ window.addEventListener("click", function (event) {
 							var snapInObjectGlobal = sessionStorage.getItem("snapInObjectSession");
 							var snapInObject = JSON.parse(snapInObjectGlobal);
 							var prechatValues = JSON.stringify(snapInObject.snapinPreChatFormValues);
-							callDellmetricsTrack("890.220.002", "PrechatComplete" + prechatValues);
 							virtualSnapInObjectSession(true);
+							callDellmetricsTrack("890.220.002", "PrechatComplete" + prechatValues);
 						}
 						break;
 					case "dialogButton dialog-button-0 uiButton embeddedServiceSidebarButton":
@@ -639,6 +639,7 @@ function pageObserverForProp20(eleSelector){
 							snapInCurrentPage = "snapInPrechatForm";
 							callDellmetricsTrack("890.220.010");
 						}
+						virtualSnapInObjectSession(false);
 					}else if(snapInWaiting && snapInCurrentPage != "snapInWaiting"){
 						snapInCurrentPage = "snapInWaiting";
 						callDellmetricsTrack("890.220.011");
@@ -663,49 +664,6 @@ function pageObserverForProp20(eleSelector){
 	}catch(e){console.log('Error in Observer - '+e)}
 }
 
-/*function pageCheckerForProp20(){
-	snapInPrechatForm = document.querySelector(".modalContainer  .dockableContainer .sidebarBody .activeFeature .featureBody .embeddedServiceSidebarState .prechatUI");
-	snapInWaiting = document.querySelector(".dockableContainer .embeddedServiceLiveAgentStateWaiting .waitingStateContainer");
-	snapInChatStarted = document.querySelector(".dockableContainer .activeFeature .embeddedServiceLiveAgentStateChat .chasitorControls .chasitorText");
-	snapInConfirmationDialoug = document.querySelector(".dockableContainer .activeFeature .stateBody .dialogState .dialogTextContainer");
-	var snapInCurrentPage;
-	if(snapInPrechatForm)
-		snapInCurrentPage = "snapInPrechatForm";
-	else if(snapInWaiting)
-		snapInCurrentPage = "snapInWaiting";
-	else if(snapInChatStarted)
-		snapInCurrentPage = "snapInChatStarted";
-	else if(snapInConfirmationDialoug)
-		snapInCurrentPage = "snapInConfirmationDialoug";
-	else
-		snapInCurrentPage = null;
-	setProp13Value = setInterval(function(){
-		try{
-			snapInPrechatForm = document.querySelector(".modalContainer  .dockableContainer .sidebarBody .activeFeature .featureBody .embeddedServiceSidebarState .prechatUI");
-			snapInWaiting = document.querySelector(".dockableContainer .embeddedServiceLiveAgentStateWaiting .waitingStateContainer");
-			snapInChatStarted = document.querySelector(".dockableContainer .activeFeature .embeddedServiceLiveAgentStateChat .chasitorControls .chasitorText");
-			snapInConfirmationDialoug = document.querySelector(".dockableContainer .activeFeature .stateBody .dialogState .dialogTextContainer");
-			if(snapInPrechatForm && snapInCurrentPage != "snapInPrechatForm"){
-				callDellmetricsTrack("890.220.010");
-				snapInCurrentPage = "snapInPrechatForm";
-			}else if(snapInWaiting && snapInCurrentPage != "snapInWaiting"){
-				callDellmetricsTrack("890.220.011");
-				snapInCurrentPage = "snapInWaiting";
-				eleExistWithVariable('.dockableContainer .embeddedServiceLiveAgentStateWaiting .waitingStateContainer .waitingStateContent .queuePositionContent .header', waitChatCounter, 0);
-			}else if(snapInChatStarted && snapInCurrentPage != "snapInChatStarted"){
-				callDellmetricsTrack("890.220.013");
-				snapInCurrentPage = "snapInChatStarted";
-			}else if(snapInConfirmationDialoug && snapInCurrentPage != "snapInConfirmationDialoug"){
-				callDellmetricsTrack("890.220.016",document.querySelector(".dockableContainer .activeFeature .stateBody .dialogState .dialogTextContainer").innerText);
-				snapInCurrentPage = "snapInConfirmationDialoug";
-			}
-		}catch(e){
-			console.log("Error at: "+e);
-			clearInterval(setProp13Value);
-		}
-	}, 1000);
-}
-*/
 window.addEventListener("blur", function (event) {
 	var elementId = event.target.id;
 	if (elementId == "FirstName" || elementId == "LastName" || elementId == "Email" || elementId == "Primary_Phone__c" || elementId == "Issue_Description__c") {
