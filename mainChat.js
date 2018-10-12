@@ -1,4 +1,4 @@
-﻿var snapinChatGlobalIssueType, snapinChatGlobalServiceTag, snapinChatGlobalProductName = null, snapInCurrentPage = null;
+﻿var snapinChatGlobalIssueType, snapinChatGlobalServiceTag, snapinChatGlobalProductName = null, snapInCurrentPage = null, trackevent = true;
 (function () {
 	var initESW;
 	window.addEventListener("dragover", function (e) {
@@ -64,13 +64,18 @@ function triggerSnapin(snapInObject) {
 	} else {
 		if (document.querySelector(".embeddedServiceSidebar")){
 			document.querySelector(".embeddedServiceSidebar").style.display = 'block';
-			if(document.querySelector(".embeddedServiceSidebar .minimizedContainer"))
+			if(document.querySelector(".embeddedServiceSidebar .minimizedContainer")){
+				trackevent = false;
 				document.querySelector(".embeddedServiceSidebar .minimizedContainer").click();
+			}
 		}
 		else{
-			if(document.querySelector(".helpButtonEnabled #helpButtonSpan > .message"))
+			if(document.querySelector(".helpButtonEnabled #helpButtonSpan > .message")){
+				trackevent = false;
 				document.querySelector(".helpButtonEnabled #helpButtonSpan > .message").click();
-			document.querySelector(".embeddedServiceHelpButton").style.display = 'block';
+			}
+			if(document.querySelector(".embeddedServiceHelpButton"))
+				document.querySelector(".embeddedServiceHelpButton").style.display = 'block';
 			var htmlLoader= "<div id='loadingSnapinMsg' class ='12' style='min-width: 11em;max-width: 14em;width: 192px;position: fixed;left: auto;bottom: 0;right: 20px;margin: 0;height: 46px;width: 90px;max-height: 100%;border-radius: 8px 8px 0 0;text-align: center;text-decoration: none;display: inline-block;box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.5);pointer-events: all;overflow: hidden;background-color: #00447C;border-color: #005290;font-size: 14px;color: #fff;padding-top: 11px;z-index: 998;'>Loading</div>";
 			document.querySelector('body').insertAdjacentHTML('afterend', htmlLoader);
 		}
@@ -330,7 +335,7 @@ function addCharectorRemaining(eleSelector, findingEle) {
 			currentCharLength = this.value.length
 			document.querySelector("#snappinCharCounter").innerText = currentCharLength + " / " + maxCharLength + " characters";
 		}
-		document.querySelector(".formContent.embeddedServiceSidebarForm").insertAdjacentHTML("beforeend", "<div style='font-size: 12px;color:#767676;text-align: left;margin: 2em 1.75em; font-style: italic;color:#444444;'><b>Your privacy is important to us.</b> We will only use your information to process your request. We will not share it with anyone. To learn more about how we use and protect your data, see the <a href='https://www.dell.com/learn/policies-privacy?s=corp'>Dell Privacy Statement</a>.</div>");
+		document.querySelector(".formContent.embeddedServiceSidebarForm").insertAdjacentHTML("beforeend", "<div style='font-size: 12px;color:#767676;text-align: left;margin: 2em 1.75em; font-style: italic;color:#444444;'><b>Your privacy is important to us.</b> We will only use your information to process your request. We will not share it with anyone. To learn more about how we use and protect your data, see the <a href='https://www.dell.com/learn/policies-privacy?s=corp'>Dell Privacy Statement</a>.</div>");
 		keypressFieldValidation();
 		showAdditionalDetailsInUi();
 	}
@@ -564,8 +569,8 @@ window.addEventListener("click", function (event) {
 						callDellmetricsTrack("890.220.007", "ClickedOn Minimize button");
 						break;
 					case "sidebarHeader minimizedContainer helpButton embeddedServiceSidebarMinimizedDefaultUI":
-						snapInPrechatForm = document.querySelector(".modalContainer  .dockableContainer .sidebarBody .activeFeature .featureBody .embeddedServiceSidebarState .prechatUI");
 						callDellmetricsTrack("890.220.008", "ClickedOn Maximize button");
+						snapInPrechatForm = document.querySelector(".modalContainer  .dockableContainer .sidebarBody .activeFeature .featureBody .embeddedServiceSidebarState .prechatUI");
 						if(snapInPrechatForm)
 							callDellmetricsTrack("890.220.010");
 						break;
@@ -601,10 +606,15 @@ window.addEventListener("click", function (event) {
 function callDellmetricsTrack(propValue, message){
 	if (typeof(dellmetricsTrack) == "function"){
 		if (dellmetricsTrack){
-			if(message)
+			if(trackevent){
+				if(message)
 				dellmetricsTrack(propValue, message);
-			else
-				dellmetricsTrack(propValue);
+				else
+					dellmetricsTrack(propValue);
+			}else{
+				trackevent = true;
+			}
+			
 		}	
 	}
 }
@@ -752,7 +762,7 @@ function initResumeLiveAgent(liveAgentObject) {
 	liveagent.addCustomDetail('deltaSr', liveAgentObject.srNumber).saveToTranscript('Delta_Sr__c');
 	liveagent.findOrCreate("Case").map("Delta_SR__c", "deltaSr", true, false, true).showOnCreate();
 	liveagent.init(liveAgentObject.liveAgentInitUrl, liveAgentObject.deploymentId, liveAgentObject.organizationId);
-	liveagent.setName(liveAgentObject.firstName + ' ' + liveAgentObject.lastName);
+	liveagent.setName(liveAgentObject.firstName + ' ' + liveAgentObject.lastName);
 }
 function startLiveAgentChat(buttonId) {
 	liveagent.startChat(buttonId);
