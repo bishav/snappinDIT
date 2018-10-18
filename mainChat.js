@@ -256,6 +256,18 @@ function triggerResumeSnapin(snapInObject) {
 				"displayToAgent": true
 			}
 		];
+		embedded_svc.settings.extraPrechatInfo = [{
+                        "entityFieldMaps": [{
+                            "doCreate":true,
+                            "doFind":true,
+                            "fieldName":"Delta_SR__c",
+                            "isExactMatch":true,
+                            "label":"Delta Sr"
+                        }
+                        ],
+                        "entityName":"Case"
+                    }
+                ];
 		pageObserverForProp20("body");
 		
 		embedded_svc.init(snapInObject.snapInInitURL, snapInObject.snapInLAURL, gslbBaseURL, snapInObject.organizationId, snapInObject.componentName, {
@@ -281,14 +293,8 @@ function triggerResumeSnapin(snapInObject) {
 eleExist('.helpButtonEnabled #helpButtonSpan > .message', chatClick);
 eleExist(".dockableContainer .ended.embeddedServiceLiveAgentStateChatMessage", chatEnded);
 eleExist(".dockableContainer .embeddedServiceLiveAgentStateWaiting .waitingCancelChat", chatEndedOnWaiting);
-
+console.log("addCharectorRemaining2");
 eleExist(".embeddedServiceSidebarFeature .embeddedServiceLiveAgentStatePrechatDefaultUI .embeddedServiceSidebarForm .embeddedServiceSidebarFormField .Issue_Description__c", addCharectorRemaining);
-
-	/*document.querySelector("body .embeddedServiceHelpButton > .helpButton").onclick = function () {
-		alert("working");
-		eleExist(".embeddedServiceSidebarFeature .embeddedServiceLiveAgentStatePrechatDefaultUI .embeddedServiceSidebarForm .embeddedServiceSidebarFormField .Issue_Description__c", addCharectorRemaining);
-		virtualSnapInObjectSession(true);
-	}*/
 
 function chatClick(eleSelector, findingEle) {
 	if (document.querySelector(eleSelector).innerText === 'Chat Now') {
@@ -582,6 +588,7 @@ window.addEventListener("click", function (event) {
 							snapInCurrentPage = null;
 							callDellmetricsTrack("890.220.001", "StartsChat for " + snapinChatGlobalServiceTag + "|" + snapinChatGlobalIssueType + "|" + snapinChatGlobalProductName);
 							snapinLoading();
+							console.log("addCharectorRemaining3");
 							eleExist(".embeddedServiceSidebarFeature .embeddedServiceLiveAgentStatePrechatDefaultUI .embeddedServiceSidebarForm .embeddedServiceSidebarFormField .Issue_Description__c", addCharectorRemaining);
 						}else
 							callDellmetricsTrack("890.220.001", "AgentOffline for " + snapinChatGlobalServiceTag + "|" + snapinChatGlobalIssueType + "|" + snapinChatGlobalProductName);
@@ -591,6 +598,7 @@ window.addEventListener("click", function (event) {
 							callDellmetricsTrack("890.220.009", "ClickedOn " + closestByTagName(clickedElement, 'a').text);
 						}else if(clickedElement.parentNode.parentNode.className ==  "uiButton helpButtonEnabled" || clickedElement.parentNode.className == "uiButton helpButtonEnabled"){
 							snapinLoading();
+							console.log("addCharectorRemaining1");
 							eleExist(".embeddedServiceSidebarFeature .embeddedServiceLiveAgentStatePrechatDefaultUI .embeddedServiceSidebarForm .embeddedServiceSidebarFormField .Issue_Description__c", addCharectorRemaining);
 						}
 						break;
@@ -744,6 +752,16 @@ function initLiveAgent(liveAgentObject) {
 				liveagent.showWhenOffline(liveAgentObject.buttonId, document.getElementById('liveagent_button_offline_' + liveAgentObject.buttonId));
 				if ("serviceTag" in liveAgentObject)
 					liveagent.addCustomDetail('serviceTag', liveAgentObject.serviceTag);
+				/* Creates a custom detail called First Name and sets the value to "Jane" */
+				liveagent.addCustomDetail("First Name", "Jane");
+
+				/* Creates a custom detail called Last Name and sets the value to "Doe" */
+				liveagent.addCustomDetail("Last Name", "Doe");
+
+				/* Creates a custom detail called Phone Number and sets the value to "555-1212" */
+				liveagent.addCustomDetail("Phone Number", "415-555-1212");
+				liveagent.findOrCreate("Contact").map("FirstName","First Name",true,true,true).map("LastName","Last Name",true,true,true).map("Phone","Phone Number",false,false,true);
+
 			});
 		});
 	}catch(e){
@@ -815,6 +833,5 @@ function triggerChatBot(chatBotObject) {
 		document.body.appendChild(s);
 	} else {
 		initESW(chatBotObject.serviceForceURL);
-		console.log("yes");
 	}
 }
