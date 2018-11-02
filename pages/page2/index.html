@@ -136,8 +136,8 @@
                                           </div>  
                                   <hr class="mb-4">
                                   <div class="mb-3">
-                                        <a  id="liveagent_button_online_Test" class="enabledButton btn btn-primary btn-lg btn-block"  onclick="validateLiveAgent()">Start Chat Test</a>
-                                        <span style="display:none;">
+                                        <a  id="liveagent_button_online_Test" class="enabledButton btn btn-primary btn-lg btn-block"  onclick="validateLiveAgent()">Check for agent avilabality first</a>
+                                        <span id="buttonVisability" >
                                           <a id="liveagent_button_online_5730b000000GnqQ" href="javascript://Chat" class="enabledButton btn btn-primary btn-lg btn-block"  style="display: none;" onclick="liveagent.startChat('5730b000000GnqQ')">Start Chat</a>
                                         </span>
                                           <div id="liveagent_button_offline_5730b000000GnqQ" href="javascript://Chat" class="" style="display: none;" >Agent not Avilable</div>
@@ -154,7 +154,7 @@
     debugger;
     //
     //liveagent.init('https://d.la4-c2cs-phx.salesforceliveagent.com/chat', '5720b000000CbfS', '00Dq0000000CkWo');  
-                 
+        window.name = "chatchat";         
         function validateLiveAgent(){
           try{
                 serviceTag = document.getElementById('serviceTag').value,
@@ -196,7 +196,10 @@
                 console.log("working");
                 debugger;
                 //liveagent.startChat('5730b000000GnqQ');
-                liveagent.startChat ('5730b000000GnqQ');
+
+                  //liveagent.startChatWithWindow("5730b000000GnqQ", 'chatchat'); 
+                //liveagent.startChat ('5730b000000GnqQ');
+                //document.getElementById("liveagent_button_online_Test").
                // document.getElementById("liveagent_button_online_5730b000000GnqQ").click();
                 
               }

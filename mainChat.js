@@ -11,7 +11,7 @@
 	}, false);
 	
 	if(!document.getElementById('snapinStyle')){
-		var css = '@font-face{font-family: "Salesforce Sans";src: url("https://www.sfdcstatic.com/system/shared/common/assets/fonts/SalesforceSans/SalesforceSans-Regular.woff") format("woff"),url("https://www.sfdcstatic.com/system/shared/common/assets/fonts/SalesforceSans/SalesforceSans-Regular.ttf") format("truetype")}.embeddedServiceSidebarMinimizedDefaultUI, .embeddedServiceSidebarHeader{background-color: #00447C !important; border: 1px !important;}.embeddedServiceSidebarFormField .uiInput .uiLabel-left{padding-top: 0px !important;margin-top: 11px;color: #444 !important; font-weight: 300 !important;}.embeddedServiceSidebarForm.formContent{background: #f1f1f1 !important}.embeddedServiceHelpButton .helpButton .uiButton{background-color: #005290 !important;font-family: "Salesforce Sans", sans-serif}.embeddedServiceHelpButton .helpButton .uiButton:focus{outline: 1px solid #005290}.embeddedServiceSidebarForm .uiButton{border-radius: 0 !important}.embeddedServiceSidebarFormField .slds-style-inputtext{border-radius: 0 !important}.embeddedServiceSidebarFormField .slds-style-inputtext{border-radius: 0 !important;border: none !important}.embeddedServiceSidebarForm.buttonWrapper{background: linear-gradient(to bottom, rgba(247, 247, 247, 0) 0%, rgba(247, 247, 247, 1) calc(100% - 77px), rgba(247, 247, 247, 1) 100%)}.embeddedServiceSidebarButton.uiButton--inverse{background: #f7f7f7 !important;border-radius: 0px !important;border: 1px solid #ccc !important}.embeddedServiceSidebarButton.uiButton--inverse:not(:disabled):focus{box-shadow: 0 0 3px 0 #dddddd !important}.embeddedServiceSidebarDialogState .dialogButton{border-radius: 0 !important}.embeddedServiceSidebarDialogState .dialogButton:not(:disabled):focus{text-decoration: none !important}.embeddedServiceSidebarFormField .slds-style-inputtext, .embeddedServiceSidebarFormField .slds-style-select{color: #444 !important}.embeddedServiceSidebarForm .fieldList{margin: 12px 12px 0 0px !important}.embeddedServiceLiveAgentStateChatHeaderOption .optionName{color: #fff !important;text-decoration: none !important}.embeddedServiceSidebarHeader .headerText{margin-bottom: 0px !important}.embeddedServiceSidebarMinimizedDefaultUI .minimizedImage {display: none !important;}.embeddedServiceLiveAgentStateChatHeader.reconnecting.alert {background-color: #cb2b19 !important;padding-top: 46px !important;}',
+		var css = '@font-face{font-family: "Salesforce Sans";src: url("https://www.sfdcstatic.com/system/shared/common/assets/fonts/SalesforceSans/SalesforceSans-Regular.woff") format("woff"),url("https://www.sfdcstatic.com/system/shared/common/assets/fonts/SalesforceSans/SalesforceSans-Regular.ttf") format("truetype")}.embeddedServiceSidebarMinimizedDefaultUI, .embeddedServiceSidebarHeader{background-color: #00447C !important; border: 1px !important;}.embeddedServiceSidebarFormField .uiInput .uiLabel-left{padding-top: 0px !important;margin-top: 11px;color: #444 !important; font-weight: 300 !important;}.embeddedServiceSidebarForm.formContent{background: #f1f1f1 !important}.embeddedServiceHelpButton .helpButton .uiButton{background-color: #005290 !important;font-family: "Salesforce Sans", sans-serif}.embeddedServiceHelpButton .helpButton .uiButton:focus{outline: 1px solid #005290}.embeddedServiceSidebarForm .uiButton{border-radius: 0 !important}.embeddedServiceSidebarFormField .slds-style-inputtext{border-radius: 0 !important}.embeddedServiceSidebarFormField .slds-style-inputtext{border-radius: 0 !important;border: none !important}.embeddedServiceSidebarForm.buttonWrapper{background: linear-gradient(to bottom, rgba(247, 247, 247, 0) 0%, rgba(247, 247, 247, 1) calc(100% - 77px), rgba(247, 247, 247, 1) 100%)}.embeddedServiceSidebarButton.uiButton--inverse{background: #f7f7f7 !important;border-radius: 0px !important;border: 1px solid #ccc !important}.embeddedServiceSidebarButton.uiButton--inverse:not(:disabled):focus{box-shadow: 0 0 3px 0 #dddddd !important}.embeddedServiceSidebarDialogState .dialogButton{border-radius: 0 !important}.embeddedServiceSidebarDialogState .dialogButton:not(:disabled):focus{text-decoration: none !important}.embeddedServiceSidebarFormField .slds-style-inputtext, .embeddedServiceSidebarFormField .slds-style-select{color: #444 !important}.embeddedServiceSidebarForm .fieldList{margin: 12px 12px 0 0px !important}.embeddedServiceLiveAgentStateChatHeaderOption .optionName{color: #fff !important;text-decoration: none !important}.embeddedServiceSidebarHeader .headerText{margin-bottom: 0px !important}.embeddedServiceSidebarMinimizedDefaultUI .minimizedImage {display: none !important;}.embeddedServiceLiveAgentStateChatHeader.reconnecting.alert {background-color: #cb2b19 !important;padding-top: 46px !important;}.embeddedServiceSidebarForm.buttonWrapper{background-color:#f1f1f1 !important;}',
 		head = document.head || document.getElementsByTagName('head')[0],
 		style = document.createElement('style');
 		style.type = 'text/css';
@@ -26,11 +26,15 @@
 	}
 })();
 function hideDomObject(eleSelector, findingEle) {
-	var snapInObjectGlobal = sessionStorage.getItem("snapInObjectSession");
-	snapInObject = JSON.parse(snapInObjectGlobal);
-	if (!snapInObject.snapinButtonClicked)
-	document.querySelector(eleSelector).style.display = 'none';
-	clearInterval(findingEle);
+	try{
+		var snapInObjectGlobal = sessionStorage.getItem("snapInObjectSession");
+		snapInObject = JSON.parse(snapInObjectGlobal);
+		if (!snapInObject.snapinButtonClicked)
+		document.querySelector(eleSelector).style.display = 'none';
+		clearInterval(findingEle);
+	}catch(e){
+		console.log("Error in:"+ e);
+	}
 }
 //eleExist('.helpButtonLabel .message', checkAgentOffline);
 function initSnapIn(snapInObject) {
@@ -61,6 +65,10 @@ function triggerSnapin(snapInObject) {
 		snapInObject["applicationClicked"] = false;
 		var snapInObjectGlobal = JSON.stringify(snapInObject);
 		sessionStorage.setItem("snapInObjectSession", snapInObjectGlobal);
+		if(document.querySelector(".embeddedServiceSidebar")){
+			collectGlobalServiceTagValue(snapInObject);
+			showAdditionalDetailsInUi();
+		}
 	} else {
 		if (document.querySelector(".embeddedServiceSidebar")){
 			document.querySelector(".embeddedServiceSidebar").style.display = 'block';
@@ -96,10 +104,7 @@ function triggerSnapin(snapInObject) {
 
 	if (snapInObject != undefined && snapInObject.snapinSessionAvailable && runApplication) {
 		initESW = function (gslbBaseURL) {
-			snapinChatGlobalIssueType = snapInObject.issueVal;
-			snapinChatGlobalServiceTag = snapInObject.serviceTag;
-			if ("productName" in snapInObject)
-				snapinChatGlobalProductName = snapInObject.productName;
+			collectGlobalServiceTagValue(snapInObject);
 			eleExist('.helpButtonEnabled #helpButtonSpan > .message', chatClick);
 			embedded_svc.settings.displayHelpButton = true;
 			if ("language" in snapInObject)
@@ -235,7 +240,10 @@ function triggerResumeSnapin(snapInObject) {
 			snapinChatGlobalProductName = snapInObject.productName;
 		eleExist('.helpButtonEnabled #helpButtonSpan > .message', chatClick);
 		embedded_svc.settings.displayHelpButton = true;
-		translatedLabels = translation("en");
+		if ("language" in snapInObject)
+				translatedLabels = translation(snapInObject.language);
+			else
+				translatedLabels = translation("en");
 		embedded_svc.settings.language = translatedLabels.language;
 		embedded_svc.settings.enabledFeatures = ['LiveAgent'];
 		embedded_svc.settings.entryFeature = 'LiveAgent';
@@ -293,25 +301,41 @@ function triggerResumeSnapin(snapInObject) {
 eleExist('.helpButtonEnabled #helpButtonSpan > .message', chatClick);
 eleExist(".dockableContainer .ended.embeddedServiceLiveAgentStateChatMessage", chatEnded);
 eleExist(".dockableContainer .embeddedServiceLiveAgentStateWaiting .waitingCancelChat", chatEndedOnWaiting);
-console.log("addCharectorRemaining2");
+
 eleExist(".embeddedServiceSidebarFeature .embeddedServiceLiveAgentStatePrechatDefaultUI .embeddedServiceSidebarForm .embeddedServiceSidebarFormField .Issue_Description__c", addCharectorRemaining);
 
+function collectGlobalServiceTagValue(snapInObject){
+	snapinChatGlobalIssueType = snapInObject.issueVal;
+	snapinChatGlobalServiceTag = snapInObject.serviceTag;
+	if ("productName" in snapInObject)
+		snapinChatGlobalProductName = snapInObject.productName;
+}
+
 function chatClick(eleSelector, findingEle) {
-	if (document.querySelector(eleSelector).innerText === 'Chat Now') {
-		document.querySelector(eleSelector).click();
+	try{
+		if (document.querySelector(eleSelector).innerText === 'Chat Now') {
+			document.querySelector(eleSelector).click();
+		}
+		clearInterval(findingEle);
+	}catch(e){
+		console.log("Error in:"+ e);
 	}
-	clearInterval(findingEle);
 }
 function chatEndedOnWaiting(eleSelector, findingEle) {
-	document.querySelector(eleSelector).addEventListener('click', function(e) {virtualSnapInObjectSession(false);});
-	/*document.querySelector(eleSelector).click(function () {
-		virtualSnapInObjectSession(false);
-	});*/
+	try{
+		document.querySelector(eleSelector).addEventListener('click', function(e) {virtualSnapInObjectSession(false);});
 	clearInterval(findingEle);
+	}catch(e){
+		console.log("Error in:"+ e);
+	}
 }
 function chatEnded(eleSelector, findingEle) {
-	virtualSnapInObjectSession(false);
-	clearInterval(findingEle);
+	try{
+		virtualSnapInObjectSession(false);
+		clearInterval(findingEle);
+	}catch(e){
+		console.log("Error in:"+ e);
+	}
 }
 function virtualSnapInObjectSession(value) {
 	var snapInObjectGlobal = sessionStorage.getItem("snapInObjectSession");
@@ -320,46 +344,42 @@ function virtualSnapInObjectSession(value) {
 	snapInObjectGlobal = JSON.stringify(snapInObject);
 	sessionStorage.setItem("snapInObjectSession", snapInObjectGlobal);
 }
-/*function checkAgentOffline(eleSelector, findingEle) {
-	if (document.querySelector(eleSelector).innerText === 'Agent Offline') {
-		document.querySelector("#" + triggerChatButtonId).disabled = "disabled";
-	} else {
-		document.querySelector("#" + triggerChatButtonId).attr("disabled", false);
-	}
-	clearInterval(findingEle);
-}*/
 function addCharectorRemaining(eleSelector, findingEle) {
-	//snapinPrechatLoaded();
-	if(document.getElementById("loadingSnapinMsg"))
-		document.getElementById("loadingSnapinMsg").remove();
-	if (!document.getElementById("snappinCharCounter")) {
-		var currentCharLength = document.querySelector(eleSelector).value.length;
-		var maxCharLength = 255;
-		//document.querySelector(eleSelector).after("<div id='snappinCharCounter' style='text-align:right;position:relative;font-size:.75em;line-height: 1.5;margin-right: .75em;margin-left: .5em;margin-top: 8px;color: #767676;float: right;'>" + currentCharLength + " / " + maxCharLength + " characters</div>")
-		document.querySelector(eleSelector).insertAdjacentHTML('afterend', "<div id='snappinCharCounter' style='text-align:right;position:relative;font-size:.75em;line-height: 1.5;margin-right: .75em;margin-left: .5em;margin-top: 8px;color: #767676;float: right;'>" + currentCharLength + " / " + maxCharLength + " characters</div>");
-		document.querySelector(eleSelector).onkeyup = function () { 
-			currentCharLength = this.value.length
-			document.querySelector("#snappinCharCounter").innerText = currentCharLength + " / " + maxCharLength + " characters";
+	try{
+		if(document.getElementById("loadingSnapinMsg"))
+			removeDomElement(document.getElementById("loadingSnapinMsg"));
+		if (!document.getElementById("snappinCharCounter")) {
+			var currentCharLength = document.querySelector(eleSelector).value.length;
+			var maxCharLength = 255;
+			//document.querySelector(eleSelector).after("<div id='snappinCharCounter' style='text-align:right;position:relative;font-size:.75em;line-height: 1.5;margin-right: .75em;margin-left: .5em;margin-top: 8px;color: #767676;float: right;'>" + currentCharLength + " / " + maxCharLength + " characters</div>")
+			document.querySelector(eleSelector).insertAdjacentHTML('afterend', "<div id='snappinCharCounter' style='text-align:right;position:relative;font-size:.75em;line-height: 1.5;margin-right: .75em;margin-left: .5em;margin-top: 8px;color: #767676;float: right;'>" + currentCharLength + " / " + maxCharLength + " characters</div>");
+			document.querySelector(eleSelector).onkeyup = function () { 
+				currentCharLength = this.value.length
+				document.querySelector("#snappinCharCounter").innerText = currentCharLength + " / " + maxCharLength + " characters";
+			}
+			document.querySelector(".formContent.embeddedServiceSidebarForm").insertAdjacentHTML("beforeend", "<div style='font-size: 12px;color:#767676;text-align: left;margin: 2em 1.75em; font-style: italic;color:#444444;'><b>Your privacy is important to us.</b> We will only use your information to process your request. We will not share it with anyone. To learn more about how we use and protect your data, see the <a href='https://www.dell.com/learn/policies-privacy?s=corp'>Dell Privacy Statement</a>.</div>");
+			keypressFieldValidation();
+			showAdditionalDetailsInUi();
 		}
-		document.querySelector(".formContent.embeddedServiceSidebarForm").insertAdjacentHTML("beforeend", "<div style='font-size: 12px;color:#767676;text-align: left;margin: 2em 1.75em; font-style: italic;color:#444444;'><b>Your privacy is important to us.</b> We will only use your information to process your request. We will not share it with anyone. To learn more about how we use and protect your data, see the <a href='https://www.dell.com/learn/policies-privacy?s=corp'>Dell Privacy Statement</a>.</div>");
-		keypressFieldValidation();
-		showAdditionalDetailsInUi();
+		//document.getElementById(triggerChatButtonId).setAttribute("disabled", false);
+		clearInterval(findingEle);
+	}catch(e){
+		console.log("Error in:"+ e);
 	}
-	//document.getElementById(triggerChatButtonId).setAttribute("disabled", false);
-	clearInterval(findingEle);
 }
 function showAdditionalDetailsInUi() {
+	if(document.getElementById("readonlyPreChatContainer"))
+		removeDomElement(document.getElementById("readonlyPreChatContainer"));
 	var topFields = document.querySelector(".sidebarBody .prechatUI  .embeddedServiceSidebarForm ul.fieldList");
 	if (snapinChatGlobalProductName == null)
-		var topFieldValues = '<div class="readonlyContainer" style="margin: 0 1.5em 6px 1.5em; text-align: left;position: relative;font-size: .75em;color: #444444;margin-bottom: 0px;"><div><b>Service Tag:</b> ' + snapinChatGlobalServiceTag + '</div><div><b>Issue:</b> ' + snapinChatGlobalIssueType + '</div></div>';
+		var topFieldValues = '<div id="readonlyPreChatContainer" class="readonlyContainer" style="margin: 0 1.5em 6px 1.5em; text-align: left;position: relative;font-size: .75em;color: #444444;margin-bottom: 0px;"><div><b>Service Tag:</b> ' + snapinChatGlobalServiceTag + '</div><div><b>Issue:</b> ' + snapinChatGlobalIssueType + '</div></div>';
 		//topFields.prepend('<div class="readonlyContainer" style="margin: 1.5em; text-align: left;position: relative;font-size: .75em;color: #767676;"><div><b>Service Tag:</b> ' + snapinChatGlobalServiceTag + '</div><div><b>Issue:</b> ' + snapinChatGlobalIssueType + '</div></div>');
 	else
-	var topFieldValues = '<div class="readonlyContainer" style="margin: 0 1.5em 6px 1.5em; text-align: left;position: relative;font-size: .75em;color: #444444;"><div style="font-size: 1.2em;">' + snapinChatGlobalProductName + '</div><div><b>Service Tag:</b> ' + snapinChatGlobalServiceTag + '</div><div><b>Issue:</b> ' + snapinChatGlobalIssueType + '</div></div>';
+	var topFieldValues = '<div id="readonlyPreChatContainer" class="readonlyContainer" style="margin: 0 1.5em 6px 1.5em; text-align: left;position: relative;font-size: .75em;color: #444444;"><div style="font-size: 1.2em;">' + snapinChatGlobalProductName + '</div><div><b>Service Tag:</b> ' + snapinChatGlobalServiceTag + '</div><div><b>Issue:</b> ' + snapinChatGlobalIssueType + '</div></div>';
 	//topFields.prepend('<div class="readonlyContainer" style="margin: 1.5em; text-align: left;position: relative;font-size: .75em;color: #767676;"><div style="font-size: 1.2em;">' + snapinChatGlobalProductName + '</div><div><b>Service Tag:</b> ' + snapinChatGlobalServiceTag + '</div><div><b>Issue:</b> ' + snapinChatGlobalIssueType + '</div></div>');
 	topFields.insertAdjacentHTML("afterbegin", topFieldValues);
 }
 function keypressFieldValidation() {
-	
 	document.querySelector('.sidebarBody .Primary_Phone__c').onkeypress = function (e) {
 		var a = [];
 		var k = e.which || e.keyCode;
@@ -431,7 +451,16 @@ function keypressFieldValidation() {
 	
 }
 function translation(language) {
-	if (language == "ja") {
+	if (language == "de") {
+		this.issue = "Issue";
+		this.firstName = "Vorname";
+		this.lastName = "Nachname";
+		this.emailAdd = "E-Mail";
+		this.primPhone = "Primair telefoonnummer";
+		this.issueDesc = "Probleem Beschrijving";
+		this.characters = "characters";
+		this.language = "de";
+	} else if (language == "ja") {
 		this.issue = "Issue";
 		this.firstName = "名";
 		this.lastName = "姓";
@@ -458,16 +487,7 @@ function translation(language) {
 		this.issueDesc = "descripcion del problema";
 		this.characters = "characters";
 		this.language = "es";
-	} else if (language == "es_MX") {
-		this.issue = "Issue";
-		this.firstName = "Nombre";
-		this.lastName = "Apellidos";
-		this.emailAdd = "Correo electrónico";
-		this.primPhone = "Primary Phone Number";
-		this.issueDesc = "Issue Description";
-		this.characters = "characters";
-		this.language = "es_MX";
-	} else if (language == "zh-CN") {
+	}else if (language == "cn") {
 		this.issue = "Issue";
 		this.firstName = "名";
 		this.lastName = "姓";
@@ -485,16 +505,7 @@ function translation(language) {
 		this.issueDesc = "descrição do problema";
 		this.characters = "characters";
 		this.language = "pt";
-	} else if (language == "pt_BR") {
-		this.issue = "Issue";
-		this.firstName = "Nome";
-		this.lastName = "Sobrenome";
-		this.emailAdd = "Email";
-		this.primPhone = "Número de Telefone Principal";
-		this.issueDesc = "descrição do problema";
-		this.characters = "characters";
-		this.language = "pt";
-	} else if (language == "nl") {
+	} else if (language == "nl" || language == "nl_NL") {
 		this.issue = "Issue";
 		this.firstName = "Voornaam";
 		this.lastName = "Achternaam";
@@ -503,16 +514,7 @@ function translation(language) {
 		this.issueDesc = "Probleem Beschrijving";
 		this.characters = "characters";
 		this.language = "nl";
-	} else if (language == "nl_NL") {
-		this.issue = "Issue";
-		this.firstName = "Voornaam";
-		this.lastName = "Achternaam";
-		this.emailAdd = "E-mail";
-		this.primPhone = "Primair telefoonnummer";
-		this.issueDesc = "Probleem Beschrijving";
-		this.characters = "characters";
-		this.language = "nl";
-	} else {
+	}else {
 		this.issue = "Issue";
 		this.firstName = "First Name";
 		this.lastName = "Last Name";
@@ -522,6 +524,7 @@ function translation(language) {
 		this.characters = "characters";
 		this.language = "en";
 	}
+	console.log("Language = "+ this.language);
 	return this;
 }
 //jquery to JS function [START]
@@ -584,11 +587,11 @@ window.addEventListener("click", function (event) {
 						callDellmetricsTrack("890.220.008", "ClickedOn Maximize button");
 						break;
 					case "uiButton helpButtonEnabled":
+					case "uiButton no-hover helpButtonEnabled":
 						if(document.querySelector(".helpButtonEnabled #helpButtonSpan > .message").innerText == "Chat Now"){
 							snapInCurrentPage = null;
 							callDellmetricsTrack("890.220.001", "StartsChat for " + snapinChatGlobalServiceTag + "|" + snapinChatGlobalIssueType + "|" + snapinChatGlobalProductName);
 							snapinLoading();
-							console.log("addCharectorRemaining3");
 							eleExist(".embeddedServiceSidebarFeature .embeddedServiceLiveAgentStatePrechatDefaultUI .embeddedServiceSidebarForm .embeddedServiceSidebarFormField .Issue_Description__c", addCharectorRemaining);
 						}else
 							callDellmetricsTrack("890.220.001", "AgentOffline for " + snapinChatGlobalServiceTag + "|" + snapinChatGlobalIssueType + "|" + snapinChatGlobalProductName);
@@ -598,7 +601,6 @@ window.addEventListener("click", function (event) {
 							callDellmetricsTrack("890.220.009", "ClickedOn " + closestByTagName(clickedElement, 'a').text);
 						}else if(clickedElement.parentNode.parentNode.className ==  "uiButton helpButtonEnabled" || clickedElement.parentNode.className == "uiButton helpButtonEnabled"){
 							snapinLoading();
-							console.log("addCharectorRemaining1");
 							eleExist(".embeddedServiceSidebarFeature .embeddedServiceLiveAgentStatePrechatDefaultUI .embeddedServiceSidebarForm .embeddedServiceSidebarFormField .Issue_Description__c", addCharectorRemaining);
 						}
 						break;
@@ -695,20 +697,24 @@ window.addEventListener("blur", function (event) {
 }, true);
 
 function waitChatCounter(eleSelector, findingEle, counterValue) {
-	if (typeof(dellmetricsTrack) == "function") {
-		if (dellmetricsTrack) {
-			if (counterValue != document.querySelector(eleSelector).innerText) {
-				dellmetricsTrack("890.220.012", "Queue number: " + document.querySelector(eleSelector).innerText);
-				clearInterval(findingEle);
-				if (document.querySelector(eleSelector).innerText > 0 && document.querySelector(eleSelector).innerText != "You're up next!") {
-					eleExistWithVariable('.dockableContainer .embeddedServiceLiveAgentStateWaiting .waitingStateContainer .waitingStateContent .queuePositionContent .header', waitChatCounter, document.querySelector(eleSelector).innerText);
+	try{
+		if (typeof(dellmetricsTrack) == "function") {
+			if (dellmetricsTrack) {
+				if (counterValue != document.querySelector(eleSelector).innerText) {
+					dellmetricsTrack("890.220.012", "Queue number: " + document.querySelector(eleSelector).innerText);
+					clearInterval(findingEle);
+					if (document.querySelector(eleSelector).innerText > 0 && document.querySelector(eleSelector).innerText != "You're up next!") {
+						eleExistWithVariable('.dockableContainer .embeddedServiceLiveAgentStateWaiting .waitingStateContainer .waitingStateContent .queuePositionContent .header', waitChatCounter, document.querySelector(eleSelector).innerText);
+					}
 				}
+			} else {
+				clearInterval(findingEle);
 			}
 		} else {
 			clearInterval(findingEle);
 		}
-	} else {
-		clearInterval(findingEle);
+	}catch(e){
+		console.log("Error in:"+ e);
 	}
 }
 function eleExistWithVariable(eleSelector, callbackFunc, value) {
@@ -734,11 +740,17 @@ function snapinLoading(){
 
 }
 function snapinPrechatLoaded(eleSelector, findingEle){
-	if(document.getElementById("loadingSnapinMsg"))
-		document.getElementById("loadingSnapinMsg").remove();
-	clearInterval(findingEle);
+	try{
+		if(document.getElementById("loadingSnapinMsg"))
+			removeDomElement(document.getElementById("loadingSnapinMsg"));
+		clearInterval(findingEle);
+	}catch(e){
+		console.log("Error in:"+ e);
+	}
 }
-	
+function removeDomElement(DomElement){
+	DomElement.parentNode.removeChild(DomElement);
+}
 function initLiveAgent(liveAgentObject) {
 	try{
 		$.getScript(liveAgentObject.deploymentUrl, function () {
@@ -752,16 +764,6 @@ function initLiveAgent(liveAgentObject) {
 				liveagent.showWhenOffline(liveAgentObject.buttonId, document.getElementById('liveagent_button_offline_' + liveAgentObject.buttonId));
 				if ("serviceTag" in liveAgentObject)
 					liveagent.addCustomDetail('serviceTag', liveAgentObject.serviceTag);
-				/* Creates a custom detail called First Name and sets the value to "Jane" */
-				liveagent.addCustomDetail("First Name", "Jane");
-
-				/* Creates a custom detail called Last Name and sets the value to "Doe" */
-				liveagent.addCustomDetail("Last Name", "Doe");
-
-				/* Creates a custom detail called Phone Number and sets the value to "555-1212" */
-				liveagent.addCustomDetail("Phone Number", "415-555-1212");
-				liveagent.findOrCreate("Contact").map("FirstName","First Name",true,true,true).map("LastName","Last Name",true,true,true).map("Phone","Phone Number",false,false,true);
-
 			});
 		});
 	}catch(e){
