@@ -153,25 +153,25 @@ function triggerSnapin(snapInObject) {
 							"doFind": true,
 							"fieldName": "LastName",
 							"isExactMatch": true,
-							"label": "Last Name"
+							"label": translatedLabels.lastName
 						}, {
 							"doCreate": false,
 							"doFind": true,
 							"fieldName": "FirstName",
 							"isExactMatch": true,
-							"label": "First Name"
+							"label": translatedLabels.firstName
 						}, {
 							"doCreate": false,
 							"doFind": true,
 							"fieldName": "Email",
 							"isExactMatch": true,
-							"label": "Email"
+							"label": translatedLabels.emailAdd
 						}, {
 							"doCreate": false,
 							"doFind": true,
 							"fieldName": "Primary_Phone__c",
 							"isExactMatch": true,
-							"label": "Primary Phone Number"
+							"label": translatedLabels.primPhone
 						}
 					],
 					"entityName": "Contact",
@@ -193,7 +193,7 @@ function triggerSnapin(snapInObject) {
 							"doFind": true,
 							"fieldName": "Issue_Description__c",
 							"isExactMatch": true,
-							"label": "Issue Description"
+							"label": translatedLabels.issueDesc
 						}
 					],
 					"entityName": "Case"
