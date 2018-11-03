@@ -254,12 +254,12 @@ function triggerResumeSnapin(snapInObject) {
 				"value": snapInObject.srNumber,
 				"transcriptFields": ["Delta_SR__c"]
 			}, {
-				"label": "First Name",
+				"label": translatedLabels.firstName,
 				"name": "FirstName",
 				"value": snapInObject.firstName,
 				"displayToAgent": true
 			}, {
-				"label": "Last Name",
+				"label": translatedLabels.lastName,
 				"value": snapInObject.lastName,
 				"displayToAgent": true
 			}
