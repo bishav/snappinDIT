@@ -52,11 +52,13 @@ function initSnapIn(snapInObject) {
 function triggerSnapin(snapInObject) {
 	var runApplication = true;
 	if (snapInObject == undefined) {
-		var snapInObjectGlobal = sessionStorage.getItem("snapInObjectSession");
-		if(snapInObjectGlobal != null){  
-			snapInObject = JSON.parse(snapInObjectGlobal);
-			if ("applicationClicked" in snapInObject)
-				runApplication = snapInObject.applicationClicked;
+		if(history.length > 1){
+			var snapInObjectGlobal = sessionStorage.getItem("snapInObjectSession");
+			if(snapInObjectGlobal != null){  
+				snapInObject = JSON.parse(snapInObjectGlobal);
+				if ("applicationClicked" in snapInObject)
+					runApplication = snapInObject.applicationClicked;
+			}
 		}
 	} else if (!snapInObject.snapinButtonClicked) {
 		eleExist('.embeddedServiceHelpButton', hideDomObject);
@@ -771,6 +773,34 @@ function initLiveAgent(liveAgentObject) {
 	}
 }
 
+function initLiveAgentWithoutPrechatForm(liveAgentObject) {
+	try{
+		$.getScript(liveAgentObject.deploymentUrl, function () {
+			liveagent.enableLogging();
+			liveagent.init(liveAgentObject.liveAgentInitUrl, liveAgentObject.deploymentId, liveAgentObject.organizationId);
+			if (!window._laq) {
+				window._laq = [];
+			}
+			window._laq.push(function () {
+				liveagent.showWhenOnline(liveAgentObject.buttonId, document.getElementById('liveagent_button_online_' + liveAgentObject.buttonId));
+				liveagent.showWhenOffline(liveAgentObject.buttonId, document.getElementById('liveagent_button_offline_' + liveAgentObject.buttonId));
+				if ("serviceTag" in liveAgentObject)
+					liveagent.addCustomDetail('serviceTag', liveAgentObject.serviceTag).saveToTranscript('Service_Tag__c');
+				liveagent.addCustomDetail("First Name", liveAgentObject.firstName).saveToTranscript('FirstName__c');
+				liveagent.addCustomDetail("Last Name", liveAgentObject.lastName).saveToTranscript('LastName__c');
+				liveagent.addCustomDetail("Phone Number", liveAgentObject.phoneNumber).saveToTranscript('ContactNumber__c');
+				liveagent.addCustomDetail("Email ID", liveAgentObject.emailId).saveToTranscript('Email__c');
+				liveagent.addCustomDetail("Issue Type", liveAgentObject.issueType).saveToTranscript('Issue__c');
+				liveagent.addCustomDetail("Issue Description", liveAgentObject.issueDescription).saveToTranscript('Description__c');
+				liveagent.findOrCreate("Asset").map("Asset__c", liveAgentObject.serviceTag, true, false, false).showOnCreate(); 
+				liveagent.setName(liveAgentObject.firstName + ' ' + liveAgentObject.lastName); 
+			});
+		});
+	}catch(e){
+		console.log('error:' + e);
+	}
+}
+
 function initResumeLiveAgent(liveAgentObject) {
 	if (!window._laq) {
 		window._laq = [];
@@ -809,12 +839,40 @@ function triggerChatBot(chatBotObject) {
 		embedded_svc.settings.waitingStateBackgroundImgURL = '';
 		embedded_svc.settings.smallCompanyLogoImgURL = '';
 		 embedded_svc.settings.extraPrechatFormDetails = [
-     
-            { "label": "First Name", "name": "FirstName", "value": chatBotObject.FirstName,"transcriptFields": ["FirstName__c"], "displayToAgent": true },
-            { "label": "Last Name", "name": "LastName", "value": chatBotObject.LastName,"transcriptFields": ["LastName__c"], "displayToAgent": true },
-            { "label": "Service_Tag", "value": chatBotObject.Service_Tag,"transcriptFields": ["Service_Tag__c"], "displayToAgent": true },
-            { "label": "Kb_Article", "value": chatBotObject.Kb_Article,"transcriptFields": ["KB__c"], "displayToAgent": true }   
-           ];
+
+			{ "label": "Service_Tag", "value":chatBotObject.Service_Tag,"transcriptFields": ["Service_Tag__c"], "displayToAgent": true },
+			{ "label": "Phone Number", "value":chatBotObject.Phone_Number,"transcriptFields": ["ContactNumber__c"], "displayToAgent": true },
+			{ "label": "First Name", "value":chatBotObject.First_Name,"transcriptFields": ["FirstName__c"], "displayToAgent": true },
+            { "label": "Last Name", "value":chatBotObject.Last_Name,"transcriptFields": ["LastName__c"], "displayToAgent": true },
+			{ "label": "Email", "value":chatBotObject.Email,"transcriptFields": ["Email__c"], "displayToAgent": true},
+			{ "label": "product_Model", "value":chatBotObject.product_Model,"transcriptFields": ["product_Model__c"], "displayToAgent": true },
+			{ "label": "Kb_Article", "value":chatBotObject.Kb_Article,"transcriptFields": ["KB__c"], "displayToAgent": true },
+			{ "label": "issue_Description", "value":chatBotObject.issue_Description,"transcriptFields": ["issue_Description__c"], "displayToAgent": true },
+			{ "label": "warranty_Details", "value":chatBotObject.warranty_Details,"transcriptFields": ["warranty_Details__c"], "displayToAgent": true },
+			{ "label": "windows_Version", "value":chatBotObject.windows_Version,"transcriptFields": ["windows_Version__c"], "displayToAgent": true },
+			{ "label": "BIOS_Version", "value":chatBotObject.BIOS_Version,"transcriptFields": ["BIOS_Version__c"], "displayToAgent": true },
+			{ "label": "recent_Software_Updated_Date", "value":chatBotObject.recent_Software_Updated_Date,"transcriptFields": ["recent_Software_Updated_Date__c"], "displayToAgent": true },
+			{ "label": "is_External_Peripherals_Connected", "value":chatBotObject.is_External_Peripherals_Connected,"transcriptFields": ["is_External_Peripherals_Connected__c"], "displayToAgent": true },
+			{ "label": "is_SA_Diagnostic_Passed", "value":chatBotObject.is_SA_Diagnostic_Passed,"transcriptFields": ["is_SA_Diagnostic_Passed__c"], "displayToAgent": true },
+			{ "label": "is_Error_Related_HWorSW", "value":chatBotObject.is_Error_Related_HWorSW,"transcriptFields": ["is_Error_Related_HWorSW__c"], "displayToAgent": true },
+			{ "label": "is_BIOSandDrivers_Updated", "value":chatBotObject.is_BIOSandDrivers_Updated,"transcriptFields": ["is_BIOSandDrivers_Updated__c"], "displayToAgent": true },
+			{ "label": "is_AnyAntivirus_Installed", "value":chatBotObject.is_AnyAntivirus_Installed,"transcriptFields": ["is_AnyAntivirus_Installed__c"], "displayToAgent": true },
+			{ "label": "is_Related_Heat_Issue", "value":chatBotObject.is_Related_Heat_Issue,"transcriptFields": ["is_Related_Heat_Issue__c"], "displayToAgent": true },
+			{ "label": "is_Warranty_Covered", "value":chatBotObject.is_Warranty_Covered,"transcriptFields": ["is_Warranty_Covered__c"], "displayToAgent": true },
+			{ "label": "is_HardDrive_Test_Passed", "value":chatBotObject.is_HardDrive_Test_Passed,"transcriptFields": ["is_HardDrive_Test_Passed__c"], "displayToAgent": true },
+			{ "label": "is_Memory_Test_Passed", "value":chatBotObject.is_Memory_Test_Passed,"transcriptFields": ["is_Memory_Test_Passed__c"], "displayToAgent": true },
+			{ "label": "is_MotherBoard_Test_Passed", "value":chatBotObject.is_MotherBoard_Test_Passed,"transcriptFields": ["is_MotherBoard_Test_Passed__c"], "displayToAgent": true },
+			{ "label": "is_HDD_IDE", "value":chatBotObject.is_HDD_IDE,"transcriptFields": ["is_HDD_IDE__c"], "displayToAgent": true },
+			{ "label": "last_time_scan_run", "value":chatBotObject.last_time_scan_run,"transcriptFields": ["last_time_scan_run__c"], "displayToAgent": true }
+		   ];
+		   embedded_svc.settings.prepopulatedPrechatFields = {
+			FirstName: chatBotObject.First_Name,
+			LastName: chatBotObject.Last_Name,
+			Email: chatBotObject.Email,
+			ContactNumber__c: chatBotObject.Phone_Number,
+			Service_Tag__c :chatBotObject.Service_Tag
+		};
+		   
 		embedded_svc.settings.enabledFeatures = ['LiveAgent'];
 		embedded_svc.settings.entryFeature = 'LiveAgent';
 		embedded_svc.init(chatBotObject.chatBotInitURL, chatBotObject.chatBotLAURL, gslbBaseURL, chatBotObject.organizationId, chatBotObject.componentName, {

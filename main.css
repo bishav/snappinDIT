@@ -46,7 +46,22 @@
 
 .navbar.navbar-light.bg-light {
     background-color: #fff!important;
+}
+.navigationLink {
+    background-color: #007db8;
     box-shadow: 0 5px 5px 1px #e3e3e3;
+    padding: 6px 0px;
+}
+
+.navigationLink a{
+    color: #fff;
+    margin-left: 20px;
+}
+.navigationLink a.active{
+    color: rgb(176, 210, 252) !important;
+}
+.navigationLink a:hover{
+    text-decoration: none;
 }
 
 .navbar.navbar-light.bg-light > .navbar-brand {
