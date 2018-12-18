@@ -617,7 +617,8 @@ window.addEventListener("click", function (event) {
 
 function callDellmetricsTrack(propValue, message){
 	if(showsAgentOflineMsg(propValue, message)){
-		$(".dialog-button-0.embeddedServiceSidebarButton").hide();
+		document.querySelector(".dialog-button-0.embeddedServiceSidebarButton").style.display = 'none'
+		//$(".dialog-button-0.embeddedServiceSidebarButton").hide();
 	}
 	if (typeof(dellmetricsTrack) == "function"){
 		if (dellmetricsTrack){
