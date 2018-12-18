@@ -616,6 +616,9 @@ window.addEventListener("click", function (event) {
 });
 
 function callDellmetricsTrack(propValue, message){
+	if(showsAgentOflineMsg(propValue, message)){
+		$(".dialog-button-0.embeddedServiceSidebarButton").hide();
+	}
 	if (typeof(dellmetricsTrack) == "function"){
 		if (dellmetricsTrack){
 			if(trackevent){
@@ -629,6 +632,24 @@ function callDellmetricsTrack(propValue, message){
 			
 		}	
 	}
+}
+
+function showsAgentOflineMsg(propValue, message){
+	if(propValue == "890.220.016" && 
+		(
+			message == "申し訳ありません。チャットすることができません。 しばらくしてからもう一度お試しください。" ||
+			message == "죄송합니다. 현재 귀하와 채팅할 수 없습니다. 나중에 다시 시도해주십시오." ||
+			message == "Lo sentimos, no se puede abrir una sesión de chat. Vuelva más tarde o inténtelo de nuevo." ||
+			message == "抱歉，我们无法和您聊天。 请稍后回来或重试。" ||
+			message == "Lamentamos não poder conversar com você. Volte mais tarde ou tente novamente." ||
+			message == "Es tut uns Leid, aber momentan können wir nicht mit Ihnen chatten. Versuchen Sie es später noch einmal." ||
+			message.includes("Sorry that we are not able to chat with you. Come back later or try again.")		
+		)
+		){
+			return true;
+		}else{
+			return false;
+		}
 }
 
 function pageObserverForProp20(eleSelector){
