@@ -36,7 +36,7 @@
                     <a href="../page2/index.html" target="_blank" href="#" >Live Agent (In New Tab)</a>
                     <a href="../page3/index.html" target="_blank">Resume Chat (In New Tab)</a>
 </div>    
-    <div class="new-chat" style="margin-top: 20px;">
+    <div id="prechatFormCanvas" class="new-chat" style="margin-top: 20px;">
         <div class="row justify-content-md-center">
                 <div class="col-lg-6 col-md-8 col-sm-12 order-md-1  border rounded">
                                 <form class="needs-validation" novalidate="">
@@ -54,14 +54,14 @@
                                     <div class="row"> 
                                     <div class="col-md-6 mb-3">
                                       <label for="firstName">First name</label>
-                                      <input type="text" class="form-control" id="firstName" placeholder="" value="" required="">
+                                      <input type="text" class="form-control" id="firstName" placeholder="" value= "Bisahv" required="">
                                       <div class="invalid-feedback">
                                         Valid first name is required.
                                       </div>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                       <label for="lastName">Last name</label>
-                                      <input type="text" class="form-control" id="lastName" placeholder="" value="" required="">
+                                      <input type="text" class="form-control" id="lastName" placeholder="" value="Rajbhandari" required="">
                                       <div class="invalid-feedback">
                                         Valid last name is required.
                                       </div>
@@ -74,7 +74,7 @@
                                       <div class="input-group-prepend">
                                         <span class="input-group-text">@</span>
                                       </div>
-                                      <input type="text" class="form-control" id="emailId" placeholder="Email Id" required="">
+                                      <input type="text" class="form-control" id="emailId" placeholder="Email Id" required="" value="bishav@dell.com">
                                       <div class="invalid-feedback" style="width: 100%;">
                                         Your email id is required.
                                       </div>
@@ -84,7 +84,7 @@
                       
                                   <div class="mb-3">
                                     <label for="phoneNumber">Phone Number</label>
-                                    <input type="text" class="form-control" id="phoneNumber" placeholder="Phone Number" required="">
+                                    <input type="text" class="form-control" id="phoneNumber" placeholder="Phone Number" required="" value="88920">
                                     <div class="invalid-feedback">
                                       Please enter your Phone Number.
                                     </div>
@@ -93,10 +93,10 @@
                                   <div class="mb-3">
                                         <label for="issueType">Issue Type</label>
                                         <select class="custom-select d-block w-100" id="issueType" required="">
-                                                <option value="">Choose...</option>
-                                                <option>Slow Performance</option>
+                                                <option  value="">Slow Performance</option>
                                                 <option>Keyboard not working</option>
                                                 <option>Touch pad not working</option>
+                                                <option >Choose...</option>
                                               </select>
                                         <div class="invalid-feedback">
                                           Please enter your Issue Type.
@@ -104,18 +104,15 @@
                                       </div>
                                       <div class="mb-3">
                                             <label for="issueDescription">Description</label>
-                                            <input type="text" class="form-control" id="issueDescription" placeholder="Description" required="">
+                                            <input type="text" class="form-control" id="issueDescription" placeholder="Description" required="" value="Description Test">
                                             <div class="invalid-feedback">
-                                              Please enter your Phone Number.
+                                              Please enter your Description.
                                             </div>
                                           </div>  
                                   <hr class="mb-4">
                                   <div class="mb-3">
-                                      <a  id="liveagent_button_online_Test" class="enabledButton btn btn-primary btn-lg btn-block"  onclick="startSnapinChat()">Check for agent avilabality first</a>
+                                      <a  id="liveagent_button_online_Test" class="enabledButton btn btn-primary btn-lg btn-block"  onclick="startSnapinChat()">Start New Chat</a>
                                   </div>
-                                  <div class="mb-3">
-                                    <a  id="liveagent_kill" class="enabledButton btn  btn-primary btn-lg btn-block"  onclick="onclickPrechatButton()">Send New Values</a>
-                                </div>
                                 </form>
                               
                 </div>
@@ -135,113 +132,261 @@
       
       <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
       <script type='text/javascript'>
-      function onclickPrechatButton() {
-        let state = embedded_svc.sidebarInstanceMap[Object.keys(embedded_svc.sidebarInstanceMap)[0]].getActiveState();
-        let prechatFields = state.get("v.prechatFields");
-        prechatFields.forEach(function (prechatField) {
-          if (prechatField.label === "First Name") {
-            prechatField.value = "Will"
-          } else if (prechatField.label === "Last Name") {
-            prechatField.value = "Chang"
-          } else if (prechatField.label === "Email Address"){
-            prechatField.value = "willChang@dell.com" 
-          }
-        });
-        state.set("v.prechatFields", prechatFields);
-      }
+      var trackevent = true;
       function startSnapinChat(){
-        
+        if (window.embedded_svc) {
+          console.log("BNR: window.embedded_svc");
+          initESW('https://service.force.com');
+        }else{
+             console.log("BNR: !window.embedded_svc");
+            var s = document.createElement('script');
+            s.setAttribute('src', 'https://dellservices--DEV2.my.salesforce.com/embeddedservice/5.0/esw.min.js');
+            s.onload = function() {
+              initESW(null);
+            };
+            document.body.appendChild(s);
+        }//end of else
+      }
+     
 
-        serviceTag = document.getElementById('serviceTag').value,
+      function initESW(gslbBaseURL) {
+                serviceTag = document.getElementById('serviceTag').value,
                 firstName = document.getElementById('firstName').value,
                 lastName = document.getElementById('lastName').value,
                 emailId = document.getElementById('emailId').value,
                 phoneNumber = document.getElementById('phoneNumber').value,
                 issueType = document.getElementById('issueType').value,
                 issueDescription = document.getElementById('issueDescription').value;
-        var initESW = function(gslbBaseURL) {
-          embedded_svc.settings.displayHelpButton = true; //Or false
-          embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
-      
-          //embedded_svc.settings.defaultMinimizedText = '...'; //(Defaults to Chat with an Expert)
-          //embedded_svc.settings.disabledMinimizedText = '...'; //(Defaults to Agent Offline)
-      
-          //embedded_svc.settings.loadingText = ''; //(Defaults to Loading)
-          //embedded_svc.settings.storageDomain = 'yourdomain.com'; //(Sets the domain for your deployment so that visitors can navigate subdomains during a chat session)
-      
-          // Settings for Live Agent
-          //embedded_svc.settings.directToButtonRouting = function(prechatFormData) {
-            // Dynamically changes the button ID based on what the visitor enters in the pre-chat form.
-            // Returns a valid button ID.
-          //};
-          //embedded_svc.settings.prepopulatedPrechatFields = {}; //Sets the auto-population of pre-chat form fields
-          //embedded_svc.settings.fallbackRouting = []; //An array of button IDs, user IDs, or userId_buttonId
-          //embedded_svc.settings.offlineSupportMinimizedText = '...'; //(Defaults to Contact Us)
-            
-          embedded_svc.settings.extraPrechatFormDetails = [{
-                "label": "First Name",
-                "value": firstName,
-                "transcriptFields": ["FirstName__C"]
-              }, 
-              {
-                "label": "Last Name",
-                "value": lastName,
-                "transcriptFields": ["LastName__c"]
-              }, 
-              {
-                "label": "Email Address",
-                "value": emailId,
-                "transcriptFields": ["Email__c"]
-              }, 
-              {
-                "label": "Primary Phone Number",
-                "value": phoneNumber,
-                "transcriptFields": ["ContactNumber__c"]
-              },
-              {
-                "label": "Subject",
-                "value": issueType,
-                "transcriptFields": ["Issue__c"]
-              }, 
-              {
-                  "label": "Issue Description",
-                  "value": issueDescription,
-                  "transcriptFields": ["Description__c"]
-              },
-              {
-                  "label": "AccountNumber",
-                  "value": "2701",
-                  "transcriptFields": ["CustomerNumber__c"]
-              }, 
-              {
-                  "label": "Account BUID",
-                  "value": "11",
-                  "transcriptFields": ["CustomerBUID__c"]
-              },
-              {
-                "label": "Service Tag",
-                "value": serviceTag,
-                "transcriptFields": ["Service_Tag__C"]
-              } 
-            ];
-            
-        embedded_svc.settings.extraPrechatInfo = [{
-              "entityFieldMaps": [{
-                "doCreate":false,
-                "doFind":true,
-                "fieldName":"Name",
-                "isExactMatch":true,
-                "label":"Service Tag"
-                }
-              ],
-              "entityName":"Asset",
-              "saveToTranscript": "Asset__c"
-            }
-        ]; 		 
+                embedded_svc.settings.displayHelpButton = true; //Or true
+                embedded_svc.settings.language = '';
+                embedded_svc.settings.defaultMinimizedText = 'Chat Now';  
+                embedded_svc.settings.extraPrechatFormDetails = [{
+                      "label": "First Name",
+                      "name": "FirstName",
+                      "value": firstName,
+                      "displayToAgent":true,
+                      "transcriptFields": ["FirstName__C"]
+                    }, 
+                    {
+                      "label": "Last Name",
+                      "name": "LastName",
+                      "value": lastName,
+                      "displayToAgent":true,
+                      "transcriptFields": ["LastName__c"]
+                    }, 
+                    {
+                      "label": "Email Address",
+                      "value": emailId,
+                      "displayToAgent":true,
+                      "transcriptFields": ["Email__c"]
+                    }, 
+                    {
+                      "label": "Primary Phone Number",
+                      "value": phoneNumber,
+                      "displayToAgent":true,
+                      "transcriptFields": ["ContactNumber__c"]
+                    },
+                    {
+                      "label": "Subject",
+                      "value": issueType,
+                      "displayToAgent":true,
+                      "transcriptFields": ["Issue__c"]
+                    }, 
+                    {
+                        "label": "Issue Description",
+                        "value": issueDescription,
+                        "displayToAgent":true,
+                        "transcriptFields": ["Description__c"]
+                    },
+                    {
+                        "label": "AccountNumber",
+                        "value": "2701",
+                        "displayToAgent":true,
+                        "transcriptFields": ["CustomerNumber__c"]
+                    }, 
+                    {
+                        "label": "Account BUID",
+                        "value": "11",
+                        "displayToAgent":true,
+                        "transcriptFields": ["CustomerBUID__c"]
+                    },
+                    {
+                      "label": "Service Tag",
+                      "value": serviceTag,
+                      "displayToAgent":true,
+                      "transcriptFields": ["Service_Tag__C"]
+                    } 
+                  ];
+                  
+              embedded_svc.settings.extraPrechatInfo = [{
+                    "entityFieldMaps": [{
+                      "doCreate":false,
+                      "doFind":true,
+                      "fieldName":"Name",
+                      "isExactMatch":true,
+                      "label":"Service Tag"
+                      }
+                    ],
+                    "entityName":"Asset",
+                    "saveToTranscript": "Asset__c"
+                  }
+              ]; 		 
 
-          embedded_svc.settings.enabledFeatures = ['LiveAgent'];
-          embedded_svc.settings.entryFeature = 'LiveAgent';
-      
+                embedded_svc.settings.enabledFeatures = ['LiveAgent'];
+                embedded_svc.settings.entryFeature = 'LiveAgent';
+                //addEventHandler [START]
+                embedded_svc.addEventHandler("onHelpButtonClick", function(data) {
+                  console.log("onHelpButtonClick event was fired.");
+                });
+                
+                embedded_svc.addEventHandler("onChatRequestSuccess", function(data) {
+                  console.log("onChatRequestSuccess event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+                });
+                
+                embedded_svc.addEventHandler("onChatEstablished", function(data) {
+                  console.log("onChatEstablished event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+                });
+                
+                embedded_svc.addEventHandler("onChasitorMessage", function(data) {
+                  console.log("onChasitorMessage event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+                });
+                
+                embedded_svc.addEventHandler("onAgentMessage", function(data) {
+                  console.log("onAgentMessage event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+                });
+                
+                embedded_svc.addEventHandler("onChatTransferSuccessful", function(data) {
+                  console.log("onChatTransferSuccessful event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+                });
+                
+                embedded_svc.addEventHandler("onChatEndedByChasitor", function(data) {
+                  console.log("onChatEndedByChasitor event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+                });
+                
+                embedded_svc.addEventHandler("onChatEndedByAgent", function(data) {
+                  console.log("onChatEndedByAgent event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+                });
+                
+                embedded_svc.addEventHandler("onIdleTimeoutOccurred", function(data) {
+                  console.log("onIdleTimeoutOccurred event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+                  console.log(data);
+                });
+                
+                embedded_svc.addEventHandler("onConnectionError", function(data) {
+                  console.log("onConnectionError event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+                  console.log(data);
+                });
+                
+                embedded_svc.addEventHandler("onClickSubmitButton", function(data) {
+                  console.log("onClickSubmitButton event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+                  console.log(data);
+                });
+                embedded_svc.addEventHandler("onInviteAccepted", function(data) {
+                  console.log("onInviteAccepted event was fired.");
+                });
+                
+                embedded_svc.addEventHandler("onInviteRejected", function(data) {
+                  console.log("onInviteRejected event was fired.");
+                });
+                //addEventHandler [END]
+
+                embedded_svc.init(
+                  'https://dellservices--DEV2.my.salesforce.com',
+                  'https://dev2-dellservices.cs47.force.com/LASnapIn',
+                  gslbBaseURL,
+                  '00D2a0000008e0t',
+                  'Snap_Ins_Resume_chat',
+                  {
+                    baseLiveAgentContentURL: 'https://c.la2-c2cs-iad.salesforceliveagent.com/content',
+                    deploymentId: '5720b000000GneC',
+                    buttonId: '5730b000000CbhY',
+                    baseLiveAgentURL: 'https://d.la2-c2cs-iad.salesforceliveagent.com/chat',
+                    eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I0b000000blJOEAY_16520ef73c5',
+                    isOfflineSupportEnabled: false
+                  }
+                );
+            };
+
+    /*
+     //Code already avilable on top
+     function startSnapinChatAgain() {
+      if (window.embedded_svc) {
+          let firstName = document.getElementById('firstName').value;
+          let lastName = document.getElementById('lastName').value;
+          embedded_svc.settings.extraPrechatFormDetails = [{
+          "label": "First Name",
+          "name": "FirstName",
+          "value": "Test1",
+          "displayToAgent":true,
+          "transcriptFields": ["FirstName__C"]
+          },
+          {
+          "label":"Email",
+          "value":"hey@dude.com",
+          "displayToAgent":true
+          },
+          {
+          "label": "Last Name",
+          "value": "lastName",
+          "displayToAgent":true,
+          "transcriptFields": ["LastName__c"]
+          }, {
+          "label":"issue",
+          "value":"Sales forecasts",
+          "displayToAgent":true
+          }
+          ];
+          embedded_svc.settings.extraPrechatInfo = [{
+          "entityName":"Contact",
+          "showOnCreate":true,
+          "linkToEntityName":"Case",
+          "linkToEntityField":"ContactId",
+          "saveToTranscript":"ContactId",
+          "entityFieldMaps": [{
+          "isExactMatch":true,
+          "fieldName":"FirstName",
+          "doCreate":true,
+          "doFind":true,
+          "label":"First Name"
+          }, {
+          "isExactMatch":true,
+          "fieldName":"LastName",
+          "doCreate":true,
+          "doFind":true,
+          "label":"Last Name"
+          }, {
+          "isExactMatch":true,
+          "fieldName":"Email",
+          "doCreate":true,
+          "doFind":true,
+          "label":"Email"
+          }]
+          }, {
+          "entityName":"Case",
+          "showOnCreate":true,
+          "saveToTranscript":"CaseId",
+          "entityFieldMaps": [{
+          "isExactMatch":false,
+          "fieldName":"Subject",
+          "doCreate":true,
+          "doFind":false,
+          "label":"issue"
+          }, {
+          "isExactMatch":false,
+          "fieldName":"Status",
+          "doCreate":true,
+          "doFind":false,
+          "label":"Status"
+          }, {
+          "isExactMatch":false,
+          "fieldName":"Origin",
+          "doCreate":true,
+          "doFind":false,
+          "label":"Origin"
+          }]
+          }];
+
+          let gslbBaseURL = 'https://service.force.com';
           embedded_svc.init(
             'https://dellservices--DEV2.my.salesforce.com',
             'https://dev2-dellservices.cs47.force.com/LASnapIn',
@@ -257,31 +402,283 @@
               isOfflineSupportEnabled: false
             }
           );
-        };
-      
-        if (!window.embedded_svc) {
-          var s = document.createElement('script');
-          s.setAttribute('src', 'https://dellservices--DEV2.my.salesforce.com/embeddedservice/5.0/esw.min.js');
-          s.onload = function() {
-            initESW(null);
-          };
-          document.body.appendChild(s);
-        } else {
-          initESW('https://service.force.com');
+      }
+    }
+    */
+
+
+    /******************************************/
+   /*Customized Click Event Functions [START]*/ 
+      eleExist('.helpButtonEnabled #helpButtonSpan > .message', whenHelpButtonEnabled);//Check if the element is avilable or not
+      function whenHelpButtonEnabled(eleSelector, findingEle) {
+          try{
+            if (document.querySelector(eleSelector).innerText === 'Chat Now') {
+              togglePrechatAndSnapin();
+            }
+            clearInterval(findingEle);
+          }catch(e){
+            console.log("Error in:"+ e);
+          }
         }
+    function togglePrechatAndSnapin(){
+      preChatCanvas = document.getElementById("prechatFormCanvas");
+      if (window.getComputedStyle(preChatCanvas).display === 'block'){
+        hidePrechatForm();
+      }else{
+        showPrechatForm();
       }
-      function killSnapin(){
-       // alert("ending");
-       // window.startSnapinChat=function(){return false;};
-       // window.initESW=function(){return false;};
-       embedded_svc.settings.extraPrechatFormDetails = [{
-                "label": "First Name",
-                "value": 'Test',
-                "transcriptFields": ["FirstName__C"]
+    }
+    function hidePrechatForm(){
+      console.log("hide prechat");
+      document.getElementById("prechatFormCanvas").style.display = 'none';
+     // helpButtonEnabledDOM = document.querySelector(".embeddedServiceHelpButton");
+     // helpButtonEnabledDOM.style.display = 'block';
+      helpButtonEnabledDOM.click();
+    }
+    function showPrechatForm(){
+      console.log("show prechat");
+      document.getElementById("prechatFormCanvas").style.display = 'block';
+      document.querySelector(".embeddedServiceHelpButton").style.display = 'none';
+    }
+    function ElementObserver(){
+      // Select the node that will be observed for mutations
+      var targetNode = document.querySelector(".embeddedServiceHelpButton");
+
+      // Options for the observer (which mutations to observe)
+      var config = { attributes: true, childList: true, subtree: true };
+
+      // Callback function to execute when mutations are observed
+      var callback = function(mutationsList, observer) {
+          for(var mutation of mutationsList) {
+              if (mutation.type == 'childList') {
+                  console.log('A child node has been added or removed.');
               }
-            ];
+              else if (mutation.type == 'attributes') {
+                  console.log('The ' + mutation.attributeName + ' attribute was modified.');
+              }
+          }
+      };
+
+      // Create an observer instance linked to the callback function
+      var observer = new MutationObserver(callback);
+
+      // Start observing the target node for configured mutations
+      observer.observe(targetNode, config);
+          }
+    /*Customized Click Event Functions [END]*/ 
+  /****************************************/
+
+    /********************************************/
+   /*Customer Activity Tracker Function [START]*/ 
+   function dellmetricsTrack(elementId,Message){
+           // alert("Element Id = "+elementId+" and Message is '"+Message+"'");
+           if(Message)
+				console.log("PropValue = "+elementId+": "+Message);
+			else
+                console.log("PropValue = "+elementId);
+        }
+   function callDellmetricsTrack(propValue, message){
+      if (typeof(dellmetricsTrack) == "function"){
+        if (dellmetricsTrack){
+          if(trackevent){
+            if(message)
+            dellmetricsTrack(propValue, message);
+            else
+              dellmetricsTrack(propValue);
+          }else{
+            trackevent = true;
+          }
+          
+        }	
       }
-     
+    }
+   function pageObserverForProp20(eleSelector){
+      try{
+        snapInPrechatForm = document.querySelector(".modalContainer  .dockableContainer .sidebarBody .activeFeature .featureBody .embeddedServiceSidebarState .prechatUI");
+        snapInWaiting = document.querySelector(".dockableContainer .embeddedServiceLiveAgentStateWaiting .waitingStateContainer");
+        snapInChatStarted = document.querySelector(".dockableContainer .activeFeature .embeddedServiceLiveAgentStateChat .chasitorControls .chasitorText");
+        snapInConfirmationDialoug = document.querySelector(".dockableContainer .activeFeature .stateBody .dialogState .dialogTextContainer");
+        if(snapInPrechatForm)
+          snapInCurrentPage = "snapInPrechatForm";
+        else if(snapInWaiting)
+          snapInCurrentPage = "snapInWaiting";
+        else if(snapInChatStarted)
+          snapInCurrentPage = "snapInChatStarted";
+        else if(snapInConfirmationDialoug)
+          snapInCurrentPage = "snapInConfirmationDialoug";
+        else
+          snapInCurrentPage = null;
+        var MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
+        var attributeChangeCallback = function( mutations ){ 
+          mutations.forEach(function( mutation )  { 
+            if(mutation.addedNodes.length>0){
+              snapInPrechatForm = document.querySelector(".modalContainer  .dockableContainer .sidebarBody .activeFeature .featureBody .embeddedServiceSidebarState .prechatUI");
+              snapInWaiting = document.querySelector(".dockableContainer .embeddedServiceLiveAgentStateWaiting .waitingStateContainer");
+              snapInChatStarted = document.querySelector(".dockableContainer .activeFeature .embeddedServiceLiveAgentStateChat .chasitorControls .chasitorText");
+              snapInConfirmationDialoug = document.querySelector(".dockableContainer .activeFeature .stateBody .dialogState .dialogTextContainer");
+              if(snapInPrechatForm && snapInCurrentPage != "snapInPrechatForm"){
+                prechatformHeader = document.querySelector(".embeddedServiceSidebar");
+                if(window.getComputedStyle(prechatformHeader).display === 'block'){
+                  snapInCurrentPage = "snapInPrechatForm";
+                  callDellmetricsTrack("890.220.010");
+                }
+                virtualSnapInObjectSession(false);
+              }else if(snapInWaiting && snapInCurrentPage != "snapInWaiting"){
+                snapInCurrentPage = "snapInWaiting";
+                callDellmetricsTrack("890.220.011");
+                eleExistWithVariable('.dockableContainer .embeddedServiceLiveAgentStateWaiting .waitingStateContainer .waitingStateContent .queuePositionContent .header', waitChatCounter, 0);
+              }else if(snapInChatStarted && snapInCurrentPage != "snapInChatStarted"){
+                snapInCurrentPage = "snapInChatStarted";
+                callDellmetricsTrack("890.220.013");
+              }else if(snapInConfirmationDialoug && snapInCurrentPage != "snapInConfirmationDialoug"){
+                snapInCurrentPage = "snapInConfirmationDialoug";
+                callDellmetricsTrack("890.220.016",document.querySelector(".dockableContainer .activeFeature .stateBody .dialogState .dialogTextContainer").innerText);
+              }
+              
+            }                       
+          }); 
+        } 
+        var observer =  new MutationObserver ( attributeChangeCallback ); 
+        var domElement = document.querySelector (eleSelector);
+        observer.observe (domElement, { 
+          childList: true,
+          subtree: true
+        });
+      }catch(e){console.log('Error in Observer - '+e)}
+    }
+   window.addEventListener("click", function (event) {
+          if(document.querySelector(".embeddedServiceSidebar") || document.querySelector(".embeddedServiceHelpButton")){
+            var clickedElement = event.target || event.srcElement;
+            if (closestByTagName(clickedElement, 'button') != null){
+              switch (closestByTagName(clickedElement, 'button').className) {
+                case "startButton uiButton--default uiButton embeddedServiceSidebarButton":
+                  if (!document.querySelector('.sidebarBody .FirstName')) {
+                    var snapInObjectGlobal = sessionStorage.getItem("snapInObjectSession");
+                    var snapInObject = JSON.parse(snapInObjectGlobal);
+                    var prechatValues = JSON.stringify(snapInObject.snapinPreChatFormValues);
+                    virtualSnapInObjectSession(true);
+                    callDellmetricsTrack("890.220.002", "PrechatComplete" + prechatValues);
+                  }
+                  break;
+                case "dialogButton dialog-button-0 uiButton embeddedServiceSidebarButton":
+                  callDellmetricsTrack("890.220.003", "ClickedOn '" + clickedElement.innerText + "' button");
+                  break;
+                case "dialogButton dialog-button-1 uiButton embeddedServiceSidebarButton":
+                  callDellmetricsTrack("890.220.004", "ClickedOn '" + clickedElement.innerText + "' button");
+                  break;
+                case "dialogButton dialog-button-1 uiButton--inverse uiButton embeddedServiceSidebarButton":
+                  callDellmetricsTrack("890.220.004", "ClickedOn '" + clickedElement.innerText + "' button");
+                  break;
+                case "waitingCancelChat uiButton--inverse uiButton embeddedServiceSidebarButton":
+                  callDellmetricsTrack("890.220.005", "ClickedOn Cancel Chat button while waiting in queue");
+                  break;
+                case "closeButton headerItem":
+                  callDellmetricsTrack("890.220.006", "ClickedOn Close (x) button");
+                  break;
+                case "minimizeButton headerItem":
+                  callDellmetricsTrack("890.220.007", "ClickedOn Minimize button");
+                  break;
+                case "sidebarHeader minimizedContainer helpButton embeddedServiceSidebarMinimizedDefaultUI":
+                  callDellmetricsTrack("890.220.008", "ClickedOn Maximize button");
+                  snapInPrechatForm = document.querySelector(".modalContainer  .dockableContainer .sidebarBody .activeFeature .featureBody .embeddedServiceSidebarState .prechatUI");
+                  if(snapInPrechatForm)
+                    callDellmetricsTrack("890.220.010");
+                  break;
+                case "sidebarHeader minimizedContainer embeddedServiceSidebarMinimizedDefaultUI":
+                  callDellmetricsTrack("890.220.008", "ClickedOn Maximize button");
+                  break;
+                case "uiButton helpButtonEnabled":
+                case "uiButton no-hover helpButtonEnabled":
+                  if(document.querySelector(".helpButtonEnabled #helpButtonSpan > .message").innerText == "Chat Now"){
+                    snapInCurrentPage = null;
+                    //callDellmetricsTrack("890.220.001", "StartsChat for " + snapinChatGlobalServiceTag + "|" + snapinChatGlobalIssueType + "|" + snapinChatGlobalProductName);
+                    //snapinLoading();
+                   // eleExist(".embeddedServiceSidebarFeature .embeddedServiceLiveAgentStatePrechatDefaultUI .embeddedServiceSidebarForm .embeddedServiceSidebarFormField .Issue_Description__c", addCharectorRemaining);
+                  }else
+                    //callDellmetricsTrack("890.220.001", "AgentOffline for " + snapinChatGlobalServiceTag + "|" + snapinChatGlobalIssueType + "|" + snapinChatGlobalProductName);
+                  break;
+                default:
+                  if (closestByTagName(clickedElement, 'a').className == "chatOption embeddedServiceLiveAgentStateChatHeaderOption") {
+                    callDellmetricsTrack("890.220.009", "ClickedOn " + closestByTagName(clickedElement, 'a').text);
+                  }else if(clickedElement.parentNode.parentNode.className ==  "uiButton helpButtonEnabled" || clickedElement.parentNode.className == "uiButton helpButtonEnabled"){
+                    //snapinLoading();
+                   // eleExist(".embeddedServiceSidebarFeature .embeddedServiceLiveAgentStatePrechatDefaultUI .embeddedServiceSidebarForm .embeddedServiceSidebarFormField .Issue_Description__c", addCharectorRemaining);
+                  }
+                  break;
+                }
+            }else if (closestByTagName(clickedElement, 'a').className  == "chatOption embeddedServiceLiveAgentStateChatHeaderOption") {
+              
+              callDellmetricsTrack("890.220.009", "ClickedOn " + closestByTagName(clickedElement, 'a').text);
+              
+            }
+          }
+      }); 
+   function waitChatCounter(eleSelector, findingEle, counterValue) {
+      try{
+        if (typeof(dellmetricsTrack) == "function") {
+          if (dellmetricsTrack) {
+            if (counterValue != document.querySelector(eleSelector).innerText) {
+              dellmetricsTrack("890.220.012", "Queue number: " + document.querySelector(eleSelector).innerText);
+              clearInterval(findingEle);
+              if (document.querySelector(eleSelector).innerText > 0 && document.querySelector(eleSelector).innerText != "You're up next!") {
+                eleExistWithVariable('.dockableContainer .embeddedServiceLiveAgentStateWaiting .waitingStateContainer .waitingStateContent .queuePositionContent .header', waitChatCounter, document.querySelector(eleSelector).innerText);
+              }
+            }
+          } else {
+            clearInterval(findingEle);
+          }
+        } else {
+          clearInterval(findingEle);
+        }
+      }catch(e){
+        console.log("Error in:"+ e);
+      }
+    }
+    /*Customer Activity Tracker Function [END]*/
+   /******************************************/
+
+     /****************************/
+    /*Reusable Functions [START]*/
+    function eleExist(eleSelector, callbackFunc) {
+      var findingEle = setInterval(function () {
+          if (document.querySelector(eleSelector)) {
+            try {
+              callbackFunc(eleSelector, findingEle);
+            } catch (e) {
+              console.log('error in ' + callbackFunc + ' function: ' + e);
+            }
+          }
+        }, 1000);
+    }
+    function eleExistWithVariable(eleSelector, callbackFunc, value) {
+      var findingEle = setInterval(function () {
+          if (document.querySelector(eleSelector)) {
+            try {
+              callbackFunc(eleSelector, findingEle, value);
+            } catch (e) {
+              console.log('error in ' + callbackFunc + ' function: ' + e);
+            }
+          }
+        }, 1000);
+    }
+    var closestByTagName = function(el, closedElement) {
+      var elParent = el;
+      if(elParent){
+        var tagedVal = elParent.tagName;
+        if(tagedVal)
+          while (tagedVal.toLowerCase() != closedElement) {
+            elParent = elParent.parentNode;
+            tagedVal = elParent.tagName;
+            if (!tagedVal) {
+              return el;
+            }
+          }
+      }
+        
+        return elParent;
+    }
+    /*Reusable Functions [END]*/
+   /**************************/
       </script>  
 </body>
 </html>

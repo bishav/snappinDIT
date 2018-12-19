@@ -38,6 +38,7 @@ function hideDomObject(eleSelector, findingEle) {
 }
 //eleExist('.helpButtonLabel .message', checkAgentOffline);
 function initSnapIn(snapInObject) {
+	debugger;
 	if (!window.embedded_svc) {
 		var s = document.createElement('script');
 		s.setAttribute('src', snapInObject.snapInJs);
@@ -106,6 +107,7 @@ function triggerSnapin(snapInObject) {
 
 	if (snapInObject != undefined && snapInObject.snapinSessionAvailable && runApplication) {
 		initESW = function (gslbBaseURL) {
+			debugger;
 			collectGlobalServiceTagValue(snapInObject);
 			eleExist('.helpButtonEnabled #helpButtonSpan > .message', chatClick);
 			embedded_svc.settings.displayHelpButton = true;
@@ -221,6 +223,7 @@ function triggerSnapin(snapInObject) {
 				Email: emailAddVal,
 				Primary_Phone__c: primePhoneVal
 			};
+			
 			pageObserverForProp20("body");
 			embedded_svc.init(snapInObject.snapInInitURL, snapInObject.snapInLAURL, gslbBaseURL, snapInObject.organizationId, snapInObject.componentName, {
 				baseLiveAgentContentURL: snapInObject.baseLiveAgentContentURL,
