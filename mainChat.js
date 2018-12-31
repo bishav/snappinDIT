@@ -620,8 +620,7 @@ window.addEventListener("click", function (event) {
 
 function callDellmetricsTrack(propValue, message){
 	if(showsAgentOflineMsg(propValue, message)){
-		document.querySelector(".dialog-button-0.embeddedServiceSidebarButton").style.display = 'none'
-		//$(".dialog-button-0.embeddedServiceSidebarButton").hide();
+		document.querySelector(".dialog-button-0.embeddedServiceSidebarButton").style.display = 'none';
 	}
 	if (typeof(dellmetricsTrack) == "function"){
 		if (dellmetricsTrack){
@@ -637,7 +636,7 @@ function callDellmetricsTrack(propValue, message){
 		}	
 	}
 }
-
+/*
 function showsAgentOflineMsg(propValue, message){
 	if(propValue == "890.220.016" && 
 		(
@@ -655,7 +654,7 @@ function showsAgentOflineMsg(propValue, message){
 			return false;
 		}
 }
-
+*/
 function pageObserverForProp20(eleSelector){
 	try{
 		snapInPrechatForm = document.querySelector(".modalContainer  .dockableContainer .sidebarBody .activeFeature .featureBody .embeddedServiceSidebarState .prechatUI");

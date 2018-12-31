@@ -40,7 +40,6 @@
         <div class="row justify-content-md-center">
                 <div class="col-lg-6 col-md-8 col-sm-12 order-md-1  border rounded">
                                 <form class="needs-validation" novalidate="">
-
                                         <div class="mb-3">
                                                 <label for="serviceTag" style="margin-top: 10px;">Service Tag </label>
                                                 <div class="input-group">
@@ -50,7 +49,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                     <div class="row"> 
                                     <div class="col-md-6 mb-3">
                                       <label for="firstName">First name</label>
@@ -137,10 +135,15 @@
         if (window.embedded_svc) {
           console.log("BNR: window.embedded_svc");
           initESW('https://service.force.com');
+          var targetNode = document.querySelector(".embeddedServiceHelpButton");
+          if(targetNode)
+            togglePrechatAndSnapin(targetNode);
         }else{
              console.log("BNR: !window.embedded_svc");
             var s = document.createElement('script');
-            s.setAttribute('src', 'https://dellservices--DEV2.my.salesforce.com/embeddedservice/5.0/esw.min.js');
+            //s.setAttribute('src', 'https://dellservices--DEV2.my.salesforce.com/embeddedservice/5.0/esw.min.js');
+            s.setAttribute('src', 'https://dellservices--DEV3.my.salesforce.com/embeddedservice/5.0/esw.min.js');
+
             s.onload = function() {
               initESW(null);
             };
@@ -290,7 +293,7 @@
                 });
                 //addEventHandler [END]
 
-                embedded_svc.init(
+               /* embedded_svc.init(
                   'https://dellservices--DEV2.my.salesforce.com',
                   'https://dev2-dellservices.cs47.force.com/LASnapIn',
                   gslbBaseURL,
@@ -302,6 +305,21 @@
                     buttonId: '5730b000000CbhY',
                     baseLiveAgentURL: 'https://d.la2-c2cs-iad.salesforceliveagent.com/chat',
                     eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I0b000000blJOEAY_16520ef73c5',
+                    isOfflineSupportEnabled: false
+                  }
+                );*/
+                embedded_svc.init(
+                  'https://dellservices--DEV3.my.salesforce.com',
+                  'https://dev3-dellservices.cs47.force.com/LaSnapIn',
+                  gslbBaseURL,
+                  '00D2a0000008ftq',
+                  'Snap_Ins_Resume_chat',
+                  {
+                    baseLiveAgentContentURL: 'https://c.la2-c2cs-iad.salesforceliveagent.com/content',
+                    deploymentId: '572Z000000000KC',
+                    buttonId: '5730b000000CbhY',
+                    baseLiveAgentURL: 'https://d.la2-c2cs-iad.salesforceliveagent.com/chat',
+                    eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04IZ00000008OIUMA2_1648e3b61a5',
                     isOfflineSupportEnabled: false
                   }
                 );
@@ -408,12 +426,12 @@
 
 
     /******************************************/
-   /*Customized Click Event Functions [START]*/ 
+   /*Customized Click Event Functions [START] */
       eleExist('.helpButtonEnabled #helpButtonSpan > .message', whenHelpButtonEnabled);//Check if the element is avilable or not
       function whenHelpButtonEnabled(eleSelector, findingEle) {
           try{
             if (document.querySelector(eleSelector).innerText === 'Chat Now') {
-              elementObserver();
+              embeddedServiceHelpBtnObserver();
               //togglePrechatAndSnapin();
             }
             clearInterval(findingEle);
@@ -422,24 +440,19 @@
           }
         }
  
-        function ElementObserver(){
+        function embeddedServiceHelpBtnObserver(){
           // Select the node that will be observed for mutations
           var targetNode = document.querySelector(".embeddedServiceHelpButton");
-
+          togglePrechatAndSnapin(targetNode);
           // Options for the observer (which mutations to observe)
           var config = { attributes: true, childList: false, subtree: false };
 
           // Callback function to execute when mutations are observed
           var callback = function(mutationsList, observer) {
               for(var mutation of mutationsList) {
-                 /* if (mutation.type == 'childList') {
-                      console.log('A child node has been added or removed.');
-                  }
-                  else */if (mutation.type == 'attributes') {
+                 if (mutation.type == 'attributes') {
                       console.log('The ' + mutation.attributeName + ' attribute was modified.');
-                      if (window.getComputedStyle(targetNode).display === 'block'){
-                        togglePrechatAndSnapin();
-                      }
+                      togglePrechatAndSnapin(targetNode);
                   }
               }
           };
@@ -451,25 +464,29 @@
           observer.observe(targetNode, config);
       }
       
-        function togglePrechatAndSnapin(){
-      preChatCanvas = document.getElementById("prechatFormCanvas");
-      if (window.getComputedStyle(preChatCanvas).display === 'block'){
-        hidePrechatForm();
-      }else{
-        showPrechatForm();
-      }
+        function togglePrechatAndSnapin(targetNode){
+          if (window.getComputedStyle(targetNode).display === 'block'){
+              preChatCanvas = document.getElementById("prechatFormCanvas");
+              if (window.getComputedStyle(preChatCanvas).display === 'block'){
+                hidePrechatForm();
+              }else{
+                showPrechatForm();
+              }
+          }
+         
     }
     function hidePrechatForm(){
       console.log("hide prechat");
       document.getElementById("prechatFormCanvas").style.display = 'none';
-     // helpButtonEnabledDOM = document.querySelector(".embeddedServiceHelpButton");
-     // helpButtonEnabledDOM.style.display = 'block';
-      helpButtonEnabledDOM.click();
+      if(document.querySelector(".helpButtonEnabled #helpButtonSpan > .message")){
+        document.querySelector(".embeddedServiceHelpButton .uiButton.helpButtonEnabled").style.display = 'block';
+        document.querySelector(".helpButtonEnabled #helpButtonSpan > .message").click();
+      }
     }
     function showPrechatForm(){
       console.log("show prechat");
       document.getElementById("prechatFormCanvas").style.display = 'block';
-      document.querySelector(".embeddedServiceHelpButton").style.display = 'none';
+      document.querySelector(".embeddedServiceHelpButton .uiButton.helpButtonEnabled").style.display = 'none';
     }
     
       /*Customized Click Event Functions [END]*/ 
