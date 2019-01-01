@@ -38,7 +38,6 @@ function hideDomObject(eleSelector, findingEle) {
 }
 //eleExist('.helpButtonLabel .message', checkAgentOffline);
 function initSnapIn(snapInObject) {
-	debugger;
 	if (!window.embedded_svc) {
 		var s = document.createElement('script');
 		s.setAttribute('src', snapInObject.snapInJs);
@@ -52,7 +51,6 @@ function initSnapIn(snapInObject) {
 }
 
 function triggerSnapin(snapInObject) {
-	
 	appendCustPreChatSnapinStyle();
 	appendCustPreChatSnapinDom(snapInObject);
 }
@@ -77,17 +75,146 @@ function appendCustPreChatSnapinDom(snapInObject){
 		let body = document.body || document.getElementsByTagName('body')[0];
 		body.insertAdjacentHTML('beforeend', domEle);
 
+		prePopulateCustPreFormValues(snapInObject);
+		custPreFormShowIssueDetailsCharRemainingOnKeyUp();
+		custPreChatKeypressFieldValidation();
+		custPreChatShowAdditionalDetailsInUi(snapInObject);
 		document.getElementById("cusPreChat-startChat").addEventListener("click", function(){custPrechatInitiateChat(snapInObject)});
 		document.getElementById("cusPreChat-minimize-btn").addEventListener("click", minimizeCustPrechat);
 		document.getElementById("cusPreChat-close-btn").addEventListener("click", closeCustPrechat);
 		document.getElementById("cusPreChat-helpButtonEnabled").addEventListener("click", maximizeCustPrechat);
-		custPreChatKeypressFieldValidation();
-		custPreChatShowAdditionalDetailsInUi(snapInObject);
 	}else{
 		console.log("show prechat for if hidden");
 	}
 }
+function prePopulateCustPreFormValues(snapInObject){
+	if ("firstName" in snapInObject)
+		document.getElementById("cusPreChat-FirstName").value = snapInObject.firstName;
+	if ("lastName" in snapInObject)
+		document.getElementById("cusPreChat-LastName").value = snapInObject.lastName;
+	if ("email" in snapInObject)
+		document.getElementById("cusPreChat-Email").value = snapInObject.email;
+	if ("phoneNo" in snapInObject)
+		document.getElementById("cusPreChat-Phone").value = snapInObject.phoneNo;
+}
+function custPreFormShowIssueDetailsCharRemainingOnKeyUp() {
+	try{	
+			document.getElementById("cusPreChat-IssueDescription").onkeyup = function(){
+				custPreFormShowIssueDetailsCharRemaining();
+				};
+				}catch(e){
+		console.log("Error in:"+ e);
+	}
+}
+function custPreFormShowIssueDetailsCharRemaining(){
+	maxCharLength = 255,
+	currentCharLength = document.getElementById("cusPreChat-IssueDescription").value.length;
+	document.getElementById("snappinCharCounter").innerText = currentCharLength + " / " + maxCharLength + " characters";
+			
+}
+function custPreChatKeypressFieldValidation() {
+	document.getElementById("cusPreChat-Phone").onkeypress = function (e) {
+		var a = [];
+		var k = e.which || e.keyCode;
+		for (i = 48; i < 58; i++)
+			a.push(i);
+		a.push(45);
+		a.push(8);
+		a.push(9);
+		if (!(a.indexOf(k) >= 0))
+			e.preventDefault();
+		else
+			removeDomElementbyId("ErrMsg_"+e.path[0].id);
+	}
+	document.getElementById('cusPreChat-FirstName').onkeypress = function (e) {
+		var a = [];
+		var k = e.which || e.keyCode;
+		if (!((k > 64 && k < 91) || (k > 96 && k < 123) || k==8 || k==9))
+			e.preventDefault();
+		else
+			removeDomElementbyId("ErrMsg_"+e.path[0].id);
+	}
+	document.getElementById('cusPreChat-LastName').onkeypress = function (e) {
+		var a = [];
+		var k = e.which || e.keyCode;
+		if (!((k > 64 && k < 91) || (k > 96 && k < 123) || k==8 || k==9))
+			e.preventDefault();
+		else
+			removeDomElementbyId("ErrMsg_"+e.path[0].id);
+	}
+	document.getElementById("cusPreChat-Email").onkeypress = function (e) {
+		var a = [];
+		var k = e.which || e.keyCode;
+		if (!((k > 63 && k < 91) || (k > 96 && k < 123) || (k > 48 && k < 58) || (k == 45) || (k == 46) || (k == 95) || k==8 || k==9))
+			e.preventDefault();
+		else
+			removeDomElementbyId("ErrMsg_"+e.path[0].id);
+	}
+	document.getElementById("cusPreChat-IssueDescription").onkeypress = function (e) {
+		var a = [];
+		var k = e.which || e.keyCode;
+		if (k == 62 || k == 60)
+			e.preventDefault();
+		else{
+			removeDomElementbyId("ErrMsg_"+e.path[0].id);
+		}
+	}
 
+	document.getElementById("cusPreChat-FirstName").addEventListener("paste", function (e) {
+		checkForSpecialCharAndText(e);
+	});
+	document.getElementById("cusPreChat-LastName").addEventListener("paste", function (e) {
+		checkForSpecialCharAndText(e);
+	});
+	document.getElementById("cusPreChat-IssueDescription").addEventListener("paste", function (e) {
+		if (pastedText(e).includes('<') || pastedText(e).includes('>')) {
+			e.preventDefault();
+			alert("You are trying to paste an invalid text.");
+		}else
+		removeDomElementbyId("ErrMsg_"+e.path[0].id);
+	});
+	document.getElementById("cusPreChat-Email").addEventListener("paste", function (e) {
+		var format = /[!#$%^&*()+\=\[\]{};':"\\|,<>\/?]/;
+		if (format.test(pastedText(e)) == true) {
+			e.preventDefault();
+			alert("You are trying to paste an invalid text.");
+		}else
+		removeDomElementbyId("ErrMsg_"+e.path[0].id);
+	});
+	document.getElementById("cusPreChat-Phone").addEventListener("paste", function (e) {
+		if (/^[0-9-]*$/.test(pastedText(e)) == false) {
+			e.preventDefault();
+			alert("You are trying to paste an invalid text.");
+		}else
+		removeDomElementbyId("ErrMsg_"+e.path[0].id);
+	});
+	function checkForSpecialCharAndText(e){
+		var format = /[0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
+		if (format.test(pastedText(e)) == true) {
+			e.preventDefault();
+			alert("You are trying to paste an invalid text.");
+		}else
+			removeDomElementbyId("ErrMsg_"+e.path[0].id);
+	}
+	function pastedText(e){
+		if (e.clipboardData && e.clipboardData.getData)
+			return e.clipboardData.getData('text/plain');
+		else
+			return null;
+	}
+	
+}
+function custPreChatShowAdditionalDetailsInUi(snapInObject) {
+	if(document.getElementById("readonlyPreChatContainer"))
+		removeDomElement(document.getElementById("readonlyPreChatContainer"));
+	let topFields = document.querySelector(".cusPreChat-sidebarBody .cusPreChat-prechatUI  .cusPreChat-embeddedServiceSidebarForm ul.cusPreChat-fieldList");
+	let topFieldValues;
+	if (snapInObject.productName == null)
+		topFieldValues = '<div id="readonlyPreChatContainer" class="readonlyContainer" style="margin: 0 1.5em 6px 1.5em; text-align: left;position: relative;font-size: .75em;color: #444444;margin-bottom: 0px;"><div><b>Service Tag:</b> ' + snapInObject.serviceTag + '</div><div><b>Issue:</b> ' + snapInObject.issueVal + '</div></div>';
+	else
+		topFieldValues = '<div id="readonlyPreChatContainer" class="readonlyContainer" style="margin: 0 1.5em 6px 1.5em; text-align: left;position: relative;font-size: .75em;color: #444444;"><div style="font-size: 1.2em;">' + snapInObject.productName + '</div><div><b>Service Tag:</b> ' + snapInObject.serviceTag + '</div><div><b>Issue:</b> ' + snapInObject.issueVal + '</div></div>';
+	topFields.insertAdjacentHTML("afterbegin", topFieldValues);
+}
 function custPreFormValidation(){
 let acceptForm, inputFields = document.querySelectorAll(".cusPreChat-input");
 inputFields.forEach(domElement => {
@@ -146,108 +273,7 @@ function removeDomElementbyId(id){
 		element.parentNode.removeChild(element);
 	}
 }
-function custPreChatKeypressFieldValidation() {
-	document.getElementById("cusPreChat-Phone").onkeypress = function (e) {
-		var a = [];
-		var k = e.which || e.keyCode;
-		for (i = 48; i < 58; i++)
-			a.push(i);
-		a.push(45);
-		a.push(8);
-		a.push(9);
-		if (!(a.indexOf(k) >= 0))
-			e.preventDefault();
-		else
-			removeDomElementbyId("ErrMsg_"+e.path[0].id);
-	}
-	document.getElementById('cusPreChat-FirstName').onkeypress = function (e) {
-		var a = [];
-		var k = e.which || e.keyCode;
-		if (!((k > 64 && k < 91) || (k > 96 && k < 123) || k==8 || k==9))
-			e.preventDefault();
-		else
-			removeDomElementbyId("ErrMsg_"+e.path[0].id);
-	}
-	document.getElementById('cusPreChat-LastName').onkeypress = function (e) {
-		var a = [];
-		var k = e.which || e.keyCode;
-		if (!((k > 64 && k < 91) || (k > 96 && k < 123) || k==8 || k==9))
-			e.preventDefault();
-		else
-			removeDomElementbyId("ErrMsg_"+e.path[0].id);
-	}
-	document.getElementById("cusPreChat-Email").onkeypress = function (e) {
-		var a = [];
-		var k = e.which || e.keyCode;
-		if (!((k > 63 && k < 91) || (k > 96 && k < 123) || (k > 48 && k < 58) || (k == 45) || (k == 46) || (k == 95) || k==8 || k==9))
-			e.preventDefault();
-		else
-			removeDomElementbyId("ErrMsg_"+e.path[0].id);
-	}
-	document.getElementById("cusPreChat-IssueDescription").onkeypress = function (e) {
-		var a = [];
-		var k = e.which || e.keyCode;
-		if (k == 62 || k == 60)
-			e.preventDefault();
-		else
-			removeDomElementbyId("ErrMsg_"+e.path[0].id);
-	}
 
-	document.getElementById("cusPreChat-FirstName").addEventListener("paste", function (e) {
-		checkForSpecialCharAndText(e);
-	});
-	document.getElementById("cusPreChat-LastName").addEventListener("paste", function (e) {
-		checkForSpecialCharAndText(e);
-	});
-	document.getElementById("cusPreChat-IssueDescription").addEventListener("paste", function (e) {
-		if (pastedText(e).includes('<') || pastedText(e).includes('>')) {
-			e.preventDefault();
-			alert("You are trying to paste an invalid text.");
-		}else
-		removeDomElementbyId("ErrMsg_"+e.path[0].id);
-	});
-	document.getElementById("cusPreChat-Email").addEventListener("paste", function (e) {
-		var format = /[!#$%^&*()+\=\[\]{};':"\\|,<>\/?]/;
-		if (format.test(pastedText(e)) == true) {
-			e.preventDefault();
-			alert("You are trying to paste an invalid text.");
-		}else
-		removeDomElementbyId("ErrMsg_"+e.path[0].id);
-	});
-	document.getElementById("cusPreChat-Phone").addEventListener("paste", function (e) {
-		if (/^[0-9-]*$/.test(pastedText(e)) == false) {
-			e.preventDefault();
-			alert("You are trying to paste an invalid text.");
-		}else
-		removeDomElementbyId("ErrMsg_"+e.path[0].id);
-	});
-	function checkForSpecialCharAndText(e){
-		var format = /[0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
-		if (format.test(pastedText(e)) == true) {
-			e.preventDefault();
-			alert("You are trying to paste an invalid text.");
-		}else
-			removeDomElementbyId("ErrMsg_"+e.path[0].id);
-	}
-	function pastedText(e){
-		if (e.clipboardData && e.clipboardData.getData)
-			return e.clipboardData.getData('text/plain');
-		else
-			return null;
-	}
-	
-}
-function custPreChatShowAdditionalDetailsInUi(snapInObject) {
-	if(document.getElementById("readonlyPreChatContainer"))
-		removeDomElement(document.getElementById("readonlyPreChatContainer"));
-	let topFields = document.querySelector(".cusPreChat-sidebarBody .cusPreChat-prechatUI  .cusPreChat-embeddedServiceSidebarForm ul.cusPreChat-fieldList");
-	let topFieldValues;
-	if (snapInObject.productName == null)
-		topFieldValues = '<div id="readonlyPreChatContainer" class="readonlyContainer" style="margin: 0 1.5em 6px 1.5em; text-align: left;position: relative;font-size: .75em;color: #444444;margin-bottom: 0px;"><div><b>Service Tag:</b> ' + snapInObject.serviceTag + '</div><div><b>Issue:</b> ' + snapInObject.issueVal + '</div></div>';
-	else
-		topFieldValues = '<div id="readonlyPreChatContainer" class="readonlyContainer" style="margin: 0 1.5em 6px 1.5em; text-align: left;position: relative;font-size: .75em;color: #444444;"><div style="font-size: 1.2em;">' + snapInObject.productName + '</div><div><b>Service Tag:</b> ' + snapInObject.serviceTag + '</div><div><b>Issue:</b> ' + snapInObject.issueVal + '</div></div>';
-	topFields.insertAdjacentHTML("afterbegin", topFieldValues);
-}
 function minimizeCustPrechat(){
 	document.getElementById("cusPreChat-embeddedServiceHelpButton").style.display = 'block';
 	document.getElementById("cusPreChatSnapinDom").style.display = 'none';
@@ -263,6 +289,7 @@ function closeCustPrechat(){
 		if(inputField.value)
 			inputField.value = null;
 	});
+	custPreFormShowIssueDetailsCharRemaining();
 }
 function maximizeCustPrechat(){
 	document.getElementById("cusPreChat-sidebarLoadingIndicator").style.display = 'none';
@@ -271,21 +298,18 @@ function maximizeCustPrechat(){
 	document.getElementById("cusPreChatSnapinDom").style.display = 'block';
 	document.getElementById("cusPreChat-minimize-btn").style.display = 'block';
 	document.getElementById("cusPreChat-close-btn").style.display = 'block';
+	if(document.querySelector(".embeddedServiceHelpButton"))
+		document.querySelector(".embeddedServiceHelpButton").style.display = 'none';
+
 }
 function custPrechatInitiateChat(snapInObject) {
 	if(custPreFormValidation()){
 		loadingSnapinChatCustomized()
 		if (window.embedded_svc) {
-			console.log("BNR: window.embedded_svc");
-			initESW('https://service.force.com',snapInObject);
-			var targetNode = document.querySelector(".embeddedServiceHelpButton");
-			if(targetNode)
-			  togglePrechatAndSnapin(targetNode);
+			initESW(snapInObject.serviceForceURL,snapInObject);
 		  }else{
-			   console.log("BNR: !window.embedded_svc");
 			  var s = document.createElement('script');
-			  //s.setAttribute('src', 'https://dellservices--DEV2.my.salesforce.com/embeddedservice/5.0/esw.min.js');
-			  s.setAttribute('src', 'https://dellservices--DEV3.my.salesforce.com/embeddedservice/5.0/esw.min.js');
+			  s.setAttribute('src', snapInJs.snapInJs);
   
 			  s.onload = function() {
 				initESW(null,snapInObject);
@@ -297,8 +321,6 @@ function custPrechatInitiateChat(snapInObject) {
 }
 
 function initESW(gslbBaseURL,snapInObject) {
-	serviceTag = snapInObject.serviceTag,
-	issueType = snapInObject.issueVal,
 	firstName = document.getElementById('cusPreChat-FirstName').value,
 	lastName = document.getElementById('cusPreChat-LastName').value,
 	emailId = document.getElementById('cusPreChat-Email').value,
@@ -310,56 +332,56 @@ function initESW(gslbBaseURL,snapInObject) {
 	embedded_svc.settings.extraPrechatFormDetails = [{
 		  "label": "First Name",
 		  "name": "FirstName",
-		  "value": firstName,
+		  "value": document.getElementById('cusPreChat-FirstName').value,
 		  "displayToAgent":true,
 		  "transcriptFields": ["FirstName__C"]
 		}, 
 		{
 		  "label": "Last Name",
 		  "name": "LastName",
-		  "value": lastName,
+		  "value": document.getElementById('cusPreChat-LastName').value,
 		  "displayToAgent":true,
 		  "transcriptFields": ["LastName__c"]
 		}, 
 		{
 		  "label": "Email Address",
-		  "value": emailId,
+		  "value": document.getElementById('cusPreChat-Email').value,
 		  "displayToAgent":true,
 		  "transcriptFields": ["Email__c"]
 		}, 
 		{
 		  "label": "Primary Phone Number",
-		  "value": phoneNumber,
+		  "value": document.getElementById('cusPreChat-Phone').value,
 		  "displayToAgent":true,
 		  "transcriptFields": ["ContactNumber__c"]
 		},
 		{
 		  "label": "Subject",
-		  "value": issueType,
+		  "value": snapInObject.issueVal,
 		  "displayToAgent":true,
 		  "transcriptFields": ["Issue__c"]
 		}, 
 		{
 			"label": "Issue Description",
-			"value": issueDescription,
+			"value": document.getElementById('cusPreChat-IssueDescription').value,
 			"displayToAgent":true,
 			"transcriptFields": ["Description__c"]
 		},
 		{
 			"label": "AccountNumber",
-			"value": "2701",
+			"value": snapInObject.customernumber,
 			"displayToAgent":true,
 			"transcriptFields": ["CustomerNumber__c"]
 		}, 
 		{
 			"label": "Account BUID",
-			"value": "11",
+			"value": snapInObject.BUID,
 			"displayToAgent":true,
 			"transcriptFields": ["CustomerBUID__c"]
 		},
 		{
 		  "label": "Service Tag",
-		  "value": serviceTag,
+		  "value": snapInObject.serviceTag,
 		  "displayToAgent":true,
 		  "transcriptFields": ["Service_Tag__C"]
 		} 
@@ -384,46 +406,36 @@ function initESW(gslbBaseURL,snapInObject) {
 	//addEventHandler [START]
 	embedded_svc.addEventHandler("onHelpButtonClick", function(data) {
 	  console.log("onHelpButtonClick event was fired.");
-	});
-	
+	});	
 	embedded_svc.addEventHandler("onChatRequestSuccess", function(data) {
 	  console.log("onChatRequestSuccess event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
 	});
-	
 	embedded_svc.addEventHandler("onChatEstablished", function(data) {
 	  console.log("onChatEstablished event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
 	});
-	
 	embedded_svc.addEventHandler("onChasitorMessage", function(data) {
 	  console.log("onChasitorMessage event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
 	});
-	
 	embedded_svc.addEventHandler("onAgentMessage", function(data) {
 	  console.log("onAgentMessage event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
 	});
-	
 	embedded_svc.addEventHandler("onChatTransferSuccessful", function(data) {
 	  console.log("onChatTransferSuccessful event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
 	});
-	
 	embedded_svc.addEventHandler("onChatEndedByChasitor", function(data) {
 	  console.log("onChatEndedByChasitor event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
 	});
-	
 	embedded_svc.addEventHandler("onChatEndedByAgent", function(data) {
 	  console.log("onChatEndedByAgent event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
 	});
-	
 	embedded_svc.addEventHandler("onIdleTimeoutOccurred", function(data) {
 	  console.log("onIdleTimeoutOccurred event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
 	  console.log(data);
 	});
-	
 	embedded_svc.addEventHandler("onConnectionError", function(data) {
 	  console.log("onConnectionError event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
 	  console.log(data);
 	});
-	
 	embedded_svc.addEventHandler("onClickSubmitButton", function(data) {
 	  console.log("onClickSubmitButton event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
 	  console.log(data);
@@ -431,32 +443,24 @@ function initESW(gslbBaseURL,snapInObject) {
 	embedded_svc.addEventHandler("onInviteAccepted", function(data) {
 	  console.log("onInviteAccepted event was fired.");
 	});
-	
 	embedded_svc.addEventHandler("onInviteRejected", function(data) {
 	  console.log("onInviteRejected event was fired.");
 	});
 	//addEventHandler [END]
 	pageObserverForProp20("body");
-	embedded_svc.init(
-	  'https://dellservices--DEV3.my.salesforce.com',
-	  'https://dev3-dellservices.cs47.force.com/LaSnapIn',
-	  gslbBaseURL,
-	  '00D2a0000008ftq',
-	  'Snap_Ins_Resume_chat',
-	  {
-		baseLiveAgentContentURL: 'https://c.la2-c2cs-iad.salesforceliveagent.com/content',
-		deploymentId: '572Z000000000KC',
-		buttonId: '5730b000000CbhY',
-		baseLiveAgentURL: 'https://d.la2-c2cs-iad.salesforceliveagent.com/chat',
-		eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04IZ00000008OIUMA2_1648e3b61a5',
+	embedded_svc.init(snapInObject.snapInInitURL, snapInObject.snapInLAURL, gslbBaseURL, snapInObject.organizationId, snapInObject.componentName, {
+		baseLiveAgentContentURL: snapInObject.baseLiveAgentContentURL,
+		deploymentId: snapInObject.deploymentId,
+		buttonId: snapInObject.buttonId,
+		baseLiveAgentURL: snapInObject.baseLiveAgentURL,
+		eswLiveAgentDevName: snapInObject.LiveAgentDevName,
 		isOfflineSupportEnabled: false
-	  }
-	);
+	});
 };
     /******************************************/
    /*Customized Click Event Functions [START] */
    //eleExist('.helpButtonEnabled #helpButtonSpan > .message', whenHelpButtonEnabled);//Check if the element is avilable or not
-   /*function whenHelpButtonEnabled(eleSelector, findingEle) {
+  /* function whenHelpButtonEnabled(eleSelector, findingEle) {
 	   try{
 		 if (document.querySelector(eleSelector).innerText === 'Chat Now') {
 		   embeddedServiceHelpBtnObserver();
@@ -466,9 +470,10 @@ function initESW(gslbBaseURL,snapInObject) {
 	   }catch(e){
 		 console.log("Error in:"+ e);
 	   }
-	 }*/
+	 }
 
 	 function embeddedServiceHelpBtnObserver(){
+		 debugger;
 	   // Select the node that will be observed for mutations
 	   var targetNode = document.querySelector(".embeddedServiceHelpButton");
 	   togglePrechatAndSnapin(targetNode);
@@ -491,39 +496,36 @@ function initESW(gslbBaseURL,snapInObject) {
 	   // Start observing the target node for configured mutations
 	   observer.observe(targetNode, config);
    }
-   
+   */
 	 function togglePrechatAndSnapin(targetNode){
-	   if (window.getComputedStyle(targetNode).display === 'block'){
-		   preChatCanvas = document.getElementById("cusPreChatSnapinDom");
-		   if (window.getComputedStyle(preChatCanvas).display === 'block'){
-			 document.querySelector(".embeddedServiceHelpButton").style.display = 'none';
-			 document.querySelector(".helpButtonEnabled #helpButtonSpan > .message").click();
-			 pageObserverForProp20("body");
-		   }else{
-			 showPrechatForm();
-		   }
-	   }
-	  
+		 if(targetNode === "snapInhelpBtnDisabled"){
+			document.getElementById("cusPreChatSnapinDom").style.display = "none";
+		 }else if(targetNode === "snapInhelpBtnEnabled"){
+			preChatCanvas = document.getElementById("cusPreChatSnapinDom");
+			if (window.getComputedStyle(preChatCanvas).display === 'block'){
+			  //document.querySelector(".embeddedServiceHelpButton").style.display = 'none';
+			  if(document.querySelector(".helpButtonEnabled #helpButtonSpan > .message"))
+				  document.querySelector(".helpButtonEnabled #helpButtonSpan > .message").click();
+			}else{
+				minimizeCustPrechat();
+			}
+		 }  
  }
  function loadingSnapinChatCustomized(){
 	document.getElementById("cusPreChat-sidebarLoadingIndicator").style.display = 'flex';
 	document.getElementById("cusPreChat-hideWhileLoading").style.display = 'none';
 	document.getElementById("cusPreChat-minimize-btn").style.display = 'none';
 	document.getElementById("cusPreChat-close-btn").style.display = 'none';
-
-	
+	if(document.querySelector(".embeddedServiceHelpButton"))
+		document.querySelector(".embeddedServiceHelpButton").style.display = 'block';
  }
  function hidePrechatForm(){
    //console.log("hide prechat");
    document.getElementById("cusPreChatSnapinDom").style.display = 'none';
    //if(document.querySelector(".helpButtonEnabled #helpButtonSpan > .message"))
 	//	document.querySelector(".embeddedServiceHelpButton .uiButton.helpButtonEnabled").style.display = 'block';
- }
- function showPrechatForm(){
-   console.log("show prechat");
-   //document.getElementById("cusPreChatSnapinDom").style.display = 'block';
-   minimizeCustPrechat();
-   document.querySelector(".embeddedServiceHelpButton .uiButton.helpButtonEnabled").style.display = 'none';
+	//if(document.querySelector(".embeddedServiceHelpButton"))
+	//	document.querySelector(".embeddedServiceHelpButton").style.display = 'none';
  }
  
    /*Customized Click Event Functions [END]*/ 
@@ -597,10 +599,10 @@ function triggerResumeSnapin(snapInObject) {
 	}
 }
 eleExist('.helpButtonEnabled #helpButtonSpan > .message', chatClick);
-eleExist(".dockableContainer .ended.embeddedServiceLiveAgentStateChatMessage", chatEnded);
-eleExist(".dockableContainer .embeddedServiceLiveAgentStateWaiting .waitingCancelChat", chatEndedOnWaiting);
+//eleExist(".dockableContainer .ended.embeddedServiceLiveAgentStateChatMessage", chatEnded);
+//eleExist(".dockableContainer .embeddedServiceLiveAgentStateWaiting .waitingCancelChat", chatEndedOnWaiting);
 
-eleExist(".embeddedServiceSidebarFeature .embeddedServiceLiveAgentStatePrechatDefaultUI .embeddedServiceSidebarForm .embeddedServiceSidebarFormField .Issue_Description__c", addCharectorRemaining);
+//eleExist(".embeddedServiceSidebarFeature .embeddedServiceLiveAgentStatePrechatDefaultUI .embeddedServiceSidebarForm .embeddedServiceSidebarFormField .Issue_Description__c", addCharectorRemaining);
 
 function collectGlobalServiceTagValue(snapInObject){
 	snapinChatGlobalIssueType = snapInObject.issueVal;
@@ -619,6 +621,7 @@ function chatClick(eleSelector, findingEle) {
 		console.log("Error in:"+ e);
 	}
 }
+/*
 function chatEndedOnWaiting(eleSelector, findingEle) {
 	try{
 		document.querySelector(eleSelector).addEventListener('click', function(e) {virtualSnapInObjectSession(false);});
@@ -627,14 +630,16 @@ function chatEndedOnWaiting(eleSelector, findingEle) {
 		console.log("Error in:"+ e);
 	}
 }
-function chatEnded(eleSelector, findingEle) {
+*/
+/*function chatEnded(eleSelector, findingEle) {
 	try{
 		virtualSnapInObjectSession(false);
 		clearInterval(findingEle);
 	}catch(e){
 		console.log("Error in:"+ e);
 	}
-}
+}*/
+/*
 function virtualSnapInObjectSession(value) {
 	var snapInObjectGlobal = sessionStorage.getItem("snapInObjectSession");
 	snapInObject = JSON.parse(snapInObjectGlobal);
@@ -642,30 +647,7 @@ function virtualSnapInObjectSession(value) {
 	snapInObjectGlobal = JSON.stringify(snapInObject);
 	sessionStorage.setItem("snapInObjectSession", snapInObjectGlobal);
 }
-function addCharectorRemaining(eleSelector, findingEle) {
-	try{
-		if(document.getElementById("loadingSnapinMsg"))
-			removeDomElement(document.getElementById("loadingSnapinMsg"));
-		if (!document.getElementById("snappinCharCounter")) {
-			var currentCharLength = document.querySelector(eleSelector).value.length;
-			var maxCharLength = 255;
-			//document.querySelector(eleSelector).after("<div id='snappinCharCounter' style='text-align:right;position:relative;font-size:.75em;line-height: 1.5;margin-right: .75em;margin-left: .5em;margin-top: 8px;color: #767676;float: right;'>" + currentCharLength + " / " + maxCharLength + " characters</div>")
-			document.querySelector(eleSelector).insertAdjacentHTML('afterend', "<div id='snappinCharCounter' style='text-align:right;position:relative;font-size:.75em;line-height: 1.5;margin-right: .75em;margin-left: .5em;margin-top: 8px;color: #767676;float: right;'>" + currentCharLength + " / " + maxCharLength + " characters</div>");
-			document.querySelector(eleSelector).onkeyup = function () { 
-				currentCharLength = this.value.length
-				document.querySelector("#snappinCharCounter").innerText = currentCharLength + " / " + maxCharLength + " characters";
-			}
-			document.querySelector(".formContent.embeddedServiceSidebarForm").insertAdjacentHTML("beforeend", "<div style='font-size: 12px;color:#767676;text-align: left;margin: 2em 1.75em; font-style: italic;color:#444444;'><b>Your privacy is important to us.</b> We will only use your information to process your request. We will not share it with anyone. To learn more about how we use and protect your data, see the <a href='https://www.dell.com/learn/policies-privacy?s=corp'>Dell Privacy Statement</a>.</div>");
-			showAdditionalDetailsInUi();
-		}
-		//document.getElementById(triggerChatButtonId).setAttribute("disabled", false);
-		clearInterval(findingEle);
-	}catch(e){
-		console.log("Error in:"+ e);
-	}
-}
-
-
+*/
 function translation(language) {
 	if (language == "de") {
 		this.issue = "Issue";
@@ -771,7 +753,7 @@ window.addEventListener("click", function (event) {
 							var snapInObjectGlobal = sessionStorage.getItem("snapInObjectSession");
 							var snapInObject = JSON.parse(snapInObjectGlobal);
 							var prechatValues = JSON.stringify(snapInObject.snapinPreChatFormValues);
-							virtualSnapInObjectSession(true);
+							//virtualSnapInObjectSession(true);
 							callDellmetricsTrack("890.220.002", "PrechatComplete" + prechatValues);
 						}
 						break;
@@ -808,8 +790,9 @@ window.addEventListener("click", function (event) {
 							snapInCurrentPage = null;
 							callDellmetricsTrack("890.220.001", "StartsChat for " + snapinChatGlobalServiceTag + "|" + snapinChatGlobalIssueType + "|" + snapinChatGlobalProductName);
 							//snapinLoading();
-							embeddedServiceHelpBtnObserver();
-							eleExist(".embeddedServiceSidebarFeature .embeddedServiceLiveAgentStatePrechatDefaultUI .embeddedServiceSidebarForm .embeddedServiceSidebarFormField .Issue_Description__c", addCharectorRemaining);
+							//embeddedServiceHelpBtnObserver();
+							//togglePrechatAndSnapin("snapInhelpBtnEnabled");
+							//eleExist(".embeddedServiceSidebarFeature .embeddedServiceLiveAgentStatePrechatDefaultUI .embeddedServiceSidebarForm .embeddedServiceSidebarFormField .Issue_Description__c", addCharectorRemaining);
 						}else
 							callDellmetricsTrack("890.220.001", "AgentOffline for " + snapinChatGlobalServiceTag + "|" + snapinChatGlobalIssueType + "|" + snapinChatGlobalProductName);
 						break;
@@ -818,7 +801,7 @@ window.addEventListener("click", function (event) {
 							callDellmetricsTrack("890.220.009", "ClickedOn " + closestByTagName(clickedElement, 'a').text);
 						}else if(clickedElement.parentNode.parentNode.className ==  "uiButton helpButtonEnabled" || clickedElement.parentNode.className == "uiButton helpButtonEnabled"){
 							//snapinLoading();
-							eleExist(".embeddedServiceSidebarFeature .embeddedServiceLiveAgentStatePrechatDefaultUI .embeddedServiceSidebarForm .embeddedServiceSidebarFormField .Issue_Description__c", addCharectorRemaining);
+							//eleExist(".embeddedServiceSidebarFeature .embeddedServiceLiveAgentStatePrechatDefaultUI .embeddedServiceSidebarForm .embeddedServiceSidebarFormField .Issue_Description__c", addCharectorRemaining);
 						}
 						break;
 					}
@@ -873,6 +856,8 @@ function pageObserverForProp20(eleSelector){
 		snapInWaiting = document.querySelector(".dockableContainer .embeddedServiceLiveAgentStateWaiting .waitingStateContainer");
 		snapInChatStarted = document.querySelector(".dockableContainer .activeFeature .embeddedServiceLiveAgentStateChat .chasitorControls .chasitorText");
 		snapInConfirmationDialoug = document.querySelector(".dockableContainer .activeFeature .stateBody .dialogState .dialogTextContainer");
+		snapInhelpBtnDisabled = document.querySelector(".embeddedServiceHelpButton .helpButton .helpButtonDisabled");
+		snapInhelpBtnEnabled = document.querySelector(".embeddedServiceHelpButton .helpButton .helpButtonEnabled");
 		if(snapInPrechatForm)
 			snapInCurrentPage = "snapInPrechatForm";
 		else if(snapInWaiting)
@@ -881,6 +866,10 @@ function pageObserverForProp20(eleSelector){
 			snapInCurrentPage = "snapInChatStarted";
 		else if(snapInConfirmationDialoug)
 			snapInCurrentPage = "snapInConfirmationDialoug";
+		else if(snapInhelpBtnDisabled)
+			snapInCurrentPage = "snapInhelpBtnDisabled";
+		else if(snapInhelpBtnDisabled)
+		snapInhelpBtnEnabled = "snapInhelpBtnEnabled";
 		else
 			snapInCurrentPage = null;
 		var MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
@@ -891,13 +880,16 @@ function pageObserverForProp20(eleSelector){
 					snapInWaiting = document.querySelector(".dockableContainer .embeddedServiceLiveAgentStateWaiting .waitingStateContainer");
 					snapInChatStarted = document.querySelector(".dockableContainer .activeFeature .embeddedServiceLiveAgentStateChat .chasitorControls .chasitorText");
 					snapInConfirmationDialoug = document.querySelector(".dockableContainer .activeFeature .stateBody .dialogState .dialogTextContainer");
+					snapInhelpBtnDisabled = document.querySelector(".embeddedServiceHelpButton .helpButton .helpButtonDisabled");
+					snapInhelpBtnEnabled = document.querySelector(".embeddedServiceHelpButton .helpButton .helpButtonEnabled");
+					snapInEmbeddedServiceHelpBtn = document.querySelector(".embeddedServiceHelpButton");
 					if(snapInPrechatForm && snapInCurrentPage != "snapInPrechatForm"){
 						prechatformHeader = document.querySelector(".embeddedServiceSidebar");
 						if(window.getComputedStyle(prechatformHeader).display === 'block'){
 							snapInCurrentPage = "snapInPrechatForm";
 							callDellmetricsTrack("890.220.010");
 						}
-						virtualSnapInObjectSession(false);
+						//virtualSnapInObjectSession(false);
 					}else if(snapInWaiting && snapInCurrentPage != "snapInWaiting"){
 						snapInCurrentPage = "snapInWaiting";
 						callDellmetricsTrack("890.220.011");
@@ -905,10 +897,24 @@ function pageObserverForProp20(eleSelector){
 						eleExistWithVariable('.dockableContainer .embeddedServiceLiveAgentStateWaiting .waitingStateContainer .waitingStateContent .queuePositionContent .header', waitChatCounter, 0);
 					}else if(snapInChatStarted && snapInCurrentPage != "snapInChatStarted"){
 						snapInCurrentPage = "snapInChatStarted";
+						hidePrechatForm();
 						callDellmetricsTrack("890.220.013");
 					}else if(snapInConfirmationDialoug && snapInCurrentPage != "snapInConfirmationDialoug"){
 						snapInCurrentPage = "snapInConfirmationDialoug";
+						hidePrechatForm();
 						callDellmetricsTrack("890.220.016",document.querySelector(".dockableContainer .activeFeature .stateBody .dialogState .dialogTextContainer").innerText);
+					}else if(snapInEmbeddedServiceHelpBtn && window.getComputedStyle(snapInEmbeddedServiceHelpBtn).display === 'block'){
+						if(snapInhelpBtnDisabled && window.getComputedStyle(snapInhelpBtnDisabled).display === 'flex' && snapInCurrentPage != "snapInhelpBtnDisabled"){
+							snapInCurrentPage = "snapInhelpBtnDisabled";
+							togglePrechatAndSnapin(snapInCurrentPage);
+							//embeddedServiceHelpBtnObserver();
+							//hidePrechatForm();
+						}else if(snapInhelpBtnEnabled && window.getComputedStyle(snapInhelpBtnEnabled).display === 'flex' && snapInCurrentPage != "snapInhelpBtnEnabled"){
+							if(snapInCurrentPage === "snapInhelpBtnDisabled")
+								document.getElementById("cusPreChatSnapinDom").style.display = "block";
+							snapInCurrentPage = "snapInhelpBtnEnabled";
+							togglePrechatAndSnapin(snapInCurrentPage);
+						}
 					}
 					
 				}                       
@@ -923,6 +929,7 @@ function pageObserverForProp20(eleSelector){
 	}catch(e){console.log('Error in Observer - '+e)}
 }
 
+/*
 window.addEventListener("blur", function (event) {
 	var elementId = event.target.id;
 	if (elementId == "FirstName" || elementId == "LastName" || elementId == "Email" || elementId == "Primary_Phone__c" || elementId == "Issue_Description__c") {
@@ -934,7 +941,7 @@ window.addEventListener("blur", function (event) {
 		sessionStorage.setItem("snapInObjectSession", snapInObjectGlobal);
 	}
 }, true);
-
+*/
 function waitChatCounter(eleSelector, findingEle, counterValue) {
 	try{
 		if (typeof(dellmetricsTrack) == "function") {
