@@ -38,21 +38,28 @@ function hideDomObject(eleSelector, findingEle) {
 }
 //eleExist('.helpButtonLabel .message', checkAgentOffline);
 function initSnapIn(snapInObject) {
-	if (!window.embedded_svc) {
+	debugger;
+	if (window.embedded_svc) {
+		initESW(snapInObject.serviceForceURL,snapInObject);
+	}else{
 		var s = document.createElement('script');
-		s.setAttribute('src', snapInObject.snapInJs);
-		s.onload = function () {
-			initESW(null);
+		s.setAttribute('src', snapInJs.snapInJs);
+		s.onload = function() {
+			initESW(null,snapInObject);
 		};
 		document.body.appendChild(s);
-	} else {
-		initESW(snapInObject.serviceForceURL);
 	}
 }
 
 function triggerSnapin(snapInObject) {
-	appendCustPreChatSnapinStyle();
-	appendCustPreChatSnapinDom(snapInObject);
+	if(snapInObject === undefined && history.length > 1 && snapinChatGlobalObjNotEmpty()){
+		snapInObject = sendGlobalSnapinObjToJson();
+		if("snapinChatInitiated" in snapInObject && snapInObject.snapinChatInitiated)
+			initSnapIn(snapInObject);
+	}else if(snapInObject){
+		appendCustPreChatSnapinStyle();
+		appendCustPreChatSnapinDom(snapInObject);
+	}
 }
 function appendCustPreChatSnapinStyle(){
 	if(!document.getElementById('custPreChatSnapinStyle')){
@@ -273,7 +280,6 @@ function removeDomElementbyId(id){
 		element.parentNode.removeChild(element);
 	}
 }
-
 function minimizeCustPrechat(){
 	document.getElementById("cusPreChat-embeddedServiceHelpButton").style.display = 'block';
 	document.getElementById("cusPreChatSnapinDom").style.display = 'none';
@@ -302,56 +308,71 @@ function maximizeCustPrechat(){
 		document.querySelector(".embeddedServiceHelpButton").style.display = 'none';
 
 }
+function addCustFormDetailsTo(snapInObject){
+	debugger;
+	snapInObject.firstName = document.getElementById("cusPreChat-FirstName").value;
+	snapInObject.lastName = document.getElementById("cusPreChat-LastName").value;
+	snapInObject.email = document.getElementById("cusPreChat-Email").value;
+	snapInObject.phoneNo = 	document.getElementById("cusPreChat-Phone").value;
+	snapInObject.issueDescription = document.getElementById('cusPreChat-IssueDescription').value;
+	snapInObject.snapinChatInitiated = true; //to retain chat
+	return snapInObject;
+}
+function snapinChatGlobalObjNotEmpty(){
+	snapInObjectGlobal = sessionStorage.getItem("snapInObjectSession");
+	if(snapInObjectGlobal != null)
+		return true;
+	else
+		return false;
+}
+function saveGlobalSnapinObjToSession(snapInObject){
+	debugger;
+	if(snapInObject){
+		snapInObjectGlobal = JSON.stringify(snapInObject);
+		sessionStorage.setItem("snapInObjectSession", snapInObjectGlobal);
+	}	
+}
+function sendGlobalSnapinObjToJson(){
+		snapInObjectGlobal = sessionStorage.getItem("snapInObjectSession");
+		snapInObject = JSON.parse(snapInObjectGlobal);
+		return snapInObject;
+}
 function custPrechatInitiateChat(snapInObject) {
 	if(custPreFormValidation()){
-		loadingSnapinChatCustomized()
-		if (window.embedded_svc) {
-			initESW(snapInObject.serviceForceURL,snapInObject);
-		  }else{
-			  var s = document.createElement('script');
-			  s.setAttribute('src', snapInJs.snapInJs);
-  
-			  s.onload = function() {
-				initESW(null,snapInObject);
-			  };
-			  document.body.appendChild(s);
-		  }//end of else
-		
+		snapInObject = addCustFormDetailsTo(snapInObject);
+		saveGlobalSnapinObjToSession(snapInObject);
+		loadingSnapinChatCustomized();
+		initSnapIn(snapInObject);
 	}
 }
 
 function initESW(gslbBaseURL,snapInObject) {
-	firstName = document.getElementById('cusPreChat-FirstName').value,
-	lastName = document.getElementById('cusPreChat-LastName').value,
-	emailId = document.getElementById('cusPreChat-Email').value,
-	phoneNumber = document.getElementById('cusPreChat-Phone').value,
-	issueDescription = document.getElementById('cusPreChat-IssueDescription').value;
 	embedded_svc.settings.displayHelpButton = true; //Or true
 	embedded_svc.settings.language = '';
 	embedded_svc.settings.defaultMinimizedText = 'Chat Now';  
 	embedded_svc.settings.extraPrechatFormDetails = [{
 		  "label": "First Name",
 		  "name": "FirstName",
-		  "value": document.getElementById('cusPreChat-FirstName').value,
+		  "value": snapInObject.firstName,
 		  "displayToAgent":true,
 		  "transcriptFields": ["FirstName__C"]
 		}, 
 		{
 		  "label": "Last Name",
 		  "name": "LastName",
-		  "value": document.getElementById('cusPreChat-LastName').value,
+		  "value": snapInObject.lastName,
 		  "displayToAgent":true,
 		  "transcriptFields": ["LastName__c"]
 		}, 
 		{
 		  "label": "Email Address",
-		  "value": document.getElementById('cusPreChat-Email').value,
+		  "value": snapInObject.email,
 		  "displayToAgent":true,
 		  "transcriptFields": ["Email__c"]
 		}, 
 		{
 		  "label": "Primary Phone Number",
-		  "value": document.getElementById('cusPreChat-Phone').value,
+		  "value": snapInObject.phoneNo,
 		  "displayToAgent":true,
 		  "transcriptFields": ["ContactNumber__c"]
 		},
@@ -363,7 +384,7 @@ function initESW(gslbBaseURL,snapInObject) {
 		}, 
 		{
 			"label": "Issue Description",
-			"value": document.getElementById('cusPreChat-IssueDescription').value,
+			"value": snapInObject.issueDescription,
 			"displayToAgent":true,
 			"transcriptFields": ["Description__c"]
 		},
@@ -457,59 +478,29 @@ function initESW(gslbBaseURL,snapInObject) {
 		isOfflineSupportEnabled: false
 	});
 };
-    /******************************************/
-   /*Customized Click Event Functions [START] */
-   //eleExist('.helpButtonEnabled #helpButtonSpan > .message', whenHelpButtonEnabled);//Check if the element is avilable or not
-  /* function whenHelpButtonEnabled(eleSelector, findingEle) {
-	   try{
-		 if (document.querySelector(eleSelector).innerText === 'Chat Now') {
-		   embeddedServiceHelpBtnObserver();
-		   //togglePrechatAndSnapin();
-		 }
-		 clearInterval(findingEle);
-	   }catch(e){
-		 console.log("Error in:"+ e);
-	   }
-	 }
-
-	 function embeddedServiceHelpBtnObserver(){
-		 debugger;
-	   // Select the node that will be observed for mutations
-	   var targetNode = document.querySelector(".embeddedServiceHelpButton");
-	   togglePrechatAndSnapin(targetNode);
-	   // Options for the observer (which mutations to observe)
-	   var config = { attributes: true, childList: false, subtree: false };
-
-	   // Callback function to execute when mutations are observed
-	   var callback = function(mutationsList, observer) {
-		   for(var mutation of mutationsList) {
-			  if (mutation.type == 'attributes') {
-				   console.log('The ' + mutation.attributeName + ' attribute was modified.');
-				   togglePrechatAndSnapin(targetNode);
-			   }
-		   }
-	   };
-
-	   // Create an observer instance linked to the callback function
-	   var observer = new MutationObserver(callback);
-
-	   // Start observing the target node for configured mutations
-	   observer.observe(targetNode, config);
-   }
-   */
-	 function togglePrechatAndSnapin(targetNode){
-		 if(targetNode === "snapInhelpBtnDisabled"){
-			document.getElementById("cusPreChatSnapinDom").style.display = "none";
-		 }else if(targetNode === "snapInhelpBtnEnabled"){
-			preChatCanvas = document.getElementById("cusPreChatSnapinDom");
-			if (window.getComputedStyle(preChatCanvas).display === 'block'){
-			  //document.querySelector(".embeddedServiceHelpButton").style.display = 'none';
-			  if(document.querySelector(".helpButtonEnabled #helpButtonSpan > .message"))
-				  document.querySelector(".helpButtonEnabled #helpButtonSpan > .message").click();
-			}else{
-				minimizeCustPrechat();
+ 
+function togglePrechatAndSnapin(targetNode){
+		 if(document.getElementById("cusPreChatSnapinDom")){
+			if(targetNode === "snapInhelpBtnDisabled"){
+				document.getElementById("cusPreChatSnapinDom").style.display = "none";
+			}else if(targetNode === "snapInhelpBtnEnabled"){
+				preChatCanvas = document.getElementById("cusPreChatSnapinDom");
+				if (window.getComputedStyle(preChatCanvas).display === 'block'){
+				//document.querySelector(".embeddedServiceHelpButton").style.display = 'none';
+				if(document.querySelector(".helpButtonEnabled #helpButtonSpan > .message"))
+					document.querySelector(".helpButtonEnabled #helpButtonSpan > .message").click();
+				}else{
+					minimizeCustPrechat();
+				}
+			}  
+		 }else if(snapinChatGlobalObjNotEmpty()){
+			snapInObject = sendGlobalSnapinObjToJson();
+			snapInObject.snapinChatInitiated = false;
+			saveGlobalSnapinObjToSession(snapInObject);
+			if(!document.getElementById("cusPreChatSnapinDom")){
+				document.querySelector(".embeddedServiceHelpButton").style.display = 'none';
 			}
-		 }  
+		 }
  }
  function loadingSnapinChatCustomized(){
 	document.getElementById("cusPreChat-sidebarLoadingIndicator").style.display = 'flex';
@@ -520,13 +511,9 @@ function initESW(gslbBaseURL,snapInObject) {
 		document.querySelector(".embeddedServiceHelpButton").style.display = 'block';
  }
  function hidePrechatForm(){
-   //console.log("hide prechat");
-   document.getElementById("cusPreChatSnapinDom").style.display = 'none';
-   //if(document.querySelector(".helpButtonEnabled #helpButtonSpan > .message"))
-	//	document.querySelector(".embeddedServiceHelpButton .uiButton.helpButtonEnabled").style.display = 'block';
-	//if(document.querySelector(".embeddedServiceHelpButton"))
-	//	document.querySelector(".embeddedServiceHelpButton").style.display = 'none';
- }
+   	if(document.getElementById("cusPreChatSnapinDom"))
+		document.getElementById("cusPreChatSnapinDom").style.display = 'none';
+ 	}
  
    /*Customized Click Event Functions [END]*/ 
 /****************************************/
@@ -907,8 +894,6 @@ function pageObserverForProp20(eleSelector){
 						if(snapInhelpBtnDisabled && window.getComputedStyle(snapInhelpBtnDisabled).display === 'flex' && snapInCurrentPage != "snapInhelpBtnDisabled"){
 							snapInCurrentPage = "snapInhelpBtnDisabled";
 							togglePrechatAndSnapin(snapInCurrentPage);
-							//embeddedServiceHelpBtnObserver();
-							//hidePrechatForm();
 						}else if(snapInhelpBtnEnabled && window.getComputedStyle(snapInhelpBtnEnabled).display === 'flex' && snapInCurrentPage != "snapInhelpBtnEnabled"){
 							if(snapInCurrentPage === "snapInhelpBtnDisabled")
 								document.getElementById("cusPreChatSnapinDom").style.display = "block";
@@ -1061,7 +1046,6 @@ function initResumeLiveAgent(liveAgentObject) {
 function startLiveAgentChat(buttonId) {
 	liveagent.startChat(buttonId);
 }
-
 function eleExist(eleSelector, callbackFunc) {
 	var findingEle = setInterval(function () {
 			if (document.querySelector(eleSelector)) {
