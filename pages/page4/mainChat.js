@@ -1,4 +1,4 @@
-﻿var snapinChatGlobalIssueType, snapinChatGlobalServiceTag, snapinChatGlobalProductName = null, snapInCurrentPage = null, trackevent = true;
+﻿var snapinCurentPageUrlIsDuplicate = false, snapinChatGlobalIssueType, snapinChatGlobalServiceTag, snapinChatGlobalProductName = null, snapInCurrentPage = null, trackevent = true;
 (function () {
 	var initESW;
 	window.addEventListener("dragover", function (e) {
@@ -36,30 +36,52 @@ function hideDomObject(eleSelector, findingEle) {
 		console.log("Error in:"+ e);
 	}
 }
-//eleExist('.helpButtonLabel .message', checkAgentOffline);
+
+if (window.performance && window.performance.navigation.type == window.performance.navigation.TYPE_BACK_FORWARD) {
+	if(sessionStorage.getItem("snapinCurentPageURL") === window.location.href){
+		snapinCurentPageUrlIsDuplicate = true;
+	}
+	else
+		snapinCurentPageUrlIsDuplicate = false;
+}
+sessionStorage.setItem("snapinCurentPageURL",window.location.href);
+
 function initSnapIn(snapInObject) {
-	debugger;
 	if (window.embedded_svc) {
-		initESW(snapInObject.serviceForceURL,snapInObject);
+		initOriginalESW(snapInObject.serviceForceURL,snapInObject);
+		
 	}else{
 		var s = document.createElement('script');
-		s.setAttribute('src', snapInJs.snapInJs);
+		s.setAttribute('src', snapInObject.snapInJs);
 		s.onload = function() {
-			initESW(null,snapInObject);
+			initOriginalESW(null,snapInObject);
 		};
 		document.body.appendChild(s);
 	}
 }
 
 function triggerSnapin(snapInObject) {
-	if(snapInObject === undefined && history.length > 1 && snapinChatGlobalObjNotEmpty()){
+	if(snapInObject === undefined && history.length > 1 && snapinChatGlobalObjNotEmpty() && !snapinCurentPageUrlIsDuplicate){
 		snapInObject = sendGlobalSnapinObjToJson();
 		if("snapinChatInitiated" in snapInObject && snapInObject.snapinChatInitiated)
 			initSnapIn(snapInObject);
 	}else if(snapInObject){
-		appendCustPreChatSnapinStyle();
-		appendCustPreChatSnapinDom(snapInObject);
+		if(!snapInObject.snapinButtonClicked){
+			saveGlobalSnapinObjToSession(snapInObject);
+		}else if(customChatNotCreated()){
+			snapInObject = sendGlobalSnapinObjToJson();
+			appendCustPreChatSnapinStyle();
+			appendCustPreChatSnapinDom(snapInObject);
+		}
 	}
+}
+function customChatNotCreated(){
+	let cusPreChatHelpBtn = document.getElementById('cusPreChat-embeddedServiceHelpButton');
+	if(cusPreChatHelpBtn && window.getComputedStyle(cusPreChatHelpBtn).display != "none"){
+		document.getElementById("cusPreChat-helpButtonEnabled").click();
+		return false;
+	}else
+		return true;
 }
 function appendCustPreChatSnapinStyle(){
 	if(!document.getElementById('custPreChatSnapinStyle')){
@@ -78,7 +100,7 @@ function appendCustPreChatSnapinStyle(){
 }
 function appendCustPreChatSnapinDom(snapInObject){
 	if(!document.getElementById('cusPreChatSnapinDom')){
-		let domEle = '<div id="cusPreChatSnapinDom" class="cusPreChat-modalContainer"><div class="cusPreChat-dockableContainer"><div class="cusPreChat-embeddedServiceSidebarHeader"><div class="cusPreChat-shortHeader"><div class="cusPreChat-shortHeaderContent"> <button id="cusPreChat-minimize-btn" class="cusPreChat-minimizeButton cusPreChat-headerItem"> <span class="cusPreChat-assistiveText">Minimize chat</span> <span class="cusPreChat-minimize cusPreChat-x-small cusPreChat-embeddedServiceIcon"> <svg focusable="false" aria-hidden="true" data-key="contract_alt" viewBox="0 0 100 100"> <path d="M56.923 45.962h29.615c1.924 0 2.5-2.116.962-3.654l-9.423-9.616 17.308-17.5c.96-.96.96-2.692 0-3.654L88.27 4.423c-.962-.77-2.5-.77-3.655.192L67.308 21.923 57.5 12.5c-1.538-1.538-3.654-.962-3.654.962v29.615c0 1.346 1.73 2.885 3.077 2.885zm-13.846 7.884H13.462c-1.924 0-2.5 2.116-.962 3.654l9.423 9.615-17.308 17.5c-.96.962-.96 2.693 0 3.654l7.116 7.115c.962.96 2.5.96 3.655 0l17.5-17.5 9.807 9.423c1.346 1.73 3.462 1.154 3.462-.77V57.115c0-1.346-1.73-3.27-3.077-3.27z"> </path> </svg> </span> </button><h2 class="cusPreChat-headerText"><div class="cusPreChat-headerTextContent"> <span id="cusPreChat-headerTextLabel">Chat Now</span> <span id="cusPreChat-headerSubtext"> </span></div></h2> <button id="cusPreChat-close-btn" class="cusPreChat-closeButton cusPreChat-headerItem"> <span class="cusPreChat-assistiveText">Close chat</span> <span class="cusPreChat-x-small cusPreChat-embeddedServiceIcon"> <svg focusable="false" aria-hidden="true" data-key="close" viewBox="0 0 100 100"> <path d="M65.577 53.73l27.5-27.71c1.27-1.27 1.27-3.174 0-4.445l-4.23-4.44c-1.272-1.27-3.175-1.27-4.445 0L56.694 44.847c-.847.845-2.115.845-2.96 0L26.018 16.922c-1.27-1.27-3.174-1.27-4.445 0l-4.44 4.442c-1.27 1.27-1.27 3.174 0 4.444l27.71 27.71c.846.846.846 2.116 0 2.962L16.923 84.403c-1.27 1.27-1.27 3.174 0 4.444l4.442 4.442c1.27 1.268 3.174 1.268 4.444 0l27.71-27.713c.846-.847 2.116-.847 2.962 0L84.19 93.29c1.27 1.268 3.174 1.268 4.445 0l4.44-4.445c1.27-1.268 1.27-3.17 0-4.44l-27.5-27.712c-.847-.847-.847-2.115 0-2.96z"> </path> </svg> </span> </button></div></div></div><div class="cusPreChat-sidebarBody"><div id="cusPreChat-sidebarLoadingIndicator" class="cusPreChat-sidebarLoadingIndicator" style="display: none;"><div class="cusPreChat-loadingBallContainer cusPreChat-animated cusPreChat-embeddedServiceLoadingBalls"> <span class="cusPreChat-loadingBall cusPreChat-first"> </span> <span class="cusPreChat-loadingBall cusPreChat-second"> </span> <span class="cusPreChat-loadingBall cusPreChat-third"> </span></div></div><div id="cusPreChat-hideWhileLoading" class="cusPreChat-activeFeature cusPreChat-hideWhileLoading"><div class="cusPreChat-featureBody cusPreChat-embeddedServiceSidebarFeature"><div class="cusPreChat-stateBody cusPreChat-embeddedServiceSidebarState"><div class="cusPreChat-prechatUI cusPreChat-embeddedServiceLiveAgentStatePrechatDefaultUI"><div class="cusPreChat-formContent cusPreChat-embeddedServiceSidebarForm"><ul class="cusPreChat-fieldList"><div id="readonlyPreChatContainer" class="cusPreChat-readonlyContainer" style="margin: 0 1.5em 6px 1.5em; text-align: left;position: relative;font-size: .75em;color: #444444;"><div style="font-size: 1.2em;">Precision M4500</div><div> <b>Service Tag:</b> 123432</div><div> <b>Issue:</b> Keyboard not working</div></div><li class="cusPreChat-inputSplitName cusPreChat-embeddedServiceSidebarFormField"> <span class="cusPreChat-split-field-container"><div class="cusPreChat-uiInput cusPreChat-uiInputText cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel"> <span class="">First Name</span> <span class="cusPreChat-required">*</span> </label> <input id="cusPreChat-FirstName" class="cusPreChat-FirstName cusPreChat-slds-style-inputtext cusPreChat-input" maxlength="121" type="text" aria-describedby="" placeholder="" required="" id="FirstName" aria-required="true"></div></span></li><li class="cusPreChat-inputSplitName cusPreChat-embeddedServiceSidebarFormField"> <span class="cusPreChat-split-field-container"><div class="cusPreChat-uiInput cusPreChat-uiInputText cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="LastName"> <span class="">Last Name</span> <span class="cusPreChat-required" aria-hidden="true">*</span> </label> <input id="cusPreChat-LastName" class="cusPreChat-LastName cusPreChat-slds-style-inputtext cusPreChat-input" maxlength="121" type="text" aria-describedby="" placeholder="" required="" id="LastName" aria-required="true"></div> </span></li><li class="cusPreChat-inputEmail cusPreChat-embeddedServiceSidebarFormField"><div class="cusPreChat-uiInput cusPreChat-uiInputEmail cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="Email"> <span>Email Address</span> <span class="cusPreChat-required" aria-hidden="true">*</span> </label> <input id="cusPreChat-Email" class="cusPreChat-Email cusPreChat-slds-style-inputtext cusPreChat-input" maxlength="80" type="email" aria-describedby="" placeholder="" required="" id="Email" aria-required="true"></div></li><li class="cusPreChat-inputPhone cusPreChat-embeddedServiceSidebarFormField"><div class="cusPreChat-uiInput cusPreChat-uiInputPhone cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="Primary_Phone__c"> <span>Primary Phone Number</span> <span class="cusPreChat-required" aria-hidden="true">*</span> </label> <input id="cusPreChat-Phone" class="cusPreChat-Primary_Phone__c cusPreChat-slds-style-inputtext cusPreChat-input" maxlength="40" type="tel" aria-describedby="" placeholder="" required="" id="Primary_Phone__c" aria-required="true"></div></li><li class="cusPreChat-inputText cusPreChat-embeddedServiceSidebarFormField"><div class="cusPreChat-uiInput cusPreChat-uiInputText cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="Issue_Description__c"> <span>Issue Description</span> <span class="cusPreChat-required" aria-hidden="true">*</span> </label> <input id="cusPreChat-IssueDescription" class="cusPreChat-Issue_Description__c cusPreChat-slds-style-inputtext cusPreChat-input" maxlength="255" type="text" aria-describedby="" placeholder="" required="" id="Issue_Description__c"><div id="snappinCharCounter" style="text-align:right;position:relative;font-size:.75em;line-height: 1.5;margin-right: .75em;margin-left: .5em;margin-top: 8px;color: #767676;float: right;">0 / 255 characters</div></div></li></ul><div style="font-size: 12px;color:#767676;text-align: left;margin: 2em 1.75em; font-style: italic;color:#444444;"><b>Your privacy is important to us.</b> We will only use your information to process your request. We will not share it with anyone. To learn more about how we use and protect your data, see the <a href="https://www.dell.com/learn/policies-privacy?s=corp">Dell Privacy Statement</a>.</div></div><div class="cusPreChat-buttonWrapper cusPreChat-embeddedServiceSidebarForm"> <button id="cusPreChat-startChat" class="cusPreChat-startButton cusPreChat-uiButton--default cusPreChat-uiButton cusPreChat-embeddedServiceSidebarButton" type="button"> <span class="cusPreChat-label cusPreChat-bBody">Start Chat</span> </button></div></div></div></div></div></div></div></div><div id="cusPreChat-embeddedServiceHelpButton" class="cusPreChat-embeddedServiceHelpButton" style="display: none;"><div class="cusPreChat-helpButton" style="width: 168px;"> <button id="cusPreChat-helpButtonEnabled" class="cusPreChat-uiButton cusPreChat-helpButtonEnabled" href="javascript:void(0)" > <span class="cusPreChat-embeddedServiceIcon" aria-hidden="true" data-icon="" style="display: inline-block; z-index: 1; float: left"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="chat" width="100%" height="100%" style="height: 18px; width: 18px;"> <path d="M12 1.8C5.9 1.8 1 6.4 1 12c0 1.7.5 3.4 1.3 4.8.1.3.2.6.1.8l-1.4 4c-.2.3.2.6.6.6l3.9-1.6c.3-.1.5 0 .8.1 1.7.9 3.7 1.5 5.8 1.5 6 0 11-4.5 11-10.2C23 6.4 18.1 1.8 12 1.8zm-5.5 12c-1.1 0-1.9-.8-1.9-1.8s.8-1.8 1.9-1.8 1.8.8 1.8 1.8-.8 1.8-1.8 1.8zm5.5 0c-1 0-1.8-.8-1.8-1.8s.8-1.8 1.8-1.8 1.8.8 1.8 1.8-.8 1.8-1.8 1.8zm5.5 0c-1 0-1.8-.8-1.8-1.8s.8-1.8 1.8-1.8 1.9.8 1.9 1.8-.8 1.8-1.9 1.8z"></path> </svg> </span><div class="cusPreChat-helpButtonLabel" id="cusPreChat-helpButtonSpan" aria-live="polite" aria-atomic="true"> <span class="cusPreChat-assistiveText">Live chat:</span> <span class="cusPreChat-message">Chat Now</span></div> </button></div></div>';
+		let domEle = '<div id="cusPreChatSnapinDom" class="cusPreChat-modalContainer"><div class="cusPreChat-dockableContainer"><div class="cusPreChat-embeddedServiceSidebarHeader"><div class="cusPreChat-shortHeader"><div class="cusPreChat-shortHeaderContent"> <button id="cusPreChat-minimize-btn" class="cusPreChat-minimizeButton cusPreChat-headerItem"> <span class="cusPreChat-assistiveText">Minimize chat</span> <span class="cusPreChat-minimize cusPreChat-x-small cusPreChat-embeddedServiceIcon"> <svg focusable="false" aria-hidden="true" data-key="contract_alt" viewBox="0 0 100 100"> <path d="M56.923 45.962h29.615c1.924 0 2.5-2.116.962-3.654l-9.423-9.616 17.308-17.5c.96-.96.96-2.692 0-3.654L88.27 4.423c-.962-.77-2.5-.77-3.655.192L67.308 21.923 57.5 12.5c-1.538-1.538-3.654-.962-3.654.962v29.615c0 1.346 1.73 2.885 3.077 2.885zm-13.846 7.884H13.462c-1.924 0-2.5 2.116-.962 3.654l9.423 9.615-17.308 17.5c-.96.962-.96 2.693 0 3.654l7.116 7.115c.962.96 2.5.96 3.655 0l17.5-17.5 9.807 9.423c1.346 1.73 3.462 1.154 3.462-.77V57.115c0-1.346-1.73-3.27-3.077-3.27z"> </path> </svg> </span> </button><h2 class="cusPreChat-headerText"><div class="cusPreChat-headerTextContent"> <span id="cusPreChat-headerTextLabel">Chat Now</span> <span id="cusPreChat-headerSubtext"> </span></div></h2> <button id="cusPreChat-close-btn" class="cusPreChat-closeButton cusPreChat-headerItem"> <span class="cusPreChat-assistiveText">Close chat</span> <span class="cusPreChat-x-small cusPreChat-embeddedServiceIcon"> <svg focusable="false" aria-hidden="true" data-key="close" viewBox="0 0 100 100"> <path d="M65.577 53.73l27.5-27.71c1.27-1.27 1.27-3.174 0-4.445l-4.23-4.44c-1.272-1.27-3.175-1.27-4.445 0L56.694 44.847c-.847.845-2.115.845-2.96 0L26.018 16.922c-1.27-1.27-3.174-1.27-4.445 0l-4.44 4.442c-1.27 1.27-1.27 3.174 0 4.444l27.71 27.71c.846.846.846 2.116 0 2.962L16.923 84.403c-1.27 1.27-1.27 3.174 0 4.444l4.442 4.442c1.27 1.268 3.174 1.268 4.444 0l27.71-27.713c.846-.847 2.116-.847 2.962 0L84.19 93.29c1.27 1.268 3.174 1.268 4.445 0l4.44-4.445c1.27-1.268 1.27-3.17 0-4.44l-27.5-27.712c-.847-.847-.847-2.115 0-2.96z"> </path> </svg> </span> </button></div></div></div><div class="cusPreChat-sidebarBody"><div id="cusPreChat-sidebarLoadingIndicator" class="cusPreChat-sidebarLoadingIndicator" style="display: none;"><div class="cusPreChat-loadingBallContainer cusPreChat-animated cusPreChat-embeddedServiceLoadingBalls"> <span class="cusPreChat-loadingBall cusPreChat-first"> </span> <span class="cusPreChat-loadingBall cusPreChat-second"> </span> <span class="cusPreChat-loadingBall cusPreChat-third"> </span></div></div><div id="cusPreChat-hideWhileLoading" class="cusPreChat-activeFeature cusPreChat-hideWhileLoading"><div class="cusPreChat-featureBody cusPreChat-embeddedServiceSidebarFeature"><div class="cusPreChat-stateBody cusPreChat-embeddedServiceSidebarState"><div class="cusPreChat-prechatUI cusPreChat-embeddedServiceLiveAgentStatePrechatDefaultUI"><div class="cusPreChat-formContent cusPreChat-embeddedServiceSidebarForm"><ul class="cusPreChat-fieldList"><div id="readonlyPreChatContainer" class="cusPreChat-readonlyContainer" style="margin: 0 1.5em 6px 1.5em; text-align: left;position: relative;font-size: .75em;color: #444444;"><div style="font-size: 1.2em;">Precision M4500</div><div> <b>Service Tag:</b> 123432</div><div> <b>Issue:</b> Keyboard not working</div></div><li class="cusPreChat-inputSplitName cusPreChat-embeddedServiceSidebarFormField"> <span class="cusPreChat-split-field-container"><div class="cusPreChat-uiInput cusPreChat-uiInputText cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel"> <span class="">First Name</span> <span class="cusPreChat-required">*</span> </label> <input id="cusPreChat-FirstName" class="cusPreChat-FirstName cusPreChat-slds-style-inputtext cusPreChat-input" maxlength="121" type="text" aria-describedby="" placeholder="" required="" id="FirstName" aria-required="true"></div></span></li><li class="cusPreChat-inputSplitName cusPreChat-embeddedServiceSidebarFormField"> <span class="cusPreChat-split-field-container"><div class="cusPreChat-uiInput cusPreChat-uiInputText cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="LastName"> <span class="">Last Name</span> <span class="cusPreChat-required" aria-hidden="true">*</span> </label> <input id="cusPreChat-LastName" class="cusPreChat-LastName cusPreChat-slds-style-inputtext cusPreChat-input" maxlength="121" type="text" aria-describedby="" placeholder="" required="" id="LastName" aria-required="true"></div> </span></li><li class="cusPreChat-inputEmail cusPreChat-embeddedServiceSidebarFormField"><div class="cusPreChat-uiInput cusPreChat-uiInputEmail cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="Email"> <span>Email Address</span> <span class="cusPreChat-required" aria-hidden="true">*</span> </label> <input id="cusPreChat-Email" class="cusPreChat-Email cusPreChat-slds-style-inputtext cusPreChat-input" maxlength="80" type="email" aria-describedby="" placeholder="" required="" id="Email" aria-required="true"></div></li><li class="cusPreChat-inputPhone cusPreChat-embeddedServiceSidebarFormField"><div class="cusPreChat-uiInput cusPreChat-uiInputPhone cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="Primary_Phone__c"> <span>Primary Phone Number</span> <span class="cusPreChat-required" aria-hidden="true">*</span> </label> <input id="cusPreChat-Phone" class="cusPreChat-Primary_Phone__c cusPreChat-slds-style-inputtext cusPreChat-input" maxlength="40" type="tel" aria-describedby="" placeholder="" required="" id="Primary_Phone__c" aria-required="true"></div></li><li class="cusPreChat-inputText cusPreChat-embeddedServiceSidebarFormField"><div class="cusPreChat-uiInput cusPreChat-uiInputText cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="Issue_Description__c"> <span>Issue Description</span> <span class="cusPreChat-required" aria-hidden="true">*</span> </label> <input id="cusPreChat-IssueDescription" class="cusPreChat-Issue_Description__c cusPreChat-slds-style-inputtext cusPreChat-input" maxlength="255" type="text" aria-describedby="" placeholder="" required="" id="Issue_Description__c"><div id="snappinCharCounter" style="text-align:right;position:relative;font-size:.75em;line-height: 1.5;margin-right: .75em;margin-left: .5em;margin-top: 8px;color: #767676;float: right;">0 / 255 characters</div></div></li></ul><div style="font-size: 12px;color:#767676;text-align: left;margin: 2em 1.75em; font-style: italic;color:#444444;"><b>Your privacy is important to us.</b> We will only use your information to process your request. We will not share it with anyone. To learn more about how we use and protect your data, see the <a href="https://www.dell.com/learn/policies-privacy?s=corp">Dell Privacy Statement</a>.</div></div><div class="cusPreChat-buttonWrapper cusPreChat-embeddedServiceSidebarForm"> <button id="cusPreChat-startChat" class="cusPreChat-startButton cusPreChat-uiButton--default cusPreChat-uiButton cusPreChat-embeddedServiceSidebarButton" type="button"> <span class="cusPreChat-label cusPreChat-bBody">Start Chat</span> </button></div></div></div></div></div></div></div></div><div id="cusPreChat-embeddedServiceHelpButton" class="cusPreChat-embeddedServiceHelpButton" style="display: none;"><div class="cusPreChat-helpButton" style="width: 168px;"> <button id="cusPreChat-helpButtonEnabled" class="cusPreChat-uiButton cusPreChat-helpButtonEnabled" href="javascript:void(0)" > <span class="cusPreChat-embeddedServiceIcon" aria-hidden="true" style="display: inline-block; z-index: 1; float: left"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="chat" width="100%" height="100%" style="height: 18px; width: 18px;"> <path d="M12 1.8C5.9 1.8 1 6.4 1 12c0 1.7.5 3.4 1.3 4.8.1.3.2.6.1.8l-1.4 4c-.2.3.2.6.6.6l3.9-1.6c.3-.1.5 0 .8.1 1.7.9 3.7 1.5 5.8 1.5 6 0 11-4.5 11-10.2C23 6.4 18.1 1.8 12 1.8zm-5.5 12c-1.1 0-1.9-.8-1.9-1.8s.8-1.8 1.9-1.8 1.8.8 1.8 1.8-.8 1.8-1.8 1.8zm5.5 0c-1 0-1.8-.8-1.8-1.8s.8-1.8 1.8-1.8 1.8.8 1.8 1.8-.8 1.8-1.8 1.8zm5.5 0c-1 0-1.8-.8-1.8-1.8s.8-1.8 1.8-1.8 1.9.8 1.9 1.8-.8 1.8-1.9 1.8z"></path> </svg> </span><div class="cusPreChat-helpButtonLabel" id="cusPreChat-helpButtonSpan" aria-live="polite" aria-atomic="true"> <span class="cusPreChat-assistiveText">Live chat:</span> <span class="cusPreChat-message">Chat Now</span></div> </button></div></div>';
 		let body = document.body || document.getElementsByTagName('body')[0];
 		body.insertAdjacentHTML('beforeend', domEle);
 
@@ -310,7 +332,6 @@ function maximizeCustPrechat(){
 
 }
 function addCustFormDetailsTo(snapInObject){
-	debugger;
 	snapInObject.firstName = document.getElementById("cusPreChat-FirstName").value;
 	snapInObject.lastName = document.getElementById("cusPreChat-LastName").value;
 	snapInObject.email = document.getElementById("cusPreChat-Email").value;
@@ -328,7 +349,6 @@ function snapinChatGlobalObjNotEmpty(){
 		return false;
 }
 function saveGlobalSnapinObjToSession(snapInObject){
-	debugger;
 	if(snapInObject){
 		snapInObjectGlobal = JSON.stringify(snapInObject);
 		sessionStorage.setItem("snapInObjectSession", snapInObjectGlobal);
@@ -348,7 +368,7 @@ function custPrechatInitiateChat(snapInObject) {
 	}
 }
 
-function initESW(gslbBaseURL,snapInObject) {
+function initOriginalESW(gslbBaseURL,snapInObject) {
 	snapinChatGlobalServiceTag = snapInObject.serviceTag; 
 	snapinChatGlobalIssueType = snapInObject.issueVal;
 	snapinChatGlobalProductName = snapInObject.productName;
@@ -887,7 +907,6 @@ function pageObserverForProp20(eleSelector){
 						snapInCurrentPage = "snapInWaiting";
 						callDellmetricsTrack("890.220.011");
 						hidePrechatForm();
-						//eleExistWithVariable('.dockableContainer .embeddedServiceLiveAgentStateWaiting .waitingStateContainer .waitingStateContent .queuePositionContent .header', waitChatCounter, 0);
 					}else if(snapInChatStarted && snapInCurrentPage != "snapInChatStarted"){
 						snapInCurrentPage = "snapInChatStarted";
 						hidePrechatForm();
@@ -899,7 +918,11 @@ function pageObserverForProp20(eleSelector){
 					}else if(snapInEmbeddedServiceHelpBtn && window.getComputedStyle(snapInEmbeddedServiceHelpBtn).display === 'block'){
 						if(snapInhelpBtnDisabled && window.getComputedStyle(snapInhelpBtnDisabled).display === 'flex' && snapInCurrentPage != "snapInhelpBtnDisabled"){
 							snapInCurrentPage = "snapInhelpBtnDisabled";
-							togglePrechatAndSnapin(snapInCurrentPage);
+							setTimeout(function(){
+								let cusPreChatSnapinDom = document.getElementById("cusPreChatSnapinDom");
+								if(window.getComputedStyle(cusPreChatSnapinDom).display != 'none')
+									togglePrechatAndSnapin(snapInCurrentPage);
+							}, 10000);
 						}else if(snapInhelpBtnEnabled && window.getComputedStyle(snapInhelpBtnEnabled).display === 'flex' && snapInCurrentPage != "snapInhelpBtnEnabled"){
 							if(snapInCurrentPage === "snapInhelpBtnDisabled")
 								document.getElementById("cusPreChatSnapinDom").style.display = "block";
@@ -919,20 +942,6 @@ function pageObserverForProp20(eleSelector){
 		});
 	}catch(e){console.log('Error in Observer - '+e)}
 }
-
-/*
-window.addEventListener("blur", function (event) {
-	var elementId = event.target.id;
-	if (elementId == "FirstName" || elementId == "LastName" || elementId == "Email" || elementId == "Primary_Phone__c" || elementId == "Issue_Description__c") {
-		var snapinPrechatVal = document.querySelector("#FirstName").value +"|"+document.querySelector("#LastName").value +"|"+document.querySelector("#Email").value +"|"+document.querySelector("#Primary_Phone__c").value;
-		var snapInObjectGlobal = sessionStorage.getItem("snapInObjectSession");
-		snapInObject = JSON.parse(snapInObjectGlobal);
-		snapInObject["snapinPreChatFormValues"] = snapinPrechatVal;
-		snapInObjectGlobal = JSON.stringify(snapInObject);
-		sessionStorage.setItem("snapInObjectSession", snapInObjectGlobal);
-	}
-}, true);
-*/
 function waitChatCounter(eleSelector, findingEle, counterValue) {
 	try{
 		if (typeof(dellmetricsTrack) == "function") {
@@ -965,18 +974,6 @@ function eleExistWithVariable(eleSelector, callbackFunc, value) {
 			}
 		}, 1000);
 }
-/*
-function snapinLoading(){
-	var snapInObjectGlobal = sessionStorage.getItem("snapInObjectSession");
-							snapInObject = JSON.parse(snapInObjectGlobal);
-							if(snapInObject.snapinButtonClicked){
-								var htmlLoader= "<div id='loadingSnapinMsg' class ='12' style='min-width: 11em;max-width: 14em;width: 192px;position: fixed;left: auto;bottom: 0;right: 20px;margin: 0;height: 46px;width: 90px;max-height: 100%;border-radius: 8px 8px 0 0;text-align: center;text-decoration: none;display: inline-block;box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.5);pointer-events: all;overflow: hidden;background-color: #005290;border-color: #005290;font-size: 14px;color: #fff;padding-top: 11px;z-index: 998;'>Loading</div>";
-								document.querySelector('body').insertAdjacentHTML('afterend', htmlLoader);
-								eleExist(".modalContainer.sidebarMaximized.embeddedServiceSidebar .dockableContainer", snapinPrechatLoaded);
-							}
-
-}
-*/
 function snapinPrechatLoaded(eleSelector, findingEle){
 	try{
 		if(document.getElementById("loadingSnapinMsg"))
