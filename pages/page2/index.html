@@ -122,11 +122,11 @@
                                   <div class="mb-3">
                                         <a  id="liveagent_button_online_Test" class="enabledButton btn btn-primary btn-lg btn-block"  onclick="validateLiveAgent()">Check for agent avilabality first</a>
                                         <span id="buttonVisability" >
-                                          <!--<a id="liveagent_button_online_5730b000000GnqQ" href="javascript://Chat" class="enabledButton btn btn-primary btn-lg btn-block"  style="display: none;" onclick="liveagent.startChat('5730b000000GnqQ')">Start Chat</a>-->
-                                          <a id="liveagent_button_online_5730b000000Gnrk" href="javascript://Chat" class="enabledButton btn btn-primary btn-lg btn-block"  style="display: none;" onclick="liveagent.startChat('5730b000000Gnrk')">Start Chat</a>
+                                          <a id="liveagent_button_online_5730b000000GnqQ" href="javascript://Chat" class="enabledButton btn btn-primary btn-lg btn-block"  style="display: none;" onclick="liveagent.startChat('5730b000000GnqQ')">Start Chat</a>
+                                          <!--<a id="liveagent_button_online_5730b000000Gnrk" href="javascript://Chat" class="enabledButton btn btn-primary btn-lg btn-block"  style="display: none;" onclick="liveagent.startChat('5730b000000Gnrk')">Start Chat</a>-->
                                         </span>
-                                         <!-- <div id="liveagent_button_offline_5730b000000GnqQ" href="javascript://Chat" class="" style="display: none;" >Agent not Avilable</div>-->
-                                         <div id="liveagent_button_offline_5730b000000Gnrk" href="javascript://Chat" class="" style="display: none;" >Agent not Avilable</div> 
+                                          <div id="liveagent_button_offline_5730b000000GnqQ" href="javascript://Chat" class="" style="display: none;" >Agent not Avilable</div>
+                                         <!--<div id="liveagent_button_offline_5730b000000Gnrk" href="javascript://Chat" class="" style="display: none;" >Agent not Avilable</div> -->
                                     </div>
                                 </form>
                               
@@ -168,16 +168,17 @@
 
 
                 
-              liveagent.init('https://d.la2-c1cs-iad.salesforceliveagent.com/chat', '5720b000000CbfS', '00D4F0000000TPX');//SIT2 GE4
-              liveagent.init('https://d.la4-c2cs-phx.salesforceliveagent.com/chat', '5720b000000CbfS', '00Dq0000000CkWo');//Dev3
+              // liveagent.init('https://d.la2-c1cs-iad.salesforceliveagent.com/chat', '5720b000000CbfS', '00D4F0000000TPX');//SIT2 GE4
+              //liveagent.init('https://d.la4-c2cs-phx.salesforceliveagent.com/chat', '5720b000000CbfS', '00Dq0000000CkWo');//Dev3
+              liveagent.init('https://d.la2-c2cs-iad.salesforceliveagent.com/chat', '5720b000000CbfS', '00D2a0000008ftq'); 
               if (!window._laq) { window._laq = []; }
                 window._laq.push(function(){
                   
-                      //liveagent.showWhenOnline('5730b000000GnqQ', document.getElementById('liveagent_button_online_5730b000000GnqQ'));
-                      //liveagent.showWhenOffline('5730b000000GnqQ', document.getElementById('liveagent_button_offline_5730b000000GnqQ'));
+                      liveagent.showWhenOnline('5730b000000GnqQ', document.getElementById('liveagent_button_online_5730b000000GnqQ'));
+                      liveagent.showWhenOffline('5730b000000GnqQ', document.getElementById('liveagent_button_offline_5730b000000GnqQ'));
 
-                      liveagent.showWhenOnline('5730b000000Gnrk', document.getElementById('liveagent_button_online_5730b000000Gnrk'));
-                      liveagent.showWhenOffline('5730b000000Gnrk', document.getElementById('liveagent_button_offline_5730b000000Gnrk'));
+                     // liveagent.showWhenOnline('5730b000000Gnrk', document.getElementById('liveagent_button_online_5730b000000Gnrk'));
+                     // liveagent.showWhenOffline('5730b000000Gnrk', document.getElementById('liveagent_button_offline_5730b000000Gnrk'));
                   });
            // document.getElementById("liveagent_button_online_Test").click();
                 

@@ -107,7 +107,8 @@
                         <button type="button" id="liveChatButton" class="btn btn-primary" onclick="initLiveChat()" style="display: block;float: left;margin-right: 20px;">Start LiveChat</button>
                         <button type="button" id="chatBotButton" class="btn btn-primary" onclick="initChatBot()" style="display: block;float: left;margin-right: 20px;">Chat With Bot</button>
                         <div class="live-agent-button">
-                            <a id="liveagent_button_online_5733B0000004D90" class="btn btn-primary" href="javascript://Chat" onclick="startLiveAgentChat('5733B0000004D90')">Start Chat</a><div id="liveagent_button_offline_5733B0000004D90" style="display: none;"><!-- Offline Chat Content --></div>
+                                <a id="liveagent_button_online_5730b000000CbhT" href="javascript://Chat" class="enabledButton btn btn-primary btn-lg btn-block"  style="display: none;" onclick="liveagent.startChat('5730b000000CbhT')">Start Chat</a>
+                                <div id="liveagent_button_offline_5730b000000CbhT" href="javascript://Chat" class="" style="display: none;" >Agent not Avilable</div> 
                         </div>
                     </div>
                 </div>
@@ -215,16 +216,14 @@
                 }, 1000);
             } 
         }
+
         triggerSnapin();
 
-        
         function initChat() {
                 var snapInObject = {
                     snapinButtonClicked:true
                 }
                 triggerSnapin(snapInObject);
-            
-            
         }
         function initResumeChat(){
             var language = document.getElementById("selectLanguageOption");
@@ -271,8 +270,29 @@
                     issueVal: issueVal,
                     BUID: "11",
                     productName: "Precision M4500",
-/*
+                    serviceTag: "CARV006",
+                    customernumber: "2701",
 
+
+                    //Dev1
+                 /*   customernumber: "2701",
+                    domainName:"localhost",//"bishav.github.io",//
+                    baseLiveAgentContentURL: 'https://c.la4-c2cs-phx.salesforceliveagent.com/content',
+				    deploymentId: '572Z000000000KC',
+				    buttonId: '5730b000000CbhT',
+				    baseLiveAgentURL: 'https://d.la4-c2cs-phx.salesforceliveagent.com/chat',
+                    LiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04IZ00000008OIKMA2_1647fbd242d',
+                
+                    componentName: "Snap_Ins_Chat_Deployment",
+                    organizationId: '00Dq0000000CkWo',
+                    serviceForceURL: "https://service.force.com",
+                    snapInInitURL: 'https://dellservices--DEV1.cs21.my.salesforce.com',
+                    snapInLAURL: 'https://dev1-dellservices.cs21.force.com/LaSnapIn',
+                    snapInJs: 'https://dellservices--DEV1.cs21.my.salesforce.com/embeddedservice/5.0/esw.min.js',
+
+
+
+//SIT1
                     baseLiveAgentContentURL: 'https://c.la3-c2cs-dfw.salesforceliveagent.com/content',
 				    deploymentId: '5720b000000GneC',
 				    buttonId: '5730b000000CbhT',//'5730b000000GnqX',//'5730b000000CbhT',//'5730b000000L1hM',
@@ -289,19 +309,17 @@
 
  */
 
+ 
+      //DEV2      
 
-                
-
-                    firstName: "CoolGuy",
-                    BUID: "11",
-                    productName: "Precision M4500",
                     baseLiveAgentContentURL: 'https://c.la2-c2cs-iad.salesforceliveagent.com/content',
-				    deploymentId: '5720b000000GneC',
-				    buttonId: '5730b000000CbhT',//'5730b000000GnqX',//'5730b000000CbhT',//'5730b000000L1hM',
-				    baseLiveAgentURL: 'https://d.la2-c2cs-iad.salesforceliveagent.com/chat',
-				    LiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I0b000000blJOEAY_16520ef73c5',
-                    componentName: "Snap_Ins_Resume_chat",
-                    customernumber: "2701",
+                    deploymentId: '5720b000000GneC',
+                    buttonId: '5730b000000CbhT',//'5730b0000008PZv',//
+                    baseLiveAgentURL: 'https://d.la2-c2cs-iad.salesforceliveagent.com/chat',
+                    LiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I0b000000blJJEAY_16520d15b68',
+
+                   
+                    componentName: "Snap_Ins_Chat_Deployment",
                     domainName:"localhost",//"bishav.github.io",//
                     organizationId: "00D2a0000008e0t",
                     serviceForceURL: "https://service.force.com",
@@ -310,10 +328,9 @@
                     snapInLAURL: 'https://dev2-dellservices.cs47.force.com/LASnapIn',
                    
 
-
-
-                /*
-
+ /*
+  
+                
                     LiveAgentDevName: "EmbeddedServiceLiveAgent_Parent04I0b000000blJJEAY_16520d15b68",
                     baseLiveAgentContentURL: "https://c.la3-c2cs-dfw.salesforceliveagent.com/content",
                     baseLiveAgentURL: "https://d.la3-c2cs-dfw.salesforceliveagent.com/chat",
@@ -324,10 +341,10 @@
                     snapInInitURL: "https://dellservices--SIT4.my.salesforce.com",
                     snapInJs: "https://dellservices--SIT4.my.salesforce.com/embeddedservice/5.0/esw.min.js",
                     snapInLAURL: "https://sit4-dellservices.cs53.force.com/LASnapIn",
- */
+ 
 
 
-                /*  LiveAgentDevName: "EmbeddedServiceLiveAgent_Parent04IZ00000008OIKMA2_1647fbd242d",
+                    LiveAgentDevName: "EmbeddedServiceLiveAgent_Parent04IZ00000008OIKMA2_1647fbd242d",
                     baseLiveAgentContentURL: 'https://c.la2-c2cs-iad.salesforceliveagent.com/content',
                     baseLiveAgentURL: 'https://d.la2-c2cs-iad.salesforceliveagent.com/chat',
                     deploymentId: '572Z000000000KC',
@@ -340,7 +357,10 @@
                     snapInInitURL: "https://dellservices--DEV3.my.salesforce.com",
                     snapInJs: "https://dellservices--DEV3.my.salesforce.com/embeddedservice/5.0/esw.min.js",
                     snapInLAURL: "https://dev3-dellservices.cs47.force.com/LaSnapIn",
-                    /*
+
+                   
+
+                    
                     LiveAgentDevName: "EmbeddedServiceLiveAgent_Parent04I4F000000000LUAQ_16483b64909",
                     baseLiveAgentContentURL: 'https://c.la2-c1cs-ord.salesforceliveagent.com/content',
                     baseLiveAgentURL: "https://d.la2-c2cs-ord.salesforceliveagent.com/chat",
@@ -361,28 +381,13 @@
                     snapinSessionAvailable: false
                    
                 }
-                triggerSnapin(snapInObject);
+               triggerSnapin(snapInObject);
             
             
         }
 
         function initChatBot(){
             var chatBotObject = {
-               /* chatBotInitURL: 'https://dellchatbots-org1-apr2018.my.salesforce.com', 
-                chatBotLAURL: 'https://sdodemo-main-162914e0cd7.force.com/consumer', 
-                organizationId: '00D6A000002zvYi', 
-                componentName: 'Snap_ins_Einstein_Bot',
-                baseLiveAgentContentURL: 'https://c.la1-c1-iad.salesforceliveagent.com/content',
-                deploymentId: '5726A000000DiLp', 
-                buttonId: '5736A000000DUkg', 
-                baseLiveAgentURL: 'https://d.la1-c1-iad.salesforceliveagent.com/chat', 
-                LiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I1N000000000VUAQ_161f777bdfa',
-                domainName: "localhost", //"bishav.github.io",//
-                serviceForceURL: "https://service.force.com",
-                snapInJs: "https://dellchatbots-org1-apr2018.my.salesforce.com/embeddedservice/4.1/esw.min.js" ,
-                srNumber:'',
-                firstName:'',
-                lastName:''*/
                 chatBotInitURL: 'https://dellservices--SIT2.cs93.my.salesforce.com',
                 chatBotLAURL: 'https://sit2-dellservices.cs93.force.com/LaSnapIn',
                 organizationId: '00D4F0000000TPX',
@@ -401,27 +406,60 @@
             triggerChatBot(chatBotObject);
         }
         function initLiveChat(){
-            //var serviceTag = document.querySelector('#serviceTag').value.toUpperCase();
-            //var issueVal = document.querySelector('#dropdownMenuButton').innerHTML;
             liveAgent();
         }
         function liveAgent() {
             var serviceTag = document.querySelector('#serviceTag').value.toUpperCase();
             var issueVal = document.querySelector('#dropdownMenuButton').innerHTML;
             var liveAgentObject = {
-               /* deploymentUrl: 'https://c.la4-c1cs-phx.salesforceliveagent.com/content/g/js/43.0/deployment.js',
-                liveAgentInitUrl: 'https://d.la4-c1cs-phx.salesforceliveagent.com/chat',
-                buttonId: '5733B0000004D90',
-                deploymentId: '5723B0000004Crz',
-                organizationId: '00Dm0000000DQXs',
-                serviceTag: "12335"*/
-                
-                deploymentUrl: 'https://c.la4-c2cs-phx.salesforceliveagent.com/content/g/js/44.0/deployment.js',
-                liveAgentInitUrl: 'https://d.la4-c2cs-phx.salesforceliveagent.com/chat',
+            
+               /* //Dev2
+               deploymentUrl: "https://c.la2-c2cs-iad.salesforceliveagent.com/content/g/js/45.0/deployment.js",
+                liveAgentInitUrl: 'https://d.la2-c2cs-iad.salesforceliveagent.com/chat',
                 buttonId: '5730b000000GnqQ',
                 deploymentId: '5720b000000CbfS',
-                organizationId: '00Dq0000000CkWo',
-                serviceTag: "12335"
+                organizationId: '00D2a0000008e0t',
+                serviceTag: serviceTag,
+                  firstName : "bisahv",
+                  lastName : "lastName",
+                  emailId : "bnr@dell.com",
+                  phoneNumber : "12345",
+                  issueType : issueVal,
+                  issueDescription : "issueDescription" */
+
+
+
+//SIT1
+deploymentUrl: "https://c.la3-c2cs-dfw.salesforceliveagent.com/content/g/js/45.0/deployment.js",
+                liveAgentInitUrl: 'https://d.la3-c2cs-dfw.salesforceliveagent.com/chat',
+                buttonId: '5730b000000CbhT',
+                deploymentId: '5720b000000CbfS',
+                organizationId: '00D0j000000D0v9',
+                serviceTag: serviceTag,
+                  firstName : "bisahv",
+                  lastName : "lastName",
+                  emailId : "bnr@dell.com",
+                  phoneNumber : "12345",
+                  issueType : issueVal,
+                  issueDescription : "issueDescription"
+/*
+
+
+//DEV3
+                deploymentUrl: 'https://c.la2-c2cs-iad.salesforceliveagent.com/content/g/js/45.0/deployment.js',
+                liveAgentInitUrl: 'https://d.la2-c2cs-phx.salesforceliveagent.com/chat',
+                buttonId: '5730b000000GnqQ',
+                deploymentId: '5720b000000CbfS',
+                organizationId: '00D2a0000008ftq',
+                serviceTag: serviceTag,
+                  firstName : "bisahv",
+                  lastName : "lastName",
+                  emailId : "bnr@dell.com",
+                  phoneNumber : "12345",
+                  issueType : issueVal,
+                  issueDescription : "issueDescription"
+                  */
+
                 
                 /*deploymentUrl: 'https://c.la2-c1cs-ord.salesforceliveagent.com/content/g/js/44.0/deployment.js',
                 liveAgentInitUrl: 'https://d.la2-c1cs-ord.salesforceliveagent.com/chat',
@@ -430,7 +468,9 @@
                 organizationId: '00D4F0000008jtf',
                 serviceTag: serviceTag*/
             }
-            initLiveAgent(liveAgentObject);
+            //initLiveAgent(liveAgentObject);
+            document.querySelector('.live-agent-button').style.display = 'block';
+            initLiveAgentWithoutPrechatForm(liveAgentObject);
         }       
 
         // calling live agent
