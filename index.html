@@ -37,7 +37,7 @@
     </nav>
     <div class="navigationLink">
                         <a class="active" href="#">Home</a>
-                        <a href="pages/page2/index.html" target="_blank">Live Agent (In New Tab)</a>
+                        <a href="pages/page2/index.html" target="_">Live Agent (In New Tab)</a>
                         <a href="pages/page3/index.html" >Resume Chat (In New Tab)</a>
     </div>
     <div class="container">
@@ -119,12 +119,9 @@
     <script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>
     <script src="https://getbootstrap.com/docs/4.0/dist/js/bootstrap.min.js"></script>
     <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
-    <!-- <script src="mainChatNowworking20180818V4.js"></script> -->
-    <script src="mainChat.js"></script>
-    <!-- <script src="mainChatPrePerf.js"></script>-->
-     
-     <!--<script src="sfdccore.js"></script>-->
-      <!--<script src="sfdccore.js"></script> -->
+   <script src="mainChat.js"></script>
+    <!--  <script src="mainChatPrePerf.js"></script>-->
+    <!--<script src="sfdccore.js"></script>-->
      
     <script>
         var dropdownIssue = document.querySelectorAll('#issueDropdown > .dropdown-item');
@@ -307,9 +304,9 @@
                     snapInJs: 'https://dellservices--SIT1.my.salesforce.com/embeddedservice/5.0/esw.min.js',
                     snapInLAURL: 'https://sit1-dellservices.cs53.force.com/LASnapIn',
 
- */
-
  
+
+    */ 
       //DEV2      
 
                     baseLiveAgentContentURL: 'https://c.la2-c2cs-iad.salesforceliveagent.com/content',
@@ -326,7 +323,7 @@
                     snapInInitURL: 'https://dellservices--DEV2.my.salesforce.com',
                     snapInJs: "https://dellservices--DEV2.my.salesforce.com/embeddedservice/5.0/esw.min.js",
                     snapInLAURL: 'https://dev2-dellservices.cs47.force.com/LASnapIn',
-                   
+               
 
  /*
   
@@ -359,23 +356,20 @@
                     snapInLAURL: "https://dev3-dellservices.cs47.force.com/LaSnapIn",
 
                    
-
-                    
-                    LiveAgentDevName: "EmbeddedServiceLiveAgent_Parent04I4F000000000LUAQ_16483b64909",
-                    baseLiveAgentContentURL: 'https://c.la2-c1cs-ord.salesforceliveagent.com/content',
-                    baseLiveAgentURL: "https://d.la2-c2cs-ord.salesforceliveagent.com/chat",
-                    buttonId: "5734F000000CaWx",//"5730b000000CbhT", // 
-                    componentName: "Snap_Ins_Chat_Deployment",
-                    customernumber: "2701",
-                    deploymentId: "5724F0000008OKB",
-                    domainName:"localhost",//"bishav.github.io",//
-                    organizationId: "00D4F0000000TPX",
-                    productName: "Precision M4500",
                     serviceForceURL: "https://service.force.com",
-                    serviceTag: serviceTag,
-                    snapInInitURL: "https://dellservices--SIT2.cs93.my.salesforce.com",
                     snapInJs: "https://dellservices--SIT2.cs93.my.salesforce.com/embeddedservice/5.0/esw.min.js",
-                    snapInLAURL: "https://sit2-dellservices.cs93.force.com/LaSnapIn",
+                    snapInInitURL:'https://dellservices--SIT2.cs93.my.salesforce.com',
+			        snapInLAURL: 'https://sit2-dellservices.cs93.force.com/LaSnapIn',
+                    organizationId: "00D4F0000000TPX",
+                    componentName: "Snap_Ins_Chat_Deployment",
+                    baseLiveAgentContentURL: 'https://c.la2-c1cs-iad.salesforceliveagent.com/content',
+				    deploymentId: '5724F0000008OKB',
+				    baseLiveAgentURL: 'https://d.la2-c1cs-iad.salesforceliveagent.com/chat',
+                    LiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I4F000000000LUAQ_16483b64909',
+
+                    buttonId: "5734F000000CaWx",//"5730b000000CbhT",
+                    domainName:"localhost",//"bishav.github.io",//
+                    productName: "Precision M4500",
                     */
                     snapinButtonClicked: false,
                     snapinSessionAvailable: false
