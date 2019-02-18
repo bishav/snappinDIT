@@ -67,10 +67,18 @@ function triggerSnapin(snapInObject) {
 				custPreChatShowAdditionalDetailsInUi(snapInObject);
 			initSnapIn(snapInObject);
 		}else if(customChatNotCreated()){
+			snapinClickedAndInitiatedSessionInput(true, false);
 			snapInObject = sendGlobalSnapinObjToJson();
 			appendCustPreChatSnapinDom(snapInObject);
+			callDellmetricsTrack("890.220.001", "StartsChat for " + snapinChatGlobalServiceTag + "|" + snapinChatGlobalIssueType + "|" + snapinChatGlobalProductName);
 		}
 	}
+}
+function snapinClickedAndInitiatedSessionInput(clicked,initiated){
+	snapInObject = sendGlobalSnapinObjToJson();
+	snapInObject.snapinButtonClicked = clicked;
+	snapInObject.snapinChatInitiated = initiated;
+	saveGlobalSnapinObjToSession(snapInObject);
 }
 function customChatNotCreated(){
 	let cusPreChatHelpBtn = document.getElementById('cusPreChat-embeddedServiceHelpButton');
@@ -164,7 +172,7 @@ function custPreChatKeypressFieldValidation() {
 	document.getElementById("cusPreChat-Email").onkeypress = function (e) {
 		var a = [];
 		var k = e.which || e.keyCode;
-		if (!((k > 63 && k < 91) || (k > 96 && k < 123) || (k > 48 && k < 58) || (k == 45) || (k == 46) || (k == 95) || k==8 || k==9))
+		if (!((k > 63 && k < 91) || (k > 96 && k < 123) || (k > 47 && k < 58) || (k == 45) || (k == 46) || (k == 95) || k==8 || k==9))
 			e.preventDefault();
 		else if(document.getElementById("ErrMsg_cusPreChat-Email"))
 			removeDomElementbyId("ErrMsg_cusPreChat-Email");
@@ -186,13 +194,9 @@ function custPreChatKeypressFieldValidation() {
 		checkForSpecialCharAndText(e,"cusPreChat-LastName");
 	});
 	document.getElementById("cusPreChat-IssueDescription").addEventListener("paste", function (e) {
-		if (window.clipboardData && window.clipboardData.getData) { // IE
-			if(window.clipboardData.getData('Text').includes('<') || window.clipboardData.getData('Text').includes('>')){
-				e.preventDefault();
-				alert("You are trying to paste an invalid text.");
-			}else if(document.getElementById("ErrMsg_cusPreChat-IssueDescription"))
-				removeDomElementbyId("ErrMsg_cusPreChat-IssueDescription");
-		} else if (pastedText(e).includes('<') || pastedText(e).includes('>')) {
+		var format = /[<>]/; 
+		//if (pastedText(e).includes('<') || pastedText(e).includes('>')) {
+		if (format.test(pastedText(e)) == true) {
 			e.preventDefault();
 			alert("You are trying to paste an invalid text.");
 		}else if(document.getElementById("ErrMsg_cusPreChat-IssueDescription"))
@@ -318,7 +322,8 @@ function removeDomElementbyId(id){
 }
 function minimizeCustPrechat(){
 	document.getElementById("cusPreChat-embeddedServiceHelpButton").style.display = 'block';
-	document.getElementById("cusPreChatSnapinDom").style.display = 'none';
+	if(document.getElementById("cusPreChatSnapinDom"))
+		document.getElementById("cusPreChatSnapinDom").style.display = 'none';
 }
 function closeCustPrechat(){
 	minimizeCustPrechat();
@@ -345,12 +350,12 @@ function maximizeCustPrechat(){
 
 }
 function addCustFormDetailsTo(snapInObject){
+	snapInObject = sendGlobalSnapinObjToJson();
 	snapInObject.firstName = document.getElementById("cusPreChat-FirstName").value;
 	snapInObject.lastName = document.getElementById("cusPreChat-LastName").value;
 	snapInObject.email = document.getElementById("cusPreChat-Email").value;
 	snapInObject.phoneNo = 	document.getElementById("cusPreChat-Phone").value;
 	snapInObject.issueDescription = document.getElementById('cusPreChat-IssueDescription').value;
-	snapInObject.snapinChatInitiated = true; 
 	return snapInObject;
 }
 function snapinChatGlobalObjNotEmpty(){
@@ -380,18 +385,20 @@ function loadingSnapinQueue(){
  function snapinQueueLoaded(){
 	if(document.querySelector(".embeddedServiceSidebar")){
 		document.querySelector(".embeddedServiceSidebar").style.display = 'block';
+		if(document.getElementById("cusPreChatSnapinDom"))
 		document.getElementById("cusPreChatSnapinDom").style.display = 'none';
 	}
  }
  function removeLoaderIn10(){
 	setTimeout(function(){
 		let cusPreChatSnapinDom = document.getElementById("cusPreChatSnapinDom");
+		snapinClickedAndInitiatedSessionInput(true,false);
 		if(cusPreChatSnapinDom && window.getComputedStyle(cusPreChatSnapinDom).display != 'none'){
 			document.getElementById("cusPreChatSnapinDom").style.display = 'none';
 			if(document.querySelector(".embeddedServiceHelpButton"))
 				document.querySelector(".embeddedServiceHelpButton").style.display = 'block';
 		}
-	}, 10000);
+	}, 30000);
 }
 function custPrechatInitiateChat(snapInObject) {
 	if(custPreFormValidation()){
@@ -530,6 +537,53 @@ function initOriginalESW(gslbBaseURL,snapInObject) {
 					Primary_Phone__c: primePhoneVal,
 					Issue_Description__c : issueDescription
 				};
+				
+	//addEventHandler [START]
+  embedded_svc.addEventHandler("onHelpButtonClick", function(data) {
+	console.log("onHelpButtonClick event was fired.");
+  });	
+  embedded_svc.addEventHandler("onChatRequestSuccess", function(data) {
+	console.log("onChatRequestSuccess event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+  });
+  embedded_svc.addEventHandler("onChatEstablished", function(data) {
+	console.log("onChatEstablished event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+  });
+  embedded_svc.addEventHandler("onChasitorMessage", function(data) {
+	console.log("onChasitorMessage event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+	snapinClickedAndInitiatedSessionInput(true,true);
+  });
+  embedded_svc.addEventHandler("onAgentMessage", function(data) {
+	console.log("onAgentMessage event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+	snapinClickedAndInitiatedSessionInput(true,true);
+  });
+  embedded_svc.addEventHandler("onChatTransferSuccessful", function(data) {
+	console.log("onChatTransferSuccessful event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+  });
+  embedded_svc.addEventHandler("onChatEndedByChasitor", function(data) {
+	console.log("onChatEndedByChasitor event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+	snapinClickedAndInitiatedSessionInput(false,false);
+  });
+  embedded_svc.addEventHandler("onChatEndedByAgent", function(data) {
+	console.log("onChatEndedByAgent event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+	snapinClickedAndInitiatedSessionInput(false,false);
+  });
+  embedded_svc.addEventHandler("onIdleTimeoutOccurred", function(data) {
+	console.log("onIdleTimeoutOccurred event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+  });
+  embedded_svc.addEventHandler("onConnectionError", function(data) {
+	console.log("onConnectionError event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+	snapinClickedAndInitiatedSessionInput(false,false);
+  });
+  embedded_svc.addEventHandler("onClickSubmitButton", function(data) {
+	console.log("onClickSubmitButton event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+  });
+  embedded_svc.addEventHandler("onInviteAccepted", function(data) {
+	console.log("onInviteAccepted event was fired.");
+  });
+  embedded_svc.addEventHandler("onInviteRejected", function(data) {
+	console.log("onInviteRejected event was fired.");
+  });
+  //addEventHandler [END]	
 	embedded_svc.init(snapInObject.snapInInitURL, snapInObject.snapInLAURL, gslbBaseURL, snapInObject.organizationId, snapInObject.componentName, {
 		baseLiveAgentContentURL: snapInObject.baseLiveAgentContentURL,
 		deploymentId: snapInObject.deploymentId,
@@ -651,8 +705,6 @@ function chatStarted(eleSelector, findingEle, snapInObject) {
 			let state = embedded_svc.sidebarInstanceMap[Object.keys(embedded_svc.sidebarInstanceMap)[0]].getActiveState();
 			let prechatFields = state.get("v.prechatFields");
 			prechatFields.forEach(function (prechatField) {
-				console.log("prechatField object:");
-				console.log(prechatField);
 				if (prechatField.label === "First Name") {
 					prechatField.value = snapInObject.firstName
 				} else if (prechatField.label === "Last Name") {
@@ -800,9 +852,7 @@ window.addEventListener("click", function (event) {
 					case "uiButton helpButtonEnabled":
 					case "uiButton no-hover helpButtonEnabled":
 						if(document.querySelector(".helpButtonEnabled #helpButtonSpan > .message").innerText == "Chat Now"){
-							snapInCurrentPage = null;
-							callDellmetricsTrack("890.220.001", "StartsChat for " + snapinChatGlobalServiceTag + "|" + snapinChatGlobalIssueType + "|" + snapinChatGlobalProductName);
-							
+							snapInCurrentPage = null;							
 						}else
 							callDellmetricsTrack("890.220.001", "AgentOffline for " + snapinChatGlobalServiceTag + "|" + snapinChatGlobalIssueType + "|" + snapinChatGlobalProductName);
 						break;
@@ -896,6 +946,7 @@ function pageObserverForProp20(eleSelector){
 					}else if(snapInWaiting && snapInCurrentPage != "snapInWaiting"){
 						snapInCurrentPage = "snapInWaiting";
 						callDellmetricsTrack("890.220.011");
+						eleExistWithVariable('.dockableContainer .embeddedServiceLiveAgentStateWaiting .waitingStateContainer .waitingStateContent .queuePositionContent .header', waitChatCounter, 0);
 						snapinQueueLoaded();
 					}else if(snapInChatStarted && snapInCurrentPage != "snapInChatStarted"){
 						snapInCurrentPage = "snapInChatStarted";
@@ -913,7 +964,7 @@ function pageObserverForProp20(eleSelector){
 							removeLoaderIn10();
 							
 						}else if(snapInhelpBtnEnabled && window.getComputedStyle(snapInhelpBtnEnabled).display === 'flex' && snapInCurrentPage != "snapInhelpBtnEnabled"){
-							if(snapInCurrentPage === "snapInhelpBtnDisabled")
+							if(snapInCurrentPage === "snapInhelpBtnDisabled" && document.getElementById("cusPreChatSnapinDom"))
 								document.getElementById("cusPreChatSnapinDom").style.display = "block";
 							snapInCurrentPage = "snapInhelpBtnEnabled";
 							togglePrechatAndSnapin(snapInCurrentPage);
@@ -997,7 +1048,7 @@ function initLiveAgent(liveAgentObject) {
 		console.log('error:' + e);
 	}
 }
-function initLiveAgentWithoutPrechatForm(liveAgentObject, callback) {
+function initLiveAgentWithoutPrechatForm(liveAgentObject, callbackOnline, callbackOffline) {
 	try{
 		delete window.liveagent;
     	delete window.liveAgentDeployment; 
@@ -1021,18 +1072,21 @@ function initLiveAgentWithoutPrechatForm(liveAgentObject, callback) {
 					liveagent.findOrCreate("Asset").map("Asset__c", liveAgentObject.serviceTag, true, false, false).showOnCreate(); 
 					liveagent.setName(liveAgentObject.firstName + ' ' + liveAgentObject.lastName); 
 			});
-			checkifLiveAgentButtonIsOnline(liveagent,liveAgentObject,callback);
+			checkifLiveAgentButtonIsOnline(liveagent,liveAgentObject,callbackOnline,callbackOffline);
 		});
 	}catch(e){
 		console.log('error:' + e);
 	}
 }
-function checkifLiveAgentButtonIsOnline(liveagent,liveAgentObject,callback){
+function checkifLiveAgentButtonIsOnline(liveagent,liveAgentObject,callbackOnline,callbackOffline){
 	liveagent.addButtonEventHandler(liveAgentObject.buttonId,function (e){
 		if(e == liveagent.BUTTON_EVENT.BUTTON_AVAILABLE){              
-			callback();
+			callbackOnline();
 			return;
-		}      
+		}else if(e == liveagent.BUTTON_EVENT.BUTTON_UNAVAILABLE){
+			callbackOffline();
+			return;
+		}    
 	});
 }
 function initResumeLiveAgent(liveAgentObject) {
@@ -1062,70 +1116,372 @@ function eleExist(eleSelector, callbackFunc) {
 			}
 		}, 1000);
 }
+/////////////////////////////ChatBot Code///////////////////////////////////
 
 function triggerChatBot(chatBotObject) {
-	var initESW = function (gslbBaseURL) {
-		eleExist('.helpButtonEnabled #helpButtonSpan > .message', chatClick);
-		embedded_svc.settings.displayHelpButton = true;
-		embedded_svc.settings.language = '';
-		embedded_svc.settings.avatarImgURL = '';
-		embedded_svc.settings.prechatBackgroundImgURL = '';
-		embedded_svc.settings.waitingStateBackgroundImgURL = '';
-		embedded_svc.settings.smallCompanyLogoImgURL = '';
-		 embedded_svc.settings.extraPrechatFormDetails = [
+    console.log(chatBotObject);
+    if (chatBotObject == undefined && sessionStorage.getItem("chatBotObjectSession") != null) {
+        chatBotObject = JSON.parse(sessionStorage.getItem("chatBotObjectSession"));
+    } else {
+        sessionStorage.setItem("chatBotObjectSession", JSON.stringify(chatBotObject));
+        sessionStorage.setItem("isChatBotActive", 'true');
+    }
+    var initESW = function (gslbBaseURL) {
+        embedded_svc.settings.displayHelpButton = true;
+        embedded_svc.settings.language = '';
+        embedded_svc.settings.avatarImgURL = '';
+        embedded_svc.settings.prechatBackgroundImgURL = '';
+        embedded_svc.settings.waitingStateBackgroundImgURL = '';
+        embedded_svc.settings.smallCompanyLogoImgURL = '';
+        embedded_svc.settings.extraPrechatFormDetails = [
 
-			{ "label": "Service_Tag", "value":chatBotObject.Service_Tag,"transcriptFields": ["Service_Tag__c"], "displayToAgent": true },
-			{ "label": "Phone Number", "value":chatBotObject.Phone_Number,"transcriptFields": ["ContactNumber__c"], "displayToAgent": true },
-			{ "label": "First Name", "value":chatBotObject.First_Name,"transcriptFields": ["FirstName__c"], "displayToAgent": true },
-            { "label": "Last Name", "value":chatBotObject.Last_Name,"transcriptFields": ["LastName__c"], "displayToAgent": true },
-			{ "label": "Email", "value":chatBotObject.Email,"transcriptFields": ["Email__c"], "displayToAgent": true},
-			{ "label": "product_Model", "value":chatBotObject.product_Model,"transcriptFields": ["product_Model__c"], "displayToAgent": true },
-			{ "label": "Kb_Article", "value":chatBotObject.Kb_Article,"transcriptFields": ["KB__c"], "displayToAgent": true },
-			{ "label": "issue_Description", "value":chatBotObject.issue_Description,"transcriptFields": ["issue_Description__c"], "displayToAgent": true },
-			{ "label": "warranty_Details", "value":chatBotObject.warranty_Details,"transcriptFields": ["warranty_Details__c"], "displayToAgent": true },
-			{ "label": "windows_Version", "value":chatBotObject.windows_Version,"transcriptFields": ["windows_Version__c"], "displayToAgent": true },
-			{ "label": "BIOS_Version", "value":chatBotObject.BIOS_Version,"transcriptFields": ["BIOS_Version__c"], "displayToAgent": true },
-			{ "label": "recent_Software_Updated_Date", "value":chatBotObject.recent_Software_Updated_Date,"transcriptFields": ["recent_Software_Updated_Date__c"], "displayToAgent": true },
-			{ "label": "is_External_Peripherals_Connected", "value":chatBotObject.is_External_Peripherals_Connected,"transcriptFields": ["is_External_Peripherals_Connected__c"], "displayToAgent": true },
-			{ "label": "is_SA_Diagnostic_Passed", "value":chatBotObject.is_SA_Diagnostic_Passed,"transcriptFields": ["is_SA_Diagnostic_Passed__c"], "displayToAgent": true },
-			{ "label": "is_Error_Related_HWorSW", "value":chatBotObject.is_Error_Related_HWorSW,"transcriptFields": ["is_Error_Related_HWorSW__c"], "displayToAgent": true },
-			{ "label": "is_BIOSandDrivers_Updated", "value":chatBotObject.is_BIOSandDrivers_Updated,"transcriptFields": ["is_BIOSandDrivers_Updated__c"], "displayToAgent": true },
-			{ "label": "is_AnyAntivirus_Installed", "value":chatBotObject.is_AnyAntivirus_Installed,"transcriptFields": ["is_AnyAntivirus_Installed__c"], "displayToAgent": true },
-			{ "label": "is_Related_Heat_Issue", "value":chatBotObject.is_Related_Heat_Issue,"transcriptFields": ["is_Related_Heat_Issue__c"], "displayToAgent": true },
-			{ "label": "is_Warranty_Covered", "value":chatBotObject.is_Warranty_Covered,"transcriptFields": ["is_Warranty_Covered__c"], "displayToAgent": true },
-			{ "label": "is_HardDrive_Test_Passed", "value":chatBotObject.is_HardDrive_Test_Passed,"transcriptFields": ["is_HardDrive_Test_Passed__c"], "displayToAgent": true },
-			{ "label": "is_Memory_Test_Passed", "value":chatBotObject.is_Memory_Test_Passed,"transcriptFields": ["is_Memory_Test_Passed__c"], "displayToAgent": true },
-			{ "label": "is_MotherBoard_Test_Passed", "value":chatBotObject.is_MotherBoard_Test_Passed,"transcriptFields": ["is_MotherBoard_Test_Passed__c"], "displayToAgent": true },
-			{ "label": "is_HDD_IDE", "value":chatBotObject.is_HDD_IDE,"transcriptFields": ["is_HDD_IDE__c"], "displayToAgent": true },
-			{ "label": "last_time_scan_run", "value":chatBotObject.last_time_scan_run,"transcriptFields": ["last_time_scan_run__c"], "displayToAgent": true }
-		   ];
-		   embedded_svc.settings.prepopulatedPrechatFields = {
-			FirstName: chatBotObject.First_Name,
-			LastName: chatBotObject.Last_Name,
-			Email: chatBotObject.Email,
-			ContactNumber__c: chatBotObject.Phone_Number,
-			Service_Tag__c :chatBotObject.Service_Tag
-		};
-		   
-		embedded_svc.settings.enabledFeatures = ['LiveAgent'];
-		embedded_svc.settings.entryFeature = 'LiveAgent';
-		embedded_svc.init(chatBotObject.chatBotInitURL, chatBotObject.chatBotLAURL, gslbBaseURL, chatBotObject.organizationId, chatBotObject.componentName, {
-			baseLiveAgentContentURL: chatBotObject.baseLiveAgentContentURL,
-			deploymentId: chatBotObject.deploymentId,
-			buttonId: chatBotObject.buttonId,
-			baseLiveAgentURL: chatBotObject.baseLiveAgentURL,
-			eswLiveAgentDevName: chatBotObject.LiveAgentDevName,
-			isOfflineSupportEnabled: false
-		});
-	};
-	if (!window.embedded_svc) {
-		var s = document.createElement('script');
-		s.setAttribute('src', chatBotObject.snapInJs);
-		s.onload = function () {
-			initESW(null);
-		};
-		document.body.appendChild(s);
-	} else {
-		initESW(chatBotObject.serviceForceURL);
-	}
+            {"label":"Transcript From","value": "ChatBot","transcriptFields":["Transcript_From__c"],"displayToAgent":true},
+            { "label": "Service Tag",/* "value": chatBotObject.Service_Tag,*/ "transcriptFields": ["Service_Tag__c"], "displayToAgent": true },
+            { "label": "Phone", /*"value": '00 61 2 9876', */"transcriptFields": ["ContactNumber__c"], "displayToAgent": true },
+            { "label": "First Name", /*"value": chatBotObject.FirstName, */"transcriptFields": ["FirstName__c"], "displayToAgent": true },
+            { "label": "Last Name", /*"value": chatBotObject.LastName, */"transcriptFields": ["LastName__c"], "displayToAgent": true },
+            { "label": "Email Address", /*"value":chatBotObject.Email,*/ "transcriptFields": ["Email__c"], "displayToAgent": true },
+            { "label": "product_Model", "value": chatBotObject.product_Model, "transcriptFields": ["product_Model__c"], "displayToAgent": true },
+            { "label": "Kb_Article", "value": chatBotObject.Kb_Article, "transcriptFields": ["KB__c"], "displayToAgent": true },
+            { "label": "issue_Description", "value": chatBotObject.issue_Description, "transcriptFields": ["issue_Description__c"], "displayToAgent": true },
+            { "label": "warranty_Details", "value": chatBotObject.warranty_Details, "transcriptFields": ["warranty_Details__c"], "displayToAgent": true },
+            { "label": "windows_Version", "value": chatBotObject.windows_Version, "transcriptFields": ["windows_Version__c"], "displayToAgent": true },
+            { "label": "BIOS_Version", "value": chatBotObject.BIOS_Version, "transcriptFields": ["BIOS_Version__c"], "displayToAgent": true },
+            { "label": "recent_Software_Updated_Date", "value": chatBotObject.recent_Software_Updated_Date, "transcriptFields": ["recent_Software_Updated_Date__c"], "displayToAgent": true },
+            { "label": "is_External_Peripherals_Connected", "value": chatBotObject.is_External_Peripherals_Connected, "transcriptFields": ["is_External_Peripherals_Connected__c"], "displayToAgent": true },
+            { "label": "is_SA_Diagnostic_Passed", "value": chatBotObject.is_SA_Diagnostic_Passed, "transcriptFields": ["is_SA_Diagnostic_Passed__c"], "displayToAgent": true },
+            { "label": "is_Error_Related_HWorSW", "value": chatBotObject.is_Error_Related_HWorSW, "transcriptFields": ["is_Error_Related_HWorSW__c"], "displayToAgent": true },
+            { "label": "is_BIOSandDrivers_Updated", "value": chatBotObject.is_BIOSandDrivers_Updated, "transcriptFields": ["is_BIOSandDrivers_Updated__c"], "displayToAgent": true },
+            { "label": "is_AnyAntivirus_Installed", "value": chatBotObject.is_AnyAntivirus_Installed, "transcriptFields": ["is_AnyAntivirus_Installed__c"], "displayToAgent": true },
+            { "label": "is_Related_Heat_Issue", "value": chatBotObject.is_Related_Heat_Issue, "transcriptFields": ["is_Related_Heat_Issue__c"], "displayToAgent": true },
+            { "label": "is_Warranty_Covered", "value": chatBotObject.is_Warranty_Covered, "transcriptFields": ["is_Warranty_Covered__c"], "displayToAgent": true },
+            { "label": "is_HardDrive_Test_Passed", "value": chatBotObject.is_HardDrive_Test_Passed, "transcriptFields": ["is_HardDrive_Test_Passed__c"], "displayToAgent": true },
+            { "label": "is_Memory_Test_Passed", "value": chatBotObject.is_Memory_Test_Passed, "transcriptFields": ["is_Memory_Test_Passed__c"], "displayToAgent": true },
+            { "label": "is_MotherBoard_Test_Passed", "value": chatBotObject.is_MotherBoard_Test_Passed, "transcriptFields": ["is_MotherBoard_Test_Passed__c"], "displayToAgent": true },
+            { "label": "is_HDD_IDE", "value": chatBotObject.is_HDD_IDE, "transcriptFields": ["is_HDD_IDE__c"], "displayToAgent": true },
+            { "label": "last_time_scan_run", "value": chatBotObject.last_time_scan_run, "transcriptFields": ["last_time_scan_run__c"], "displayToAgent": true },
+            { "label": "isDsdnstalled", "value": chatBotObject.isDsdnstalled, "transcriptFields": ["isDsdnstalled__c"], "displayToAgent": true },
+            { "label": "isHwAlert", "value": chatBotObject.isHwAlert, "transcriptFields": ["isHwAlert__c"], "displayToAgent": true },
+            { "label": "isSwAlert", "value": chatBotObject.isSwAlert, "transcriptFields": ["isSwAlert__c"], "displayToAgent": true },
+            //      { "label": "isDsdInstalled", "value":'true',"transcriptFields": ["isDsdInstalled__c"], "displayToAgent": true },
+            //      { "label": "Delta Sr", "value":'true',"transcriptFields": ["Delta_Sr__c"], "displayToAgent": true },
+            //      { "label": "SR_Number", "value":'102050',"transcriptFields": ["SR_Number__c"], "displayToAgent": true }, 
+            //      { "label": "Alert_Type", "value":'EPSV',"transcriptFields": ["Alert_Type__c"], "displayToAgent": true }, 
+            //      { "label": "Dispatch_Number", "value":'1508401',"transcriptFields": ["Dispatch_Number__c"], "displayToAgent": true },
+
+
+
+        ];
+        var firstNameVal = null,
+            lastNameVal = null,
+            emailVal = null,
+            primePhoneVal = null,
+            ServiceTagVal = null;
+        //  DescriptionVal = null,
+        //  Subjectval = null;
+        if ("First_Name" in chatBotObject)
+            firstNameVal = chatBotObject.First_Name;
+        if ("Last_Name" in chatBotObject)
+            lastNameVal = chatBotObject.Last_Name;
+        if ("Email" in chatBotObject)
+            emailVal = chatBotObject.Email;
+        if ("Phone" in chatBotObject)
+            primePhoneVal = chatBotObject.Phone;
+        if ("Service_Tag" in chatBotObject)
+            ServiceTagVal = chatBotObject.Service_Tag;
+
+        /*  if ("issue_Description" in chatBotObject)
+                DescriptionVal = chatBotObject.issue_Description;
+            if ("Subject" in chatBotObject)
+                Subjectval = chatBotObject.Subject;  */
+
+        embedded_svc.settings.prepopulatedPrechatFields = {
+            FirstName: firstNameVal, /* 'Dave', */
+            LastName: lastNameVal,/* 'Boon',*/
+            Email: emailVal, /* 'boon_dev@dell.com', */
+            Phone: primePhoneVal,/* '00 61 22 9876 ', */
+            Service_Tag__c: ServiceTagVal
+            /*  Description: DescriptionVal,
+                Subject:Subjectval  */
+            //  recent_Software_Update
+        };
+
+        embedded_svc.settings.extraPrechatInfo = [{
+            "entityFieldMaps": [{
+                "doCreate": true,
+                "doFind": true,
+                "fieldName": "LastName",
+                "isExactMatch": true,
+                "label": "Last Name"
+            }, {
+                "doCreate": true,
+                "doFind": true,
+                "fieldName": "FirstName",
+                "isExactMatch": true,
+                "label": "First Name"
+            }, {
+                "doCreate": true,
+                "doFind": true,
+                "fieldName": "Email",
+                "isExactMatch": true,
+                "label": "Email Address"
+            }],
+            "entityName": "Contact",
+            "saveToTranscript": "ContactId"
+            //"linkToEntityName": "Live_Chat_Transcript"
+        }, {
+            "entityFieldMaps": [{
+                "doCreate": false,
+                "doFind": true,
+                "fieldName": "Name",
+                "isExactMatch": true,
+                "label": "Service Tag"
+            }
+            ],
+            "entityName": "Asset",
+            "saveToTranscript": "Asset__c"
+        }, {
+            "entityFieldMaps": [/*{
+                        "doCreate": false,
+                        "doFind": true,
+                        "fieldName": "Issue_Description__c",
+                        "isExactMatch": true,
+                        "label": "Issue Description"
+                }, */
+                {
+                    "doCreate": false,
+                    "doFind": true,
+                    "fieldName": "AssetId",
+                    "isExactMatch": true,
+                    "label": "Asset"
+                }
+            ],
+            "entityName": "Case"
+            //  "saveToTranscript": ""
+        }
+        ];
+
+        embedded_svc.settings.chatbotAvatarImgURL = 'https://dellservices--sit1--c.cs53.content.force.com/servlet/servlet.FileDownload?file=0150j000000F3tl';
+        embedded_svc.settings.defaultMinimizedText = "Get Started";
+        embedded_svc.settings.enabledFeatures = ['LiveAgent'];
+        embedded_svc.settings.entryFeature = 'LiveAgent';
+        embedded_svc.init(chatBotObject.chatBotInitURL, chatBotObject.chatBotLAURL, gslbBaseURL, chatBotObject.organizationId, chatBotObject.componentName, {
+            baseLiveAgentContentURL: chatBotObject.baseLiveAgentContentURL,
+            deploymentId: chatBotObject.deploymentId,
+            buttonId: chatBotObject.buttonId,
+            baseLiveAgentURL: chatBotObject.baseLiveAgentURL,
+            eswLiveAgentDevName: chatBotObject.LiveAgentDevName,
+            isOfflineSupportEnabled: false
+        });
+        embedded_svc.addEventHandler("onAgentMessage", function (data) {
+            bindHandler();
+        });
+
+    };
+    if (!window.embedded_svc) {
+        var s = document.createElement('script');
+        s.setAttribute('src', chatBotObject.snapInJs);
+        s.onload = function () {
+            initESW(null);
+        };
+        document.body.appendChild(s);
+    } else {
+        initESW(chatBotObject.serviceForceURL);
+
+    }
 }
+
+eleExist(".embeddedServiceSidebarFeature .embeddedServiceLiveAgentStatePrechatDefaultUI .embeddedServiceSidebarForm .Service_Tag__c", AdditionalHelpTest_ServiceTag);
+
+function AdditionalHelpTest_ServiceTag(eleSelector, findingEle) {
+    clearInterval(findingEle); 
+    if(!document.getElementById("additionalHelpTest")){
+        try{
+            var my_elem = document.querySelector(eleSelector);
+
+            var span = document.createElement('span');
+            span.innerHTML = '<div  style= "color:Red;font-size: .75em;"> \xa0(Service Tags are 7-digit codes usually located on \xa0\xa0the back or bottom of Dell products.)</div>';
+            span.iD = 'additionalHelpTest';
+
+            my_elem.parentNode.insertBefore(span, my_elem);
+        } catch (e) {
+            console.log(e);
+
+        }
+    }
+}
+
+//define redirect urls
+var quickTestURL = 'https://www.dell.com/support/home/us/en/19/home/index/quicktestnovideo';
+var sRPageURL = 'https://www.dell.com/support/incidents-online/us/en/19/srsearch';
+var driverPageURL = '//www.dell.com/support/home/us/en/19/product-support/servicetag/{0}/diagnose/ShowResults/driverscan';
+var ResultPageURL = '//www-sit-g2.dell.com/support/home/us/en/04/product-support/servicetag/2f909r2/diagnose/showresults/2f909r26ef3dd1163a64181a6964c9885c9eb27';
+var isBinded = false;
+var isFirstTimeForQuickTest = false;
+var isFirstTimeForResult = false;
+var isFirstTimeForReadServiceTag = false;
+var isFirstSrPage = false;
+var isFirstDriver = false;
+
+function RefreshProp() {
+    isFirstTimeForQuickTest = false;
+    isFirstTimeForResult = false;
+}
+function bindHandler() {
+    if (!isBinded) {
+        $("ul[class*='messageWrapper']").on('DOMSubtreeModified', this.messageReceived);
+        isBinded = true;
+    }
+
+}
+var Command = function (value) {
+    try {
+        //  throw Error;
+        console.log('%s creating command object', value),
+            this.execute = function () {
+                if (this.redirectURL != null && this.isNewWindow == true)
+                    window.location.href = this.redirectURL;
+            };
+        //this.isNewWindow = false,
+        this.redirectURL = null;
+    }
+    catch (err) {
+        console.log('error occured %s', err);
+    }
+}
+
+//Set command properties
+var getCommand = function (message) {
+    /*read message from DOM*/
+    console.log('get command method');
+    console.log("message is: %s:", message);
+    var cmd = new Command(message);
+    var tempMessage = message;
+    var IfContains = message.startsWith('We have validated') && message.includes('case number');
+    if (IfContains) {
+
+        message = 'GetServiceTagDetails';
+    }
+
+    try {
+        switch (message) {
+            case 'Opening QuickTest..\n':
+                if (!isFirstTimeForQuickTest) {
+                    cmd.redirectURL = quickTestURL;
+                    cmd.isNewWindow = true;
+                    isFirstTimeForQuickTest = true;
+                }
+                break;
+            case 'Opening Action Page..\n':
+                if (!isFirstTimeForResult) {
+                    cmd.redirectURL = ResultPageURL;
+                    cmd.isNewWindow = true;
+                    isFirstTimeForResult = true;
+                }
+                break;
+            case 'GetServiceTagDetails':
+                if (!isFirstTimeForReadServiceTag) {
+                    var serviceTag = tempMessage.split(' ')[7].trim();
+                    var caseNumber = tempMessage.split(' ')[16].trim();
+                    processChatBotCommand(serviceTag, caseNumber);
+                    isFirstTimeForReadServiceTag = true;
+                }
+                break;
+            case 'Update my drivers':
+                if (!isFirstDriver) {
+                    cmd.redirectURL = driverPageURL;
+                    cmd.isNewWindow = true;
+                    isFirstDriver = true;
+                }
+                break;
+
+            case 'Yes , Show case details...':
+                if (!isFirstSrPage) {
+                    cmd.redirectURL = sRPageURL;
+                    cmd.isNewWindow = true;
+                    isFirstSrPage = true;
+                }
+                break;
+            default:
+                cmd.redirectURL = null;
+                cmd.isNewWindow = false;
+                break;
+        }
+    } catch (e) {
+        console.log('error:' + e)
+    }
+    return cmd;
+};
+
+/*read message*/
+function messageReceived(e) {
+    var message = e.currentTarget.lastElementChild.childNodes[1].innerText;// message is having always three element .. middle one contain actual text
+    var cmd = new getCommand(message);
+    if (cmd.redirectURL != null) {
+        cmd.execute();
+    }
+}
+
+window.addEventListener('message', function (e) {
+    if (e.origin.indexOf('dell.com') > -1 && typeof (e.data) == "string") {
+        ProcessChildMessage(e.data);
+    }
+}, false);
+
+function ProcessChildMessage(message) {
+    try {
+        var ev = document.createEvent('Event');
+        ev.initEvent('keydown');
+        ev.which = ev.keyCode = 13;
+        var t = document.getElementsByClassName('chasitorText')[0];
+        t.value = '';
+        t.dispatchEvent(ev);
+        t.value = message;
+        t.focus();
+        t.dispatchEvent(ev);
+    } catch (e) {
+        console.log('Error found while posting message to chatbot : ' + e);
+    }
+}
+
+function UpdateCaseNumberinSession(servicetag, caseNumber) {
+    if (sessionStorage.getItem("chatBotObjectSession") != null) {
+        var data = JSON.parse(sessionStorage.getItem("chatBotObjectSession"));
+        if (data.Service_Tag != servicetag) {
+            data.isDsdnstalled = false;
+        }
+        data.Service_Tag = servicetag;
+        data.caseNumber = caseNumber;
+        sessionStorage.setItem("chatBotObjectSession", JSON.stringify(data));
+    }
+}
+function processChatBotCommand(serviceTag, caseNumber) {
+
+    UpdateCaseNumberinSession(serviceTag, caseNumber);
+    GetChatBotinfo().then(function (response) {
+        if (sessionStorage.getItem("chatBotObjectSession") != null) {
+            var data = JSON.parse(sessionStorage.getItem("chatBotObjectSession"));
+            response.caseNumber = data.caseNumber;
+            data.ChatBotInfo = response;
+            UpdateDriverScanURL(response.isSwAlert, data.Service_Tag);
+            sessionStorage.setItem("chatBotObjectSession", JSON.stringify(data));
+            SendResponseToChatbot(data.ChatBotInfo).then(function (respon) {
+                ProcessChildMessage('...');
+            }).catch(function (reason) {
+                console.log('rejected promise' + reason);
+                ProcessChildMessage('....');
+            });
+        }
+    });
+}
+function UpdateDriverScanURL(isAnyAlert, serviceTag) {
+    if (isAnyAlert != undefined && serviceTag != undefined && isAnyAlert) {
+        driverPageURL = driverPageURL.format(serviceTag);
+    }
+}
+//Call trigger chat bot from other places
+//if (document.getElementsByName('isChatBotEnabled')[0] != undefined && document.getElementsByName('isChatBotEnabled')[0].getAttribute('content') == "true") {
+if (sessionStorage.getItem("isChatBotActive") != null && sessionStorage.getItem("isChatBotActive") == "true") {
+    triggerChatBot();
+}
+//};
