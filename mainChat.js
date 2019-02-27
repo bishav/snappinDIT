@@ -1,4 +1,4 @@
-﻿var snapinChatGlobalIssueType, snapinChatGlobalServiceTag, snapinChatGlobalProductName = null, snapInCurrentPage = null, trackevent = true;
+﻿var snapinCurentPageUrlIsDuplicate = false,snapinChatGlobalIssueType, snapinChatGlobalServiceTag, snapinChatGlobalProductName = null, snapInCurrentPage = null, trackevent = true;
 (function () {
 	var initESW;
 	window.addEventListener("dragover", function (e) {
@@ -25,6 +25,14 @@
 		head.appendChild(style);
 	}
 })();
+if (window.performance && window.performance.navigation.type == window.performance.navigation.TYPE_BACK_FORWARD) {
+	if(sessionStorage.getItem("snapinCurentPageURL") === (window.location.origin + window.location.pathname)){
+		snapinCurentPageUrlIsDuplicate = true;
+	}
+	else
+		snapinCurentPageUrlIsDuplicate = false;
+}
+sessionStorage.setItem("snapinCurentPageURL",(window.location.origin + window.location.pathname));
 
 function hideDomObject(eleSelector, findingEle) {
 	try{
@@ -50,6 +58,7 @@ function initSnapIn(snapInObject) {
 }
 
 function triggerSnapin(snapInObject) {
+	//alert("snapinCurentPageUrlIsDuplicate = "+ snapinCurentPageUrlIsDuplicate);
 	if(snapInObject === undefined && history.length > 1 && snapinChatGlobalObjNotEmpty()){
 		snapInObject = sendGlobalSnapinObjToJson();
 		if("snapinChatInitiated" in snapInObject && snapInObject.snapinChatInitiated){
@@ -503,7 +512,7 @@ function initOriginalESW(gslbBaseURL,snapInObject) {
 					"entityName": "Case"
 				}
 			];
-			
+			/*
 			var firstNameVal = null,
 			lastNameVal = null,
 			emailAddVal = null,
@@ -584,6 +593,7 @@ function initOriginalESW(gslbBaseURL,snapInObject) {
 	console.log("onInviteRejected event was fired.");
   });
   //addEventHandler [END]	
+  */
 	embedded_svc.init(snapInObject.snapInInitURL, snapInObject.snapInLAURL, gslbBaseURL, snapInObject.organizationId, snapInObject.componentName, {
 		baseLiveAgentContentURL: snapInObject.baseLiveAgentContentURL,
 		deploymentId: snapInObject.deploymentId,
