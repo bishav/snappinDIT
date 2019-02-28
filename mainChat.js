@@ -426,10 +426,11 @@ function initOriginalESW(gslbBaseURL,snapInObject) {
 	snapinChatGlobalIssueType = snapInObject.issueVal;
 	snapinChatGlobalProductName = snapInObject.productName;
 	embedded_svc.settings.displayHelpButton = true;
-	embedded_svc.settings.defaultMinimizedText = 'Chat Now';  
+	//embedded_svc.settings.defaultMinimizedText = 'Chat Now';  
 
 	embedded_svc.settings.enabledFeatures = ['LiveAgent'];
 	embedded_svc.settings.entryFeature = 'LiveAgent';
+	/*
 	if ("language" in snapInObject)
 		translatedLabels = translation(snapInObject.language);
 	else
@@ -512,7 +513,7 @@ function initOriginalESW(gslbBaseURL,snapInObject) {
 					"entityName": "Case"
 				}
 			];
-			/*
+			*//*
 			var firstNameVal = null,
 			lastNameVal = null,
 			emailAddVal = null,
