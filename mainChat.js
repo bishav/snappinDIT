@@ -68,10 +68,10 @@ function triggerSnapin(snapInObject) {
 		}		
 	}else if(snapInObject){
 		if(!snapInObject.snapinButtonClicked){
-			eleExist('.embeddedServiceHelpButton', hideDomObject);
-			eleExist('.embeddedServiceSidebar', hideDomObject);
+			//eleExist('.embeddedServiceHelpButton', hideDomObject);
+			//eleExist('.embeddedServiceSidebar', hideDomObject);
 			saveGlobalSnapinObjToSession(snapInObject);
-			eleExist('.helpButtonEnabled #helpButtonSpan > .message', chatClick);
+			//eleExist('.helpButtonEnabled #helpButtonSpan > .message', chatClick);
 			if(document.getElementById('cusPreChatSnapinDom'))
 				custPreChatShowAdditionalDetailsInUi(snapInObject);
 			initSnapIn(snapInObject);
