@@ -105,9 +105,9 @@
                         <p>Start a chat session with one of our technical support experts.</p>
                         <button type="button" id="liveChatButton" class="btn btn-primary" onclick="initLiveChat()" style="display: block;float: left;margin-right: 20px;">Start LiveChat</button>
                         <div class="live-agent-button" style="float:left;">
-                                <a id="liveagent_button_online_5730b000000GnqQ" href="javascript://Chat" class="enabledButton btn btn-primary btn-block"  style="display: none;" >Start Chat</a>
-                                <div id="liveagent_button_offline_5730b000000GnqQ" href="javascript://Chat" class="" style="display: none;" >Agent not Avilable</div> 
-                                <a id="" href="javascript://Chat" class="enabledButton btn btn-primary btn-block"  onclick="liveagent.startChat('5730b000000GnqQ')">New Button</a>
+                                <a id="liveagent_button_online_5730b0000008PaN" href="javascript://Chat" class="enabledButton btn btn-primary btn-block"  style="display: none;" >Start Chat</a>
+                                <div id="liveagent_button_offline_5730b0000008PaN" href="javascript://Chat" class="" style="display: none;" >Agent not Avilable</div> 
+                                <a id="" href="javascript://Chat" class="enabledButton btn btn-primary btn-block"  onclick="liveagent.startChat('5730b0000008PaN')">New Button</a>
                         </div>
                     </div>
                 </div>
@@ -165,7 +165,7 @@
             var liveAgentObject = {
             
                //Dev2
-               deploymentUrl: "https://c.la2-c2cs-iad.salesforceliveagent.com/content/g/js/45.0/deployment.js",
+ /*              deploymentUrl: "https://c.la2-c2cs-iad.salesforceliveagent.com/content/g/js/45.0/deployment.js",
                 liveAgentInitUrl: 'https://d.la2-c2cs-iad.salesforceliveagent.com/chat',
                 buttonId: '5730b000000GnqQ',
                 deploymentId: '5720b000000CbfS',
@@ -177,6 +177,25 @@
                   phoneNumber : "12345",
                   issueType : issueVal,
                   issueDescription : "issueDescription" 
+*/
+
+//SIT2
+
+
+
+                    deploymentUrl: "https://c.la1-c1cs-dfw.salesforceliveagent.com/content/g/js/45.0/deployment.js",
+                    liveAgentInitUrl: "https://d.la1-c1cs-dfw.salesforceliveagent.com/chat",
+                buttonId: '5730b0000008PaN',
+                deploymentId: '5720b000000CbfS',
+                organizationId: '00D5B00000096bN',
+                serviceTag: serviceTag,
+                /*  firstName : "bisahv",
+                  lastName : "lastName",
+                  emailId : "bnr@dell.com",
+                  phoneNumber : "12345",
+                  issueType : issueVal,
+                  issueDescription : "issueDescription" 
+                  */
 
  /*
 

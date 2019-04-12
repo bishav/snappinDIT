@@ -1,7 +1,7 @@
 ﻿﻿<!DOCTYPE html>
 <html>
 <head>
-  <!--    <meta charset="utf-8" />
+    <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Page Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,14 +9,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  
+   <!-- 
     <style type='text/css'>  
         @font-face {font-family: 'Salesforce Sans';src: url('https://www.sfdcstatic.com/system/shared/common/assets/fonts/SalesforceSans/SalesforceSans-Regular.woff') format('woff'),url('https://www.sfdcstatic.com/system/shared/common/assets/fonts/SalesforceSans/SalesforceSans-Regular.ttf') format('truetype');}
     </style>
 -->
 </head>
 <body>
-  <!--   <nav class="navbar navbar-light bg-light">
+    <nav class="navbar navbar-light bg-light">
             <span id="selectLanguage" style="float: right; display: block; margin-right:5px">
                 <span style="background: #6c757d;color: #fff;width: 38px;height: 28px;padding: 2px 11px;border-radius: .25rem 0 0 .25rem;"><i class="fa fa-globe"></i></span>
                 <select id="selectLanguageOption" style="margin-left: -5px;">
@@ -48,7 +48,7 @@
                 </div>
                 <div class="live-agent-resume-button hide">
                     <script type='text/javascript' src='https://c.la4-c1cs-phx.salesforceliveagent.com/content/g/js/43.0/deployment.js'></script>
-                <a id="liveagent_button_online_5733B0000004D95" class="btn btn-primary" href="javascript://Chat" onclick="liveagent.startChat('5733B0000004D95')" style="display: none;">Start Chat</a><div id="liveagent_button_offline_5733B0000004D95" style="display: none;"></div><script type="text/javascript">
+                <a id="liveagent_button_online_5733B0000004D95" class="btn btn-primary" href="javascript://Chat" onclick="liveagent.startChat('5733B0000004D95')" style="display: none;">Start Chat</a><div id="liveagent_button_offline_5733B0000004D95" style="display: none;"><!-- Offline Chat Content --></div><script type="text/javascript">
                     if (!window._laq) { window._laq = []; }
                     window._laq.push(function(){liveagent.showWhenOnline('5733B0000004D95', document.getElementById('liveagent_button_online_5733B0000004D95'));
                     liveagent.showWhenOffline('5733B0000004D95', document.getElementById('liveagent_button_offline_5733B0000004D95'));
@@ -56,7 +56,6 @@
                 </div>
             </div>
             <div class="offline-msg hide">
-            
             </div>
         </div>
         <div class="new-chat">
@@ -69,6 +68,10 @@
                             <input type="text" class="form-control"  id="serviceTag" aria-describedby="serviceTag" placeholder="Enter Service Tag">
                             <p>Based on asset warranty contact channel will be displayed</p>
                         </div>
+                        <!-- <div class="form-group">
+                            <label for="exampleFormControlTextarea1">Description</label>
+                            <textarea class="form-control" id="description-textarea" rows="5"></textarea>
+                        </div> -->
                         <div class="dropdown hide">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Select Issue Type
@@ -111,9 +114,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>
     <script src="https://getbootstrap.com/docs/4.0/dist/js/bootstrap.min.js"></script>
-    <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
+   <!--  <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>-->
    <script src="mainChat.js"></script>
-
+    <!--  <script src="mainChatPrePerf.js"></script>-->
+    <!--<script src="sfdccore.js"></script>-->
      
     <script>
         var dropdownIssue = document.querySelectorAll('#issueDropdown > .dropdown-item');
@@ -211,8 +215,45 @@
         function initChat() {
                 var snapInObject = {
                     snapinButtonClicked:true
-                }
-                triggerSnapin(snapInObject);
+                };
+                var preChatlableObject = {
+                    firstName:"First Name",
+                    lastName:"Last Name",
+                    SfdcLastName:"Last Name",
+                    emailAddress:"Email Address",
+                    phoneNumber:"Primary Phone Number",
+                    issueDescription:"Issue Description",
+                    startChat:"Start Chat",
+                    issueType:"Issue",
+                   // optional:preChatModel.LblOptional,
+                    characters:"characters",
+                    issueDescriptionLength:"20",
+                    SFDCLanguageConfig:"first Name|Last Name",
+                   // summeryErrormsg:preChatModel.SummeryErrormsg,
+                  //  issueDescriptionMaxCharValidation:preChatModel.IssueDetailMaxCharValidationMsg,
+                      customerPrivacyDesc:"\u003cb\u003eYour privacy is important to us.\u003c/b\u003e We will only use your information to process your request. We will not share it with anyone. To learn more about how we use and protect your data, see the \u003ca target=\u0027_blank\u0027 href=\u0027//www.dell.com/learn/policies-privacy\u0027\u003eDell Privacy Statement.\u003c/a\u003e",
+                  //  firstNameValidation:preChatModel.FirstNameValidation,
+                  //  lastNameValidation:preChatModel.LastNameValidation,
+                  //  emailRequiredValidation:preChatModel.EmailRequiredValidation,
+                      emailValidation:"Invalid Email Validation",
+                //    phoneRequiredValidation:preChatModel.PhoneRequiredValidation,
+                 //   phoneValidation:preChatModel.PhoneValidation,
+                 //   issueDescriptionValidation:preChatModel.IssueDetailValidation,
+                 //   severityValidation:preChatModel.SeverityValidation,
+                 //   chatUnavailableMessage:preChatModel.ChatUnavailableMessage,
+                      chatHeader:"Chat Now",
+
+                //    serialNumber:preChatModel.LblSerialNumber,
+                //    instanceId:preChatModel.LblInstanceId,
+                      serviceTag:"Service Tag",
+                //    severity:preChatModel.LblSeverity,
+                   // severityList:preChatModel.SeverityList,
+                 //   severityContents:preChatModel.SeverityContents,  
+                      blocklistEmails:"noreply@Dell.com|testing@dell.com|cool@dell.com|ok@dell.com",
+                      pasteInvalidTextMsg: "You are trying to paste an invalid text.",
+                      requiredFieldValidation:"This field is required"
+                };
+               triggerSnapin(snapInObject, preChatlableObject);
         }
         function initResumeChat(){
             var language = document.getElementById("selectLanguageOption");
@@ -254,6 +295,11 @@
                // var widgetSizeVal = detectScreen();
                 var snapInObject = {
                    language: language.options[language.selectedIndex].value,
+                   firstName:"Bishav",
+                   lastName: "Rajbhandari",
+                   email:"bnr@dell.com",
+                   phoneNo:"1234567",
+                   issueDescription:"Description Test",
                    // widgetSize: widgetSizeVal,
                     serviceTag: serviceTag,
                     issueVal: issueVal,
@@ -298,7 +344,7 @@
 
  
 
- 
+ */
       //DEV2      
 
                     baseLiveAgentContentURL: 'https://c.la2-c2cs-iad.salesforceliveagent.com/content',
@@ -307,14 +353,15 @@
                     baseLiveAgentURL: 'https://d.la2-c2cs-iad.salesforceliveagent.com/chat',
                     LiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I0b000000blJJEAY_16520d15b68',                
                     componentName: "Snap_Ins_Chat_Deployment",
-                    domainName:"bishav.github.io",//"localhost",//
+                    domainName:"localhost",//"bishav.github.io",//
                     organizationId: "00D2a0000008e0t",
                     serviceForceURL: "https://service.force.com",
                     snapInInitURL: 'https://dellservices--DEV2.my.salesforce.com',
-                    snapInJs: "https://dellservices--DEV2.my.salesforce.com/embeddedservice/5.0/esw.min.js",
+                    //snapInJs: "https://dellservices--DEV2.my.salesforce.com/embeddedservice/5.0/esw.min.js",
+                    snapInJs: "https://service.force.com/embeddedservice/5.0/esw.min.js",
                     snapInLAURL: 'https://dev2-dellservices.cs47.force.com/LASnapIn',
                
-
+/*
   
                 
                     LiveAgentDevName: "EmbeddedServiceLiveAgent_Parent04I0b000000blJJEAY_16520d15b68",
@@ -346,7 +393,7 @@
 
                  
 
-      */            
+             
                     baseLiveAgentContentURL: 'https://c.la1-c1cs-dfw.salesforceliveagent.com/content',
                     deploymentId: '5720b000000GneC',
                     buttonId: '5730b000000L1hC',
@@ -357,10 +404,11 @@
                     organizationId: "00D5B00000096bN",
                     serviceForceURL: "https://service.force.com",
                     snapInInitURL:'https://dellservices--SIT2.my.salesforce.com',
-                    snapInJs: "https://dellservices--SIT2.my.salesforce.com/embeddedservice/5.0/esw.min.js",
+                    //snapInJs: "https://dellservices--SIT2.my.salesforce.com/embeddedservice/5.0/esw.min.js",
+                    snapInJs: "https://service.force.com/embeddedservice/5.0/esw.min.js",
                     snapInLAURL: 'https://sit2-dellservices.cs52.force.com/LaSnapIn',
 
-/*
+
 baseLiveAgentContentURL: 'https://c.la2-c1cs-ord.salesforceliveagent.com/content',
 deploymentId: '5720b000000GneC',
 buttonId: '5730b000000CbhT',
@@ -376,8 +424,42 @@ snapInLAURL: 'https://chat-dellservices.cs95.force.com/LASnapIn',
  */
                     snapinButtonClicked: false
                      
-                }
-               triggerSnapin(snapInObject);
+                };
+                var preChatlableObject = {
+                    firstName:"First Name",
+                    lastName:"Last Name",
+                    emailAddress:"Email Address",
+                    phoneNumber:"Primary Phone Number",
+                    issueDescription:"Issue Description",
+                    startChat:"Start Chat",
+                    issueType:"Issue",
+                   // optional:preChatModel.LblOptional,
+                    characters:"characters",
+                    issueDescriptionLength:"20",
+
+                   // summeryErrormsg:preChatModel.SummeryErrormsg,
+                  //  issueDescriptionMaxCharValidation:preChatModel.IssueDetailMaxCharValidationMsg,
+                      customerPrivacyDesc:"\u003cb\u003eBisahv Your privacy is important to us.\u003c/b\u003e We will only use your information to process your request. We will not share it with anyone. To learn more about how we use and protect your data, see the \u003ca target=\u0027_blank\u0027 href=\u0027//www.dell.com/learn/policies-privacy\u0027\u003eDell Privacy Statement.\u003c/a\u003e",
+                  //  firstNameValidation:preChatModel.FirstNameValidation,
+                  //  lastNameValidation:preChatModel.LastNameValidation,
+                  //  emailRequiredValidation:preChatModel.EmailRequiredValidation,
+                 //   emailValidation:preChatModel.EmailValidation,
+                //    phoneRequiredValidation:preChatModel.PhoneRequiredValidation,
+                 //   phoneValidation:preChatModel.PhoneValidation,
+                 //   issueDescriptionValidation:preChatModel.IssueDetailValidation,
+                 //   severityValidation:preChatModel.SeverityValidation,
+                 //   chatUnavailableMessage:preChatModel.ChatUnavailableMessage,
+                //    chatHeader:preChatModel.ChatHeader,
+
+                //    serialNumber:preChatModel.LblSerialNumber,
+                //    instanceId:preChatModel.LblInstanceId,
+                      serviceTag:"Service Tag",
+                //    severity:preChatModel.LblSeverity,
+                   // severityList:preChatModel.SeverityList,
+                 //   severityContents:preChatModel.SeverityContents,  
+                      blocklistEmails:"noreply@Dell.com|testing@dell.com|cool@dell.com|ok@dell.com"
+                };
+               triggerSnapin(snapInObject, preChatlableObject);
             
             
         }
@@ -432,13 +514,13 @@ deploymentUrl: "https://c.la3-c2cs-dfw.salesforceliveagent.com/content/g/js/45.0
                 deploymentId: '5720b000000CbfS',
                 organizationId: '00D0j000000D0v9',
                 serviceTag: serviceTag,
-                  firstName : "bisahv",
+           /*       firstName : "bisahv",
                   lastName : "lastName",
                   emailId : "bnr@dell.com",
                   phoneNumber : "12345",
                   issueType : issueVal,
                   issueDescription : "issueDescription"
-/*
+
 
 
 //DEV3
@@ -448,12 +530,6 @@ deploymentUrl: "https://c.la3-c2cs-dfw.salesforceliveagent.com/content/g/js/45.0
                 deploymentId: '5720b000000CbfS',
                 organizationId: '00D2a0000008ftq',
                 serviceTag: serviceTag,
-                  firstName : "bisahv",
-                  lastName : "lastName",
-                  emailId : "bnr@dell.com",
-                  phoneNumber : "12345",
-                  issueType : issueVal,
-                  issueDescription : "issueDescription"
                   */
 
                 
@@ -479,70 +555,6 @@ deploymentUrl: "https://c.la3-c2cs-dfw.salesforceliveagent.com/content/g/js/45.0
 			else
                 console.log("PropValue = "+elementId);
         }
-    </script>   -->
-    
-    
-    <style type='text/css'>
-        .embeddedServiceHelpButton .helpButton .uiButton {
-            background-color: #007db8;
-            font-family: "Roboto Regular", sans-serif;
-        }
-        .embeddedServiceHelpButton .helpButton .uiButton:focus {
-            outline: 1px solid #007db8;
-        }
-    </style>
-    
-    <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
-    <script type='text/javascript'>
-        var initESW = function(gslbBaseURL) {
-            embedded_svc.settings.displayHelpButton = true; //Or false
-            embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
-    
-            //embedded_svc.settings.defaultMinimizedText = '...'; //(Defaults to Chat with an Expert)
-            //embedded_svc.settings.disabledMinimizedText = '...'; //(Defaults to Agent Offline)
-    
-            //embedded_svc.settings.loadingText = ''; //(Defaults to Loading)
-            //embedded_svc.settings.storageDomain = 'yourdomain.com'; //(Sets the domain for your deployment so that visitors can navigate subdomains during a chat session)
-    
-            // Settings for Live Agent
-            //embedded_svc.settings.directToButtonRouting = function(prechatFormData) {
-                // Dynamically changes the button ID based on what the visitor enters in the pre-chat form.
-                // Returns a valid button ID.
-            //};
-            //embedded_svc.settings.prepopulatedPrechatFields = {}; //Sets the auto-population of pre-chat form fields
-            //embedded_svc.settings.fallbackRouting = []; //An array of button IDs, user IDs, or userId_buttonId
-            //embedded_svc.settings.offlineSupportMinimizedText = '...'; //(Defaults to Contact Us)
-    
-            embedded_svc.settings.enabledFeatures = ['LiveAgent'];
-            embedded_svc.settings.entryFeature = 'LiveAgent';
-    
-            embedded_svc.init(
-                'https://dellservices--DEV2.my.salesforce.com',
-                'https://dev2-dellservices.cs47.force.com/LASnapIn',
-                gslbBaseURL,
-                '00D2a0000008e0t',
-                'Snap_Ins_Chat_Deployment',
-                {
-                    baseLiveAgentContentURL: 'https://c.la2-c2cs-iad.salesforceliveagent.com/content',
-                    deploymentId: '5720b000000GneC',
-                    buttonId: '5730b000000CbhT',
-                    baseLiveAgentURL: 'https://d.la2-c2cs-iad.salesforceliveagent.com/chat',
-                    eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I0b000000blJJEAY_16520d15b68',
-                    isOfflineSupportEnabled: false
-                }
-            );
-        };
-    
-        if (!window.embedded_svc) {
-            var s = document.createElement('script');
-            s.setAttribute('src', 'https://dellservices--DEV2.my.salesforce.com/embeddedservice/5.0/esw.min.js');
-            s.onload = function() {
-                initESW(null);
-            };
-            document.body.appendChild(s);
-        } else {
-            initESW('https://service.force.com');
-        }
-    </script>
+    </script>    
 </body>
 </html>
