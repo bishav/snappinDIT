@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../../main.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="main.js"></script> -->
+    <style type='text/css'>
+            .embeddedServiceHelpButton .helpButton .uiButton { background-color: #005290; font-family: "Salesforce Sans", sans-serif; }
+            .embeddedServiceHelpButton .helpButton .uiButton:focus { outline: 1px solid #005290; }
+            @font-face {
+            font-family: 'Salesforce Sans';
+            src: url('https://www.sfdcstatic.com/system/shared/common/assets/fonts/SalesforceSans/SalesforceSans-Regular.woff') format('woff'),
+    url('https://www.sfdcstatic.com/system/shared/common/assets/fonts/SalesforceSans/SalesforceSans-Regular.ttf') format('truetype');
+            }
+    </style>
+
+
+
+     
+</head>
+<body>
+    <nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" href="#">
+        <img src="../../assets/DellTech_Logo_Prm_Blue.jpg" class="d-inline-block align-top" alt="">
+    </a>
+</nav>
+<div class="navigationLink">
+                    <a href="../../index.html" target="_blank">Home</a>
+                    <a href="../page2/index.html" target="_blank" href="#" >Live Agent (In New Tab)</a>
+                    <a href="../page3/index.html" target="_blank">Resume Chat (In New Tab)</a>
+</div>    
+    <div id="prechatFormCanvas" class="new-chat" style="margin-top: 20px;">
+        <div class="row justify-content-md-center">
+                <div class="col-lg-6 col-md-8 col-sm-12 order-md-1  border rounded">
+                                <form class="needs-validation" novalidate="">
+                                        <div class="mb-3">
+                                                <label for="serviceTag" style="margin-top: 10px;">Order Number </label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" id="orderNumber">
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                              <label for="serviceTag" style="margin-top: 10px;">Order Price </label>
+                                              <div class="input-group">
+                                                  <input type="text" class="form-control" id="orderPrice">
+                                              </div>
+                                          </div> 
+                                  <hr class="mb-4">
+                                  <div class="mb-3">
+                                      <a  id="liveagent_button_online_Test" class="enabledButton btn btn-primary btn-lg btn-block"  onclick="startOrderChat()">Start New Chat</a>
+                                  </div>
+                                </form>
+                              
+                </div>
+            </div>
+        </div>
+    </div>
+   
+      <style type='text/css'>
+        .embeddedServiceHelpButton .helpButton .uiButton {
+          background-color: #007db8;
+          font-family: "Roboto Regular", sans-serif;
+        }
+        .embeddedServiceHelpButton .helpButton .uiButton:focus {
+          outline: 1px solid #007db8;
+        }
+      </style>
+      <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
+      <script type='text/javascript'>
+      function startOrderChat(){
+        let orderNumber = document.getElementById("orderNumber").value,
+        orederPrice = document.getElementById("orderPrice").value;
+        console.log(orderNumber+" and "+orederPrice);
+        var orderSnapinObject =  {
+          
+                    
+                    baseLiveAgentContentURL: 'https://c.la1-c1cs-ord.salesforceliveagent.com/content',
+                    deploymentId: '5720b000000GneC',
+                    buttonId: '573L0000000024l',
+                    baseLiveAgentURL: 'https://d.la1-c1cs-ord.salesforceliveagent.com/chat',
+                    LiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04IL00000008OLOMA2_16b1ca9ab40',                
+                    componentName: "bishav.github.io",//"CARE_Snap_In",//
+                    domainName:"localhost",
+                    organizationId: "00DL000000629BA",
+                    serviceForceURL: "https://service.force.com",
+                    snapInInitURL: 'https://dellservices--DEV3.my.salesforce.com',
+                    snapInJs: "https://service.force.com/embeddedservice/5.0/esw.min.js",
+                    snapInLAURL: 'https://dev3-dellservices.cs8.force.com/LASnapIn',
+                    orderNumber: orderNumber,
+                    orederPrice: orederPrice
+        }
+      
+        triggerOrderSnapin(orderSnapinObject);
+
+      }
+
+    function triggerOrderSnapin(orderSnapinObject){
+        var initESW = function(gslbBaseURL) {
+            embedded_svc.settings.displayHelpButton = true; //Or false
+            embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
+    
+            //embedded_svc.settings.defaultMinimizedText = '...'; //(Defaults to Chat with an Expert)
+            //embedded_svc.settings.disabledMinimizedText = '...'; //(Defaults to Agent Offline)
+    
+            //embedded_svc.settings.loadingText = ''; //(Defaults to Loading)
+            //embedded_svc.settings.storageDomain = 'yourdomain.com'; //(Sets the domain for your deployment so that visitors can navigate subdomains during a chat session)
+    
+            // Settings for Live Agent
+            //embedded_svc.settings.directToButtonRouting = function(prechatFormData) {
+                // Dynamically changes the button ID based on what the visitor enters in the pre-chat form.
+                // Returns a valid button ID.
+            //};
+            //embedded_svc.settings.prepopulatedPrechatFields = {}; //Sets the auto-population of pre-chat form fields
+            //embedded_svc.settings.fallbackRouting = []; //An array of button IDs, user IDs, or userId_buttonId
+            //embedded_svc.settings.offlineSupportMinimizedText = '...'; //(Defaults to Contact Us)
+    
+            embedded_svc.settings.enabledFeatures = ['LiveAgent'];
+            embedded_svc.settings.entryFeature = 'LiveAgent';
+            if ("language" in orderSnapinObject)
+                translatedLabels = translation(orderSnapinObject.language);
+            else
+                translatedLabels = translation("en");
+            embedded_svc.settings.language = translatedLabels.language;
+
+            embedded_svc.settings.extraPrechatFormDetails = [{
+                "label": translatedLabels.firstName,
+                "transcriptFields": ["FirstName__c"]
+            }, {
+                "label": translatedLabels.lastName,
+                "transcriptFields": ["LastName__c"]
+            }, {
+                "label": translatedLabels.primPhone,
+                "transcriptFields": ["ContactNumber__c"]
+            }, {
+                "label": translatedLabels.emailAdd,
+                "transcriptFields": ["Email__c"]
+            }, {
+                "label": "Subject",//Title
+                "transcriptFields": ["Issue__c"]
+            }, {
+                "label": "Order Number",
+                "value": orderSnapinObject.orderNumber,
+                "transcriptFields": ["Order_Number__c"]
+            }, {
+                "label": translatedLabels.issueDesc,
+                "transcriptFields": ["Description__c"]
+            }
+    ];
+    embedded_svc.settings.extraPrechatInfo = [{
+        "entityFieldMaps": [{
+            "doCreate": false,
+            "doFind": true,
+            "fieldName": "LastName",
+            "isExactMatch": true,
+            "label": translatedLabels.lastName
+        }, {
+            "doCreate": false,
+            "doFind": true,
+            "fieldName": "FirstName",
+            "isExactMatch": true,
+            "label": translatedLabels.firstName
+        }, {
+            "doCreate": false,
+            "doFind": true,
+            "fieldName": "Email",
+            "isExactMatch": true,
+            "label": translatedLabels.emailAdd
+        }, {
+            "doCreate": false,
+            "doFind": true,
+            "fieldName": "Primary_Phone__c",
+            "isExactMatch": true,
+            "label": translatedLabels.primPhone
+        }
+        ],
+        "entityName": "Contact",
+        "saveToTranscript": ""
+    }, {
+        "entityFieldMaps": [{
+            "doCreate": false,
+            "doFind": true,
+            "fieldName": "OrderNumber__c",
+            "isExactMatch": true,
+            "label": "Order Number"
+        }
+        ],
+        "entityName": "Order",
+        "saveToTranscript": "OrderNumber__c"
+    }, {
+        "entityFieldMaps": [{
+            "doCreate": false,
+            "doFind": true,
+            "fieldName": "Issue_Description__c",
+            "isExactMatch": true,
+            "label": translatedLabels.issueDesc
+        }
+        ],
+        "entityName": "Case"
+    }
+    ];
+
+            embedded_svc.init(
+                orderSnapinObject.snapInInitURL,
+                orderSnapinObject.snapInLAURL,
+                gslbBaseURL,
+                orderSnapinObject.organizationId,
+                orderSnapinObject.componentName,
+                {
+                    baseLiveAgentContentURL: orderSnapinObject.baseLiveAgentContentURL,
+                    deploymentId:  orderSnapinObject.deploymentId,
+                    buttonId: orderSnapinObject.buttonId,
+                    baseLiveAgentURL: orderSnapinObject.baseLiveAgentURL,
+                    eswLiveAgentDevName: orderSnapinObject.LiveAgentDevName,
+                    isOfflineSupportEnabled: false
+                }
+            );
+
+        };
+    
+        if (!window.embedded_svc) {
+            var s = document.createElement('script');
+            s.setAttribute('src', orderSnapinObject.snapInJs);
+            s.onload = function() {
+                initESW(null);
+            };
+            document.body.appendChild(s);
+        } else {
+            initESW(orderSnapinObject.serviceForceURL);
+        }   
+    }
+
+    
+function translation(language) {
+    if (language == "de") {
+        this.issue = "Issue";
+        this.firstName = "Vorname";
+        this.lastName = "Nachname";
+        this.emailAdd = "E-Mail";
+        this.primPhone = "Primair telefoonnummer";
+        this.issueDesc = "Probleem Beschrijving";
+        this.characters = "characters";
+        this.language = "de";
+    } else if (language == "ja") {
+        this.issue = "Issue";
+        this.firstName = "名";
+        this.lastName = "姓";
+        this.emailAdd = "メール";
+        this.primPhone = "主に使う電話番号";
+        this.issueDesc = "問題の説明";
+        this.characters = "characters";
+        this.language = "ja";
+    } else if (language == "ko") {
+        this.issue = "Issue";
+        this.firstName = "이름";
+        this.lastName = "성";
+        this.emailAdd = "이메일";
+        this.primPhone = "기본 전화 번호";
+        this.issueDesc = "문제 설명";
+        this.characters = "characters";
+        this.language = "ko";
+    } else if (language == "es") {
+        this.issue = "Issue";
+        this.firstName = "Nombre";
+        this.lastName = "Apellidos";
+        this.emailAdd = "Correo electrónico";
+        this.primPhone = "Número de teléfono primario";
+        this.issueDesc = "descripcion del problema";
+        this.characters = "characters";
+        this.language = "es";
+    } else if (language == "cn") {
+        this.issue = "Issue";
+        this.firstName = "名";
+        this.lastName = "姓";
+        this.emailAdd = "电子邮件";
+        this.primPhone = "最常用的电话号码";
+        this.issueDesc = "问题说明";
+        this.characters = "characters";
+        this.language = "zh-CN";
+    } else if (language == "pt") {
+        this.issue = "Issue";
+        this.firstName = "Nome";
+        this.lastName = "Sobrenome";
+        this.emailAdd = "Email";
+        this.primPhone = "Número de Telefone Principal";
+        this.issueDesc = "descrição do problema";
+        this.characters = "characters";
+        this.language = "pt";
+    } else if (language == "nl" || language == "nl_NL") {
+        this.issue = "Issue";
+        this.firstName = "Voornaam";
+        this.lastName = "Achternaam";
+        this.emailAdd = "E-mail";
+        this.primPhone = "Primair telefoonnummer";
+        this.issueDesc = "Probleem Beschrijving";
+        this.characters = "characters";
+        this.language = "nl";
+    } else {
+        this.issue = "Issue";
+        this.firstName = "First Name";
+        this.lastName = "Last Name";
+        this.emailAdd = "Email Address";
+        this.primPhone = "Primary Phone Number";
+        this.issueDesc = "Issue Description";
+        this.characters = "characters";
+        this.language = "en";
+    }
+    console.log("Language = " + this.language);
+    return this;
+}
+
+       
+    </script>
+</body>
+</html>

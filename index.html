@@ -115,7 +115,8 @@
     <script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>
     <script src="https://getbootstrap.com/docs/4.0/dist/js/bootstrap.min.js"></script>
    <!--  <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>-->
-   <script src="mainChat.js"></script>
+    <script src="mainChat.js"></script>
+   <!--  <script src="mainChatPrePerf.js"></script>-->
     <!--  <script src="mainChatPrePerf.js"></script>-->
     <!--<script src="sfdccore.js"></script>-->
      
@@ -232,15 +233,15 @@
                    // summeryErrormsg:preChatModel.SummeryErrormsg,
                   //  issueDescriptionMaxCharValidation:preChatModel.IssueDetailMaxCharValidationMsg,
                       customerPrivacyDesc:"\u003cb\u003eYour privacy is important to us.\u003c/b\u003e We will only use your information to process your request. We will not share it with anyone. To learn more about how we use and protect your data, see the \u003ca target=\u0027_blank\u0027 href=\u0027//www.dell.com/learn/policies-privacy\u0027\u003eDell Privacy Statement.\u003c/a\u003e",
-                  //  firstNameValidation:preChatModel.FirstNameValidation,
-                  //  lastNameValidation:preChatModel.LastNameValidation,
-                  //  emailRequiredValidation:preChatModel.EmailRequiredValidation,
                       emailValidation:"Invalid Email Validation",
-                //    phoneRequiredValidation:preChatModel.PhoneRequiredValidation,
+                      firstNameValidation: "First name required",
+                      lastNameValidation:"Last name required",
+                      emailRequiredValidation:"Email name required",
+                      phoneRequiredValidation:"Phone name required",
+                      issueDescriptionValidation:"Descritpion name required",
                  //   phoneValidation:preChatModel.PhoneValidation,
-                 //   issueDescriptionValidation:preChatModel.IssueDetailValidation,
                  //   severityValidation:preChatModel.SeverityValidation,
-                 //   chatUnavailableMessage:preChatModel.ChatUnavailableMessage,
+                      chatUnavailableMessage:"Sorry, no agents are available at this moment.",
                       chatHeader:"Chat Now",
 
                 //    serialNumber:preChatModel.LblSerialNumber,
@@ -295,12 +296,12 @@
                // var widgetSizeVal = detectScreen();
                 var snapInObject = {
                    language: language.options[language.selectedIndex].value,
-                  /* firstName:"Bishav",
+                   firstName:"Bishav",
                    lastName: "Rajbhandari",
                    email:"bnr@dell.com",
                    phoneNo:"1234567",
                    issueDescription:"Description Test",
-                   */
+                   
                    // widgetSize: widgetSizeVal,
                     serviceTag: serviceTag,
                     issueVal: issueVal,
@@ -311,7 +312,7 @@
                    // domainName:"localhost",
 
                     //Dev1
-                 /*   customernumber: "2701",
+  /*                 customernumber: "2701",
                     domainName:"localhost",//"bishav.github.io",//
                     baseLiveAgentContentURL: 'https://c.la4-c2cs-phx.salesforceliveagent.com/content',
 				    deploymentId: '572Z000000000KC',
@@ -345,16 +346,32 @@
 
  
 
- */
-      //DEV2      
+ 
+//SIT4
+//////
+                    baseLiveAgentContentURL: 'https://c.la2-c1cs-ord.salesforceliveagent.com/content',
+                    deploymentId: '5720b000000GneC',
+                    buttonId: '5730b000000CbhT',
+                    baseLiveAgentURL: 'https://d.la2-c1cs-ord.salesforceliveagent.com/chat',
+                    LiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I0b000000blJJEAY_16520d15b68',               
+                    componentName: "Snap_Ins_Chat_Deployment",
+                    domainName:"localhost",//"bishav.github.io",//
+                    organizationId: "00D0x0000000jC2",
+                    serviceForceURL: "https://service.force.com",
+                    snapInInitURL: 'https://dellservices--SIT4.my.salesforce.com',
+                    snapInJs: "https://service.force.com/embeddedservice/5.0/esw.min.js",
+                    snapInLAURL: 'https://sit4-dellservices.cs95.force.com/LASnapIn',
 
+*/
+
+      //DEV2      
                     baseLiveAgentContentURL: 'https://c.la2-c2cs-iad.salesforceliveagent.com/content',
                     deploymentId: '5720b000000GneC',
                     buttonId: '5730b000000CbhT',//'5730b0000008PZv',//
                     baseLiveAgentURL: 'https://d.la2-c2cs-iad.salesforceliveagent.com/chat',
                     LiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I0b000000blJJEAY_16520d15b68',                
                     componentName: "Snap_Ins_Chat_Deployment",
-                    domainName:"bishav.github.io",//"localhost",//
+                    domainName:"localhost",//"bishav.github.io",//
                     organizationId: "00D2a0000008e0t",
                     serviceForceURL: "https://service.force.com",
                     snapInInitURL: 'https://dellservices--DEV2.my.salesforce.com',
@@ -362,20 +379,8 @@
                     snapInJs: "https://service.force.com/embeddedservice/5.0/esw.min.js",
                     snapInLAURL: 'https://dev2-dellservices.cs47.force.com/LASnapIn',
                
-/*
-  
-                
-                    LiveAgentDevName: "EmbeddedServiceLiveAgent_Parent04I0b000000blJJEAY_16520d15b68",
-                    baseLiveAgentContentURL: "https://c.la3-c2cs-dfw.salesforceliveagent.com/content",
-                    baseLiveAgentURL: "https://d.la3-c2cs-dfw.salesforceliveagent.com/chat",
-                    componentName: "Snap_Ins_Chat_Deployment",
-                    deploymentId: "5720b000000GneC",
-                    organizationId: "00D0j0000008fNw",
-                    serviceForceURL: "https://service.force.com",
-                    snapInInitURL: "https://dellservices--SIT4.my.salesforce.com",
-                    snapInJs: "https://dellservices--SIT4.my.salesforce.com/embeddedservice/5.0/esw.min.js",
-                    snapInLAURL: "https://sit4-dellservices.cs53.force.com/LASnapIn",
- 
+
+ /*
 
 
                     LiveAgentDevName: "EmbeddedServiceLiveAgent_Parent04IZ00000008OIKMA2_1647fbd242d",
@@ -441,15 +446,15 @@ snapInLAURL: 'https://chat-dellservices.cs95.force.com/LASnapIn',
                    // summeryErrormsg:preChatModel.SummeryErrormsg,
                   //  issueDescriptionMaxCharValidation:preChatModel.IssueDetailMaxCharValidationMsg,
                       customerPrivacyDesc:"\u003cb\u003eBisahv Your privacy is important to us.\u003c/b\u003e We will only use your information to process your request. We will not share it with anyone. To learn more about how we use and protect your data, see the \u003ca target=\u0027_blank\u0027 href=\u0027//www.dell.com/learn/policies-privacy\u0027\u003eDell Privacy Statement.\u003c/a\u003e",
-                  //  firstNameValidation:preChatModel.FirstNameValidation,
-                  //  lastNameValidation:preChatModel.LastNameValidation,
-                  //  emailRequiredValidation:preChatModel.EmailRequiredValidation,
-                 //   emailValidation:preChatModel.EmailValidation,
-                //    phoneRequiredValidation:preChatModel.PhoneRequiredValidation,
+                      emailValidation:"Invalid Email Validation",
+                      firstNameValidation: "First name required",
+                      lastNameValidation:"Last name required",
+                      emailRequiredValidation:"Email name required",
+                      phoneRequiredValidation:"Phone name required",
+                      issueDescriptionValidation:"Descritpion name required",
                  //   phoneValidation:preChatModel.PhoneValidation,
-                 //   issueDescriptionValidation:preChatModel.IssueDetailValidation,
                  //   severityValidation:preChatModel.SeverityValidation,
-                 //   chatUnavailableMessage:preChatModel.ChatUnavailableMessage,
+                      chatUnavailableMessage:"Sorry, no agents are available at this moment.",
                 //    chatHeader:preChatModel.ChatHeader,
 
                 //    serialNumber:preChatModel.LblSerialNumber,
