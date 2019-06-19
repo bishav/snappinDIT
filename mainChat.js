@@ -26,6 +26,10 @@ var coveoHeader = "", isCoveoSearchEnabled = false;
 
         head.appendChild(style);
     }
+
+    if ( typeof NodeList.prototype.forEach === "function" ) return false;
+    NodeList.prototype.forEach = Array.prototype.forEach;
+
 })();
 
 function hideDomObject(eleSelector, findingEle) {
@@ -108,7 +112,7 @@ function appendCustPreChatSnapinDom(snapInObject, preChatlableObject) {
     } else {
         //BNR
         let snapinExists = document.querySelector(".embeddedServiceSidebar");
-        if(!snapinExists || (snapinExists &&window.getComputedStyle(snapinExists).display == 'none'))
+        if(!snapinExists || (snapinExists && window.getComputedStyle(snapinExists).display == 'none'))
             maximizeCustPrechat();
         //document.getElementById("cusPreChatSnapinDom").style.display = 'block';
         if (document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton').className != "uiButton helpButtonEnabled")
@@ -590,6 +594,7 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
 
     embedded_svc.settings.enabledFeatures = ['LiveAgent'];
     embedded_svc.settings.entryFeature = 'LiveAgent';
+    
     if ("language" in snapInObject)
         translatedLabels = translation(snapInObject.language);
     else
@@ -672,7 +677,7 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
         "entityName": "Case"
     }
     ];
-
+    
     var firstNameVal = null,
         lastNameVal = null,
         emailAddVal = null,
@@ -902,6 +907,21 @@ function chatStarted(eleSelector, findingEle, snapInObject) {
         function changePrechatValues(snapInObject, callback) {
             let state = embedded_svc.sidebarInstanceMap[Object.keys(embedded_svc.sidebarInstanceMap)[0]].getActiveState();
             let prechatFields = state.get("v.prechatFields");
+            //BNR Language POC [START]
+            prechatFields.forEach(function (prechatField) {
+                if (prechatField.name === "FirstName") {
+                    prechatField.value = snapInObject.c_firstName
+                } else if (prechatField.name === "LastName") {
+                    prechatField.value = snapInObject.c_lastName
+                } else if (prechatField.name === "Email") {
+                    prechatField.value = snapInObject.c_email
+                } else if (prechatField.name === "Primary_Phone__c") {
+                    prechatField.value = snapInObject.c_phoneNo
+                } else if (prechatField.name === "Issue_Description__c") {
+                    prechatField.value = snapInObject.c_issueDescription
+                }
+            });
+            /*
             prechatFields.forEach(function (prechatField) {
                 if (prechatField.label === "First Name") {
                     prechatField.value = snapInObject.c_firstName
@@ -915,6 +935,8 @@ function chatStarted(eleSelector, findingEle, snapInObject) {
                     prechatField.value = snapInObject.c_issueDescription
                 }
             });
+            */
+           //BNR Language POC [END]
             state.set("v.prechatFields", prechatFields);
             callback();
         }
@@ -987,7 +1009,16 @@ function translation(language) {
         this.issueDesc = "Probleem Beschrijving";
         this.characters = "characters";
         this.language = "nl";
-    } else {
+    } else if (language == "fr") {
+        this.issue = "Issue";
+        this.firstName = "Prénom";
+        this.lastName = "Nom";
+        this.emailAdd = "Adresse e-mail";
+        this.primPhone = "Numéro de téléphone principal";
+        this.issueDesc = "Description du problème";
+        this.characters = "characters"
+        this.language = "fr";
+    }else {
         this.issue = "Issue";
         this.firstName = "First Name";
         this.lastName = "Last Name";
