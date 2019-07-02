@@ -27,8 +27,8 @@ var coveoHeader = "", isCoveoSearchEnabled = false, isPCFCall = false;
         head.appendChild(style);
     }
 
-    if (typeof NodeList.prototype.forEach === "function") return false;
-    NodeList.prototype.forEach = Array.prototype.forEach;
+    //if (typeof NodeList.prototype.forEach === "function") return false;
+    //NodeList.prototype.forEach = Array.prototype.forEach;
 
 })();
 
