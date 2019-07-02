@@ -90,18 +90,21 @@
       <script type='text/javascript'>
       function startOrderChat(){
         let orderNumber = document.getElementById("orderNumber").value,
-        BUID = document.getElementById("BUID").value;
-        if(document.getElementById('amer').checked && document.getElementById("orderNumber").value && document.getElementById("orderPrice").value && document.getElementById("orderPrice").value > 200)
-            alert("Working");
+        BUID = document.getElementById("BUID").value,
+        buttonId;
+        if(document.getElementById('amer').checked && document.getElementById("orderNumber").value && document.getElementById("orderPrice").value && document.getElementById("orderPrice").value > 200){
+            console.log("Send 2 button");
+            buttonId : {'573L0000000024l','573L0000000024l'};
+        }
 
         var orderSnapinObject =  {
                     BUID: BUID,
                     orderNumber: orderNumber,
-                    firstName:"Bishav",
-                    lastName:"Rajbhandari",
-                    emailAddress:"bishav.n.r@gmail.com",
-                    phoneNumber:"889231424565",
-                    issueDescription:"This is a test",
+                   // firstName:"Bishav",
+                  //  lastName:"Rajbhandari",
+                  //  emailAddress:"bishav.n.r@gmail.com",
+                 //   phoneNumber:"889231424565",
+                 //   issueDescription:"This is a test",
 
 
                    
@@ -411,7 +414,17 @@
             );
 
         };
-    
+        
+        embedded_svc.settings.directToButtonRouting = function(prechatFormData) {
+            if (prechatFormData[5].value === "America"){
+                //embedded_svc.settings.fallbackRouting = ["573L00000000255", "573L0000000024q"];
+                //return "573L00000000250"
+                //573L0000000024l
+                return "573L0000000024q";
+            }  
+        }
+        
+
         if (!window.embedded_svc) {
             var s = document.createElement('script');
             s.setAttribute('src', orderSnapinObject.snapInJs);

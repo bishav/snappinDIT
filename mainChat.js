@@ -1,5 +1,5 @@
 ﻿var snapinChatGlobalIssueType, snapinChatGlobalServiceTag, snapinChatGlobalProductName = null, snapInCurrentPage = null, trackevent = true;
-var coveoHeader = "", isCoveoSearchEnabled = false;
+var coveoHeader = "", isCoveoSearchEnabled = false, isPCFCall = false;
 
 (function () {
     var initESW;
@@ -70,11 +70,14 @@ function triggerSnapin(snapInObject, preChatlableObject) {
         } else if (snapInObject) {
             if (!snapInObject.snapinButtonClicked) {
                 eleExist('.embeddedServiceHelpButton', hideDomObject);
-                eleExist('.embeddedServiceSidebar', hideDomObject);
+                //eleExist('.embeddedServiceSidebar', hideDomObject);
+                eleExist('.modalContainer  .dockableContainer .sidebarBody .activeFeature .featureBody .embeddedServiceSidebarState .prechatUI', hideDomObject);
                 saveGlobalSnapinObjToSession(snapInObject);
                 eleExist('.helpButtonEnabled #helpButtonSpan > .message', chatClick);
-                if (document.getElementById('cusPreChatSnapinDom'))
+                if (document.getElementById('cusPreChatSnapinDom')){
                     custPreChatShowAdditionalDetailsInUi(snapInObject, preChatlableObject);
+                }
+                    
                 initSnapIn(snapInObject);
             } else if (customChatNotCreated()) {
                 snapInObject = sendGlobalSnapinObjToJson();
@@ -94,7 +97,6 @@ function customChatNotCreated() {
 }
 function appendCustPreChatSnapinDom(snapInObject, preChatlableObject) {
     if (!document.getElementById('cusPreChatSnapinDom')) {
-        //BNR
         let domEle = '<div id="cusPreChatSnapinDom" class="cusPreChat-modalContainer"> <div class="cusPreChat-dockableContainer"> <div class="cusPreChat-embeddedServiceSidebarHeader"> <div class="cusPreChat-shortHeader"> <div class="cusPreChat-shortHeaderContent"> <button id="cusPreChat-minimize-btn" class="cusPreChat-minimizeButton cusPreChat-headerItem"> <span class="cusPreChat-assistiveText">Minimize chat</span> <span class="cusPreChat-minimize cusPreChat-x-small cusPreChat-embeddedServiceIcon"> <svg focusable="false" aria-hidden="true" data-key="contract_alt" viewBox="0 0 100 100"> <path d="M56.923 45.962h29.615c1.924 0 2.5-2.116.962-3.654l-9.423-9.616 17.308-17.5c.96-.96.96-2.692 0-3.654L88.27 4.423c-.962-.77-2.5-.77-3.655.192L67.308 21.923 57.5 12.5c-1.538-1.538-3.654-.962-3.654.962v29.615c0 1.346 1.73 2.885 3.077 2.885zm-13.846 7.884H13.462c-1.924 0-2.5 2.116-.962 3.654l9.423 9.615-17.308 17.5c-.96.962-.96 2.693 0 3.654l7.116 7.115c.962.96 2.5.96 3.655 0l17.5-17.5 9.807 9.423c1.346 1.73 3.462 1.154 3.462-.77V57.115c0-1.346-1.73-3.27-3.077-3.27z"> </path> </svg> </span> </button> <h2 class="cusPreChat-headerText"> <div class="cusPreChat-headerTextContent"> <span id="cusPreChat-headerTextLabel">' + preChatlableObject.chatHeader + '</span> <span id="cusPreChat-headerSubtext"> </span></div></h2> <button id="cusPreChat-close-btn" class="cusPreChat-closeButton cusPreChat-headerItem"> <span class="cusPreChat-assistiveText">Close chat</span> <span class="cusPreChat-x-small cusPreChat-embeddedServiceIcon"> <svg focusable="false" aria-hidden="true" data-key="close" viewBox="0 0 100 100"> <path d="M65.577 53.73l27.5-27.71c1.27-1.27 1.27-3.174 0-4.445l-4.23-4.44c-1.272-1.27-3.175-1.27-4.445 0L56.694 44.847c-.847.845-2.115.845-2.96 0L26.018 16.922c-1.27-1.27-3.174-1.27-4.445 0l-4.44 4.442c-1.27 1.27-1.27 3.174 0 4.444l27.71 27.71c.846.846.846 2.116 0 2.962L16.923 84.403c-1.27 1.27-1.27 3.174 0 4.444l4.442 4.442c1.27 1.268 3.174 1.268 4.444 0l27.71-27.713c.846-.847 2.116-.847 2.962 0L84.19 93.29c1.27 1.268 3.174 1.268 4.445 0l4.44-4.445c1.27-1.268 1.27-3.17 0-4.44l-27.5-27.712c-.847-.847-.847-2.115 0-2.96z"> </path> </svg> </span> </button> </div></div></div><div class="cusPreChat-sidebarBody"> <div id="cusPreChat-sidebarLoadingIndicator" class="cusPreChat-sidebarLoadingIndicator" style="display: none;"> <div class="cusPreChat-loadingBallContainer cusPreChat-animated cusPreChat-embeddedServiceLoadingBalls"> <span class="cusPreChat-loadingBall cusPreChat-first"> </span> <span class="cusPreChat-loadingBall cusPreChat-second"> </span> <span class="cusPreChat-loadingBall cusPreChat-third"> </span></div></div><div id="cusPreChat-alertMsgContainer" class="cusPreChat-sidebarLoadingIndicator" style="display: none;"><div style="margin: 2.5em 1.75em;">' + preChatlableObject.chatUnavailableMessage + '</div><div><button id="cusPreChat-CloseChat" class="cusPreChat-embeddedServiceSidebarButton" type="button"><span class="cusPreChat-label cusPreChat-bBody">Close Chat</span></button></div></div><div id="cusPreChat-hideWhileLoading" class="cusPreChat-activeFeature cusPreChat-hideWhileLoading"> <div class="cusPreChat-featureBody cusPreChat-embeddedServiceSidebarFeature"> <div class="cusPreChat-stateBody cusPreChat-embeddedServiceSidebarState"> <div class="cusPreChat-prechatUI cusPreChat-embeddedServiceLiveAgentStatePrechatDefaultUI"> <div class="cusPreChat-formContent cusPreChat-embeddedServiceSidebarForm"> <ul class="cusPreChat-fieldList"> <div id="readonlyPreChatContainer" class="cusPreChat-readonlyContainer" style="margin: 0 1.5em 6px 1.5em; text-align: left;position: relative;font-size: .75em;color: #444444;"> <div style="font-size: 1.2em;">Precision M4500</div><div> <b>' + preChatlableObject.serviceTag + ':</b> 123432</div><div> <b>' + preChatlableObject.issueType + ':</b> Keyboard not working</div></div><li class="cusPreChat-inputSplitName cusPreChat-embeddedServiceSidebarFormField"> <span class="cusPreChat-split-field-container"> <div class="cusPreChat-uiInput cusPreChat-uiInputText cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel"> <span class="">' + preChatlableObject.firstName + '</span></label> <input id="cusPreChat-FirstName" class="cusPreChat-FirstName form-control cusPreChat-input" maxlength="121" type="text" aria-describedby="" placeholder="" required="" aria-required="true"></div></span> </li><li class="cusPreChat-inputSplitName cusPreChat-embeddedServiceSidebarFormField"> <span class="cusPreChat-split-field-container"> <div class="cusPreChat-uiInput cusPreChat-uiInputText cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="LastName"> <span class="">' + preChatlableObject.lastName + '</span> </label> <input id="cusPreChat-LastName" class="cusPreChat-LastName form-control cusPreChat-input" maxlength="121" type="text" aria-describedby="" placeholder="" required="" aria-required="true"></div></span> </li><li class="cusPreChat-inputEmail cusPreChat-embeddedServiceSidebarFormField"> <div class="cusPreChat-uiInput cusPreChat-uiInputEmail cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="Email"> <span>' + preChatlableObject.emailAddress + '</span></label> <input id="cusPreChat-Email" class="cusPreChat-Email form-control cusPreChat-input" maxlength="80" type="email" aria-describedby="" placeholder="" required="" aria-required="true"></div></li><li class="cusPreChat-inputPhone cusPreChat-embeddedServiceSidebarFormField"> <div class="cusPreChat-uiInput cusPreChat-uiInputPhone cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="Primary_Phone__c"> <span>' + preChatlableObject.phoneNumber + '</span> </label> <input id="cusPreChat-Phone" class="cusPreChat-Primary_Phone__c form-control cusPreChat-input" maxlength="40" type="tel" aria-describedby="" placeholder="" required="" aria-required="true"></div></li><li class="cusPreChat-inputText cusPreChat-embeddedServiceSidebarFormField"> <div class="cusPreChat-uiInput cusPreChat-uiInputText cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="Issue_Description__c"> <span>' + preChatlableObject.issueDescription + '</span> </label> <textarea id="cusPreChat-IssueDescription" class="cusPreChat-Issue_Description__c form-control cusPreChat-input coveo-query" maxlength="' + preChatlableObject.issueDescriptionLength + '" type="text" aria-describedby="" placeholder="" required="" data-coveo-id="txtIssueDetails"></textarea><div id="snappinCharCounter" style="text-align:right;position:relative;font-size:.75em;line-height: 1.5;margin-right: .75em;margin-left: .5em;margin-top: 8px; float: right; color:#767676">0 / ' + preChatlableObject.issueDescriptionLength + ' ' + preChatlableObject.characters + '</div></div></li></ul>  <div id="PrechatCoveo" style="display:none;"></div> <div style="font-size: 12px;color:#767676;text-align: left;margin: 2.5em 1.75em; font-style: italic;color:#444444;">' + preChatlableObject.customerPrivacyDesc + '</div></div><div class="cusPreChat-buttonWrapper cusPreChat-embeddedServiceSidebarForm"> <button id="cusPreChat-startChat" class="cusPreChat-startButton cusPreChat-uiButton--default cusPreChat-uiButton cusPreChat-embeddedServiceSidebarButton" type="button"> <span class="cusPreChat-label cusPreChat-bBody">' + preChatlableObject.startChat + '</span> </button></div></div></div></div></div></div></div></div><div id="cusPreChat-embeddedServiceHelpButton" class="cusPreChat-embeddedServiceHelpButton" style="display: none;"> <div class="cusPreChat-helpButton" style="width: 168px;"> <button id="cusPreChat-helpButtonEnabled" class="cusPreChat-uiButton cusPreChat-helpButtonEnabled" href="javascript:void(0)" > <span class="cusPreChat-embeddedServiceIcon" aria-hidden="true" style="display: inline-block; z-index: 1; float: left"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="chat" width="100%" height="100%" style="height: 18px; width: 18px;"> <path d="M12 1.8C5.9 1.8 1 6.4 1 12c0 1.7.5 3.4 1.3 4.8.1.3.2.6.1.8l-1.4 4c-.2.3.2.6.6.6l3.9-1.6c.3-.1.5 0 .8.1 1.7.9 3.7 1.5 5.8 1.5 6 0 11-4.5 11-10.2C23 6.4 18.1 1.8 12 1.8zm-5.5 12c-1.1 0-1.9-.8-1.9-1.8s.8-1.8 1.9-1.8 1.8.8 1.8 1.8-.8 1.8-1.8 1.8zm5.5 0c-1 0-1.8-.8-1.8-1.8s.8-1.8 1.8-1.8 1.8.8 1.8 1.8-.8 1.8-1.8 1.8zm5.5 0c-1 0-1.8-.8-1.8-1.8s.8-1.8 1.8-1.8 1.9.8 1.9 1.8-.8 1.8-1.9 1.8z"></path> </svg> </span> <div class="cusPreChat-helpButtonLabel" id="cusPreChat-helpButtonSpan" aria-live="polite" aria-atomic="true"> <span class="cusPreChat-assistiveText">Live chat:</span> <span class="cusPreChat-message">' + preChatlableObject.chatHeader + '</span></div></button> </div></div>';
         let body = document.body || document.getElementsByTagName('body')[0];
         body.insertAdjacentHTML('beforeend', domEle);
@@ -107,18 +109,27 @@ function appendCustPreChatSnapinDom(snapInObject, preChatlableObject) {
         document.getElementById("cusPreChat-close-btn").addEventListener("click", function () { closeCustPrechat(preChatlableObject) });
         document.getElementById("cusPreChat-helpButtonEnabled").addEventListener("click", maximizeCustPrechat);
 
+        if (typeof snapInObject.isPCFCall !== "undefined" && snapInObject.isPCFCall) {
+            isPCFCall = snapInObject.isPCFCall;
+        }
+
         if (snapInObject.isCoveoSearchEnabled === true) {
-            httpCoveoGetAsync(snapInObject.coveoViewUrl + "?isheaderRequired=false", apendToAHoverDiv);
+            httpCoveoGetAsync(snapInObject.coveoViewUrl + "?isheaderRequired=false", apendToAHoverDiv);          
             coveoInit(snapInObject, preChatlableObject);
+            
         }
     } else {
-        //BNR
-        let snapinExists = document.querySelector(".embeddedServiceSidebar");
-        if (!snapinExists || (snapinExists && window.getComputedStyle(snapinExists).display == 'none'))
+        let snapinExists = document.querySelector(".embeddedServiceSidebar"),
+        custPrechatForm = document.getElementById("cusPreChatSnapinDom");
+        if ((!snapinExists || (snapinExists && window.getComputedStyle(snapinExists).display == 'none')) && window.getComputedStyle(custPrechatForm).display == 'none'){
             maximizeCustPrechat();
+        }
+            
         //document.getElementById("cusPreChatSnapinDom").style.display = 'block';
-        if (document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton').className != "uiButton helpButtonEnabled")
-            agentsOfflinePostChatForm();
+        if (document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton').className != "uiButton helpButtonEnabled"){
+             agentsOfflinePostChatForm();
+        }
+           
 
     }
     callDellmetricsTrack("890.220.010");
@@ -184,7 +195,7 @@ function coveoInit(snapInObject, preChatlableObject) {
                     }
                 });
 
-            }, 1000);
+            }, 2000);
         }
     } catch (e) {
         console.log("Error in: " + e);
@@ -197,7 +208,27 @@ function GetCoveoPopoverResult(timeout) {
 
     var textLength = $('#cusPreChat-IssueDescription').val().length;
 
-    if (isCoveoSearchEnabled === true && textLength > 1 && $('#search').hasClass('coveo-hidden') === false && $('#search').find('div.CoveoResult').length !== 0) {
+    if (isPCFCall === true && isCoveoSearchEnabled === true && textLength > 1 && $('#searchcoveoview').hasClass('coveo-hidden') === false && $('#searchcoveoview').find('div.CoveoResult').length !== 0) {
+        setTimeout(function () {
+            $('#cusPreChat-IssueDescription').popover(
+                {
+                    html: true,
+                    container: 'body',
+                    template: '<div class="popover popoverPosition" id="prechatCoveoPopover" role="tooltip">' + '<div class="arrow"></div>' + '<h3 class="popover-header"></h3>' + '<div class="popover-body"></div></div>',
+                    title: function () {
+                        return "<b>" + coveoHeader + "</b><a href='#' class='close' data-dismiss='alert'>&times;</a>"
+                    },
+                    content: function () {
+                        return $('#searchCoveo').html()
+                    },
+                });
+            $(document).on("click", ".popover .close", function () {
+                $(this).parents(".popover").popover('hide');
+            });
+            $('#cusPreChat-IssueDescription').popover("show");
+        }, timeout);// delay is required to snyc up with result.           
+    }
+    else if (isCoveoSearchEnabled === true && textLength > 1 && $('#search').hasClass('coveo-hidden') === false && $('#search').find('div.CoveoResult').length !== 0) {
 
         setTimeout(function () {
             $('#cusPreChat-IssueDescription').popover(
@@ -218,9 +249,19 @@ function GetCoveoPopoverResult(timeout) {
         }, timeout);// delay is required to snyc up with result.           
     }
     else {
-        $('#cusPreChat-IssueDescription').popover('destroy');
+        CoveoPopoverDispose();
     }
 }
+
+function CoveoPopoverDispose() {
+    if (isCoveoSearchEnabled === true) {
+        if (!isPCFCall)
+            $('#cusPreChat-IssueDescription').popover('destroy');
+        else
+            $('#cusPreChat-IssueDescription').popover('dispose');
+    }
+}
+
 //Coveo Get code[END]
 function prePopulateCustPreFormValues(snapInObject) {
     if ("firstName" in snapInObject)
@@ -449,7 +490,7 @@ function minimizeCustPrechat() {
     document.getElementById("cusPreChat-embeddedServiceHelpButton").style.display = 'block';
     document.getElementById("cusPreChatSnapinDom").style.display = 'none';
 
-    $('#cusPreChat-IssueDescription').popover('destroy');
+    CoveoPopoverDispose();
 }
 function closeCustPrechat(preChatlableObject) {
     //minimizeCustPrechat();
@@ -461,13 +502,13 @@ function closeCustPrechat(preChatlableObject) {
     removecustFormValues();
     custPreFormShowIssueDetailsCharRemaining(preChatlableObject);
 
-    $('#cusPreChat-IssueDescription').popover('destroy');
+    CoveoPopoverDispose();
 }
 function maximizeCustPrechat() {
     //BNR
     if ((document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton') && document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton').className != "uiButton helpButtonEnabled") || (!document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton'))) {
         agentsOfflinePostChatForm();
-    } else {
+    } else{
         document.getElementById("cusPreChat-sidebarLoadingIndicator").style.display = 'none';
         document.getElementById("cusPreChat-hideWhileLoading").style.display = 'block';
         document.getElementById("cusPreChat-embeddedServiceHelpButton").style.display = 'none';
@@ -490,7 +531,7 @@ function removecustFormValues() {
     inputFields = document.querySelectorAll(".cusPreChat-input");
     inputFields.forEach(function (inputField) {
         if (inputField.value)
-            inputField.value = null;
+            inputField.value = "";
     });
     prePopulateCustPreFormValues(snapInObject);
 }
@@ -577,13 +618,14 @@ function custPrechatInitiateChat(snapInObject, preChatlableObject) {
         loadingSnapinQueue();
         //console.log("BNR-4");
         removecustFormValues();
+        custPreFormShowIssueDetailsCharRemaining(preChatlableObject);
         snapInObject = sendGlobalSnapinObjToJson();
         if ("snapinChatInitiated" in snapInObject && snapInObject.snapinChatInitiated)
             eleExistWithVariable('.helpButtonEnabled #helpButtonSpan > .message', chatClick);
         eleExistWithVariable('.embeddedServiceSidebar .startButton', chatStarted, snapInObject);
     }
 
-    $('#cusPreChat-IssueDescription').popover('destroy');
+    CoveoPopoverDispose();
 }
 
 function initOriginalESW(gslbBaseURL, snapInObject) {
@@ -952,124 +994,124 @@ function translation(lang) {
     language = language.toLowerCase();
     this.primPhone = "Primary Phone Number";
     this.issueDesc = "Issue Description";
-if (language == "de") {
-    this.firstName = "Vorname";
-    this.lastName = "Nachname";
-    this.emailAdd = "E-Mail";
-    this.primPhone = "Primair telefoonnummer";
-    this.issueDesc = "Probleem Beschrijving";
-    this.language = "de";
-} else if (language == "ja") {
-    this.firstName = "名";
-    this.lastName = "姓";
-    this.emailAdd = "メール";
-    this.primPhone = "主に使う電話番号";
-    this.issueDesc = "問題の説明";
-    this.language = "ja";
-} else if (language == "ko") {
-    this.firstName = "이름";
-    this.lastName = "성";
-    this.emailAdd = "이메일";
-    this.primPhone = "기본 전화 번호";
-    this.issueDesc = "문제 설명";
-    this.language = "ko";
-} else if (language == "es") {
-    this.firstName = "Nombre";
-    this.lastName = "Apellidos";
-    this.emailAdd = "Correo electrónico";
-    this.primPhone = "Número de teléfono primario";
-    this.issueDesc = "descripcion del problema";
-    this.language = "es";
-} else if (language == "cn" || language == "zh-cn" ) {
-    this.firstName = "名";
-    this.lastName = "姓";
-    this.emailAdd = "电子邮件";
-    this.primPhone = "最常用的电话号码";
-    this.issueDesc = "问题说明";
-    this.language = "zh-CN";
-} else if (language == "zh-tw") {
-    this.firstName = "名字";
-    this.lastName = "姓氏";
-    this.emailAdd = "電子郵件";
-    this.language = "zh-TW";
-} else if (language == "pt") {
-    this.firstName = "Nome";
-    this.lastName = "Sobrenome";
-    this.emailAdd = "Email";
-    this.primPhone = "Número de Telefone Principal";
-    this.issueDesc = "descrição do problema";
-    this.language = "pt";
-} else if (language == "pt-br") {
-    this.firstName = "Nome";
-    this.lastName = "Sobrenome";
-    this.emailAdd = "Email";
-    this.primPhone = "Número de Telefone Principal";
-    this.issueDesc = "descrição do problema";
-    this.language = "pt-br";
-}else if (language == "nl" || language == "nl-nl") {
-    this.firstName = "Voornaam",this.lastName = "Achternaam",
-    this.emailAdd = "E-mail";
-    this.primPhone = "Primair telefoonnummer";
-    this.issueDesc = "Probleem Beschrijving";
-    this.language = "nl";
-} else if (language == "fr") {
-    this.firstName = "Prénom";
-    this.lastName = "Nom";
-    this.emailAdd = "Adresse e-mail";
-    this.language = "fr";
-}else if (language == "da") {
-    this.firstName = "Fornavn";
-    this.lastName = "Efternavn";
-    this.emailAdd = "Mail";
-    this.language = "da";
-}else if (language == "fi") {
-    this.firstName = "Etunimi";
-    this.lastName = "Sukunimi";
-    this.emailAdd = "Sähköposti";
-    this.language = "fi";
-}else if (language == "it") {
-    this.firstName = "Nome";
-    this.lastName = "Cognome";
-    this.emailAdd = "Email";
-    this.language = "it";
-}else if (language == "no") {
-    this.firstName = "Fornavn";
-    this.lastName = "Etternavn";
-    this.emailAdd = "E-post";
-    this.language = "no";
-}else if (language == "ru") {
-    this.firstName = "Имя";
-    this.lastName = "Фамилия";
-    this.emailAdd = "Эл. почта";
-    this.language = "ru";
-}else if (language == "sv") {
-    this.firstName = "Förnamn";
-    this.lastName = "Efternamn";
-    this.emailAdd = "E-post";
-    this.language = "sv";
-}else if (language == "th") {
-    this.firstName = "ชื่อจริง";
-    this.lastName = "นามสกุล";
-    this.emailAdd = "อีเมล";
-    this.language = "th";
-}else if (language == "pl") {
-    this.firstName = "Imię";
-    this.lastName = "Nazwisko";
-    this.emailAdd = "E-mail";
-    this.language = "pl";
-}else if (language == "sk") {
-    this.firstName = "Meno";
-    this.lastName = "Priezvisko";
-    this.emailAdd = "E-mail";
-    this.language = "sk";
-}else {
-    this.firstName = "First Name";
-    this.lastName = "Last Name";
-    this.emailAdd = "Email Address";
-    this.language = "en";
-}
-console.log("Language = " + this.language);
-return this;
+    if (language == "de") {
+        this.firstName = "Vorname";
+        this.lastName = "Nachname";
+        this.emailAdd = "E-Mail";
+        this.primPhone = "Primair telefoonnummer";
+        this.issueDesc = "Probleem Beschrijving";
+        this.language = "de";
+    } else if (language == "ja") {
+        this.firstName = "名";
+        this.lastName = "姓";
+        this.emailAdd = "メール";
+        this.primPhone = "主に使う電話番号";
+        this.issueDesc = "問題の説明";
+        this.language = "ja";
+    } else if (language == "ko") {
+        this.firstName = "이름";
+        this.lastName = "성";
+        this.emailAdd = "이메일";
+        this.primPhone = "기본 전화 번호";
+        this.issueDesc = "문제 설명";
+        this.language = "ko";
+    } else if (language == "es") {
+        this.firstName = "Nombre";
+        this.lastName = "Apellidos";
+        this.emailAdd = "Correo electrónico";
+        this.primPhone = "Número de teléfono primario";
+        this.issueDesc = "descripcion del problema";
+        this.language = "es";
+    } else if (language == "cn" || language == "zh-cn") {
+        this.firstName = "名";
+        this.lastName = "姓";
+        this.emailAdd = "电子邮件";
+        this.primPhone = "最常用的电话号码";
+        this.issueDesc = "问题说明";
+        this.language = "zh-CN";
+    } else if (language == "zh-tw") {
+        this.firstName = "名字";
+        this.lastName = "姓氏";
+        this.emailAdd = "電子郵件";
+        this.language = "zh-TW";
+    } else if (language == "pt") {
+        this.firstName = "Nome";
+        this.lastName = "Sobrenome";
+        this.emailAdd = "Email";
+        this.primPhone = "Número de Telefone Principal";
+        this.issueDesc = "descrição do problema";
+        this.language = "pt";
+    } else if (language == "pt-br") {
+        this.firstName = "Nome";
+        this.lastName = "Sobrenome";
+        this.emailAdd = "Email";
+        this.primPhone = "Número de Telefone Principal";
+        this.issueDesc = "descrição do problema";
+        this.language = "pt-br";
+    } else if (language == "nl" || language == "nl-nl") {
+        this.firstName = "Voornaam", this.lastName = "Achternaam",
+            this.emailAdd = "E-mail";
+        this.primPhone = "Primair telefoonnummer";
+        this.issueDesc = "Probleem Beschrijving";
+        this.language = "nl";
+    } else if (language == "fr") {
+        this.firstName = "Prénom";
+        this.lastName = "Nom";
+        this.emailAdd = "Adresse e-mail";
+        this.language = "fr";
+    } else if (language == "da") {
+        this.firstName = "Fornavn";
+        this.lastName = "Efternavn";
+        this.emailAdd = "Mail";
+        this.language = "da";
+    } else if (language == "fi") {
+        this.firstName = "Etunimi";
+        this.lastName = "Sukunimi";
+        this.emailAdd = "Sähköposti";
+        this.language = "fi";
+    } else if (language == "it") {
+        this.firstName = "Nome";
+        this.lastName = "Cognome";
+        this.emailAdd = "Email";
+        this.language = "it";
+    } else if (language == "no") {
+        this.firstName = "Fornavn";
+        this.lastName = "Etternavn";
+        this.emailAdd = "E-post";
+        this.language = "no";
+    } else if (language == "ru") {
+        this.firstName = "Имя";
+        this.lastName = "Фамилия";
+        this.emailAdd = "Эл. почта";
+        this.language = "ru";
+    } else if (language == "sv") {
+        this.firstName = "Förnamn";
+        this.lastName = "Efternamn";
+        this.emailAdd = "E-post";
+        this.language = "sv";
+    } else if (language == "th") {
+        this.firstName = "ชื่อจริง";
+        this.lastName = "นามสกุล";
+        this.emailAdd = "อีเมล";
+        this.language = "th";
+    } else if (language == "pl") {
+        this.firstName = "Imię";
+        this.lastName = "Nazwisko";
+        this.emailAdd = "E-mail";
+        this.language = "pl";
+    } else if (language == "sk") {
+        this.firstName = "Meno";
+        this.lastName = "Priezvisko";
+        this.emailAdd = "E-mail";
+        this.language = "sk";
+    } else {
+        this.firstName = "First Name";
+        this.lastName = "Last Name";
+        this.emailAdd = "Email Address";
+        this.language = "en";
+    }
+    console.log("Language = " + this.language);
+    return this;
 }
 
 var closestByTagName = function (el, closedElement) {
@@ -1222,6 +1264,10 @@ function pageObserverForProp20(eleSelector) {
                     snapInEmbeddedServiceHelpBtn = document.querySelector(".embeddedServiceHelpButton");
                     if (snapInPrechatForm && snapInCurrentPage != "snapInPrechatForm") {
                         snapInCurrentPage = "snapInPrechatForm";
+                        //BNR: DEFECT 6915122[START]
+                        document.querySelector(".modalContainer.embeddedServiceSidebar").style.display = "none";
+                        snapinChatInitiatedState(false);
+                        //BNR: DEFECT 6915122[END]
                     } else if (snapInWaiting && snapInCurrentPage != "snapInWaiting") {
                         snapInCurrentPage = "snapInWaiting";
                         callDellmetricsTrack("890.220.011");
@@ -1812,15 +1858,21 @@ function loadingSnapinBotQueue() {
     document.getElementById("cusBotPreChat-close-btn").style.display = 'none';
 }
 function snapinBotQueueLoaded() {
-    document.getElementById("cusBotPreChat-sidebarLoadingIndicator").style.display = 'none';
-    document.getElementById("cusBotPreChat-hideWhileLoading").style.display = 'block';
-    document.getElementById("cusBotPreChat-minimize-btn").style.display = 'block';
-    document.getElementById("cusBotPreChat-close-btn").style.display = 'block';
-    closeCustBotPrechat();
-    //Hide custom form [Start]
-    serviceSidebar = document.querySelector(".modalContainer.embeddedServiceSidebar");
-    serviceSidebar.style.display = "block";
-    //Hide custom form [end]
+    try {
+        if (document.getElementById("cusBotPreChat-sidebarLoadingIndicator")) {
+            document.getElementById("cusBotPreChat-sidebarLoadingIndicator").style.display = 'none';
+            document.getElementById("cusBotPreChat-hideWhileLoading").style.display = 'block';
+            document.getElementById("cusBotPreChat-minimize-btn").style.display = 'block';
+            document.getElementById("cusBotPreChat-close-btn").style.display = 'block';
+            closeCustBotPrechat();
+        }
+        let serviceSidebar = document.querySelector(".modalContainer.embeddedServiceSidebar");
+        if (serviceSidebar) {
+            serviceSidebar.style.display = "block";
+        }
+    } catch (e) {
+        console.log('Exception at method name snapinBotQueueLoaded :' + e);
+    }
 }
 function ChatBotStarted(eleSelector, findingEle, chatBotObject) {
     try {
