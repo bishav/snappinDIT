@@ -80,6 +80,7 @@ function triggerSnapin(snapInObject, preChatlableObject) {
                 //eleExist('.embeddedServiceSidebar', hideDomObject);
                 eleExistWithVariable('.modalContainer  .dockableContainer .sidebarBody .activeFeature .featureBody .embeddedServiceSidebarState .prechatUI', hideOtherDomObject,'.embeddedServiceSidebar');
                 saveGlobalSnapinObjToSession(snapInObject);
+                snapinChatInitiatedState(true);
                 eleExist('.helpButtonEnabled #helpButtonSpan > .message', chatClick);
                 if (document.getElementById('cusPreChatSnapinDom'))
                     custPreChatShowAdditionalDetailsInUi(snapInObject, preChatlableObject);
