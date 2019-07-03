@@ -40,7 +40,14 @@ function hideDomObject(eleSelector, findingEle) {
         console.log("Error in:" + e);
     }
 }
-
+function hideOtherDomObject(eleSelector, findingEle, otherDomEle) {
+    try {
+        document.querySelector(otherDomEle).style.display = 'none';
+        clearInterval(findingEle);
+    } catch (e) {
+        console.log("Error in:" + e);
+    }
+}
 function initSnapIn(snapInObject) {
     let snapinAlreadyInitiated = document.getElementById("esw_storage_iframe");
     if (!snapinAlreadyInitiated) {
@@ -70,7 +77,8 @@ function triggerSnapin(snapInObject, preChatlableObject) {
         } else if (snapInObject) {
             if (!snapInObject.snapinButtonClicked) {
                 eleExist('.embeddedServiceHelpButton', hideDomObject);
-                eleExist('.embeddedServiceSidebar', hideDomObject);
+                //eleExist('.embeddedServiceSidebar', hideDomObject);
+                eleExistWithVariable('.modalContainer  .dockableContainer .sidebarBody .activeFeature .featureBody .embeddedServiceSidebarState .prechatUI', hideOtherDomObject,'.embeddedServiceSidebar');
                 saveGlobalSnapinObjToSession(snapInObject);
                 eleExist('.helpButtonEnabled #helpButtonSpan > .message', chatClick);
                 if (document.getElementById('cusPreChatSnapinDom'))
