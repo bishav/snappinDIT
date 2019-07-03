@@ -27,8 +27,8 @@ var coveoHeader = "", isCoveoSearchEnabled = false, isPCFCall = false;
         head.appendChild(style);
     }
 
-    //if (typeof NodeList.prototype.forEach === "function") return false;
-    //NodeList.prototype.forEach = Array.prototype.forEach;
+    if (typeof NodeList.prototype.forEach === "function") return false;
+    NodeList.prototype.forEach = Array.prototype.forEach;
 
 })();
 
@@ -70,7 +70,7 @@ function triggerSnapin(snapInObject, preChatlableObject) {
         } else if (snapInObject) {
             if (!snapInObject.snapinButtonClicked) {
                 eleExist('.embeddedServiceHelpButton', hideDomObject);
-                //eleExist('.embeddedServiceSidebar', hideDomObject);
+                eleExist('.embeddedServiceSidebar', hideDomObject);
                 eleExist('.modalContainer  .dockableContainer .sidebarBody .activeFeature .featureBody .embeddedServiceSidebarState .prechatUI', hideDomObject);
                 saveGlobalSnapinObjToSession(snapInObject);
                 eleExist('.helpButtonEnabled #helpButtonSpan > .message', chatClick);
