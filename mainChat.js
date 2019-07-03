@@ -606,7 +606,9 @@ function removeLoaderIn10() {
                 document.querySelector(".embeddedServiceHelpButton").style.display = 'block';
         }
         //BNR
-        if (document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton').className != "uiButton helpButtonEnabled")
+        let element = document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton');
+        if(element && !element.classList.contains("helpButtonEnabled")) 
+        //if (document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton').className != "uiButton helpButtonEnabled")
             snapinChatInitiatedState(false);
         hideResumeSnapinLoader();
     }, 30000);
