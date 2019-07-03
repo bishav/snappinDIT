@@ -126,9 +126,12 @@ function appendCustPreChatSnapinDom(snapInObject, preChatlableObject) {
         }
             
         //document.getElementById("cusPreChatSnapinDom").style.display = 'block';
-        if (document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton').className != "uiButton helpButtonEnabled"){
-             agentsOfflinePostChatForm();
-        }
+        //if (document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton').className != "uiButton helpButtonEnabled"){
+            // agentsOfflinePostChatForm();
+        //}
+        let element = document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton');
+        if(element && !element.classList.contains("helpButtonEnabled"))
+            agentsOfflinePostChatForm();
            
 
     }
@@ -506,9 +509,13 @@ function closeCustPrechat(preChatlableObject) {
 }
 function maximizeCustPrechat() {
     //BNR
-    if ((document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton') && document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton').className != "uiButton helpButtonEnabled") || (!document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton'))) {
-        agentsOfflinePostChatForm();
-    } else{
+    let element = document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton');
+        if((element && !element.classList.contains("helpButtonEnabled")) || !element) 
+            agentsOfflinePostChatForm();
+    //if ((document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton') && document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton').className != "uiButton helpButtonEnabled") || (!document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton'))) {
+    //    agentsOfflinePostChatForm();
+   // }
+     else{
         document.getElementById("cusPreChat-sidebarLoadingIndicator").style.display = 'none';
         document.getElementById("cusPreChat-hideWhileLoading").style.display = 'block';
         document.getElementById("cusPreChat-embeddedServiceHelpButton").style.display = 'none';
@@ -933,7 +940,9 @@ function resumeChatClick(eleSelector, findingEle) {
 function chatStarted(eleSelector, findingEle, snapInObject) {
     try {
         //BNR
-        if (document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton').className === "uiButton helpButtonEnabled")
+        let element = document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton');
+        if(element && element.classList.contains("helpButtonEnabled")) 
+       // if (document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton').className === "uiButton helpButtonEnabled")
             changePrechatValues(snapInObject, clickSnapinChatBtn);
         else {
             agentsOfflinePostChatForm();
