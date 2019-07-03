@@ -71,7 +71,7 @@ function triggerSnapin(snapInObject, preChatlableObject) {
             if (!snapInObject.snapinButtonClicked) {
                 eleExist('.embeddedServiceHelpButton', hideDomObject);
                 eleExist('.embeddedServiceSidebar', hideDomObject);
-                eleExist('.modalContainer  .dockableContainer .sidebarBody .activeFeature .featureBody .embeddedServiceSidebarState .prechatUI', hideDomObject);
+                //eleExist('.modalContainer  .dockableContainer .sidebarBody .activeFeature .featureBody .embeddedServiceSidebarState .prechatUI', hideDomObject);
                 saveGlobalSnapinObjToSession(snapInObject);
                 eleExist('.helpButtonEnabled #helpButtonSpan > .message', chatClick);
                 if (document.getElementById('cusPreChatSnapinDom')){
