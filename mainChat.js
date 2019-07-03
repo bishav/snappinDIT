@@ -80,7 +80,7 @@ function triggerSnapin(snapInObject, preChatlableObject) {
                     
                 initSnapIn(snapInObject);
             } else if (customChatNotCreated()) {
-                snapinChatInitiatedState(false);
+                //snapinChatInitiatedState(true);
                 snapInObject = sendGlobalSnapinObjToJson();
                 appendCustPreChatSnapinDom(snapInObject, preChatlableObject)
             }
@@ -953,10 +953,10 @@ function chatStarted(eleSelector, findingEle, snapInObject) {
         }
         function clickSnapinChatBtn() {
             snapInObject = sendGlobalSnapinObjToJson();
-            if ("snapinChatInitiated" in snapInObject && snapInObject.snapinChatInitiated) {
+            //if ("snapinChatInitiated" in snapInObject && snapInObject.snapinChatInitiated) {
                 document.querySelector(eleSelector).click();
                 clearInterval(findingEle);
-            }/*else
+            /*}else
                 console.log("working");
             */
         }
