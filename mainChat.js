@@ -600,7 +600,7 @@ function agentsOfflinePostChatForm() {
 function removeLoaderIn10() {
     //BNR
     setTimeout(function () {
-        let cusPreChatSnapinDom = document.getElementById("cusPreChatSnapinDom");
+        let cusPreChatSnapinDom = document.getElementById("cusPreChat-sidebarLoadingIndicator");
         if (cusPreChatSnapinDom && window.getComputedStyle(cusPreChatSnapinDom).display != 'none') {
             document.getElementById("cusPreChatSnapinDom").style.display = 'none';
             if (document.querySelector(".embeddedServiceHelpButton"))
