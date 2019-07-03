@@ -80,6 +80,7 @@ function triggerSnapin(snapInObject, preChatlableObject) {
                     
                 initSnapIn(snapInObject);
             } else if (customChatNotCreated()) {
+                snapinChatInitiatedState(true);
                 snapInObject = sendGlobalSnapinObjToJson();
                 appendCustPreChatSnapinDom(snapInObject, preChatlableObject)
             }
