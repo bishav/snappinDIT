@@ -96,7 +96,10 @@ function triggerSnapin(snapInObject, preChatlableObject) {
 function customChatNotCreated() {
     let cusPreChatHelpBtn = document.getElementById('cusPreChat-embeddedServiceHelpButton');
     let snapinExists = document.querySelector(".embeddedServiceSidebar .dockableContainer");
-    if (cusPreChatHelpBtn && window.getComputedStyle(cusPreChatHelpBtn).display != "none" && !snapinExists) {
+    let chatStarted = document.querySelector(".dockableContainer .activeFeature .embeddedServiceLiveAgentStateChat .chasitorControls .chasitorText");
+    if (chatStarted)
+        return false;        
+    else if (cusPreChatHelpBtn && window.getComputedStyle(cusPreChatHelpBtn).display != "none" && !snapinExists) {
         document.getElementById("cusPreChat-helpButtonEnabled").click();
         return false;
     } else
@@ -125,12 +128,6 @@ function appendCustPreChatSnapinDom(snapInObject, preChatlableObject) {
             httpCoveoGetAsync(snapInObject.coveoViewUrl + "?isheaderRequired=false", apendToAHoverDiv);          
             coveoInit(snapInObject, preChatlableObject);
         }
-
-        let snapinExists = document.querySelector(".embeddedServiceSidebar"), custPrechatForm = document.getElementById("cusPreChatSnapinDom");
-        if ((!snapinExists || (snapinExists && window.getComputedStyle(snapinExists).display == 'none')) && window.getComputedStyle(custPrechatForm).display == 'none')
-            maximizeCustPrechat();
-        else
-          closeCustPrechat(preChatlableObject);  
     } else {
         //BNR
         let snapinExists = document.querySelector(".embeddedServiceSidebar"), custPrechatForm = document.getElementById("cusPreChatSnapinDom");
