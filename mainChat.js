@@ -42,6 +42,7 @@ function hideDomObject(eleSelector, findingEle) {
 }
 function hideOtherDomObject(eleSelector, findingEle, otherDomEle) {
     try {
+        alert("Prechat In hideOtherDomObject");
         document.querySelector(otherDomEle).style.display = 'none';
         clearInterval(findingEle);
     } catch (e) {
@@ -1277,7 +1278,7 @@ function pageObserverForProp20(eleSelector) {
                     if (snapInPrechatForm && snapInCurrentPage != "snapInPrechatForm") {
                         snapInCurrentPage = "snapInPrechatForm";
                         //BNR: DEFECT 6915122[START]
-                        alert("Prechat");
+                        alert("Prechat In Observer");
                         document.querySelector(".modalContainer.embeddedServiceSidebar").style.display = "none";
                         snapinChatInitiatedState(false);
                         //BNR: DEFECT 6915122[END]
