@@ -1277,6 +1277,7 @@ function pageObserverForProp20(eleSelector) {
                     if (snapInPrechatForm && snapInCurrentPage != "snapInPrechatForm") {
                         snapInCurrentPage = "snapInPrechatForm";
                         //BNR: DEFECT 6915122[START]
+                        alert("Prechat");
                         document.querySelector(".modalContainer.embeddedServiceSidebar").style.display = "none";
                         snapinChatInitiatedState(false);
                         //BNR: DEFECT 6915122[END]
