@@ -68,7 +68,7 @@ function initSnapIn(snapInObject) {
 function triggerSnapin(snapInObject, preChatlableObject) {
     try{
         if (!(sessionStorage.getItem("isChatBotActive") != null && sessionStorage.getItem("isChatBotActive") == "true")) {//Check if chat bot is Active
-            if (typeof (isSnapinInitiated) == "function" && isSnapinInitiated){
+            if (typeof (isSnapinInitiated) == "function" && isSnapinInitiated()){
                 let orderSnapinObject = sendGlobalSnapinCareObjToJson();
                 initiateChatCARE(orderSnapinObject);//orderRetain Chat
             } else if (snapInObject === undefined && history.length > 1 && snapinChatGlobalObjNotEmpty()) {
