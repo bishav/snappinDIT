@@ -559,7 +559,7 @@ function custCarePreFormShowIssueDetailsCharRemaining(preChatlableObject) {
 function isSnapinInitiated(){
 try{
     snapInCareObject = sendGlobalSnapinCareObjToJson();
-    if ("snapinCareChatInitiated" in snapInCareObject && snapInCareObject.snapinCareChatInitiated)
+    if (snapInCareObject && "snapinCareChatInitiated" in snapInCareObject && snapInCareObject.snapinCareChatInitiated)
         return true;
     else
         return false;
