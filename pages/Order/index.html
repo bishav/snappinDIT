@@ -40,6 +40,19 @@
         <div class="row justify-content-md-center">
                 <div class="col-lg-6 col-md-8 col-sm-12 order-md-1  border rounded">
                                 <form class="needs-validation" novalidate="">
+                                    <div class="mb-3">
+                                        <label for="viewType">View Type</label>
+                                        <select class="custom-select d-block w-100" id="viewType" required="">
+                                                <option value="">Choose...</option>
+                                                <option>GeneralChat</option>
+                                                <option>Order</option>
+                                                <option>CustomerNumber</option>
+                                                <option>PONumber</option>
+                                              </select>
+                                        <div class="invalid-feedback">
+                                          Please enter your Issue Type.
+                                        </div>
+                                      </div>
                                         <div class="mb-3">
                                                 <label for="serviceTag" style="margin-top: 10px;">Order Number </label>
                                                 <div class="input-group">
@@ -80,19 +93,22 @@
       function startOrderChat(){
         let orderNumber = document.getElementById("orderNumber").value,
         BUID = document.getElementById("BUID").value,
+        viewType = document.getElementById('viewType').value,
         DPId = document.getElementById("BUID").value;
         var orderSnapinObject =  {
                     BUID: BUID,
                     orderNumber: orderNumber,
+                    customerNumber: orderNumber,
+                    poNumber: orderNumber,
                     DPId: DPId,
+                    irnNumber: DPId,
+                    viewType: viewType,//General/Order/CustomerNumber/PONumber
+                   /* issueType :"Cool working",
                     firstName:"Bishav",
                     lastName:"Rajbhandari",
                     emailAddress:"bishav.n.r@gmail.com",
                     phoneNumber:"889231424565",
-                    issueDescription:"This is a test",
-
-
-                   
+                    issueDescription:"This is a test",*/
                     baseLiveAgentContentURL: 'https://c.la1-c1cs-ord.salesforceliveagent.com/content',
                     deploymentId: '5720b000000GneC',
                     buttonId: '573L0000000024l',
@@ -126,17 +142,21 @@
                    */
                     
         };
-        var orderSnapinLabelObj = {            
+        var orderSnapinLabelObj = {      
                 firstName:"First Name",
                 lastName:"Last Name",
                 emailAddress:"Email Address",
                 phoneNumber:"Primary Phone Number",
                 issueDescription:"Issue Description",
                 startChat:"Start Chat",
+                orderPreChatHeader: "Please fill out the form below",
+                customerNumber: "Customer Number",
+                poNumber: "PO Number",
                 orderNumber: "Order Number",
                 DPId: "Purchase ID",
-                orderPreChatHeader: "Please fill out the form below",
-                //optional: chatParam.LblOptional,
+                irnNumber : "IRN Number",
+                optional: "(optional)",
+                lblOrdNoOptional : "Order Number or Purchase ID (optional)",
                 characters:"characters",
                 issueDescriptionLength:"20",
                 customerPrivacyDesc:"\u003cb\u003eBisahv Your privacy is important to us.\u003c/b\u003e We will only use your information to process your request. We will not share it with anyone. To learn more about how we use and protect your data, see the \u003ca target=\u0027_blank\u0027 href=\u0027//www.dell.com/learn/policies-privacy\u0027\u003eDell Privacy Statement.\u003c/a\u003e",
@@ -149,7 +169,9 @@
          //     phoneValidation:preChatModel.PhoneValidation,
                 chatUnavailableMessage:"Sorry, no agents are available at this moment.",
                 chatHeader:"Chat Now",
-                blocklistEmails:"noreply@Dell.com|testing@dell.com|cool@dell.com|ok@dell.com"
+                blocklistEmails:"noreply@Dell.com|testing@dell.com|cool@dell.com|ok@dell.com",
+                issueType :"Issue Type"
+
         };
       
         triggerOrderSnapin(orderSnapinObject, orderSnapinLabelObj);

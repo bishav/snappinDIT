@@ -27,23 +27,52 @@ function triggerOrderSnapin(orderSnapinObject, orderSnapinLabelObj){
 }
 
 function createCusCAREpreChatSnapinDom(orderSnapinObject, orderSnapinLabelObj){
-    //Add order number[START]
-    let purchaseIdDom, orderNumberDom, pleaseFillFormMsg = "Please fill out the form below";
-    if ("DPId" in orderSnapinObject && orderSnapinObject.DPId)
-        purchaseIdDom = '<div> <b>'+orderSnapinLabelObj.DPId +'</b> '+orderSnapinObject.DPId+'</div>';
-    else
-        purchaseIdDom = '';
+    //Add order number and other checks[START]
+    let purchaseIdDom="", orderNumberDom, pleaseFillFormMsg = orderSnapinLabelObj.orderPreChatHeader;
+    switch (orderSnapinObject.viewType) {
+        case "Order":
+            if ("DPId" in orderSnapinObject && orderSnapinObject.DPId)
+                purchaseIdDom = '<div> <b>'+orderSnapinLabelObj.DPId +':</b> '+orderSnapinObject.DPId+'</div>';
+            else  if ("irnNumber" in orderSnapinObject && orderSnapinObject.irnNumber)
+                purchaseIdDom = '<div> <b>'+orderSnapinLabelObj.irnNumber +':</b> '+orderSnapinObject.irnNumber+'</div>';
+            else
+                purchaseIdDom = '';
 
-    if ("orderNumber" in orderSnapinObject && orderSnapinObject.orderNumber)
-        orderNumberDom ='<div> <b>'+orderSnapinLabelObj.orderNumber +'</b> '+orderSnapinObject.orderNumber+'</div>';
-    else
-        orderNumberDom = '';
-    
+            if ("orderNumber" in orderSnapinObject && orderSnapinObject.orderNumber)
+                orderNumberDom ='<div> <b>'+orderSnapinLabelObj.orderNumber +':</b> '+orderSnapinObject.orderNumber+'</div>';
+            else
+                orderNumberDom = '';
+            break;
+        case "DPid":
+            if ("DPId" in orderSnapinObject && orderSnapinObject.DPId)
+                purchaseIdDom = '<div> <b>'+orderSnapinLabelObj.DPId +':</b> '+orderSnapinObject.DPId+'</div>';
+            else  if ("irnNumber" in orderSnapinObject && orderSnapinObject.irnNumber)
+                purchaseIdDom = '<div> <b>'+orderSnapinLabelObj.irnNumber +':</b> '+orderSnapinObject.irnNumber+'</div>';
+            else
+                purchaseIdDom = '';
+                break;
+        case "CustomerNumber":
+            if ("customerNumber" in orderSnapinObject && orderSnapinObject.customerNumber)
+                orderNumberDom ='<div> <b>'+orderSnapinLabelObj.customerNumber +':</b> '+orderSnapinObject.customerNumber+'</div>';
+            else
+                orderNumberDom = '';
+            break;
+        case "PONumber":
+            if ("poNumber" in orderSnapinObject && orderSnapinObject.poNumber)
+                orderNumberDom ='<div> <b>'+orderSnapinLabelObj.poNumber +':</b> '+orderSnapinObject.poNumber+'</div>';
+            else
+                orderNumberDom = '';
+            break;
+        case "GeneralChat":
+        case "":
+                orderNumberDom = '';
+            break;
+    }
     if (orderNumberDom !='' || purchaseIdDom !='')
-        orderNumberDom ='<div id="readonlyCAREPreChatContainer" class="cusPreChat-readonlyContainer" style="margin: 8px 1.5em 0px 1em; text-align: left;position: relative;font-size: .75em;color: #444444;">'+purchaseIdDom+'<div> <b>'+orderSnapinLabelObj.orderNumber +'</b> '+orderSnapinObject.orderNumber+'</div></div>';
-    else
+        orderNumberDom ='<div id="readonlyCAREPreChatContainer" class="cusPreChat-readonlyContainer" style="margin: 8px 1.5em 0px 1em; text-align: left;position: relative;font-size: .75em;color: #444444;">'+purchaseIdDom+orderNumberDom+'</div>';
+    else if(orderSnapinObject.viewType == "GeneralChat")
         orderNumberDom = '<div id="readonlyCAREPreChatContainer" class="cusPreChat-readonlyContainer" style="margin: 17px 5px 7px .75em;text-align: left;position: relative;font-size: 1.2em;color: #666;font-weight: 100;">'+pleaseFillFormMsg+'</div>';
-    // Add order number[END]
+     //Add order number and other checks[END]
 
     let domEle = '<div id="cusCAREPreChatSnapinDom" class="cusPreChat-modalContainer"><div class="cusPreChat-dockableContainer"><div class="cusPreChat-embeddedServiceSidebarHeader"><div class="cusPreChat-shortHeader"><div class="cusPreChat-shortHeaderContent"> <button id="cusCAREPreChat-minimize-btn" class="cusPreChat-minimizeButton cusPreChat-headerItem"> <span class="cusPreChat-assistiveText">Minimize chat</span> <span class="cusPreChat-minimize cusPreChat-x-small cusPreChat-embeddedServiceIcon"> <svg focusable="false" aria-hidden="true" data-key="contract_alt" viewBox="0 0 100 100"> <path d="M56.923 45.962h29.615c1.924 0 2.5-2.116.962-3.654l-9.423-9.616 17.308-17.5c.96-.96.96-2.692 0-3.654L88.27 4.423c-.962-.77-2.5-.77-3.655.192L67.308 21.923 57.5 12.5c-1.538-1.538-3.654-.962-3.654.962v29.615c0 1.346 1.73 2.885 3.077 2.885zm-13.846 7.884H13.462c-1.924 0-2.5 2.116-.962 3.654l9.423 9.615-17.308 17.5c-.96.962-.96 2.693 0 3.654l7.116 7.115c.962.96 2.5.96 3.655 0l17.5-17.5 9.807 9.423c1.346 1.73 3.462 1.154 3.462-.77V57.115c0-1.346-1.73-3.27-3.077-3.27z"> </path> </svg> </span> </button><h2 class="cusPreChat-headerText"><div class="cusPreChat-headerTextContent"> <span id="cusCAREPreChat-headerTextLabel">' + orderSnapinLabelObj.chatHeader + '</span> <span id="cusCAREPreChat-headerSubtext"> </span></div></h2> <button id="cusCAREPreChat-close-btn" class="cusPreChat-closeButton cusPreChat-headerItem"> <span class="cusPreChat-assistiveText">Close chat</span> <span class="cusPreChat-x-small cusPreChat-embeddedServiceIcon"> <svg focusable="false" aria-hidden="true" data-key="close" viewBox="0 0 100 100"> <path d="M65.577 53.73l27.5-27.71c1.27-1.27 1.27-3.174 0-4.445l-4.23-4.44c-1.272-1.27-3.175-1.27-4.445 0L56.694 44.847c-.847.845-2.115.845-2.96 0L26.018 16.922c-1.27-1.27-3.174-1.27-4.445 0l-4.44 4.442c-1.27 1.27-1.27 3.174 0 4.444l27.71 27.71c.846.846.846 2.116 0 2.962L16.923 84.403c-1.27 1.27-1.27 3.174 0 4.444l4.442 4.442c1.27 1.268 3.174 1.268 4.444 0l27.71-27.713c.846-.847 2.116-.847 2.962 0L84.19 93.29c1.27 1.268 3.174 1.268 4.445 0l4.44-4.445c1.27-1.268 1.27-3.17 0-4.44l-27.5-27.712c-.847-.847-.847-2.115 0-2.96z"> </path> </svg> </span> </button></div></div></div><div class="cusPreChat-sidebarBody"><div id="cusCAREPreChat-sidebarLoadingIndicator" class="cusPreChat-sidebarLoadingIndicator" style="display: none;"><div class="cusPreChat-loadingBallContainer cusPreChat-animated cusPreChat-embeddedServiceLoadingBalls"> <span class="cusPreChat-loadingBall cusPreChat-first"> </span> <span class="cusPreChat-loadingBall cusPreChat-second"> </span> <span class="cusPreChat-loadingBall cusPreChat-third"> </span></div></div><div id="cusCAREPreChat-alertMsgContainer" class="cusPreChat-sidebarLoadingIndicator" style="display: none;"><div style="margin: 2.5em 1.75em;">' + orderSnapinLabelObj.chatUnavailableMessage + '</div><div> <button id="cusCAREPreChat-CloseChat" class="cusPreChat-embeddedServiceSidebarButton" type="button"><span class="cusPreChat-label cusPreChat-bBody">Close Chat</span> </button></div></div><div id="cusCAREPreChat-hideWhileLoading" class="cusPreChat-activeFeature cusPreChat-hideWhileLoading"><div class="cusPreChat-featureBody cusPreChat-embeddedServiceSidebarFeature"><div class="cusPreChat-stateBody cusPreChat-embeddedServiceSidebarState"><div class="cusPreChat-prechatUI cusPreChat-embeddedServiceLiveAgentStatePrechatDefaultUI"><div class="cusPreChat-formContent cusPreChat-embeddedServiceSidebarForm"><ul class="cusPreChat-fieldList">'+orderNumberDom+'<li class="cusPreChat-inputSplitName cusPreChat-embeddedServiceSidebarFormField"> <span class="cusPreChat-split-field-container"><div class="cusPreChat-uiInput cusPreChat-uiInputText cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel"> <span class="">' + orderSnapinLabelObj.firstName + '</span> </label> <input id="cusCAREPreChat-FirstName" class="cusPreChat-FirstName form-control cusPreChat-input" maxlength="121" type="text" aria-describedby="" placeholder="" required="" aria-required="true"></div> </span></li><li class="cusPreChat-inputSplitName cusPreChat-embeddedServiceSidebarFormField"> <span class="cusPreChat-split-field-container"><div class="cusPreChat-uiInput cusPreChat-uiInputText cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="LastName"> <span class="">' + orderSnapinLabelObj.lastName + '</span> </label> <input id="cusCAREPreChat-LastName" class="cusPreChat-LastName form-control cusPreChat-input" maxlength="121" type="text" aria-describedby="" placeholder="" required="" aria-required="true"></div> </span></li><li class="cusPreChat-inputEmail cusPreChat-embeddedServiceSidebarFormField"><div class="cusPreChat-uiInput cusPreChat-uiInputEmail cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="Email"> <span>' + orderSnapinLabelObj.emailAddress + '</span> </label> <input id="cusCAREPreChat-Email" class="cusPreChat-Email form-control cusPreChat-input" maxlength="80" type="email" aria-describedby="" placeholder="" required="" aria-required="true"></div></li><li class="cusPreChat-inputPhone cusPreChat-embeddedServiceSidebarFormField"><div class="cusPreChat-uiInput cusPreChat-uiInputPhone cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="Primary_Phone__c"> <span>' + orderSnapinLabelObj.phoneNumber + '</span> </label> <input id="cusCAREPreChat-Phone" class="cusPreChat-Primary_Phone__c form-control cusPreChat-input" maxlength="40" type="tel" aria-describedby="" placeholder="" required="" aria-required="true"></div></li><li class="cusPreChat-inputText cusPreChat-embeddedServiceSidebarFormField"><div class="cusPreChat-uiInput cusPreChat-uiInputText cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="Issue_Description__c"> <span>' + orderSnapinLabelObj.issueDescription + '</span> </label><textarea id="cusCAREPreChat-IssueDescription" class="cusPreChat-Issue_Description__c form-control cusPreChat-input" maxlength="' + orderSnapinLabelObj.issueDescriptionLength + '" type="text" aria-describedby="" placeholder="" required=""></textarea><div id="snappinCharCounter" style="text-align:right;position:relative;font-size:.75em;line-height: 1.5;margin-right: .75em;margin-left: .5em;margin-top: 8px; float: right; color:#767676">0 / ' + orderSnapinLabelObj.issueDescriptionLength + ' ' + orderSnapinLabelObj.characters + '</div></div></li></ul><div style="font-size: 12px;color:#767676;text-align: left;margin: 2.5em 1.75em; font-style: italic;color:#444444;">' + orderSnapinLabelObj.customerPrivacyDesc + '</div></div><div class="cusPreChat-buttonWrapper cusPreChat-embeddedServiceSidebarForm"> <button id="cusCAREPreChat-startChat" class="cusPreChat-startButton cusPreChat-uiButton--default cusPreChat-uiButton cusPreChat-embeddedServiceSidebarButton" type="button"> <span class="cusPreChat-label cusPreChat-bBody">' + orderSnapinLabelObj.startChat + '</span> </button></div></div></div></div></div></div></div></div><div id="cusCAREPreChat-embeddedServiceHelpButton" class="cusPreChat-embeddedServiceHelpButton" style="display: none;"><div class="cusPreChat-helpButton" style="width: 168px;"> <button id="cusCAREPreChat-helpButtonEnabled" class="cusPreChat-uiButton cusPreChat-helpButtonEnabled" href="javascript:void(0)"> <span class="cusPreChat-embeddedServiceIcon" aria-hidden="true" style="display: inline-block; z-index: 1; float: left"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="chat" width="100%" height="100%" style="height: 18px; width: 18px;"> <path d="M12 1.8C5.9 1.8 1 6.4 1 12c0 1.7.5 3.4 1.3 4.8.1.3.2.6.1.8l-1.4 4c-.2.3.2.6.6.6l3.9-1.6c.3-.1.5 0 .8.1 1.7.9 3.7 1.5 5.8 1.5 6 0 11-4.5 11-10.2C23 6.4 18.1 1.8 12 1.8zm-5.5 12c-1.1 0-1.9-.8-1.9-1.8s.8-1.8 1.9-1.8 1.8.8 1.8 1.8-.8 1.8-1.8 1.8zm5.5 0c-1 0-1.8-.8-1.8-1.8s.8-1.8 1.8-1.8 1.8.8 1.8 1.8-.8 1.8-1.8 1.8zm5.5 0c-1 0-1.8-.8-1.8-1.8s.8-1.8 1.8-1.8 1.9.8 1.9 1.8-.8 1.8-1.9 1.8z"></path> </svg> </span><div class="cusPreChat-helpButtonLabel" id="cusCAREPreChat-helpButtonSpan" aria-live="polite" aria-atomic="true"> <span class="cusPreChat-assistiveText">Live chat:</span> <span class="cusPreChat-message">' + orderSnapinLabelObj.chatHeader + '</span></div> </button></div></div>';
     let body = document.body || document.getElementsByTagName('body')[0];
@@ -258,17 +287,19 @@ embedded_svc.addEventHandler("onAgentMessage", function(data) {
         );
 
     };
-
-    if (!window.embedded_svc) {
-        var s = document.createElement('script');
-        s.setAttribute('src', orderSnapinObject.snapInJs);
-        s.onload = function() {
-            initESW(null);
-        };
-        document.body.appendChild(s);
-    } else {
-        initESW(orderSnapinObject.serviceForceURL);
-    }   
+    let snapinAlreadyInitiated = document.getElementById("esw_storage_iframe");
+    if (!snapinAlreadyInitiated) {
+        if (!window.embedded_svc) {
+            var s = document.createElement('script');
+            s.setAttribute('src', orderSnapinObject.snapInJs);
+            s.onload = function() {
+                initESW(null);
+            };
+            document.body.appendChild(s);
+        } else {
+            initESW(orderSnapinObject.serviceForceURL);
+        }
+    }  
 }
 
 function startCAREChat(orderSnapinObject, orderSnapinLabelObj){
@@ -280,20 +311,24 @@ function startCAREChat(orderSnapinObject, orderSnapinLabelObj){
     }
 }
 function loadingSnapinCareQueue() {
-    document.getElementById("cusCAREPreChat-sidebarLoadingIndicator").style.display = 'flex';
-    document.getElementById("cusCAREPreChat-hideWhileLoading").style.display = 'none';
-    document.getElementById("cusCAREPreChat-minimize-btn").style.display = 'none';
-    document.getElementById("cusCAREPreChat-close-btn").style.display = 'none';
+    if(document.getElementById("cusCAREPreChatSnapinDom")){
+        document.getElementById("cusCAREPreChat-sidebarLoadingIndicator").style.display = 'flex';
+        document.getElementById("cusCAREPreChat-hideWhileLoading").style.display = 'none';
+        document.getElementById("cusCAREPreChat-minimize-btn").style.display = 'none';
+        document.getElementById("cusCAREPreChat-close-btn").style.display = 'none';
+    }
 }
 function snapinCareQueueLoaded() {
-    document.getElementById("cusCAREPreChat-sidebarLoadingIndicator").style.display = 'none';
-    document.getElementById("cusCAREPreChat-hideWhileLoading").style.display = 'block';
-    document.getElementById("cusCAREPreChat-minimize-btn").style.display = 'block';
-    document.getElementById("cusCAREPreChat-close-btn").style.display = 'block';
-    closeCustCAREPrechat();
+    if(document.getElementById("cusCAREPreChatSnapinDom")){
+        document.getElementById("cusCAREPreChat-sidebarLoadingIndicator").style.display = 'none';
+        document.getElementById("cusCAREPreChat-hideWhileLoading").style.display = 'block';
+        document.getElementById("cusCAREPreChat-minimize-btn").style.display = 'block';
+        document.getElementById("cusCAREPreChat-close-btn").style.display = 'block';
+        closeCustCAREPrechat();
+    }
     //Close prechat form [Start]
-        serviceSidebar = document.querySelector(".modalContainer.embeddedServiceSidebar");
-        serviceSidebar.style.display = "block";
+    serviceSidebar = document.querySelector(".modalContainer.embeddedServiceSidebar");
+    serviceSidebar.style.display = "block";
     //Close prechat form [end]
 } 
 function CareChatStarted(eleSelector, findingEle, orderSnapinObject) {
@@ -745,7 +780,7 @@ try {
 
                     } else if (snapInhelpBtnEnabled && window.getComputedStyle(snapInhelpBtnEnabled).display === 'flex' && snapInCurrentPage != "snapInhelpBtnEnabled") {
                         if (snapInCurrentPage === "snapInhelpBtnDisabled")
-                            document.getElementById("cusPreChatSnapinDom").style.display = "block";
+                            document.getElementById("cusCAREPreChatSnapinDom").style.display = "block";
                         snapInCurrentPage = "snapInhelpBtnEnabled";
                         //If the button is enabled open Prechat form by clicking on enabled button
                             snapInhelpBtnEnabled.click();
