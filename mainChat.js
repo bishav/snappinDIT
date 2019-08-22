@@ -654,7 +654,7 @@ function custPrechatInitiateChat(snapInObject, preChatlableObject) {
         saveGlobalSnapinObjToSession(snapInObject);
         pageObserverForProp20("body");
         loadingSnapinQueue();
-        //STORY 7128491
+        //STORY 7128491[]
 
         removecustFormValues();
         custPreFormShowIssueDetailsCharRemaining(preChatlableObject);
