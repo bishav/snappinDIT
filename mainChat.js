@@ -109,6 +109,7 @@ function customChatNotCreated() {
     if (chatStarted)
         return false;        
     else if (cusPreChatHelpBtn && window.getComputedStyle(cusPreChatHelpBtn).display != "none" && !snapinExists) {
+        prechatSettingForEmc();//STORY 7193456: FY201101
         document.getElementById("cusPreChat-helpButtonEnabled").click();
         return false;
     } else
@@ -116,7 +117,11 @@ function customChatNotCreated() {
 }
 function appendCustPreChatSnapinDom(snapInObject, preChatlableObject) {
     if (!document.getElementById('cusPreChatSnapinDom')) {
-        //BNR
+        //STORY 7193456: FY201101[START]
+        if("isEmcProduct" in snapInObject && snapInObject.isEmcProduct){
+            preChatlableObject.serviceTag = preChatlableObject.serialNumber;
+        }
+        //STORY 7193456: FY201101[END]
         let domEle = '<div id="cusPreChatSnapinDom" class="cusPreChat-modalContainer"> <div class="cusPreChat-dockableContainer"> <div class="cusPreChat-embeddedServiceSidebarHeader"> <div class="cusPreChat-shortHeader"> <div class="cusPreChat-shortHeaderContent"> <button id="cusPreChat-minimize-btn" class="cusPreChat-minimizeButton cusPreChat-headerItem"> <span class="cusPreChat-assistiveText">Minimize chat</span> <span class="cusPreChat-minimize cusPreChat-x-small cusPreChat-embeddedServiceIcon"> <svg focusable="false" aria-hidden="true" data-key="contract_alt" viewBox="0 0 100 100"> <path d="M56.923 45.962h29.615c1.924 0 2.5-2.116.962-3.654l-9.423-9.616 17.308-17.5c.96-.96.96-2.692 0-3.654L88.27 4.423c-.962-.77-2.5-.77-3.655.192L67.308 21.923 57.5 12.5c-1.538-1.538-3.654-.962-3.654.962v29.615c0 1.346 1.73 2.885 3.077 2.885zm-13.846 7.884H13.462c-1.924 0-2.5 2.116-.962 3.654l9.423 9.615-17.308 17.5c-.96.962-.96 2.693 0 3.654l7.116 7.115c.962.96 2.5.96 3.655 0l17.5-17.5 9.807 9.423c1.346 1.73 3.462 1.154 3.462-.77V57.115c0-1.346-1.73-3.27-3.077-3.27z"> </path> </svg> </span> </button> <h2 class="cusPreChat-headerText"> <div class="cusPreChat-headerTextContent"> <span id="cusPreChat-headerTextLabel">' + preChatlableObject.chatHeader + '</span> <span id="cusPreChat-headerSubtext"> </span></div></h2> <button id="cusPreChat-close-btn" class="cusPreChat-closeButton cusPreChat-headerItem"> <span class="cusPreChat-assistiveText">Close chat</span> <span class="cusPreChat-x-small cusPreChat-embeddedServiceIcon"> <svg focusable="false" aria-hidden="true" data-key="close" viewBox="0 0 100 100"> <path d="M65.577 53.73l27.5-27.71c1.27-1.27 1.27-3.174 0-4.445l-4.23-4.44c-1.272-1.27-3.175-1.27-4.445 0L56.694 44.847c-.847.845-2.115.845-2.96 0L26.018 16.922c-1.27-1.27-3.174-1.27-4.445 0l-4.44 4.442c-1.27 1.27-1.27 3.174 0 4.444l27.71 27.71c.846.846.846 2.116 0 2.962L16.923 84.403c-1.27 1.27-1.27 3.174 0 4.444l4.442 4.442c1.27 1.268 3.174 1.268 4.444 0l27.71-27.713c.846-.847 2.116-.847 2.962 0L84.19 93.29c1.27 1.268 3.174 1.268 4.445 0l4.44-4.445c1.27-1.268 1.27-3.17 0-4.44l-27.5-27.712c-.847-.847-.847-2.115 0-2.96z"> </path> </svg> </span> </button> </div></div></div><div class="cusPreChat-sidebarBody"> <div id="cusPreChat-sidebarLoadingIndicator" class="cusPreChat-sidebarLoadingIndicator" style="display: none;"> <div class="cusPreChat-loadingBallContainer cusPreChat-animated cusPreChat-embeddedServiceLoadingBalls"> <span class="cusPreChat-loadingBall cusPreChat-first"> </span> <span class="cusPreChat-loadingBall cusPreChat-second"> </span> <span class="cusPreChat-loadingBall cusPreChat-third"> </span></div></div><div id="cusPreChat-alertMsgContainer" class="cusPreChat-sidebarLoadingIndicator" style="display: none;"><div style="margin: 2.5em 1.75em;">' + preChatlableObject.chatUnavailableMessage + '</div><div><button id="cusPreChat-CloseChat" class="cusPreChat-embeddedServiceSidebarButton" type="button"><span class="cusPreChat-label cusPreChat-bBody">Close Chat</span></button></div></div><div id="cusPreChat-hideWhileLoading" class="cusPreChat-activeFeature cusPreChat-hideWhileLoading"> <div class="cusPreChat-featureBody cusPreChat-embeddedServiceSidebarFeature"> <div class="cusPreChat-stateBody cusPreChat-embeddedServiceSidebarState"> <div class="cusPreChat-prechatUI cusPreChat-embeddedServiceLiveAgentStatePrechatDefaultUI"> <div class="cusPreChat-formContent cusPreChat-embeddedServiceSidebarForm"> <ul class="cusPreChat-fieldList"> <div id="readonlyPreChatContainer" class="cusPreChat-readonlyContainer" style="margin: 0 1.5em 6px 1.5em; text-align: left;position: relative;font-size: .75em;color: #444444;"> <div style="font-size: 1.2em;">Precision M4500</div><div> <b>' + preChatlableObject.serviceTag + ':</b> 123432</div><div> <b>' + preChatlableObject.issueType + ':</b> Keyboard not working</div></div><li class="cusPreChat-inputSplitName cusPreChat-embeddedServiceSidebarFormField"> <span class="cusPreChat-split-field-container"> <div class="cusPreChat-uiInput cusPreChat-uiInputText cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel"> <span class="">' + preChatlableObject.firstName + '</span></label> <input id="cusPreChat-FirstName" class="cusPreChat-FirstName form-control cusPreChat-input" maxlength="121" type="text" aria-describedby="" placeholder="" required="" aria-required="true"></div></span> </li><li class="cusPreChat-inputSplitName cusPreChat-embeddedServiceSidebarFormField"> <span class="cusPreChat-split-field-container"> <div class="cusPreChat-uiInput cusPreChat-uiInputText cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="LastName"> <span class="">' + preChatlableObject.lastName + '</span> </label> <input id="cusPreChat-LastName" class="cusPreChat-LastName form-control cusPreChat-input" maxlength="121" type="text" aria-describedby="" placeholder="" required="" aria-required="true"></div></span> </li><li class="cusPreChat-inputEmail cusPreChat-embeddedServiceSidebarFormField"> <div class="cusPreChat-uiInput cusPreChat-uiInputEmail cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="Email"> <span>' + preChatlableObject.emailAddress + '</span></label> <input id="cusPreChat-Email" class="cusPreChat-Email form-control cusPreChat-input" maxlength="80" type="email" aria-describedby="" placeholder="" required="" aria-required="true"></div></li><li class="cusPreChat-inputPhone cusPreChat-embeddedServiceSidebarFormField"> <div class="cusPreChat-uiInput cusPreChat-uiInputPhone cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="Primary_Phone__c"> <span>' + preChatlableObject.phoneNumber + '</span> </label> <input id="cusPreChat-Phone" class="cusPreChat-Primary_Phone__c form-control cusPreChat-input" maxlength="40" type="tel" aria-describedby="" placeholder="" required="" aria-required="true"></div></li><li class="cusPreChat-inputText cusPreChat-embeddedServiceSidebarFormField"> <div class="cusPreChat-uiInput cusPreChat-uiInputText cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="Issue_Description__c"> <span>' + preChatlableObject.issueDescription + '</span> </label> <textarea id="cusPreChat-IssueDescription" class="cusPreChat-Issue_Description__c form-control cusPreChat-input coveo-query" maxlength="' + preChatlableObject.issueDescriptionLength + '" type="text" aria-describedby="" placeholder="" required="" data-coveo-id="txtIssueDetails"></textarea><div id="snappinCharCounter" style="text-align:right;position:relative;font-size:.75em;line-height: 1.5;margin-right: .75em;margin-left: .5em;margin-top: 8px; float: right; color:#767676">0 / ' + preChatlableObject.issueDescriptionLength + ' ' + preChatlableObject.characters + '</div></div></li></ul>  <div id="PrechatCoveo" style="display:none;"></div> <div style="font-size: 12px;color:#767676;text-align: left;margin: 2.5em 1.75em; font-style: italic;color:#444444;">' + preChatlableObject.customerPrivacyDesc + '</div></div><div class="cusPreChat-buttonWrapper cusPreChat-embeddedServiceSidebarForm"> <button id="cusPreChat-startChat" class="cusPreChat-startButton cusPreChat-uiButton--default cusPreChat-uiButton cusPreChat-embeddedServiceSidebarButton" type="button"> <span class="cusPreChat-label cusPreChat-bBody">' + preChatlableObject.startChat + '</span> </button></div></div></div></div></div></div></div></div><div id="cusPreChat-embeddedServiceHelpButton" class="cusPreChat-embeddedServiceHelpButton" style="display: none;"> <div class="cusPreChat-helpButton" style="width: 168px;"> <button id="cusPreChat-helpButtonEnabled" class="cusPreChat-uiButton cusPreChat-helpButtonEnabled" href="javascript:void(0)" > <span class="cusPreChat-embeddedServiceIcon" aria-hidden="true" style="display: inline-block; z-index: 1; float: left"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="chat" width="100%" height="100%" style="height: 18px; width: 18px;"> <path d="M12 1.8C5.9 1.8 1 6.4 1 12c0 1.7.5 3.4 1.3 4.8.1.3.2.6.1.8l-1.4 4c-.2.3.2.6.6.6l3.9-1.6c.3-.1.5 0 .8.1 1.7.9 3.7 1.5 5.8 1.5 6 0 11-4.5 11-10.2C23 6.4 18.1 1.8 12 1.8zm-5.5 12c-1.1 0-1.9-.8-1.9-1.8s.8-1.8 1.9-1.8 1.8.8 1.8 1.8-.8 1.8-1.8 1.8zm5.5 0c-1 0-1.8-.8-1.8-1.8s.8-1.8 1.8-1.8 1.8.8 1.8 1.8-.8 1.8-1.8 1.8zm5.5 0c-1 0-1.8-.8-1.8-1.8s.8-1.8 1.8-1.8 1.9.8 1.9 1.8-.8 1.8-1.9 1.8z"></path> </svg> </span> <div class="cusPreChat-helpButtonLabel" id="cusPreChat-helpButtonSpan" aria-live="polite" aria-atomic="true"> <span class="cusPreChat-assistiveText">Live chat:</span> <span class="cusPreChat-message">' + preChatlableObject.chatHeader + '</span></div></button> </div></div>';
         let body = document.body || document.getElementsByTagName('body')[0];
         body.insertAdjacentHTML('beforeend', domEle);
@@ -151,8 +156,34 @@ function appendCustPreChatSnapinDom(snapInObject, preChatlableObject) {
 			agentsOfflinePostChatForm();
 
     }
+    prechatSettingForEmc();//STORY 7193456: FY201101
     callDellmetricsTrack("890.220.010");
 }
+
+//STORY 7193456: FY201101[START]
+function prechatSettingForEmc(){
+    makeIdReadWrite("cusPreChat-FirstName");
+    makeIdReadWrite("cusPreChat-LastName");
+    makeIdReadWrite("cusPreChat-Email");
+    makeIdReadWrite("cusPreChat-Phone");
+    if("isEmcProduct" in snapInObject && snapInObject.isEmcProduct){
+        makeIdReadOnlyIfHasVal("cusPreChat-FirstName");
+        makeIdReadOnlyIfHasVal("cusPreChat-LastName");
+        makeIdReadOnlyIfHasVal("cusPreChat-Email");
+        makeIdReadOnlyIfHasVal("cusPreChat-Phone");
+    }
+}
+function makeIdReadOnlyIfHasVal(id){
+	if(document.getElementById(id) && document.getElementById(id).value){
+		document.getElementById(id).readOnly = true;
+	}else{
+		makeIdReadWrite(id)
+	}
+}
+function makeIdReadWrite(id){
+    document.getElementById(id).readOnly = false;
+}
+//STORY 7193456: FY201101[END]
 
 //Coveo Get code[START]
 function httpCoveoGetAsync(theUrl, callback) {
@@ -414,6 +445,11 @@ function custPreChatShowAdditionalDetailsInUi(snapInObject, preChatlableObject) 
         removeDomElement(document.getElementById("readonlyPreChatContainer"));
     let topFields = document.querySelector(".cusPreChat-sidebarBody .cusPreChat-prechatUI  .cusPreChat-embeddedServiceSidebarForm ul.cusPreChat-fieldList");
     let topFieldValues;
+    //STORY 7193456: FY201101[START]
+    if("isEmcProduct" in snapInObject && snapInObject.isEmcProduct){
+        preChatlableObject.serviceTag = preChatlableObject.serialNumber;
+    }
+    //STORY 7193456: FY201101[END]
     if (snapInObject.productName == null)
         topFieldValues = '<div id="readonlyPreChatContainer" class="readonlyContainer" style="margin: 0 1.5em 6px 1.2em; text-align: left;position: relative;font-size: .75em;color: #444444;margin-bottom: 0px;"><div><b>' + preChatlableObject.serviceTag + ':</b> ' + snapInObject.serviceTag + '</div><div><b>' + preChatlableObject.issueType + ':</b> <span class="coveo-query" data-coveo-id="IssueDesc" id="preChatIssueDesc" style="font-size: 12px;">' + snapInObject.issueVal + '</span></div></div>';
     else
@@ -654,8 +690,6 @@ function custPrechatInitiateChat(snapInObject, preChatlableObject) {
         saveGlobalSnapinObjToSession(snapInObject);
         pageObserverForProp20("body");
         loadingSnapinQueue();
-        //STORY 7128491[]
-
         removecustFormValues();
         custPreFormShowIssueDetailsCharRemaining(preChatlableObject);
         snapInObject = sendGlobalSnapinObjToJson();
@@ -687,6 +721,46 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
     else
         translatedLabels = translation("en");
     embedded_svc.settings.language = translatedLabels.language;
+
+    //STORY 7193324: FY201101[START]
+    let assetFieldName = "Name";
+    if (snapInObject.isEmcProduct){
+        assetFieldName = "External_ID__c";
+        embedded_svc.settings.extraPrechatFormDetails = [{
+            "label": translatedLabels.firstName,
+            "transcriptFields": ["FirstName__c"]
+        }, {
+            "label": translatedLabels.lastName,
+            "transcriptFields": ["LastName__c"]
+        }, {
+            "label": translatedLabels.primPhone,
+            "transcriptFields": ["ContactNumber__c"]
+        }, {
+            "label": translatedLabels.emailAdd,
+            "transcriptFields": ["Email__c"]
+        },{
+            "label": "Subject",
+            "value": snapInObject.chatSeverity +" "+ snapInObject.issueVal,
+            "transcriptFields": ["Issue__c"]
+        },{
+            "label": "Service Tag",
+            "value": snapInObject.cpid,
+            "transcriptFields": ["Service_Tag__c"]
+        }, {
+            "label": translatedLabels.issueDesc,
+            "transcriptFields": ["Description__c"]
+        }, {// New filed
+            "label": "EMC Flag",
+            "value": snapInObject.isEmcProduct,
+            "transcriptFields": ["EMC_Flag__c"]
+        }, {	// New filed
+            "label": "Serial Number",
+            "value": snapInObject.serviceTag,
+            "transcriptFields": ["Serial_Number__c"]
+        }
+        ];
+    }else
+    //STORY 7193324: FY201101[END]
     embedded_svc.settings.extraPrechatFormDetails = [{
         "label": translatedLabels.firstName,
         "transcriptFields": ["FirstName__c"]
@@ -745,7 +819,7 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
         "entityFieldMaps": [{
             "doCreate": false,
             "doFind": true,
-            "fieldName": "Name",
+            "fieldName": assetFieldName,//STORY 7193324: FY201101
             "isExactMatch": true,
             "label": "Service Tag"
         }
