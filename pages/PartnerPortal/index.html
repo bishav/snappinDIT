@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../../main.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="main.js"></script> -->
+    <style type='text/css'>
+            .embeddedServiceHelpButton .helpButton .uiButton { background-color: #005290; font-family: "Salesforce Sans", sans-serif; }
+            .embeddedServiceHelpButton .helpButton .uiButton:focus { outline: 1px solid #005290; }
+            @font-face {
+            font-family: 'Salesforce Sans';
+            src: url('https://www.sfdcstatic.com/system/shared/common/assets/fonts/SalesforceSans/SalesforceSans-Regular.woff') format('woff'),
+    url('https://www.sfdcstatic.com/system/shared/common/assets/fonts/SalesforceSans/SalesforceSans-Regular.ttf') format('truetype');
+            }
+    </style>
+
+
+
+     
+</head>
+<body>
+    <nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" href="#">
+        <img src="../../assets/DellTech_Logo_Prm_Blue.jpg" class="d-inline-block align-top" alt="">
+    </a>
+</nav>
+<div class="navigationLink">
+						<h3 style="color:#fff; margin-left: 30px;">Partner Portal</h3>
+</div>    
+    <div id="prechatFormCanvas" class="new-chat" style="margin-top: 20px;">
+        <div class="row justify-content-md-center">
+                <div class="col-lg-6 col-md-8 col-sm-12 order-md-1  border rounded">
+                                <form class="needs-validation" novalidate="">
+                                    <div class="mb-3">
+                                        <label for="portalType">Portal Type</label>
+                                        <select class="custom-select d-block w-100" id="portalType" required="">
+                                                <option value="">Choose...</option>
+                                                <option>VCE</option>
+                                                <option>GTT</option>
+                                              </select>
+                                        <div class="invalid-feedback">
+                                          Please enter your Partner Portal Type.
+                                        </div>
+                                      </div>
+									  <div class="mb-3">
+                                        <label for="ppLanguage">Language</label>
+                                        <select class="custom-select d-block w-100" id="ppLanguage" required="">
+                                                <option value="">Choose...</option>
+                                                <option>en</option>
+                                                <option>es</option>
+                                              </select>
+                                        <div class="invalid-feedback">
+                                          Please enter your Partner Portal Type.
+                                        </div>
+                                      </div>
+                                        <div class="mb-3">
+                                                <label for="serviceTag" style="margin-top: 10px;">Service Tag</label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" id="serviceTag">
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                              <label for="productGroup" style="margin-top: 10px;">Product Group</label>
+                                              <div class="input-group">
+                                                  <input type="text" class="form-control" id="productGroup">
+                                              </div>
+											</div> 
+											<div class="mb-3">
+                                              <label for="productType" style="margin-top: 10px;">Product Type</label>
+                                              <div class="input-group">
+                                                  <input type="text" class="form-control" id="productType">
+                                              </div>
+											</div> 
+											<div class="mb-3">
+                                              <label for="issueDescription" style="margin-top: 10px;">Issue Description</label>
+                                              <div class="input-group">
+                                                  <input type="textarea" class="form-control" id="issueDescription">
+                                              </div>
+											</div> 
+                                  <hr class="mb-4">
+                                  <div class="mb-3">
+                                      <a  id="liveagent_button_online_Test" class="enabledButton btn btn-primary btn-lg btn-block"  onclick="startPartnerPortalChat()">Start New Chat</a>
+                                  </div>
+                                </form>
+                              
+                </div>
+            </div>
+        </div>
+    </div>
+   
+      <style type='text/css'>
+        .embeddedServiceHelpButton .helpButton .uiButton {
+          background-color: #007db8;
+          font-family: "Roboto Regular", sans-serif;
+        }
+        .embeddedServiceHelpButton .helpButton .uiButton:focus {
+          outline: 1px solid #007db8;
+        }
+      </style>
+      <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
+      <script src="../../sfdcPartnerPortal.js"></script>
+      <script type='text/javascript'>
+     
+      function startPartnerPortalChat(){
+        let partnerPortalDetails =  {
+					language: document.getElementById("ppLanguage").value,
+                    serviceTag: document.getElementById("serviceTag").value,
+                    productType:  document.getElementById("productType").value,
+					productGroup:  document.getElementById("productGroup").value,
+                    issueDescription: document.getElementById("issueDescription").value,
+					portalType: document.getElementById("portalType").value        
+        };
+		
+        triggerPartnerPortalSnapin(partnerPortalDetails);
+      }
+      
+  
+    </script>
+</body>
+</html>

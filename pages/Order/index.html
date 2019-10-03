@@ -103,6 +103,7 @@
                     DPId: DPId,
                     irnNumber: DPId,
                     viewType: viewType,//General/Order/CustomerNumber/PONumber
+                    issueType:"PC Slow",
                    /* issueType :"Cool working",
                     firstName:"Bishav",
                     lastName:"Rajbhandari",
@@ -121,7 +122,7 @@
                     snapInInitURL: 'https://dellservices--DEV3.my.salesforce.com',
                     snapInJs: "https://service.force.com/embeddedservice/5.0/esw.min.js",
                     snapInLAURL: 'https://dev3-dellservices.cs8.force.com/LASnapIn'
-              
+
 
                     ////////
                     //SIT-1
@@ -156,7 +157,7 @@
                 DPId: "Purchase ID",
                 irnNumber : "IRN Number",
                 optional: "(optional)",
-                lblOrdNoOptional : "Order Number or Purchase ID (optional)",
+                lblOrdNoOptional : "Order Number or Purchase ID",
                 characters:"characters",
                 issueDescriptionLength:"20",
                 customerPrivacyDesc:"\u003cb\u003eBisahv Your privacy is important to us.\u003c/b\u003e We will only use your information to process your request. We will not share it with anyone. To learn more about how we use and protect your data, see the \u003ca target=\u0027_blank\u0027 href=\u0027//www.dell.com/learn/policies-privacy\u0027\u003eDell Privacy Statement.\u003c/a\u003e",
@@ -178,7 +179,13 @@
 
       }
       
-
+      function dellmetricsTrack(elementId,Message){
+        // alert("Element Id = "+elementId+" and Message is '"+Message+"'");
+        if(Message)
+            console.log("PropValue = "+elementId+": "+Message);
+        else
+             console.log("PropValue = "+elementId);
+     }
   
     </script>
 </body>
