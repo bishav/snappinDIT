@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../../main.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="main.js"></script> -->
+    <style type='text/css'>
+            .embeddedServiceHelpButton .helpButton .uiButton { background-color: #005290; font-family: "Salesforce Sans", sans-serif; }
+            .embeddedServiceHelpButton .helpButton .uiButton:focus { outline: 1px solid #005290; }
+            @font-face {
+            font-family: 'Salesforce Sans';
+            src: url('https://www.sfdcstatic.com/system/shared/common/assets/fonts/SalesforceSans/SalesforceSans-Regular.woff') format('woff'),
+    url('https://www.sfdcstatic.com/system/shared/common/assets/fonts/SalesforceSans/SalesforceSans-Regular.ttf') format('truetype');
+            }
+    </style>
+
+
+
+     
+</head>
+<body>
+    <nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" href="#">
+        <img src="../../assets/DellTech_Logo_Prm_Blue.jpg" class="d-inline-block align-top" alt="">
+    </a>
+</nav>
+<div class="navigationLink">
+    <h3 style="color: #fff;text-align: center; margin-left: 20px; font-size: 20px;">CARE Training</h3>
+</div>    
+    <div id="prechatFormCanvas" class="new-chat" style="margin-top: 20px;">
+        <div class="row justify-content-md-center">
+                <div class="col-lg-6 col-md-8 col-sm-12 order-md-1  border rounded">
+                                <form class="needs-validation" novalidate="">
+                                    <div class="mb-3">
+                                        <label for="Country">Country</label>
+                                        <select class="custom-select d-block w-100" id="QueueButtonId" required="">
+                                                <option value="5731P000000TSSR">Australia-New</option>
+                                                <option value="5731P000000TSST">Canada.EN </option>
+                                                <option value="5731P000000TSXF">Brazil-PT.T1.CHAT</option>
+                                                <option value="5731P000000TSSV">Latin America -Mexico</option>
+                                              </select>
+                                      </div>
+                                    <div class="mb-3">
+                                        <label for="viewType">View Type</label>
+                                        <select class="custom-select d-block w-100" id="viewType" required="">
+                                                <option>Order</option>
+                                                <option>GeneralChat</option>
+                                              </select>
+                                      </div>
+                                      <div class="mb-3">
+                                          <label for="viewType">Issue Type</label>
+                                          <select class="custom-select d-block w-100" id="issueType" required="">
+                                                  <option>PC Slow</option>
+                                                  <option>Monitor Not working</option>
+                                                </select>
+                                        </div>
+                                        <div class="mb-3">
+                                                <label for="serviceTag" style="margin-top: 10px;">Order Number </label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" id="orderNumber">
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                              <label for="serviceTag" style="margin-top: 10px;">BUID</label>
+                                              <div class="input-group">
+                                                  <input type="text" class="form-control" id="BUID">
+                                              </div>
+                                          </div> 
+                                  <hr class="mb-4">
+                                  <div class="mb-3">
+                                      <a  style="color: #fff;" id="liveagent_button_online_Test" class="enabledButton btn btn-primary btn-lg btn-block"  onclick="startOrderChat()">Start New Chat</a>
+                                  </div>
+                                </form>       
+                </div>
+            </div>
+        </div>
+    </div>
+   
+      <style type='text/css'>
+        .embeddedServiceHelpButton .helpButton .uiButton {
+          background-color: #007db8;
+          font-family: "Roboto Regular", sans-serif;
+        }
+        .embeddedServiceHelpButton .helpButton .uiButton:focus {
+          outline: 1px solid #007db8;
+        }
+      </style>
+      <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
+      <script src="../../mainChat.js"></script>
+      <script src="../../orderSupportChatV2.js"></script>
+      <script type='text/javascript'>
+     
+      function startOrderChat(){
+        let orderNumber = document.getElementById("orderNumber").value,
+        buttonID = document.getElementById("QueueButtonId").value,
+        BUID = document.getElementById("BUID").value,
+        viewType = document.getElementById('viewType').value,
+        issueType = document.getElementById('issueType').value,
+        DPId = document.getElementById("BUID").value;
+        var orderSnapinObject =  {
+                    BUID: BUID,
+                    orderNumber: orderNumber,
+                    customerNumber: orderNumber,
+                    poNumber: orderNumber,
+                    DPId: DPId,
+                    irnNumber: DPId,
+                    viewType: viewType,//General/Order/CustomerNumber/PONumber
+                    issueType:issueType,
+                    buttonId: buttonID,
+
+                    //SIT-6
+                    snapInInitURL: 'https://dellservices--SIT6.my.salesforce.com',
+                    snapInLAURL: 'https://sit6-dellservices.cs22.force.com/LASnapIn',
+                    organizationId: '00D17000000D93b',
+                    componentName: 'CARE_Snap_In',
+                    domainName: "bishav.github.io",//"localhost",
+                    baseLiveAgentContentURL: 'https://c.la1-c1cs-ia2.salesforceliveagent.com/content',
+                    deploymentId: '5720b000000GneC',
+                    baseLiveAgentURL: 'https://d.la1-c1cs-ia2.salesforceliveagent.com/chat',
+                    LiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I1P0000008OJDUA2_16c8a8a3e09',
+                    
+                    serviceForceURL: "https://service.force.com",
+                    snapInJs: "https://service.force.com/embeddedservice/5.0/esw.min.js"
+                    ////////
+                    //SIT-1
+                    ///////
+                    /*
+                    baseLiveAgentContentURL: 'https://c.la3-c2cs-phx.salesforceliveagent.com/content',
+                    deploymentId: '5720b000000GneC',
+                    baseLiveAgentURL: 'https://d.la3-c2cs-phx.salesforceliveagent.com/chat',
+                    LiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I0j0000008OKkEAM_16b2c5b6ad5',             
+                    componentName: "CARE_Snap_In",
+                    domainName:"localhost",
+                    organizationId: '00D0j000000D0v9',
+                    serviceForceURL: "https://service.force.com",
+                    snapInInitURL:  'https://dellservices--SIT1.my.salesforce.com',
+                    snapInJs: "https://service.force.com/embeddedservice/5.0/esw.min.js",
+                    snapInLAURL:  'https://sit1-dellservices.cs53.force.com/LASnapIn'
+                   */
+                    
+        };
+        var orderSnapinLabelObj = {      
+                firstName:"First Name",
+                lastName:"Last Name",
+                emailAddress:"Email Address",
+                phoneNumber:"Primary Phone Number",
+                issueDescription:"Issue Description",
+                startChat:"Start Chat",
+                orderPreChatHeader: "Please fill out the form below",
+                customerNumber: "Customer Number",
+                poNumber: "PO Number",
+                orderNumber: "Order Number",
+                DPId: "Purchase ID",
+                irnNumber : "IRN Number",
+                optional: "(optional)",
+                lblOrdNoOptional : "Order Number or Purchase ID",
+                characters:"characters",
+                issueDescriptionLength:"20",
+                customerPrivacyDesc:"\u003cb\u003eBisahv Your privacy is important to us.\u003c/b\u003e We will only use your information to process your request. We will not share it with anyone. To learn more about how we use and protect your data, see the \u003ca target=\u0027_blank\u0027 href=\u0027//www.dell.com/learn/policies-privacy\u0027\u003eDell Privacy Statement.\u003c/a\u003e",
+                emailValidation:"Invalid Email Validation",
+                firstNameValidation: "First name required",
+                lastNameValidation:"Last name required",
+                emailRequiredValidation:"Email name required",
+                phoneRequiredValidation:"Phone name required",
+                issueDescriptionValidation:"Descritpion name required",
+         //     phoneValidation:preChatModel.PhoneValidation,
+                chatUnavailableMessage:"Sorry, no agents are available at this moment.",
+                chatHeader:"Chat Now",
+                blocklistEmails:"noreply@Dell.com|testing@dell.com|cool@dell.com|ok@dell.com",
+                issueType :"Issue Type"
+
+        };
+      
+        triggerOrderSnapin(orderSnapinObject, orderSnapinLabelObj);
+
+      }
+      
+      function dellmetricsTrack(elementId,Message){
+        // alert("Element Id = "+elementId+" and Message is '"+Message+"'");
+        if(Message)
+            console.log("PropValue = "+elementId+": "+Message);
+        else
+             console.log("PropValue = "+elementId);
+     }
+  
+    </script>
+</body>
+</html>

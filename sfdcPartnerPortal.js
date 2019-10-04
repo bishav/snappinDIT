@@ -18,13 +18,13 @@
 function triggerPartnerPortalSnapin(partnerPortalDetails) {
     try {
 			let sfdcSnapinDetails = {
-					buttonId: '5730x000000Catz',//'5730b0000008PZr',
+					buttonId: '5730x000000Catz',//'5730x000000CauE',
 					baseLiveAgentContentURL: 'https://c.la2-c1cs-ord.salesforceliveagent.com/content',
 					deploymentId: '5720b000000CbfS',
 					baseLiveAgentURL: 'https://d.la2-c1cs-ord.salesforceliveagent.com/chat',
 					eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I0x0000008OPzEAM_16d81041603',             
                     componentName: "Partner_Portal_Snap_ins",
-                    domainName:"localhost",//"bishav.github.io",//
+                    domainName:"https://solutions.one.dell.com",//"localhost",//"bishav.github.io",//
                     organizationId: "00D0x0000000WEw",
                     serviceForceURL: "https://service.force.com",
                     snapInInitURL: 'https://dellservices--Chat.my.salesforce.com',
