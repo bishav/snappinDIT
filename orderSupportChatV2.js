@@ -209,7 +209,7 @@ function initOrderSnapin(orderSnapinObject, orderSnapinLabelObj){
                     "transcriptFields": ["Chat_Source__c"]
                 },{
                     "label": "Order Number",
-                    //"value": sendOrderNumber,
+                    "value": sendOrderNumber,
                     "transcriptFields": ["Order_Number__c"]
                 }, {
                     "label": translatedLabels.issueDesc,
