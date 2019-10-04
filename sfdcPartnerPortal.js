@@ -22,7 +22,7 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
                 buttonQueueId = '5730x000000Catz';
             else
                 buttonQueueId = '5730x000000CauE';  
-
+            
 			let sfdcSnapinDetails = {
 					buttonId: buttonQueueId,
 					baseLiveAgentContentURL: 'https://c.la2-c1cs-ord.salesforceliveagent.com/content',
