@@ -123,7 +123,36 @@ function initResumeChat(){
 				deploymentId: '5720b000000GneC',
 				buttonId: '5730b000000CbhY',
 				baseLiveAgentURL: 'https://d.la2-c1cs-ord.salesforceliveagent.com/chat',
-				LiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I0b000000blJOEAY_16520ef73c5'
+                LiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I0b000000blJOEAY_16520ef73c5',
+                
+
+
+//SIT1 resume chat
+domainName:"bishav.github.io",//"localhost",//
+LiveAgentDevName: "EmbeddedServiceLiveAgent_Parent04I0b000000blJOEAY_16520ef73c5",
+buttonId: "5730j0000004CP1",
+componentName: "Snap_Ins_Resume_chat",
+deploymentId: "5720b000000GneC",
+firstName: "Bnr",
+issueType: "NETWORKING",
+lastName: "test",
+organizationId: "00D0j000000D0v9",
+routingModel: "SkillBased",
+serviceForceURL: "https://service.force.com",
+serviceTag: "562LNBN",
+skillIds: ["5730j0000004CQs", "5730j0000004CRq", "5730j0000004CRM"],
+snapInInitURL: "https://dellservices--SIT1.my.salesforce.com",
+snapInJs: "https://dellservices--SIT1.my.salesforce.com/embeddedservice/5.0/esw.min.js",
+snapInLAURL: "https://sit1-dellservices.cs53.force.com/LASnapIn",
+snapinResumeChatInitiated: false,
+srNumber: "100003258",
+
+baseLiveAgentContentURL: 'https://c.la3-c2cs-phx.salesforceliveagent.com/content',
+baseLiveAgentURL: 'https://d.la3-c2cs-phx.salesforceliveagent.com/chat'
+
+
+//baseLiveAgentContentURL: "https://c.la3-c2cs-dfw.salesforceliveagent.com/content",
+//baseLiveAgentURL: "https://d.la3-c1cs-phx.salesforceliveagent.com/chat"
     }     
      triggerResumeSnapin(snapInObject);
 }

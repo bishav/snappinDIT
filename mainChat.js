@@ -492,16 +492,22 @@ function custPreFormValidation(preChatlableObject) {
         acceptForm = cusPreChatInvalidEmail(emailDOM, preChatlableObject);
 
     if (document.getElementById("ErrMsg_cusPreChat-FirstName")) {
+        var format = /[0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/; //FY20-1102 DEFECT 7534877
+        if(checkErrMsgValidation(firstNameDOM, "FirstName",format)) //FY20-1102 DEFECT 7534877
         acceptForm = false;
     } else if (!firstNameDOM.value)
         acceptForm = cusPreChatEleIsEmpty(firstNameDOM, preChatlableObject.firstNameValidation);
 
     if (document.getElementById("ErrMsg_cusPreChat-LastName")) {
+        var format = /[0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/; //FY20-1102 DEFECT 7534877
+        if(checkErrMsgValidation(lastNameDOM, "LastName",format)) //FY20-1102 DEFECT 7534877
         acceptForm = false;
     } else if (!lastNameDOM.value)
         acceptForm = cusPreChatEleIsEmpty(lastNameDOM, preChatlableObject.lastNameValidation);
 
     if (document.getElementById("ErrMsg_cusPreChat-Phone")) {
+        var format = /^[0-9-]*$/; //FY20-1102 DEFECT 7534877
+        if(checkErrMsgValidation(phoneDOM, "Phone",format)) //FY20-1102 DEFECT 7534877
         acceptForm = false;
     } else if (!phoneDOM.value)
         acceptForm = cusPreChatEleIsEmpty(phoneDOM, preChatlableObject.phoneRequiredValidation);
@@ -514,6 +520,18 @@ function custPreFormValidation(preChatlableObject) {
     if (acceptForm === undefined) acceptForm = true;
     return acceptForm;
 }
+//FY20-1102 DEFECT 7534877 [START]		
+function checkErrMsgValidation(fieldEle, fieldName,format){
+    if((fieldEle.value && format.test(fieldEle.value) == true) || (!fieldEle.value)){
+        return true;
+    }else{
+        let idValue = "ErrMsg_cusPreChat-"+fieldName;
+        let element = document.getElementById(idValue);
+		element.parentNode.removeChild(element);
+		return false;
+    }
+}
+//FY20-1102 DEFECT 7534877 [END]
 function cusPreChatEleIsEmpty(domElement, requiredValue) {
     cusPreChatErrorMsgPlaceholder(domElement, requiredValue);
     return false;
@@ -993,7 +1011,7 @@ function triggerResumeSnapin(snapInObject) {
                 embedded_svc.settings.language = translatedLabels.language;
                 embedded_svc.settings.enabledFeatures = ['LiveAgent'];
                 embedded_svc.settings.entryFeature = 'LiveAgent';
-                embedded_svc.settings.storageDomain = snapInObject.domainName;
+                //embedded_svc.settings.storageDomain = snapInObject.domainName;
                 embedded_svc.settings.defaultMinimizedText = 'Chat Now';
                 embedded_svc.settings.extraPrechatFormDetails = [{
                     "label": "Delta Sr",
@@ -1321,10 +1339,10 @@ function snapInClickListners() {
                     case "uiButton no-hover helpButtonEnabled":
                         if (document.querySelector(".helpButtonEnabled #helpButtonSpan > .message").innerText == "Chat Now") {
                             snapInCurrentPage = null;
-                        if (document.getElementById("cusPreChatSnapinDom").display === "none") //FY20-1101 STORY 7128491
+                        if (document.getElementById("cusPreChatSnapinDom") && document.getElementById("cusPreChatSnapinDom").display === "none") //FY20-1101 STORY 7128491
                             callDellmetricsTrack("890.220.001", "StartsChat for " + snapinChatGlobalServiceTag + "|" + snapinChatGlobalIssueType + "|" + snapinChatGlobalProductName);
 
-                        } else if (document.getElementById("cusPreChatSnapinDom").display === "none") //FY20-1101 STORY 7128491
+                        } else if (document.getElementById("cusPreChatSnapinDom") && document.getElementById("cusPreChatSnapinDom").display === "none") //FY20-1101 STORY 7128491
                             callDellmetricsTrack("890.220.001", "AgentOffline for " + snapinChatGlobalServiceTag + "|" + snapinChatGlobalIssueType + "|" + snapinChatGlobalProductName);
                         break;
                     default:
