@@ -63,9 +63,21 @@
                                         <div class="mb-3">
                                                 <label for="serviceTag" style="margin-top: 10px;">Service Tag</label>
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" id="serviceTag">
+                                                    <input type="text" class="form-control" id="serviceTag" value="Q17A027">
                                                 </div>
                                             </div>
+                                            <div class="mb-3">
+                                              <label for="serviceTag" style="margin-top: 10px;">Case Number</label>
+                                              <div class="input-group">
+                                                  <input type="text" class="form-control" id="caseNumber" value="22248896">
+                                              </div>
+                                          </div>
+                                          <div class="mb-3">
+                                            <label for="serviceTag" style="margin-top: 10px;">SR</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="srNumber">
+                                            </div>
+                                        </div>
                                             <div class="mb-3">
                                               <label for="productGroup" style="margin-top: 10px;">Product Group</label>
                                               <div class="input-group">
@@ -116,6 +128,8 @@
 					productGroup:  document.getElementById("productGroup").value,
           issueDescription: document.getElementById("issueDescription").value,
           portalType: document.getElementById("portalType").value,  
+          deltaSR: document.getElementById("srNumber").value,
+          caseNumber: document.getElementById("caseNumber").value,
           firstName: "bishav",
           lastName: "Rajbhandari",
           email:"bishav_namrshing_rajb@dell.com"      

@@ -66,9 +66,9 @@ function initSnapIn(snapInObject) {
 }
 
 function triggerSnapin(snapInObject, preChatlableObject) {
-    try{
+    try {
         if (!(sessionStorage.getItem("isChatBotActive") != null && sessionStorage.getItem("isChatBotActive") == "true")) {//Check if chat bot is Active
-            if (typeof (isSnapinInitiated) == "function" && isSnapinInitiated()){
+            if (typeof (isSnapinInitiated) == "function" && isSnapinInitiated()) {
                 let orderSnapinObject = sendGlobalSnapinCareObjToJson();
                 initiateChatCARE(orderSnapinObject);//orderRetain Chat
             } else if (snapInObject === undefined && history.length > 1 && snapinChatGlobalObjNotEmpty()) {
@@ -79,10 +79,10 @@ function triggerSnapin(snapInObject, preChatlableObject) {
                     initSnapIn(snapInObject);
                 }
             } else if (snapInObject) {
-                if (!snapInObject.snapinButtonClicked) {
+                if (!snapInObject.snapinButtonClicked && !snapinChatGlobalObjNotEmpty()) {//FY20-1102: DEFECT 7534816  Retain chat is not working properly
                     eleExist('.embeddedServiceHelpButton', hideDomObject);
                     //eleExist('.embeddedServiceSidebar', hideDomObject);
-                    eleExistWithVariable('.modalContainer  .dockableContainer .sidebarBody .activeFeature .featureBody .embeddedServiceSidebarState .prechatUI', hideOtherDomObject,'.embeddedServiceSidebar');
+                    eleExistWithVariable('.modalContainer  .dockableContainer .sidebarBody .activeFeature .featureBody .embeddedServiceSidebarState .prechatUI', hideOtherDomObject, '.embeddedServiceSidebar');
                     saveGlobalSnapinObjToSession(snapInObject);
                     //snapinChatInitiatedState(true); //Fix for defect [7030965]
                     //eleExist('.helpButtonEnabled #helpButtonSpan > .message', chatClick); //DEFECT 7030965 for Bishav comment this
@@ -98,7 +98,7 @@ function triggerSnapin(snapInObject, preChatlableObject) {
             }
         }
 
-    }catch(e){
+    } catch (e) {
         console.log("Error in: " + e);
     }
 }
@@ -107,7 +107,7 @@ function customChatNotCreated() {
     let snapinExists = document.querySelector(".embeddedServiceSidebar .dockableContainer");
     let chatStarted = document.querySelector(".dockableContainer .activeFeature .embeddedServiceLiveAgentStateChat .chasitorControls .chasitorText");
     if (chatStarted)
-        return false;        
+        return false;
     else if (cusPreChatHelpBtn && window.getComputedStyle(cusPreChatHelpBtn).display != "none" && !snapinExists) {
         prechatSettingForEmc();//STORY 7193456: FY201101
         document.getElementById("cusPreChat-helpButtonEnabled").click();
@@ -118,7 +118,7 @@ function customChatNotCreated() {
 function appendCustPreChatSnapinDom(snapInObject, preChatlableObject) {
     if (!document.getElementById('cusPreChatSnapinDom')) {
         //STORY 7193456: FY201101[START]
-        if("isEmcProduct" in snapInObject && snapInObject.isEmcProduct){
+        if ("isEmcProduct" in snapInObject && snapInObject.isEmcProduct) {
             preChatlableObject.serviceTag = preChatlableObject.serialNumber;
         }
         //STORY 7193456: FY201101[END]
@@ -141,7 +141,7 @@ function appendCustPreChatSnapinDom(snapInObject, preChatlableObject) {
         }
 
         if (snapInObject.isCoveoSearchEnabled === true) {
-            httpCoveoGetAsync(snapInObject.coveoViewUrl + "?isheaderRequired=false", apendToAHoverDiv);          
+            httpCoveoGetAsync(snapInObject.coveoViewUrl + "?isheaderRequired=false", apendToAHoverDiv);
             coveoInit(snapInObject, preChatlableObject);
         }
     } else {
@@ -152,9 +152,9 @@ function appendCustPreChatSnapinDom(snapInObject, preChatlableObject) {
         //document.getElementById("cusPreChatSnapinDom").style.display = 'block';
         //if (document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton').className != "uiButton helpButtonEnabled")
         //    agentsOfflinePostChatForm();
-		let element = document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton');
-        if(element && !element.classList.contains("helpButtonEnabled"))
-			agentsOfflinePostChatForm();
+        let element = document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton');
+        if (element && !element.classList.contains("helpButtonEnabled"))
+            agentsOfflinePostChatForm();
 
     }
     prechatSettingForEmc();//STORY 7193456: FY201101
@@ -162,32 +162,32 @@ function appendCustPreChatSnapinDom(snapInObject, preChatlableObject) {
 }
 
 //STORY 7193456: FY201101[START]
-function prechatSettingForEmc(){
+function prechatSettingForEmc() {
     makeIdReadWrite("cusPreChat-FirstName");
     makeIdReadWrite("cusPreChat-LastName");
     makeIdReadWrite("cusPreChat-Email");
     makeIdReadWrite("cusPreChat-Phone");
-    if("isEmcProduct" in snapInObject && snapInObject.isEmcProduct){
+    if ("isEmcProduct" in snapInObject && snapInObject.isEmcProduct) {
         makeIdReadOnlyIfHasVal("cusPreChat-FirstName");
         makeIdReadOnlyIfHasVal("cusPreChat-LastName");
         makeIdReadOnlyIfHasVal("cusPreChat-Email");
         makeIdReadOnlyIfHasVal("cusPreChat-Phone");
     }
 }
-function makeIdReadOnlyIfHasVal(id){
-	if(document.getElementById(id) && document.getElementById(id).value){
-		document.getElementById(id).readOnly = true;
-	}else{
-		makeIdReadWrite(id)
-	}
+function makeIdReadOnlyIfHasVal(id) {
+    if (document.getElementById(id) && document.getElementById(id).value) {
+        document.getElementById(id).readOnly = true;
+    } else {
+        makeIdReadWrite(id)
+    }
 }
-function makeIdReadWrite(id){
+function makeIdReadWrite(id) {
     document.getElementById(id).readOnly = false;
 }
 //STORY 7193456: FY201101[END]
 //STORY 6779542: Contact Us: Snapin prechat Form -Problem Description [START]
-function checkIfIssueDescIsOptional(snapInObject, preChatlableObject){
-    if("issueVal" in snapInObject && snapInObject.issueVal != "" && snapInObject.issueVal != null && snapInObject.issueVal != undefined && snapInObject.issueVal !='None' && document.getElementById("Issue_Description_Cust_Label")){
+function checkIfIssueDescIsOptional(snapInObject, preChatlableObject) {
+    if ("issueVal" in snapInObject && snapInObject.issueVal != "" && snapInObject.issueVal != null && snapInObject.issueVal != undefined && snapInObject.issueVal != 'None' && document.getElementById("Issue_Description_Cust_Label")) {
         removeDomElementbyId("issueDescIsOptional");
         let optionalLabel = document.createElement('span');
         optionalLabel.id = 'issueDescIsOptional';
@@ -195,7 +195,7 @@ function checkIfIssueDescIsOptional(snapInObject, preChatlableObject){
         let Issue_Description_Cust_Label = document.getElementById("Issue_Description_Cust_Label");
         Issue_Description_Cust_Label.appendChild(optionalLabel);
         removeDomElementbyId("ErrMsg_cusPreChat-IssueDescription");
-    }else{
+    } else {
         removeDomElementbyId("issueDescIsOptional");
     }
 }
@@ -288,7 +288,7 @@ function GetCoveoPopoverResult(timeout) {
                         return $('#searchCoveo').html()
                     },
                 });
-            $(document).on("click", ".popover .close", function () {
+            $(document).off('click', '.popover .close').on("click", ".popover .close", function () {
                 $(this).parents(".popover").popover('hide');
                 callDellmetricsTrack("890.222.134");
             });
@@ -463,7 +463,7 @@ function custPreChatShowAdditionalDetailsInUi(snapInObject, preChatlableObject) 
     let topFieldValues;
     checkIfIssueDescIsOptional(snapInObject, preChatlableObject);//STORY 6779542: Contact Us: Snapin prechat Form -Problem Description
     //STORY 7193456: FY201101[START]
-    if("isEmcProduct" in snapInObject && snapInObject.isEmcProduct){
+    if ("isEmcProduct" in snapInObject && snapInObject.isEmcProduct) {
         preChatlableObject.serviceTag = preChatlableObject.serialNumber;
     }
     //STORY 7193456: FY201101[END]
@@ -493,22 +493,22 @@ function custPreFormValidation(preChatlableObject) {
 
     if (document.getElementById("ErrMsg_cusPreChat-FirstName")) {
         var format = /[0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/; //FY20-1102 DEFECT 7534877
-        if(checkErrMsgValidation(firstNameDOM, "FirstName",format)) //FY20-1102 DEFECT 7534877
-        acceptForm = false;
+        if (checkErrMsgValidation(firstNameDOM, "FirstName", format)) //FY20-1102 DEFECT 7534877
+            acceptForm = false;
     } else if (!firstNameDOM.value)
         acceptForm = cusPreChatEleIsEmpty(firstNameDOM, preChatlableObject.firstNameValidation);
 
     if (document.getElementById("ErrMsg_cusPreChat-LastName")) {
         var format = /[0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/; //FY20-1102 DEFECT 7534877
-        if(checkErrMsgValidation(lastNameDOM, "LastName",format)) //FY20-1102 DEFECT 7534877
-        acceptForm = false;
+        if (checkErrMsgValidation(lastNameDOM, "LastName", format)) //FY20-1102 DEFECT 7534877
+            acceptForm = false;
     } else if (!lastNameDOM.value)
         acceptForm = cusPreChatEleIsEmpty(lastNameDOM, preChatlableObject.lastNameValidation);
 
     if (document.getElementById("ErrMsg_cusPreChat-Phone")) {
         var format = /^[0-9-]*$/; //FY20-1102 DEFECT 7534877
-        if(checkErrMsgValidation(phoneDOM, "Phone",format)) //FY20-1102 DEFECT 7534877
-        acceptForm = false;
+        if (checkErrMsgValidation(phoneDOM, "Phone", format)) //FY20-1102 DEFECT 7534877
+            acceptForm = false;
     } else if (!phoneDOM.value)
         acceptForm = cusPreChatEleIsEmpty(phoneDOM, preChatlableObject.phoneRequiredValidation);
 
@@ -521,14 +521,14 @@ function custPreFormValidation(preChatlableObject) {
     return acceptForm;
 }
 //FY20-1102 DEFECT 7534877 [START]		
-function checkErrMsgValidation(fieldEle, fieldName,format){
-    if((fieldEle.value && format.test(fieldEle.value) == true) || (!fieldEle.value)){
+function checkErrMsgValidation(fieldEle, fieldName, format) {
+    if ((fieldEle.value && format.test(fieldEle.value) == true) || (!fieldEle.value)) {
         return true;
-    }else{
-        let idValue = "ErrMsg_cusPreChat-"+fieldName;
-        let element = document.getElementById(idValue);
-		element.parentNode.removeChild(element);
-		return false;
+    } else {
+        var idValue = "ErrMsg_cusPreChat-" + fieldName;
+        var element = document.getElementById(idValue);
+        element.parentNode.removeChild(element);
+        return false;
     }
 }
 //FY20-1102 DEFECT 7534877 [END]
@@ -596,9 +596,9 @@ function closeCustPrechat(preChatlableObject) {
 }
 function maximizeCustPrechat() {
     //BNR
-	let element = document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton');
-    if((element && !element.classList.contains("helpButtonEnabled")) || !element){
-    //if ((document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton') && document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton').className != "uiButton helpButtonEnabled") || (!document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton'))) {
+    let element = document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton');
+    if ((element && !element.classList.contains("helpButtonEnabled")) || !element) {
+        //if ((document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton') && document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton').className != "uiButton helpButtonEnabled") || (!document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton'))) {
         agentsOfflinePostChatForm();
     } else {
         document.getElementById("cusPreChat-sidebarLoadingIndicator").style.display = 'none';
@@ -634,17 +634,17 @@ function removecustFormValues() {
     else
         return false;
 }*/
- 
+
 ///Dont retain chat if false DEFECT 6944128 [Searching for another solution]
 function snapinChatGlobalObjNotEmpty() {
     snapInObjectGlobal = sendGlobalSnapinObjToJson();
     if (snapInObjectGlobal != null && ("snapinChatInitiated" in snapInObjectGlobal) && snapInObjectGlobal.snapinChatInitiated)
-			return true;
-	else{
+        return true;
+    else {
         if (snapInObjectGlobal != null)
-		    sessionStorage.removeItem("snapInObjectSession");
-		return false;
-	}     
+            sessionStorage.removeItem("snapInObjectSession");
+        return false;
+    }
 }
 function saveGlobalSnapinObjToSession(snapInObject) {
     if (snapInObject) {
@@ -697,16 +697,16 @@ function removeLoaderIn10() {
     //BNR
     setTimeout(function () {
         //let cusPreChatSnapinDom = document.getElementById("cusPreChatSnapinDom");
-		let cusPreChatSnapinDom = document.getElementById("cusPreChat-sidebarLoadingIndicator");
+        let cusPreChatSnapinDom = document.getElementById("cusPreChat-sidebarLoadingIndicator");
         if (cusPreChatSnapinDom && window.getComputedStyle(cusPreChatSnapinDom).display != 'none') {
             document.getElementById("cusPreChatSnapinDom").style.display = 'none';
             if (document.querySelector(".embeddedServiceHelpButton"))
                 document.querySelector(".embeddedServiceHelpButton").style.display = 'block';
         }
         //BNR
-		let element = document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton');
-        if(element && !element.classList.contains("helpButtonEnabled")) 
-        //if (document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton').className != "uiButton helpButtonEnabled")
+        let element = document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton');
+        if (element && !element.classList.contains("helpButtonEnabled"))
+            //if (document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton').className != "uiButton helpButtonEnabled")
             snapinChatInitiatedState(false);
         hideResumeSnapinLoader();
     }, 30000);
@@ -714,7 +714,7 @@ function removeLoaderIn10() {
 function snapinChatInitiatedState(booleanValue) {
     //BNR
     snapInObject = sendGlobalSnapinObjToJson();
-    if(snapInObject){
+    if (snapInObject) {
         snapInObject.snapinChatInitiated = booleanValue;
         saveGlobalSnapinObjToSession(snapInObject);
     }
@@ -729,7 +729,7 @@ function custPrechatInitiateChat(snapInObject, preChatlableObject) {
         removecustFormValues();
         custPreFormShowIssueDetailsCharRemaining(preChatlableObject);
         snapInObject = sendGlobalSnapinObjToJson();
-        if (("snapinChatInitiated" in snapInObject && snapInObject.snapinChatInitiated) || ("snapinButtonClicked" in snapInObject && snapInObject.snapinButtonClicked) )
+        if (("snapinChatInitiated" in snapInObject && snapInObject.snapinChatInitiated) || ("snapinButtonClicked" in snapInObject && snapInObject.snapinButtonClicked))
             eleExistWithVariable('.helpButtonEnabled #helpButtonSpan > .message', chatClick);
         eleExistWithVariable('.embeddedServiceSidebar .startButton', chatStarted, snapInObject);
     }
@@ -748,7 +748,7 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
     embedded_svc.settings.enabledFeatures = ['LiveAgent'];
     embedded_svc.settings.entryFeature = 'LiveAgent';
     //STORY 6929894[START]
-    if ("routingModel" in snapInObject && snapInObject.routingModel && snapInObject.routingModel.toLowerCase() === "skillbased"){
+    if ("routingModel" in snapInObject && snapInObject.routingModel && snapInObject.routingModel.toLowerCase() === "skillbased") {
         embedded_svc.settings.fallbackRouting = snapInObject.skillIds;
     }
     //STORY 6929894[END]
@@ -760,7 +760,7 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
 
     //STORY 7193324: FY201101[START]
     let assetFieldName = "Name";
-    if (snapInObject.isEmcProduct){
+    if (snapInObject.isEmcProduct) {
         assetFieldName = "External_ID__c";
         embedded_svc.settings.extraPrechatFormDetails = [{
             "label": translatedLabels.firstName,
@@ -774,11 +774,11 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
         }, {
             "label": translatedLabels.emailAdd,
             "transcriptFields": ["Email__c"]
-        },{
+        }, {
             "label": "Subject",
-            "value": snapInObject.chatSeverity +" "+ snapInObject.issueVal,
+            "value": snapInObject.chatSeverity + " " + snapInObject.issueVal,
             "transcriptFields": ["Issue__c"]
-        },{
+        }, {
             "label": "Service Tag",
             "value": snapInObject.cpid,
             "transcriptFields": ["Service_Tag__c"]
@@ -795,41 +795,41 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
             "transcriptFields": ["Serial_Number__c"]
         }
         ];
-    }else
-    //STORY 7193324: FY201101[END]
-    embedded_svc.settings.extraPrechatFormDetails = [{
-        "label": translatedLabels.firstName,
-        "transcriptFields": ["FirstName__c"]
-    }, {
-        "label": translatedLabels.lastName,
-        "transcriptFields": ["LastName__c"]
-    }, {
-        "label": translatedLabels.primPhone,
-        "transcriptFields": ["ContactNumber__c"]
-    }, {
-        "label": translatedLabels.emailAdd,
-        "transcriptFields": ["Email__c"]
-    }, {
-        "label": "Subject",
-        "value": snapInObject.issueVal,
-        "transcriptFields": ["Issue__c"]
-    }, 
-    //Story #6614459: Skill Based: Resume Chat Option [START]
-    {
-        "label": "SubIssue Key",
-        "value": getIssueTypeKey(snapInObject),
-        "transcriptFields": ["Issue_Key__c"]
-    },
-    //Story #6614459: Skill Based: Resume Chat Option [END]
-    {
-        "label": "Service Tag",
-        "value": snapInObject.serviceTag,
-        "transcriptFields": ["Service_Tag__c"]
-    }, {
-        "label": translatedLabels.issueDesc,
-        "transcriptFields": ["Description__c"]
-    }
-    ];
+    } else
+        //STORY 7193324: FY201101[END]
+        embedded_svc.settings.extraPrechatFormDetails = [{
+            "label": translatedLabels.firstName,
+            "transcriptFields": ["FirstName__c"]
+        }, {
+            "label": translatedLabels.lastName,
+            "transcriptFields": ["LastName__c"]
+        }, {
+            "label": translatedLabels.primPhone,
+            "transcriptFields": ["ContactNumber__c"]
+        }, {
+            "label": translatedLabels.emailAdd,
+            "transcriptFields": ["Email__c"]
+        }, {
+            "label": "Subject",
+            "value": snapInObject.issueVal,
+            "transcriptFields": ["Issue__c"]
+        },
+        //Story #6614459: Skill Based: Resume Chat Option [START]
+        {
+            "label": "SubIssue Key",
+            "value": getIssueTypeKey(snapInObject),
+            "transcriptFields": ["Issue_Key__c"]
+        },
+        //Story #6614459: Skill Based: Resume Chat Option [END]
+        {
+            "label": "Service Tag",
+            "value": snapInObject.serviceTag,
+            "transcriptFields": ["Service_Tag__c"]
+        }, {
+            "label": translatedLabels.issueDesc,
+            "transcriptFields": ["Description__c"]
+        }
+        ];
     embedded_svc.settings.extraPrechatInfo = [{
         "entityFieldMaps": [{
             "doCreate": false,
@@ -929,7 +929,7 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
     embedded_svc.addEventHandler("onChatEndedByAgent", function (data) {
         snapinChatInitiatedState(false);
     });
-    embedded_svc.addEventHandler("onChasitorMessage", function(data) {
+    embedded_svc.addEventHandler("onChasitorMessage", function (data) {
         snapinChatInitiatedState(true);//Fix for defect 7030965
     });
     //embedded_svc.addEventHandler("onChatRequestSuccess", function(data) {
@@ -973,10 +973,10 @@ function togglePrechatAndSnapin(targetNode) {
 }
 */
 //Story #6614459: Skill Based: Resume Chat Option [START]
-function getIssueTypeKey(snapInObject){
-    if ("issueType" in snapInObject && snapInObject.issueType){
+function getIssueTypeKey(snapInObject) {
+    if ("issueType" in snapInObject && snapInObject.issueType) {
         return snapInObject.issueType;
-    }else{
+    } else {
         return "";
     }
 }
@@ -1002,7 +1002,7 @@ function triggerResumeSnapin(snapInObject) {
                 embedded_svc.settings.displayHelpButton = true;
                 //STORY 6929894[START]
                 if ("routingModel" in snapInObject && snapInObject.routingModel && snapInObject.routingModel.toLowerCase() === "skillbased")
-                    embedded_svc.settings.fallbackRouting = snapInObject.skillIds;  
+                    embedded_svc.settings.fallbackRouting = snapInObject.skillIds;
                 //STORY 6929894[END]
                 if ("language" in snapInObject)
                     translatedLabels = translation(snapInObject.language);
@@ -1113,9 +1113,9 @@ function resumeChatClick(eleSelector, findingEle) {
 function chatStarted(eleSelector, findingEle, snapInObject) {
     try {
         //BNR
-		let element = document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton');
-        if(element && element.classList.contains("helpButtonEnabled")) 
-        //if (document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton').className === "uiButton helpButtonEnabled")
+        let element = document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton');
+        if (element && element.classList.contains("helpButtonEnabled"))
+            //if (document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton').className === "uiButton helpButtonEnabled")
             changePrechatValues(snapInObject, clickSnapinChatBtn);
         else {
             agentsOfflinePostChatForm();
@@ -1124,8 +1124,8 @@ function chatStarted(eleSelector, findingEle, snapInObject) {
         function clickSnapinChatBtn() {
             snapInObject = sendGlobalSnapinObjToJson();
             //if ("snapinChatInitiated" in snapInObject && snapInObject.snapinChatInitiated) {
-                document.querySelector(eleSelector).click();
-                clearInterval(findingEle);
+            document.querySelector(eleSelector).click();
+            clearInterval(findingEle);
             /*}else
                 console.log("working");
             */
@@ -1339,8 +1339,8 @@ function snapInClickListners() {
                     case "uiButton no-hover helpButtonEnabled":
                         if (document.querySelector(".helpButtonEnabled #helpButtonSpan > .message").innerText == "Chat Now") {
                             snapInCurrentPage = null;
-                        if (document.getElementById("cusPreChatSnapinDom") && document.getElementById("cusPreChatSnapinDom").display === "none") //FY20-1101 STORY 7128491
-                            callDellmetricsTrack("890.220.001", "StartsChat for " + snapinChatGlobalServiceTag + "|" + snapinChatGlobalIssueType + "|" + snapinChatGlobalProductName);
+                            if (document.getElementById("cusPreChatSnapinDom") && document.getElementById("cusPreChatSnapinDom").display === "none") //FY20-1101 STORY 7128491
+                                callDellmetricsTrack("890.220.001", "StartsChat for " + snapinChatGlobalServiceTag + "|" + snapinChatGlobalIssueType + "|" + snapinChatGlobalProductName);
 
                         } else if (document.getElementById("cusPreChatSnapinDom") && document.getElementById("cusPreChatSnapinDom").display === "none") //FY20-1101 STORY 7128491
                             callDellmetricsTrack("890.220.001", "AgentOffline for " + snapinChatGlobalServiceTag + "|" + snapinChatGlobalIssueType + "|" + snapinChatGlobalProductName);
@@ -1414,7 +1414,7 @@ function pageObserverForProp20(eleSelector) {
         else if (snapInChatStarted)
             snapInCurrentPage = "snapInChatStarted";
         else if (snapInChatEnded)
-        snapInCurrentPage = "snapInChatEnded";
+            snapInCurrentPage = "snapInChatEnded";
         else if (snapInConfirmationDialoug)
             snapInCurrentPage = "snapInConfirmationDialoug";
         else if (snapInhelpBtnDisabled) {
@@ -1454,7 +1454,7 @@ function pageObserverForProp20(eleSelector) {
                         callDellmetricsTrack("890.220.013");
                         hideResumeSnapinLoader();
                         snapinChatInitiatedState(true);
-                    }else if (snapInChatEnded && snapInCurrentPage != "snapInChatEnded") {//Fix for defect 7030965
+                    } else if (snapInChatEnded && snapInCurrentPage != "snapInChatEnded") {//Fix for defect 7030965
                         snapInCurrentPage = "snapInChatEnded";
                         snapinQueueLoaded();
                         hideResumeSnapinLoader();
@@ -1466,12 +1466,12 @@ function pageObserverForProp20(eleSelector) {
                         //Fix for on click of (x) button from End Chat confirmation Page: FYI we have created a SFDC case 23872982 [START] 
                         let closeBtn = document.querySelector(".modalContainer .dockableContainer .embeddedServiceSidebarHeader .closeButton.headerItem");
                         closeBtn.addEventListener("click", function () {
-                            if(!snapInConfirmationDialoug){
+                            if (!snapInConfirmationDialoug) {
                                 snapinChatInitiatedState(false);
-                            }    
+                            }
                         });
                         //Fix for on click of (x) button from End Chat confirmation Page: FYI we have created a SFDC case 23872982 [END] 
-                        
+
                         hideResumeSnapinLoader();
                     } else if (snapInEmbeddedServiceHelpBtn && window.getComputedStyle(snapInEmbeddedServiceHelpBtn).display === 'block') {
 
@@ -1642,32 +1642,41 @@ function eleExist(eleSelector, callbackFunc) {
 /////////////////////////////ChatBot Code///////////////////////////////////
 
 function triggerChatBot(chatBotObject) {
-    console.log(chatBotObject);
-    //If user clicks on Start chat
-    openBotPrechatform(chatBotObject);
-
+    consoleLog(chatBotObject);
+    onChatBotServiceTagChange();
+    // Story 6535377 : Resume chat starts
+    if ("applicationContext" in chatBotObject && chatBotObject.applicationContext === "ChatBot-ResumeChat") {
+        //Need a loader and remove loader once the chatbot windo is visible.
+        chatBotObject.c_firstName = chatBotObject.First_Name,
+            chatBotObject.c_lastName = chatBotObject.Last_Name,
+            chatBotObject.c_email = chatBotObject.Email,
+            chatBotObject.c_phoneNo = chatBotObject.Phone,
+            chatBotObject.c_serviceTag = chatBotObject.Service_Tag;
+        saveGlobalSnapinBotObjToSession(chatBotObject);
+        eleExistWithVariable('.embeddedServiceSidebar .startButton', ChatBotStarted, chatBotObject);
+    } else {
+        //Story 6535377 : Resume chat Ends 
+        //If user clicks on Start chat
+        chatBotObject.StepName_Manual_Bot = 'Details';
+        openBotPrechatform(chatBotObject);
+    }
     //Post eSupport's prechat form initiate chat in the background
     initiateChatBot(chatBotObject);
     HideLoadingImage();
 }
 function clickStartChatBot(eleSelector, findingEle) {
-    if(eleSelector)
     document.querySelector(eleSelector).click();
-    if(findingEle)
     clearInterval(findingEle);
 }
 function initiateChatBot(chatBotObject) {
-    //Clickstart chatr
-    eleExist(".embeddedServiceHelpButton .helpButton .helpButtonEnabled", clickStartChatBot);
-    OmniChatBotTrackerListner();
-    AddElementToPage();
-    //console.log(chatBotObject);
     if (chatBotObject == undefined && sessionStorage.getItem("chatBotObjectSession") != null) {
         chatBotObject = JSON.parse(sessionStorage.getItem("chatBotObjectSession"));
     } else {
         sessionStorage.setItem("chatBotObjectSession", JSON.stringify(chatBotObject));
-        //sessionStorage.setItem("isChatBotActive", 'true');
+        eleExist(".embeddedServiceHelpButton .helpButton .helpButtonEnabled", clickStartChatBot);
     }
+    OmniChatBotTrackerListner();
+    AddElementToPage();
     var initESW = function (gslbBaseURL) {
         //FIX for CSS related issue in Chat bot[START]
         if (!document.getElementById('chatBotStyle')) {
@@ -1687,11 +1696,6 @@ function initiateChatBot(chatBotObject) {
         //FIX for CSS related issue in Chat bot[END]
         snapinBotPageObserver('body');
         embedded_svc.settings.displayHelpButton = false;
-        //embedded_svc.settings.language = '';
-        //embedded_svc.settings.avatarImgURL = '';
-        //embedded_svc.settings.prechatBackgroundImgURL = '';
-        //embedded_svc.settings.waitingStateBackgroundImgURL = '';
-        //embedded_svc.settings.smallCompanyLogoImgURL = '';
         embedded_svc.settings.extraPrechatFormDetails = [
 
             { "label": "Transcript From", "value": "ChatBot", "transcriptFields": ["Transcript_From__c"], "displayToAgent": true },
@@ -1722,13 +1726,16 @@ function initiateChatBot(chatBotObject) {
             { "label": "isDsdnstalled", "value": chatBotObject.isDsdnstalled, "transcriptFields": ["isDsdnstalled__c"], "displayToAgent": true },
             { "label": "isHwAlert", "value": chatBotObject.isHwAlert, "transcriptFields": ["isHwAlert__c"], "displayToAgent": true },
             { "label": "isSwAlert", "value": chatBotObject.isSwAlert, "transcriptFields": ["isSwAlert__c"], "displayToAgent": true },
-            { "label": "Application_Context", "value": chatBotObject.applicationContext, "transcriptFields": ["Application_Context__c"], "displayToAgent": true },
+            { "label": "Application_Context", /*"value": chatBotObject.applicationContext,*/ "transcriptFields": ["Application_Context__c"]/*, "displayToAgent": true */ },
+            { "label": "StepName_Manual_Bot", "value": chatBotObject.StepName_Manual_Bot, "transcriptFields": ["StepName_Manual_Bot__c"], "displayToAgent": true },
+            { "label": "Agent_QueueName", "value": chatBotObject.Agent_QueueName, "transcriptFields": ["Agent_QueueName__c"], "displayToAgent": true },
         ];
         var firstNameVal = null,
             lastNameVal = null,
             emailVal = null,
             primePhoneVal = null,
-            ServiceTagVal = null;
+            ServiceTagVal = null,
+            applicationContextval = null;
 
         if ("First_Name" in chatBotObject)
             firstNameVal = chatBotObject.First_Name;
@@ -1755,6 +1762,10 @@ function initiateChatBot(chatBotObject) {
         else
             ServiceTagVal = "1234";
 
+        if ("applicationContext" in chatBotObject)
+            applicationContextval = chatBotObject.applicationContext;
+        else
+            applicationContextval = "testing";
 
 
         embedded_svc.settings.prepopulatedPrechatFields = {
@@ -1762,24 +1773,25 @@ function initiateChatBot(chatBotObject) {
             LastName: lastNameVal,
             Email: emailVal,
             Phone: primePhoneVal,
-            Service_Tag__c: ServiceTagVal
+            Service_Tag__c: ServiceTagVal,
+            Application_Context__c: applicationContextval
         };
 
         embedded_svc.settings.extraPrechatInfo = [{
             "entityFieldMaps": [{
-                "doCreate": true,
+                "doCreate": false,
                 "doFind": true,
                 "fieldName": "LastName",
                 "isExactMatch": true,
                 "label": "Last Name"
             }, {
-                "doCreate": true,
+                "doCreate": false,
                 "doFind": true,
                 "fieldName": "FirstName",
                 "isExactMatch": true,
                 "label": "First Name"
             }, {
-                "doCreate": true,
+                "doCreate": false,
                 "doFind": true,
                 "fieldName": "Email",
                 "isExactMatch": true,
@@ -1813,13 +1825,24 @@ function initiateChatBot(chatBotObject) {
                     "fieldName": "AssetId",
                     "isExactMatch": true,
                     "label": "Asset"
+                }, {
+                    "entityFieldMaps": [{
+                        "doCreate": false,
+                        "doFind": false,
+                        "fieldName": "External_ID__c",//"Application_Context__c",//
+                        "isExactMatch": false,
+                        "label": "Application_Context"
+                    }
+                    ],
+                    "entityName": "Case",
+                    "saveToTranscript": "Application_Context__c"
                 }
             ],
             "entityName": "Case"
             //  "saveToTranscript": ""
         }
         ];
-        embedded_svc.settings.chatbotAvatarImgURL = 'https://i.dell.com/is/image/DellContent/content/dam/global-site-design/product_images/esupport/icons/digital_resolution_ux_avatar_sm_v1.png';
+        embedded_svc.settings.chatbotAvatarImgURL = 'https://i.dell.com/is/image/DellContent/content/dam/global-site-design/product_images/esupport/icons/bot_icon_40x40.png.png';
         embedded_svc.settings.defaultMinimizedText = "Get Started";
         embedded_svc.settings.enabledFeatures = ['LiveAgent'];
         embedded_svc.settings.entryFeature = 'LiveAgent';
@@ -1859,41 +1882,52 @@ function initiateChatBot(chatBotObject) {
 }
 function ResgisterChatBotHandler() {
     embedded_svc.addEventHandler("onAgentMessage", function (data) {
-        console.log('onAgentMessage event triggerred');
+        consoleLog('onAgentMessage event triggerred');
         bindHandler();
         sessionStorage.setItem("isChatBotActive", 'true');
+        isAgentEventTriggered = true;
     });
     embedded_svc.addEventHandler("onChatEndedByChasitor", function (data) {
-        console.log('onChatEndedByChasitor event triggerred');
+        consoleLog('onChatEndedByChasitor event triggerred');
         CloseAndClearChatBot();
         SetToDefaultValues();
     });
     embedded_svc.addEventHandler("onChatTransferSuccessful", function (data) {
-        console.log('onChatTransferSuccessful event triggerred');
+        consoleLog('onChatTransferSuccessful event triggerred');
         EnableChatBotInput();
     });
     embedded_svc.addEventHandler("onChatEndedByAgent", function (data) {
-        console.log('onChatEndedByAgent event triggerred');
+        consoleLog('onChatEndedByAgent event triggerred');
         CloseAndClearChatBot();
         SetToDefaultValues();
     });
     embedded_svc.addEventHandler("onConnectionError", function (data) {
-        console.log('onConnectionError event triggerred');
+        consoleLog('onConnectionError event triggerred');
         CloseAndClearChatBot();
         SetToDefaultValues();
     });
     embedded_svc.addEventHandler("onIdleTimeoutOccurred", function (data) {
-        console.log('onIdleTimeoutOccurred event triggerred');
+        consoleLog('onIdleTimeoutOccurred event triggerred');
         CloseAndClearChatBot();
         SetToDefaultValues();
     });
 
     embedded_svc.addEventHandler("onChatRequestSuccess", function (data) {
+        consoleLog('onChatRequestSuccess event triggerred');
+        SetToDefaultValues();
+        sessionStorage.removeItem('GR_MessageCount');
+        sessionStorage.removeItem('isChatBotActive');
         StoreChatBotSessionKey(data.liveAgentSessionKey);
         callDellmetricsTrackForBot("880.130.863", data.liveAgentSessionKey);
     });
 
+    embedded_svc.addEventHandler("onChatReconnectSuccessful", function (data) {
+        consoleLog('onChatReconnectSuccessful event triggerred');
+        //ProcessChildMessageWithSucess();
+    });
+
     embedded_svc.addEventHandler("onChatEstablished", function (data) {
+        consoleLog('onChatEstablished event triggerred');
         callDellmetricsTrackForBot("880.130.864", data.liveAgentSessionKey);
         setTimeout(function () {
             var hamburgerMenuIconDOM = document.querySelector(".slds-dropdown-trigger_click .slds-button.slds-button_icon.slds-button_icon-container-more");
@@ -1913,7 +1947,7 @@ function ResgisterChatBotHandler() {
     });
 
     embedded_svc.addEventHandler("onChasitorMessage", function (data) {
-
+        consoleLog('onChasitorMessage event triggerred');
 
         setTimeout(function () {
             var nodes = document.querySelectorAll(".chatContent");
@@ -1970,7 +2004,7 @@ function OmniChatBotTrackerListner() {
         });
 
     } catch (e) {
-        console.log(e);
+        consoleLog(e);
 
     }
 }
@@ -2061,7 +2095,7 @@ function snapinBotQueueLoaded() {
             serviceSidebar.style.display = "block";
         }
     } catch (e) {
-        console.log('Exception at method name snapinBotQueueLoaded :' + e);
+        consoleLog('Exception at method name snapinBotQueueLoaded :' + e);
     }
 }
 function ChatBotStarted(eleSelector, findingEle, chatBotObject) {
@@ -2070,7 +2104,7 @@ function ChatBotStarted(eleSelector, findingEle, chatBotObject) {
         document.querySelector(" .embeddedServiceSidebar .dockableContainer .prechatUI  .embeddedServiceSidebarForm .embeddedServiceSidebarButton").click();
         clearInterval(findingEle);
     } catch (e) {
-        console.log("Error in:" + e);
+        consoleLog("Error in:" + e);
     }
 }
 function changeBotPrechatValues(snapInObject) {
@@ -2088,8 +2122,12 @@ function changeBotPrechatValues(snapInObject) {
         } else if (prechatField.name === "Service_Tag__c") {
             prechatField.value = snapInObject.Service_Tag
         }
+        else if (prechatField.name === "Application_Context__c") {
+
+            prechatField.value = snapInObject.applicationContext
+        }
         else
-            console.log("ValueName" + prechatField.name);
+            consoleLog("ValueName" + prechatField.name);
     });
     state.set("v.prechatFields", prechatFields);
 }
@@ -2221,7 +2259,7 @@ function cusBotPreChatErrorMsgPlaceholder(domElement, message) {
         el.className = "cusPreChat-has-error cusPreChat-uiInput";
         referenceNode.parentNode.insertBefore(el, referenceNode.nextSibling);
     } catch (e) {
-        console.log(e);
+        consoleLog(e);
     }
 
 }
@@ -2408,7 +2446,7 @@ function snapinBotPageObserver(eleSelector) {
             childList: true,
             subtree: true
         });
-    } catch (e) { console.log('Error in Observer - ' + e) }
+    } catch (e) { consoleLog('Error in Observer - ' + e) }
 }
 /*****Obesrve ChatBot Page [END]*****/
 
@@ -2420,8 +2458,13 @@ function chatBotClick(eleSelector, findingEle) {
         }
         clearInterval(findingEle);
     } catch (e) {
-        console.log("Error in:" + e);
+        consoleLog("Error in:" + e);
     }
 }
 /****CODE FOR DIRECT LOADING OF PRECHAT FORM ENDS*********/
-
+function onChatBotServiceTagChange() {
+    let element = document.getElementById("cusBotPreChatSnapinDom");
+    if (element) {
+        element.parentNode.removeChild(element);
+    }
+}

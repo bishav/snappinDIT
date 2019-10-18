@@ -39,9 +39,11 @@ function triggerOrderSnapin(orderSnapinObject, orderSnapinLabelObj){
          //If the form is already avilable[END]
         }
     }
-    assignCarePropVal("890.130.142","890.130.153");// FY20-1101 STORY 7089672
+    //assignCarePropVal("890.130.142","890.130.153");// FY20-1101 STORY 7089672
     //initiate Chat
     initiateChatCARE(orderSnapinObject, orderSnapinLabelObj);
+    assignCarePropVal("890.130.142","890.130.153");// FY20-1101 STORY 7089672
+    
 }
 
 function createCusCAREpreChatSnapinDom(orderSnapinObject, orderSnapinLabelObj){

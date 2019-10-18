@@ -67,7 +67,7 @@
                                           </div> 
                                   <hr class="mb-4">
                                   <div class="mb-3">
-                                      <a  id="liveagent_button_online_Test" class="enabledButton btn btn-primary btn-lg btn-block"  onclick="startOrderChat()">Start New Chat</a>
+                                      <a  id="liveagent_button_online_Test" class="enabledButton btn btn-primary btn-lg btn-block"  onclick="startOrderChat()" data-metrics="{&quot;btnname&quot;:&quot;Chat&quot;,&quot;appcode&quot;:&quot;890.130.152&quot;,&quot;ordernumber&quot;:&quot;125600246&quot;}">Start New Chat</a>
                                   </div>
                                 </form>
                               
@@ -91,6 +91,7 @@
       <script type='text/javascript'>
      
       function startOrderChat(){
+        console.log("890.130.152");
         let orderNumber = document.getElementById("orderNumber").value,
         BUID = document.getElementById("BUID").value,
         viewType = document.getElementById('viewType').value,

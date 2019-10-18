@@ -15,22 +15,9 @@
 })();
 
 
-function triggerPartnerPortalSnapin(partnerPortalDetails) {
+function triggerPartnerPortalSnapin(partnerPortalDetails, sfdcSnapinDetails) {
     try {            
-			let sfdcSnapinDetails = {
-					buttonId: routingConfig(partnerPortalDetails.language),
-					baseLiveAgentContentURL: 'https://c.la2-c1cs-ord.salesforceliveagent.com/content',
-					deploymentId: '5720b000000CbfS',
-					baseLiveAgentURL: 'https://d.la2-c1cs-ord.salesforceliveagent.com/chat',
-					eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I0x0000008OPzEAM_16d81041603',             
-                    componentName: "Partner_Portal_Snap_ins",
-                   // domainName:"https://solutions.one.dell.com",//"localhost",//
-                    organizationId: "00D0x0000000WEw",
-                    serviceForceURL: "https://service.force.com",
-                    snapInInitURL: 'https://dellservices--Chat.my.salesforce.com',
-                    snapInJs: "https://service.force.com/embeddedservice/5.0/esw.min.js",
-                    snapInLAURL: 'https://chat-dellservices.cs95.force.com/LASnapIn', 
-		}
+			
             var initESW = function (gslbBaseURL) {
                 embedded_svc.settings.displayHelpButton = false;//true;
                 embedded_svc.settings.language = partnerPortalDetails.language;
@@ -45,14 +32,6 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 						"label": "Chat Source",
 						"value": 'PP',
 						"transcriptFields": ["Chat_Source__c"]
-					},{
-						"label":  "Delta Sr",
-						"value": partnerPortalDetails.deltaSR,
-						"transcriptFields": ["Delta_Sr__c"]
-                    },{
-						"label":  "Case Number",
-						"value": partnerPortalDetails.caseNumber,
-						"transcriptFields": ["Case_Number__c"]
 					},{
 						"label": "Service Tag",
 						"value": partnerPortalDetails.serviceTag,
@@ -119,21 +98,10 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 				}
 				];
 				embedded_svc.addEventHandler("onChatRequestSuccess", function (data) {
-                    $("body").on('DOMNodeRemoved', function(e) {
-                        if(e.target.className){
-                            className = e.target.className.split(" ");
-                            if(className[0] === "modalContainer")
-                                location.reload();
-                        }	
-                    });
-                /*
                     let bgLoader = document.getElementById('overlay');
                     if(bgLoader)
                         bgLoader.style.display = "none"; 
-                */
-               $('.overlay-content').hide();
                 });
-
                 embedded_svc.init(sfdcSnapinDetails.snapInInitURL, sfdcSnapinDetails.snapInLAURL, gslbBaseURL, sfdcSnapinDetails.organizationId, sfdcSnapinDetails.componentName, {
                     baseLiveAgentContentURL: sfdcSnapinDetails.baseLiveAgentContentURL,
                     deploymentId: sfdcSnapinDetails.deploymentId,
