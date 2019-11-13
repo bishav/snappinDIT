@@ -138,11 +138,13 @@ function chatClick(eleSelector, findingEle, waitCounter) {
             else if (waitCounter > 20){
                 //alert("Sorry! No agents are currently online.");
                 clearInterval(findingEle);
-                 
+				alert("No Agents Avilable");
+                /* 
                 var path = window.location.href;
                 var result = path.substring(0, path.lastIndexOf('/'));
                 console.log(result);
-                window.open(result+"/closed.html", "_self"); 
+                window.open(result+"/closed.html", "_self");
+				*/
             }else
                 console.log("Searching for Agents = " + waitCounter);
     } catch (e) {

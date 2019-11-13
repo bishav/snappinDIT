@@ -137,7 +137,7 @@ function closeCustCAREPrechat(orderSnapinLabelObj){
 
     let errorMsgs = document.querySelectorAll(".cusPreChat-has-error");
     errorMsgs.forEach(function (errorMsg) {
-        removeDomElementbyId(errorMsg)
+        removeDomElementbyId(errorMsg.id);// FY20-1102 DEFECT 7204725
     });
     removecustCareFormValues();
     custCarePreFormShowIssueDetailsCharRemaining(orderSnapinLabelObj);
