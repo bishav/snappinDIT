@@ -377,8 +377,9 @@ function routingConfig_DPP(partnerPortalDetails){
 		  default:
 			//buttonID = "5730R0000004Ff5";//GL_DB_INTB_ENT_CH_EN_BLND_SRVR_CPSD
 			buttonID = "5731P000000TSWV";//SIT 2
-			}
+            }
 		//STORY 7248769 : FY20_Channels : Chat : Partner Portal : VCE_Create Queues on Lightning  [END]
-	}
+    }
+    buttonID = "5738A0000008Om2";
 	return buttonID;
 }
