@@ -81,7 +81,9 @@ function triggerPartnerPortalSnapin_DPP(partnerPortalDetails) {
 					},{
 						"label": "Service Tag",
 						"value": partnerPortalDetails.serviceTag,
-						"transcriptFields": ["Asset__c"]
+						"transcriptFields": ["Asset__c"],
+						"displayToAgent": false
+
 					},{
 						"label": "DPId",
 						"value": partnerPortalDetails.dpid,

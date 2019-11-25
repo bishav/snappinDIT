@@ -81,7 +81,8 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 					},{
 						"label": "Service Tag",
 						"value": partnerPortalDetails.serviceTag,
-						"transcriptFields": ["Asset__c"]
+						"transcriptFields": ["Asset__c"],
+						"displayToAgent": false
 					},
 					{
 						"label": "Subject",
@@ -372,5 +373,6 @@ function routingConfig(partnerPortalDetails){
 			}
 		//STORY 7248769 : FY20_Channels : Chat : Partner Portal : VCE_Create Queues on Lightning  [END]
 	}
+	buttonID = "5738A0000008Om2";
 	return buttonID;
 }
