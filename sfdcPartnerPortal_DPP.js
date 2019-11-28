@@ -71,8 +71,12 @@ function triggerPartnerPortalSnapin_DPP(partnerPortalDetails) {
                 embedded_svc.settings.directToButtonRouting = routingConfig_DPP(partnerPortalDetails);
 
 				 embedded_svc.settings.extraPrechatFormDetails = [{
-						"label": "Chat Source",
+						"label": "Type",
 						"value": 'Partner',
+						"transcriptFields": ["Type__c"]
+					},{
+						"label": "Chat Source",
+						"value": chatSourceValDPP(partnerPortalDetails.productGroup),
 						"transcriptFields": ["Chat_Source__c"]
 					},{
 						"label": "Service Tag",
@@ -136,7 +140,7 @@ function triggerPartnerPortalSnapin_DPP(partnerPortalDetails) {
 					},{
 						"label":  "Case Number",
 						"value": partnerPortalDetails.caseNumber,
-						"transcriptFields": ["Case_number__C"]
+						"transcriptFields": ["Case_Number__c"]
 					},{
 						"label":  "Product",
 						"value": partnerPortalDetails.productName,
@@ -231,7 +235,10 @@ function triggerPartnerPortalSnapin_DPP(partnerPortalDetails) {
         console.log("Error in: " + e);
     }
 }
-
+function chatSourceValDPP(productGroup){
+	var returnValue = "Partner-"+productGroup;
+	return returnValue;
+}
 //Click on chat button
 function chatClick_DPP(eleSelector, findingEle, waitCounter) {
     try {

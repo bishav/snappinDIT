@@ -170,9 +170,9 @@ function initOrderSnapin(orderSnapinObject, orderSnapinLabelObj){
         embedded_svc.settings.enabledFeatures = ['LiveAgent'];
         embedded_svc.settings.entryFeature = 'LiveAgent';
         if ("language" in orderSnapinObject)
-            translatedLabels = translation(orderSnapinObject.language);
+            translatedLabels = translationCare(orderSnapinObject.language);
         else
-            translatedLabels = translation("en");
+            translatedLabels = translationCare("en");
         embedded_svc.settings.language = translatedLabels.language;
         
         let issueVal
@@ -855,7 +855,9 @@ if (snapInCareObject) {
     sessionStorage.setItem("snapInCareObjectSession", snapInCareObjectGlobal);
 }
 }
-function translation(language) {
+function translationCare(language) {
+    this.primPhone = "Primary Phone Number";
+    this.issueDesc = "Issue Description";
 if (language == "de") {
     this.issue = "Issue";
     this.firstName = "Vorname";
@@ -915,8 +917,8 @@ if (language == "de") {
     this.firstName = "Voornaam";
     this.lastName = "Achternaam";
     this.emailAdd = "E-mail";
-    this.primPhone = "Primair telefoonnummer";
-    this.issueDesc = "Probleem Beschrijving";
+    //this.primPhone = "Primair telefoonnummer";
+    //this.issueDesc = "Probleem Beschrijving";
     this.characters = "characters";
     this.language = "nl";
 } else if (language == "fr") {
@@ -924,8 +926,8 @@ if (language == "de") {
     this.firstName = "Prénom";
     this.lastName = "Nom";
     this.emailAdd = "Adresse e-mail";
-    this.primPhone = "Numéro de téléphone principal";
-    this.issueDesc = "Description du problème";
+    //this.primPhone = "Numéro de téléphone principal";
+    //this.issueDesc = "Description du problème";
     this.characters = "characters"
     this.language = "fr";
 }else {

@@ -39,9 +39,9 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 					baseLiveAgentURL: 'https://d.la2-c2cs-ph2.salesforceliveagent.com/chat',
 					eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I8A0000004CE8UAM_16e214e1296',
 					snapInJs: 'https://dellservices--DEV2.my.salesforce.com/embeddedservice/5.0/esw.min.js',
-					/*
+					
 					//SIT2
-					snapInInitURL: 'https://dellservices--SIT2.my.salesforce.com',
+					/*snapInInitURL: 'https://dellservices--SIT2.my.salesforce.com',
 					snapInLAURL: 'https://sit2-dellservices.cs36.force.com/LASnapIn',
 					organizationId: '00D2h0000008aOa',
 					componentName: 'Partner_Snap_In',
@@ -58,6 +58,7 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 					logTypeMultiPickList: convertLogToMultiPickList(partnerPortalDetails),
 					concatenatedDescription: concatenatDescription(partnerPortalDetails),
 					casePriority: convertToPriority(partnerPortalDetails.caseSeverity),
+					validFirstName: firstNameValidator(partnerPortalDetails),
 					serviceForceURL: "https://service.force.com",
 		}
             var initESW = function (gslbBaseURL) {
@@ -71,8 +72,12 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
                 embedded_svc.settings.directToButtonRouting = routingConfig(partnerPortalDetails);
 
 				 embedded_svc.settings.extraPrechatFormDetails = [{
-						"label": "Chat Source",
+						"label": "Type",
 						"value": 'Partner',
+						"transcriptFields": ["Type__c"]
+					},{
+						"label": "Chat Source",
+						"value": chatSourceVal(partnerPortalDetails.productGroup),
 						"transcriptFields": ["Chat_Source__c"]
 					},{
 						"label": "Service Tag",
@@ -94,12 +99,14 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 						"transcriptFields": ["Description__c"]
 					},{
 						"label":  "Description",
-						"value": partnerPortalDetails.issueDescription,
+						//"value": partnerPortalDetails.issueDescription,
+						"value": sfdcSnapinDetails.concatenatedDescription,
 						"transcriptFields": ["Collaborate_Description__c"]
 					},{
                         "label": "First Name",
                         "name": "FirstName",
-                        "value": partnerPortalDetails.firstName,
+						//"value": partnerPortalDetails.firstName,
+						"value": sfdcSnapinDetails.validFirstName,
                         "transcriptFields": ["FirstName__c"],
                         "displayToAgent": true
                     },{
@@ -323,8 +330,19 @@ function convertToPriority(caseSeverity){
 	}
 	return returnVal;
 }
-
 //Routing Config
+
+function chatSourceVal(productGroup){
+	var returnValue = "Partner-"+productGroup;
+	return returnValue;
+}
+function firstNameValidator(partnerPortalDetails){
+	if (partnerPortalDetails.firstName && (partnerPortalDetails.firstName != null || partnerPortalDetails.firstName != undefined  || partnerPortalDetails.firstName != "" || partnerPortalDetails.firstName != " ")){
+		return partnerPortalDetails.firstName;
+	}else{
+		return partnerPortalDetails.loginId;
+	}
+}
 function routingConfig(partnerPortalDetails){
 	console.log(partnerPortalDetails);
 	var buttonID;

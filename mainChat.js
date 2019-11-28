@@ -741,28 +741,26 @@ function custPrechatInitiateChat(snapInObject, preChatlableObject) {
 }
 
 //FY20-1102 Avilability and Business Hr Chack [START]
-function checkSnapinQueueStatus() {
-    var returnValue;
-    function httpGetAgentAvailability(theUrl) {
-
-        try {
-            var xmlHttp = new XMLHttpRequest();
-            xmlHttp.onreadystatechange = function () {
-                if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-                    returnValue = xmlHttp.responseText;
-            }
-            xmlHttp.open("GET", theUrl, false); // true for asynchronous 
-            xmlHttp.send(null);
-        } catch (e) {
-            console.log("Error in: " + e);
-        }
-    }
-
-    if (snapInObject.checkQueueStatusInBizHoursUrl && (snapInObject.checkQueueStatusInBizHoursUrl != "" || snapInObject.checkQueueStatusInBizHoursUrl != null || snapInObject.checkQueueStatusInBizHoursUrl != undifined)) {
-        httpGetAgentAvailability(snapInObject.checkQueueStatusInBizHoursUrl + "?chatHours=" + escape(snapInObject.hoursOfOperation) + "&timeZone=" + escape(snapInObject.timeZone) + "&buttonId=" + snapInObject.buttonId);
-        return returnValue;
-    } else
-        return 1;
+function checkSnapinQueueStatus(snapInObject) {	
+    var returnValue;	
+    function httpGetAgentAvailability(theUrl) {	
+        try {	
+            var xmlHttp = new XMLHttpRequest();	
+            xmlHttp.onreadystatechange = function () {	
+                if (xmlHttp.readyState == 4 && xmlHttp.status == 200)	
+                    returnValue = xmlHttp.responseText;	
+            }	
+            xmlHttp.open("GET", theUrl, false); // true for asynchronous 	
+            xmlHttp.send(null);	
+        } catch (e) {	
+            console.log("Error in: " + e);	
+        }	
+    }	
+    if (snapInObject.checkQueueStatusInBizHoursUrl && snapInObject.hoursOfOperation && snapInObject.timeZone && (snapInObject.checkQueueStatusInBizHoursUrl != "" || snapInObject.checkQueueStatusInBizHoursUrl != null || snapInObject.checkQueueStatusInBizHoursUrl != undifined) && (snapInObject.hoursOfOperation != "" || snapInObject.hoursOfOperation != null || snapInObject.hoursOfOperation != undifined) && (snapInObject.timeZone != "" || snapInObject.timeZone != null || snapInObject.timeZone != undifined)) {	
+        httpGetAgentAvailability(snapInObject.checkQueueStatusInBizHoursUrl + "?chatHours=" + escape(snapInObject.hoursOfOperation) + "&timeZone=" + escape(snapInObject.timeZone) + "&buttonId=" + snapInObject.buttonId);	
+        return returnValue;	
+    } else	
+        return 1;	
 } 
 //FY20-1102 Avilability and Business Hr Chack [END]
 function initOriginalESW(gslbBaseURL, snapInObject) {
