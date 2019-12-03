@@ -101,24 +101,24 @@
                                         <label for="queue">Queue</label>
                                         <select class="custom-select d-block w-100" id="queue" required="">
                                                 <option value="">Choose...</option>
-                                                <option value="5731P000000TSVgQAO">GCC AP Client PS SBD/NBD</option>
-                                                <option value="5731P000000TSVhQAO">GCC AP Enterprise PS SBD/NBD</option>
-												<option value="5731P000000TSViQAO">GCC AP Non PS SBD/NBD</option>
-												<option value="5731P000000TSVjQAO">GCC CN  Client PS SBD/NBD</option>
-												<option value="5731P000000TSVkQAO">GCC CN Enterprise PS SBD/NBD</option>
-												<option value="5731P000000TSVlQAO">GCC CN Non PS SBD/NBD</option>
-												<option value="5731P000000TSVmQAO">GCC EMEA SBD/NBD</option>
-												<option value="5731P000000TSVnQAO">GCC JP Client PS SBD/NBD</option>
-												<option value="5731P000000TSVoQAO">GCC JP Enterprise PS SBD/NBD</option>
-												<option value="5731P000000TSVpQAO">GCC JP Non PS SBD/NBD</option>
-												<option value="5731P000000TSVqQAO">GCC LA Client Basic NBD</option>
-												<option value="5731P000000TSVrQAO">GCC LA Client PS NBD</option>
-												<option value="5731P000000TSVsQAO">GGCC LA Enterprise NBD</option>
-												<option value="5731P000000TSVtQAO">GCC LA Enterprise SBD</option>
-												<option value="5731P000000TSVuQAO">GCC US/CA Client Basic NBD</option>
-												<option value="5731P000000TSVvQAO">GCC US/CA Client PS NBD</option>
-												<option value="5731P000000TSVwQAO">GCC US/CA Enterprise NBD</option>
-												<option value="5731P000000TSVxQAO">GCC US/CA Enterprise SBD</option>
+                                                <option value="5731P000000TSVg">GCC AP Client PS SBD/NBD</option>
+                                                <option value="5731P000000TSVh">GCC AP Enterprise PS SBD/NBD</option>
+												<option value="5731P000000TSVi">GCC AP Non PS SBD/NBD</option>
+												<option value="5731P000000TSVj">GCC CN  Client PS SBD/NBD</option>
+												<option value="5731P000000TSVk">GCC CN Enterprise PS SBD/NBD</option>
+												<option value="5731P000000TSVl">GCC CN Non PS SBD/NBD</option>
+												<option value="5731P000000TSVm">GCC EMEA SBD/NBD</option>
+												<option value="5731P000000TSVn">GCC JP Client PS SBD/NBD</option>
+												<option value="5731P000000TSVo">GCC JP Enterprise PS SBD/NBD</option>
+												<option value="5731P000000TSVp">GCC JP Non PS SBD/NBD</option>
+												<option value="5731P000000TSVq">GCC LA Client Basic NBD</option>
+												<option value="5731P000000TSVr">GCC LA Client PS NBD</option>
+												<option value="5731P000000TSVs">GGCC LA Enterprise NBD</option>
+												<option value="5731P000000TSVt">GCC LA Enterprise SBD</option>
+												<option value="5731P000000TSVu">GCC US/CA Client Basic NBD</option>
+												<option value="5731P000000TSVv">GCC US/CA Client PS NBD</option>
+												<option value="5731P000000TSVw">GCC US/CA Enterprise NBD</option>
+												<option value="5731P000000TSVx">GCC US/CA Enterprise SBD</option>
                                               </select>
                                         <div class="invalid-feedback">
                                           Please enter Queue.
@@ -257,7 +257,7 @@ function triggerPartnerPortalSnapin_DPP(partnerPortalDetails, sfdcSnapinDetails)
                 //embedded_svc.settings.storageDomain = sfdcSnapinDetails.domainName;
                 embedded_svc.settings.defaultMinimizedText = 'Chat Now';
                 
-                embedded_svc.settings.directToButtonRouting = routingConfig_DPP(partnerPortalDetails);
+                //embedded_svc.settings.directToButtonRouting = routingConfig_DPP(partnerPortalDetails);
 
 				 embedded_svc.settings.extraPrechatFormDetails = [{
 						"label": "Type",
@@ -424,9 +424,9 @@ function chatClick_DPP(eleSelector, findingEle, waitCounter) {
                 clearInterval(findingEle);
             }
             else if (waitCounter > 20){
-                /*clearInterval(findingEle);
+                clearInterval(findingEle);
                  
-                var path = window.location.href;
+                /*var path = window.location.href;
                 var result = path.substring(0, path.lastIndexOf('/'));
                 console.log(result);
                 window.open(result+"/closed.html", "_self"); */
