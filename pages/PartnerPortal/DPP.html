@@ -194,7 +194,6 @@
         }
       </style>
       <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
-      <script src="../../sfdcPartnerPortal.js"></script>
       <script type='text/javascript'>
      
       function startPartnerPortalChat(){
@@ -210,16 +209,15 @@
         };
                               var sfdcSnapinDetails = { //All SFDC values are supposed to be stored so that it can be updated as it needs Update for each environment change.
                                                                            buttonId: partnerPortalDetails.queue, //Button ID is required for routing to different partnerPortalDetails .queues we will need to discuss on who will handel this logic.
-                                                                           baseLiveAgentContentURL: 'https://c.la2-c1cs-ord.salesforceliveagent.com/content',
-                                                                           deploymentId: '5720b000000CbfS',
-                                                                           baseLiveAgentURL: 'https://d.la2-c1cs-ord.salesforceliveagent.com/chat',
-                                                                           eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I0x0000008OPzEAM_16d81041603',             
-                                                                             componentName: "Partner_Portal_Snap_ins",
-                                                                             organizationId: "00D0x0000000WEw",
-                                                                             serviceForceURL: "https://service.force.com",
-                                                                             snapInInitURL: 'https://dellservices--Chat.my.salesforce.com',
-                                                                            snapInJs: "https://service.force.com/embeddedservice/5.0/esw.min.js",
-                                                                            snapInLAURL: 'https://chat-dellservices.cs95.force.com/LASnapIn',
+                                                                           snapInInitURL: 'https://dellservices--SIT2.my.salesforce.com',
+					snapInLAURL: 'https://sit2-dellservices.cs36.force.com/LASnapIn',
+					organizationId: '00D2h0000008aOa',
+					componentName: 'Partner_Snap_In',
+					baseLiveAgentContentURL: 'https://c.la3-c2cs-ph2.salesforceliveagent.com/content',
+                    deploymentId: '5720b000000GneC',
+                    baseLiveAgentURL: 'https://d.la3-c2cs-ph2.salesforceliveagent.com/chat',
+                    eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I2h0000004CBOEA2_16e7ea2ec9b',
+					snapInJs: 'https://dellservices--SIT2.my.salesforce.com/embeddedservice/5.0/esw.min.js',
 																			dpid:getMainSearchValue(partnerPortalDetails.mainVal, "DPID", partnerPortalDetails.searchVal),
 																			serviceTag:getMainSearchValue(partnerPortalDetails.mainVal, "Service Tag", partnerPortalDetails.searchVal),
 																			srNumber:getMainSearchValue(partnerPortalDetails.mainVal, "SR Number", partnerPortalDetails.searchVal)																		
