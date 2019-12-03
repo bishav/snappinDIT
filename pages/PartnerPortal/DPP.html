@@ -170,7 +170,7 @@
 											<div class="mb-3">
                                               <label for="issueDescription" style="margin-top: 10px;">Issue Description</label>
                                               <div class="input-group">
-                                                  <input type="textarea" class="form-control" id="issueDescription">
+                                                  <input type="textarea" class="form-control" id="description">
                                               </div>
 											</div> 
                                   <hr class="mb-4">
@@ -424,12 +424,14 @@ function chatClick_DPP(eleSelector, findingEle, waitCounter) {
                 clearInterval(findingEle);
             }
             else if (waitCounter > 20){
-                clearInterval(findingEle);
+                /*clearInterval(findingEle);
                  
                 var path = window.location.href;
                 var result = path.substring(0, path.lastIndexOf('/'));
                 console.log(result);
-                window.open(result+"/closed.html", "_self"); 
+                window.open(result+"/closed.html", "_self"); */
+				alert("Sorry no agents are avilable.");
+				location.reload();
             }else
                 console.log("Searching for Agents = " + waitCounter);
     } catch (e) {
