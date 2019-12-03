@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google" content="notranslate" />
+    <title>Page Title</title>
+    <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../../main.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="main.js"></script> -->
+    <style type='text/css'>
+            .embeddedServiceHelpButton .helpButton .uiButton { background-color: #005290; font-family: "Salesforce Sans", sans-serif; }
+            .embeddedServiceHelpButton .helpButton .uiButton:focus { outline: 1px solid #005290; }
+            @font-face {
+            font-family: 'Salesforce Sans';
+            src: url('https://www.sfdcstatic.com/system/shared/common/assets/fonts/SalesforceSans/SalesforceSans-Regular.woff') format('woff'),
+    url('https://www.sfdcstatic.com/system/shared/common/assets/fonts/SalesforceSans/SalesforceSans-Regular.ttf') format('truetype');
+            }
+			
+			.overlay {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0, 0.5);
+}
+.overlay-content {
+    position: relative;
+    top: 25%;
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+}
+.loader {
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #3498db;
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+}
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+    </style>
+
+
+
+     
+</head>
+<body>
+<div class="overlay" id="overlay">
+        <div class="overlay-content">
+            <center>
+                <div class="loader"></div>
+            </center>
+        </div>
+    </div>
+    <nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" href="#">
+        <img src="../../assets/DellTech_Logo_Prm_Blue.jpg" class="d-inline-block align-top" alt="">
+    </a>
+</nav>
+<div class="navigationLink">
+						<h3 style="color:#fff; margin-left: 30px;">Dell Partner Portal [DPP]</h3>
+</div>    
+    <div id="prechatFormCanvas" class="new-chat" style="margin-top: 20px;">
+        <div class="row justify-content-md-center">
+                <div class="col-lg-6 col-md-8 col-sm-12 order-md-1  border rounded">
+                                <form class="needs-validation" novalidate="">
+                                    <div class="mb-3">
+                                        <label for="region">Region</label>
+                                        <select class="custom-select d-block w-100" id="region" required="">
+                                                <option value="">Choose...</option>
+                                                <option>AMER</option>
+                                                <option>APJ</option>
+                                                <option>EMEA</option>
+												<option>LATAM</option>
+                                              </select>
+                                        <div class="invalid-feedback">
+                                          Please enter a value
+                                        </div>
+                                      </div>
+									  <div class="mb-3">
+                                        <label for="queue">Queue</label>
+                                        <select class="custom-select d-block w-100" id="queue" required="">
+                                                <option value="">Choose...</option>
+                                                <option value="5731P000000TSVgQAO">GCC AP Client PS SBD/NBD</option>
+                                                <option value="5731P000000TSVhQAO">GCC AP Enterprise PS SBD/NBD</option>
+												<option value="5731P000000TSViQAO">GCC AP Non PS SBD/NBD</option>
+												<option value="5731P000000TSVjQAO">GCC CN  Client PS SBD/NBD</option>
+												<option value="5731P000000TSVkQAO">GCC CN Enterprise PS SBD/NBD</option>
+												<option value="5731P000000TSVlQAO">GCC CN Non PS SBD/NBD</option>
+												<option value="5731P000000TSVmQAO">GCC EMEA SBD/NBD</option>
+												<option value="5731P000000TSVnQAO">GCC JP Client PS SBD/NBD</option>
+												<option value="5731P000000TSVoQAO">GCC JP Enterprise PS SBD/NBD</option>
+												<option value="5731P000000TSVpQAO">GCC JP Non PS SBD/NBD</option>
+												<option value="5731P000000TSVqQAO">GCC LA Client Basic NBD</option>
+												<option value="5731P000000TSVrQAO">GCC LA Client PS NBD</option>
+												<option value="5731P000000TSVsQAO">GGCC LA Enterprise NBD</option>
+												<option value="5731P000000TSVtQAO">GCC LA Enterprise SBD</option>
+												<option value="5731P000000TSVuQAO">GCC US/CA Client Basic NBD</option>
+												<option value="5731P000000TSVvQAO">GCC US/CA Client PS NBD</option>
+												<option value="5731P000000TSVwQAO">GCC US/CA Enterprise NBD</option>
+												<option value="5731P000000TSVxQAO">GCC US/CA Enterprise SBD</option>
+                                              </select>
+                                        <div class="invalid-feedback">
+                                          Please enter Queue.
+                                        </div>
+                                      </div>
+                                            <div class="mb-3">
+                                              <label for="Full Name" style="margin-top: 10px;">Full Name</label>
+                                              <div class="input-group">
+                                                  <input type="text" class="form-control" id="fullName" >
+                                              </div>
+                                          </div>
+                                            <div class="mb-3">
+												<label for="vendor">Vendor</label>
+												<select class="custom-select d-block w-100" id="vendor" required="">
+														<option value="">Choose...</option>
+														<option>DSP</option>
+														<option>DLP</option>
+													  </select>
+												<div class="invalid-feedback">
+												  Please enter a value
+												</div>
+											  </div>
+											  <div class="mb-3">
+												  <label for="Full Name" style="margin-top: 10px;">DSP/DLP code</label>
+												  <div class="input-group">
+													  <input type="text" class="form-control" id="code" >
+												  </div>
+											  </div>
+											  <div class="mb-3">
+												<label for="vendor">Chose Code Type</label>
+												<select class="custom-select d-block w-100" id="mainVal" required="">
+														<option value="">Choose...</option>
+														<option>DPID</option>
+														<option>Service Tag</option>
+														<option>SR Number</option>
+													  </select>
+												<div class="invalid-feedback">
+												  Please enter a value
+												</div>
+											  </div>
+											  <div class="mb-3">
+												  <label for="Full Name" style="margin-top: 10px;">DPID/SR#/Service Tag</label>
+												  <div class="input-group">
+													  <input type="text" class="form-control" id="searchVal" >
+												  </div>
+											  </div>
+                                          
+                                         
+											<div class="mb-3">
+                                              <label for="issueDescription" style="margin-top: 10px;">Issue Description</label>
+                                              <div class="input-group">
+                                                  <input type="textarea" class="form-control" id="issueDescription">
+                                              </div>
+											</div> 
+                                  <hr class="mb-4">
+                                  <div class="mb-3">
+                                      <a  id="liveagent_button_online_Test" class="enabledButton btn btn-primary btn-lg btn-block"  onclick="startPartnerPortalChat()">Start New Chat</a>
+                                  </div>
+                                </form>
+                              
+                </div>
+            </div>
+        </div>
+    </div>
+   
+      <style type='text/css'>
+        .embeddedServiceHelpButton .helpButton .uiButton {
+          background-color: #007db8;
+          font-family: "Roboto Regular", sans-serif;
+        }
+        .embeddedServiceHelpButton .helpButton .uiButton:focus {
+          outline: 1px solid #007db8;
+        }
+      </style>
+      <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
+      <script src="../../sfdcPartnerPortal.js"></script>
+      <script type='text/javascript'>
+     
+      function startPartnerPortalChat(){
+        var partnerPortalDetails =  {
+				region: document.getElementById("region").value,    
+				queue: document.getElementById("queue").value,    
+				fullName: document.getElementById("fullName").value,     
+				vendor: document.getElementById("vendor").value,    
+				code: document.getElementById("code").value,
+				mainVal: document.getElementById("mainVal").value,     // if we have values for dispatchNumber, we are accepting srNumber  and assetID to be null.
+				searchVal: document.getElementById("searchVal").value,     //if we have values for srNumber , we are accepting dispatchNumber and assetID to be null.
+				description: document.getElementById("description ").value,     //this will come from text area filed with max limit of 240 character limit.
+        };
+                              var sfdcSnapinDetails = { //All SFDC values are supposed to be stored so that it can be updated as it needs Update for each environment change.
+                                                                           buttonId: partnerPortalDetails.queue, //Button ID is required for routing to different partnerPortalDetails .queues we will need to discuss on who will handel this logic.
+                                                                           baseLiveAgentContentURL: 'https://c.la2-c1cs-ord.salesforceliveagent.com/content',
+                                                                           deploymentId: '5720b000000CbfS',
+                                                                           baseLiveAgentURL: 'https://d.la2-c1cs-ord.salesforceliveagent.com/chat',
+                                                                           eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I0x0000008OPzEAM_16d81041603',             
+                                                                             componentName: "Partner_Portal_Snap_ins",
+                                                                             organizationId: "00D0x0000000WEw",
+                                                                             serviceForceURL: "https://service.force.com",
+                                                                             snapInInitURL: 'https://dellservices--Chat.my.salesforce.com',
+                                                                            snapInJs: "https://service.force.com/embeddedservice/5.0/esw.min.js",
+                                                                            snapInLAURL: 'https://chat-dellservices.cs95.force.com/LASnapIn',
+																			dpid:getMainSearchValue(partnerPortalDetails.mainVal, "DPID", partnerPortalDetails.searchVal),
+																			serviceTag:getMainSearchValue(partnerPortalDetails.mainVal, "Service Tag", partnerPortalDetails.searchVal),
+																			srNumber:getMainSearchValue(partnerPortalDetails.mainVal, "SR Number", partnerPortalDetails.searchVal),																			
+                              }				
+        triggerPartnerPortalSnapin_DPP(partnerPortalDetails, sfdcSnapinDetails);
+     }
+
+	 
+	 
+	 (function () {
+	 $('.overlay').hide();
+    var initESW;
+    window.addEventListener("dragover", function (e) {
+        e = e || event;
+        e.preventDefault();
+    }, false);
+    window.addEventListener("drop", function (e) {
+        e = e || event;
+        e.preventDefault();
+    }, false);
+
+    if (typeof NodeList.prototype.forEach === "function") return false;
+    NodeList.prototype.forEach = Array.prototype.forEach;
+
+})();
+
+
+function triggerPartnerPortalSnapin_DPP(partnerPortalDetails, sfdcSnapinDetails) {
+    try {   $('.overlay').show();
+            var initESW = function (gslbBaseURL) {
+                embedded_svc.settings.displayHelpButton = false;//true;
+                embedded_svc.settings.language = "en";
+                embedded_svc.settings.enabledFeatures = ['LiveAgent'];
+                embedded_svc.settings.entryFeature = 'LiveAgent';
+                //embedded_svc.settings.storageDomain = sfdcSnapinDetails.domainName;
+                embedded_svc.settings.defaultMinimizedText = 'Chat Now';
+                
+                embedded_svc.settings.directToButtonRouting = routingConfig_DPP(partnerPortalDetails);
+
+				 embedded_svc.settings.extraPrechatFormDetails = [{
+						"label": "Type",
+						"value": 'Partner',
+						"transcriptFields": ["Type__c"]
+					},{
+						"label": "Chat Source",
+						"value": chatSourceValDPP(partnerPortalDetails.vendor),
+						"transcriptFields": ["Chat_Source__c"]
+					},{
+						"label": "Service Tag",
+						"value": sfdcSnapinDetails.serviceTag,
+						"transcriptFields": ["Service_Tag__c"]
+					},{
+						"label": "Service Tag",
+						"value": sfdcSnapinDetails.serviceTag,
+						"transcriptFields": ["Asset__c"],
+						"displayToAgent": false
+
+					},{
+						"label": "DPId",
+						"value": sfdcSnapinDetails.dpid,
+						"transcriptFields": ["PP_DPId__c"]
+					},
+					{
+						"label": "Subject",
+						"value": sfdcSnapinDetails.issueSubject,
+						"transcriptFields": ["Issue__c"]
+					},{
+						"label":  "Issue Description",
+						"value": partnerPortalDetails.description,
+						"transcriptFields": ["Description__c"]
+					},{
+						"label":  "Description",
+						"value": partnerPortalDetails.description,
+						"transcriptFields": ["Collaborate_Description__c"]
+					},{
+                        "label": "First Name",
+                        "name": "FirstName",
+                        "value": partnerPortalDetails.fullName,
+                        "transcriptFields": ["FirstName__c"],
+                        "displayToAgent": true
+                    },{
+                        "label": "Agent Name",
+                        "value": partnerPortalDetails.fullName,
+                        "transcriptFields": ["Agent_Name__c"],
+                        "displayToAgent": true
+					},{
+						"label":  "Location",
+						"value": partnerPortalDetails.region,
+						"transcriptFields": ["PP_Location__c"]
+					},{
+						"label":  "Service Request",
+						"value": sfdcSnapinDetails.srNumber,
+						"transcriptFields": ["PP_Service_Request__c"]
+					},{
+						"label":  "Case Number",
+						"value": partnerPortalDetails.caseNumber,
+						"transcriptFields": ["Case_Number__c"]
+					},{
+						"label":  "Product",
+						"value": partnerPortalDetails.productName,
+						"transcriptFields": ["PP_Product__c"]
+					},{
+						"label":  "Case Priority",
+						"value": sfdcSnapinDetails.casePriority,
+						"transcriptFields": ["PP_Priority__c"]
+					},{
+						"label":  "Customer on the Phone?",
+						"value": partnerPortalDetails.customerOnThePhone,
+						"transcriptFields": ["PP_Customer_on_the_Phone__c"]
+					},{
+						"label":  "Driver/Firmware updated?",
+						"value": partnerPortalDetails.driverFirmwareUpdated,
+						"transcriptFields": ["PP_Driver_Firmware_updated__c"]
+					},{
+						"label":  "Logs Collected",
+						"value": sfdcSnapinDetails.logsCollected,
+						"transcriptFields": ["PP_Logs_Collected__c"]
+					},{
+						"label":  "Log Type",
+						"value": sfdcSnapinDetails.logTypeMultiPickList,
+						"transcriptFields": ["PP_Log_Type__c"]
+					},{
+						"label":  "Record Type",
+						"value": "0120b000000IiF6",//DEV2 = "0120b000000IiF6", SIT2 = "0120b000000IiF6" Need to change for each environment
+						"transcriptFields": ["RecordType"]
+					}
+				];
+				 embedded_svc.settings.extraPrechatInfo = [{
+					"entityFieldMaps": [{
+						"doCreate": false,
+						"doFind": true,
+						"fieldName": "Name",
+						"isExactMatch": true,
+						"label": "Service Tag"
+					}
+					],
+					"entityName": "Asset",
+					"saveToTranscript": "Asset__c"
+				}, {
+					"entityFieldMaps": [{
+						"doCreate": false,
+						"doFind": true,
+						"fieldName": "Issue_Description__c",
+						"isExactMatch": true,
+						"label": "Issue Description"
+					}
+				],
+				"entityName": "Case"
+				}
+				];
+				embedded_svc.addEventHandler("onChatRequestSuccess", function (data) {
+                    $("body").on('DOMNodeRemoved', function(e) {
+                        if(e.target.className){
+                            className = e.target.className.split(" ");
+                            if(className[0] === "modalContainer")
+                                location.reload();
+                        }	
+                    });
+				$('.overlay').hide();
+                });
+                embedded_svc.init(sfdcSnapinDetails.snapInInitURL, sfdcSnapinDetails.snapInLAURL, gslbBaseURL, sfdcSnapinDetails.organizationId, sfdcSnapinDetails.componentName, {
+                    baseLiveAgentContentURL: sfdcSnapinDetails.baseLiveAgentContentURL,
+                    deploymentId: sfdcSnapinDetails.deploymentId,
+                    buttonId: sfdcSnapinDetails.buttonId,
+                    baseLiveAgentURL: sfdcSnapinDetails.baseLiveAgentURL,
+                    eswLiveAgentDevName: sfdcSnapinDetails.eswLiveAgentDevName,
+                    isOfflineSupportEnabled: false
+                });
+
+                eleExist_DPP('#helpButtonSpan > .message', chatClick_DPP);
+            };
+            if (!window.embedded_svc) {
+                var s = document.createElement('script');
+                s.setAttribute('src', sfdcSnapinDetails.snapInJs);
+                s.onload = function () {
+                    initESW(null);
+                };
+                document.body.appendChild(s);
+            } else {
+                initESW(sfdcSnapinDetails.serviceForceURL);
+            }
+    } catch (e) {
+        console.log("Error in: " + e);
+    }
+}
+function chatSourceValDPP(productGroup){
+	var returnValue = "Partner-"+productGroup;
+	return returnValue;
+}
+function getMainSearchValue(mainValue, selectedVal, searchValue ){
+	if(mainValue === selectedVal){
+		return searchValue;
+	}else{
+		return null;
+	}
+}
+//Click on chat button
+function chatClick_DPP(eleSelector, findingEle, waitCounter) {
+    try {
+            if (document.querySelector(eleSelector).innerText === 'Chat Now'){
+                document.querySelector(eleSelector).click();
+                clearInterval(findingEle);
+            }
+            else if (waitCounter > 20){
+                clearInterval(findingEle);
+                 
+                var path = window.location.href;
+                var result = path.substring(0, path.lastIndexOf('/'));
+                console.log(result);
+                window.open(result+"/closed.html", "_self"); 
+            }else
+                console.log("Searching for Agents = " + waitCounter);
+    } catch (e) {
+        console.log("Error in:" + e);
+    }
+}
+
+//If element Exist Run function
+function eleExist_DPP(eleSelector, callbackFunc) {
+    let waitCounter = 0;
+    var findingEle = setInterval(function () {
+        if (document.querySelector(eleSelector)) {
+            try {
+                callbackFunc(eleSelector, findingEle,waitCounter++);
+            } catch (e) {
+                console.log('error in ' + callbackFunc + ' function: ' + e);
+            }
+        }
+    }, 1000);
+}
+
+
+
+
+      
+  
+    </script>
+</body>
+</html>
