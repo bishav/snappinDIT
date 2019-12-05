@@ -161,7 +161,7 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 						"transcriptFields": ["PP_Log_Type__c"]
 					},{
 						"label":  "Record Type",
-						"value": "0120b000000IiF6",//DEV2 = "0120b000000IiF6", SIT2 = "0120b000000IiF6" Need to change for each environment
+						"value": "0128A000000Jhee" ,//Record type id for partner//DEV2 = "0120b000000IiF6", SIT2 = "0120b000000IiF6" Need to change for each environment
 						"transcriptFields": ["RecordType"]
 					}
 				];
