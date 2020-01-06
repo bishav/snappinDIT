@@ -171,7 +171,7 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 						"transcriptFields": ["PP_Log_Type__c"]
 					}*/,{
 						"label":  "Record Type",
-						"value": "0122h0000009xf1" ,//Record type id for partner//DEV2 = "0120b000000IiF6",
+						"value": "0128A000000Jhee",//"0122h0000009xf1" ,//Record type id for partner//DEV2 = "0128A000000Jhee",
 						"transcriptFields": ["RecordType"]
 					}
 				];
