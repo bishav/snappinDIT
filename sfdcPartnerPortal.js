@@ -41,7 +41,7 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 					snapInJs: 'https://dellservices--DEV2.my.salesforce.com/embeddedservice/5.0/esw.min.js',
 					
 					//SIT2
-					/*snapInInitURL: 'https://dellservices--SIT2.my.salesforce.com',
+					snapInInitURL: 'https://dellservices--SIT2.my.salesforce.com',
 					snapInLAURL: 'https://sit2-dellservices.cs36.force.com/LASnapIn',
 					organizationId: '00D2h0000008aOa',
 					componentName: 'Partner_Snap_In',
@@ -50,14 +50,16 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
                     baseLiveAgentURL: 'https://d.la3-c2cs-ph2.salesforceliveagent.com/chat',
                     eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I2h0000004CBOEA2_16e7ea2ec9b',
 					snapInJs: 'https://dellservices--SIT2.my.salesforce.com/embeddedservice/5.0/esw.min.js',
-					*/
+					
 					//fixed object values
 					buttonId: routingConfig(partnerPortalDetails),
 					issueSubject: partnerPortalDetails.productGroup +" - "+ partnerPortalDetails.productType,
+					//logsCollected: checkLogGrants(partnerPortalDetails),
+					//logTypeMultiPickList: convertLogToMultiPickList(partnerPortalDetails),
 					logsCollected: checkLogGrants(partnerPortalDetails),
-					logTypeMultiPickList: convertLogToMultiPickList(partnerPortalDetails),
 					concatenatedDescription: concatenatDescription(partnerPortalDetails),
-					casePriority: convertToPriority(partnerPortalDetails.caseSeverity),
+					caseSeverityTxt: convertToSeverity(partnerPortalDetails.caseSeverity),
+					loginIdNoSpace: loginIdNoSpace(partnerPortalDetails.loginId),
 					validFirstName: firstNameValidator(partnerPortalDetails),
 					serviceForceURL: "https://service.force.com",
 		}
@@ -77,8 +79,16 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 						"transcriptFields": ["Type__c"]
 					},{
 						"label": "Chat Source",
-						"value": chatSourceVal(partnerPortalDetails.productGroup),
+						"value": 'Partner',//chatSourceVal(partnerPortalDetails.productGroup),
 						"transcriptFields": ["Chat_Source__c"]
+					},{
+						"label": "Product Group / Vendor",
+						"value": partnerPortalDetails.productGroup,
+						"transcriptFields": ["PP_Vendor_Product_Group__c"]
+					},{
+						"label": "Product Type / Vendor List",
+						"value": partnerPortalDetails.productType,
+						"transcriptFields": ["PP_Vendor_List_Product_Type__c"]
 					},{
 						"label": "Service Tag",
 						"value": partnerPortalDetails.serviceTag,
@@ -120,7 +130,7 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
                         "transcriptFields": ["Email__c"]
                     },{
                         "label": "Agent Name",
-                        "value": partnerPortalDetails.loginId,
+                        "value": sfdcSnapinDetails.loginIdNoSpace,
                         "transcriptFields": ["Agent_Name__c"],
                         "displayToAgent": true
 					},{
@@ -132,36 +142,36 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 						"value": partnerPortalDetails.region,
 						"transcriptFields": ["PP_Location__c"]
 					},{
-						"label":  "Service Request",
-						"value": partnerPortalDetails.caseNumber,
-						"transcriptFields": ["PP_Service_Request__c"]
+						"label":  "Case Number From Partner",//"Service Request",
+						"value": partnerPortalDetails.caseOrSr,
+						"transcriptFields": ["PP_Case_Number_From_Partner__c"]
 					},{
 						"label":  "Product",
 						"value": partnerPortalDetails.productName,
 						"transcriptFields": ["PP_Product__c"]
 					},{
-						"label":  "Case Priority",
-						"value": sfdcSnapinDetails.casePriority,
-						"transcriptFields": ["PP_Priority__c"]
+						"label":  "Case Severity",
+						"value": sfdcSnapinDetails.caseSeverityTxt,
+						"transcriptFields": ["PP_Case_Severity__c"]
 					},{
-						"label":  "Customer on the Phone?",
+						"label":  "Customer Waiting",
 						"value": partnerPortalDetails.customerOnThePhone,
-						"transcriptFields": ["PP_Customer_on_the_Phone__c"]
+						"transcriptFields": ["PP_Customer_Waiting__c"]
 					},{
-						"label":  "Driver/Firmware updated?",
+						"label":  "Driver/Firmware Updated",
 						"value": partnerPortalDetails.driverFirmwareUpdated,
-						"transcriptFields": ["PP_Driver_Firmware_updated__c"]
+						"transcriptFields": ["PP_Driver_Firmware_Updated__c"]
 					},{
 						"label":  "Logs Collected",
 						"value": sfdcSnapinDetails.logsCollected,
 						"transcriptFields": ["PP_Logs_Collected__c"]
-					},{
+					}/*,{
 						"label":  "Log Type",
 						"value": sfdcSnapinDetails.logTypeMultiPickList,
 						"transcriptFields": ["PP_Log_Type__c"]
-					},{
+					}*/,{
 						"label":  "Record Type",
-						"value": "0128A000000Jhee" ,//Record type id for partner//DEV2 = "0120b000000IiF6", SIT2 = "0120b000000IiF6" Need to change for each environment
+						"value": "0122h0000009xf1" ,//Record type id for partner//DEV2 = "0120b000000IiF6",
 						"transcriptFields": ["RecordType"]
 					}
 				];
@@ -268,49 +278,47 @@ function eleExist(eleSelector, callbackFunc) {
 
 //Log Grants optimization
 function checkLogGrants(partnerPortalDetails){
-		let returnVal;
-		if (partnerPortalDetails.logsGathered)
-			returnVal = "Yes";
-		else
-			returnVal = "No - " + partnerPortalDetails.logTypes;
-			return returnVal;
+	let returnVal = convertSeparatorToMultiPickList(partnerPortalDetails.logTypes);
+	return returnVal;
 
 }
 
 //Convert Log to Multi Pick List
-function convertLogToMultiPickList(partnerPortalDetails){
+/*function convertLogToMultiPickList(partnerPortalDetails){
 	let returnVal;
 		if (partnerPortalDetails.logsGathered)
 			returnVal = convertSeparatorToMultiPickList(partnerPortalDetails.logTypes);
 		else
 			returnVal = null;
 		return returnVal;
-}
+}*/
 
 //Convert Sepatator to Semicolom
 function convertSeparatorToMultiPickList(logTypes){
 	var returnLogType;
 	var logTypesArr = logTypes.split("Other: ");
 	if(logTypesArr[1]){
-		var logTypesArr1 = logTypesArr[1].replace(/[|]/g, " or ");
-		var logTypesArr2 = logTypesArr1.replace(/[;]/g, ",");
-		var logTypesArr3 = logTypesArr[0] + "Other: " + logTypesArr2;
-		returnLogType = logTypesArr3.replace(/[|]/g, ";");
+		var logTypesArr1 = logTypesArr[1].replace(/[|]/g, "/");
+		var logTypesArr3 = logTypesArr[0] + "Other: " + logTypesArr1;
+		//returnLogType = logTypesArr3.replace(/[|]/g, ";");
+		returnLogType = logTypesArr3.replace(/[|]/g, " ■ ");
 	}else{
 		var logTypesArr3 = logTypesArr[0]
-		returnLogType = logTypesArr3.replace(/[|]/g, ";");
+		//returnLogType = logTypesArr3.replace(/[|]/g, ";");
+		returnLogType = logTypesArr3.replace(/[|]/g, " ■ ");
 	}
 	return returnLogType;
 }
 
 //concatenat Description
 function concatenatDescription(partnerPortalDetails){
-	let description = "Customer on the Phone? " + (partnerPortalDetails.customerOnThePhone ? "Yes" : "No") + " | Driver/Firmware updated? " + (partnerPortalDetails.driverFirmwareUpdated ? "Yes" : "No")  + " | Logs Collected? " + checkLogGrants(partnerPortalDetails) + (partnerPortalDetails.logsGathered ? " - " + convertLogToMultiPickList(partnerPortalDetails) : "") + " | Issue Description : "+ partnerPortalDetails.issueDescription
+	//let description = "Customer on the Phone? " + (partnerPortalDetails.customerOnThePhone ? "Yes" : "No") + " | Driver/Firmware updated? " + (partnerPortalDetails.driverFirmwareUpdated ? "Yes" : "No")  + " | Logs Collected? " + checkLogGrants(partnerPortalDetails) + (partnerPortalDetails.logsGathered ? " - " + convertLogToMultiPickList(partnerPortalDetails) : "") + " | Issue Description : "+ partnerPortalDetails.issueDescription;
+	let description = partnerPortalDetails.issueDescription
 	return description;
 }
 
 // Convert Sev to Priority
-function convertToPriority(caseSeverity){
+function convertToSeverity(caseSeverity){
 	let returnVal;
 	switch(caseSeverity) {
 		case "1":
@@ -332,15 +340,20 @@ function convertToPriority(caseSeverity){
 }
 //Routing Config
 
-function chatSourceVal(productGroup){
-	var returnValue = "Partner-"+productGroup;
+/*function chatSourceVal(productGroup){
+	//var returnValue = "Partner-"+productGroup;
+	var returnValue = productGroup;
 	return returnValue;
+}*/
+function loginIdNoSpace(loginId){
+	return loginId.replace(/[_]/g, " ");
 }
 function firstNameValidator(partnerPortalDetails){
 	if (partnerPortalDetails.firstName && (partnerPortalDetails.firstName != null || partnerPortalDetails.firstName != undefined  || partnerPortalDetails.firstName != "" || partnerPortalDetails.firstName != " ")){
 		return partnerPortalDetails.firstName;
 	}else{
-		return partnerPortalDetails.loginId;
+		
+		return loginIdNoSpace(partnerPortalDetails.loginId);
 	}
 }
 function routingConfig(partnerPortalDetails){
@@ -365,7 +378,7 @@ function routingConfig(partnerPortalDetails){
 			//buttonID = "5738A0000008Om7"; //DEV2 GL_DB_INTB_MIX_CH_EN_BLND_OEMGTT
 			buttonID = "5730b000000PnCn";//SIT 2
 			break;
-		  case "Fed":
+		  case "Fed Tag Team":
 			//buttonID = "5738A0000008OmH"; //DEV2 NA_DB_INTB_MIX_CH_EN_BLND_FEDGTT
 			buttonID = "5730b000000PnCq";//SIT 2
 			break;
@@ -391,6 +404,6 @@ function routingConfig(partnerPortalDetails){
 			}
 		//STORY 7248769 : FY20_Channels : Chat : Partner Portal : VCE_Create Queues on Lightning  [END]
 	}
-	buttonID = "5738A0000008Om2";
+	//buttonID = "5738A0000008Om2";//Dev2 Test environment
 	return buttonID;
 }
