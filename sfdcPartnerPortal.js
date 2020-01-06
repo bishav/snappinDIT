@@ -41,7 +41,7 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 					snapInJs: 'https://dellservices--DEV2.my.salesforce.com/embeddedservice/5.0/esw.min.js',
 					
 					//SIT2
-					snapInInitURL: 'https://dellservices--SIT2.my.salesforce.com',
+					/*snapInInitURL: 'https://dellservices--SIT2.my.salesforce.com',
 					snapInLAURL: 'https://sit2-dellservices.cs36.force.com/LASnapIn',
 					organizationId: '00D2h0000008aOa',
 					componentName: 'Partner_Snap_In',
@@ -50,7 +50,7 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
                     baseLiveAgentURL: 'https://d.la3-c2cs-ph2.salesforceliveagent.com/chat',
                     eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I2h0000004CBOEA2_16e7ea2ec9b',
 					snapInJs: 'https://dellservices--SIT2.my.salesforce.com/embeddedservice/5.0/esw.min.js',
-					
+					*/
 					//fixed object values
 					buttonId: routingConfig(partnerPortalDetails),
 					issueSubject: partnerPortalDetails.productGroup +" - "+ partnerPortalDetails.productType,
@@ -404,6 +404,6 @@ function routingConfig(partnerPortalDetails){
 			}
 		//STORY 7248769 : FY20_Channels : Chat : Partner Portal : VCE_Create Queues on Lightning  [END]
 	}
-	//buttonID = "5738A0000008Om2";//Dev2 Test environment
+	buttonID = "5738A0000008Om2";//Dev2 Test environment
 	return buttonID;
 }
