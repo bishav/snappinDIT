@@ -41,7 +41,8 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 					snapInJs: 'https://dellservices--DEV2.my.salesforce.com/embeddedservice/5.0/esw.min.js',
 					
 					//SIT2
-					/*snapInInitURL: 'https://dellservices--SIT2.my.salesforce.com',
+				  /*
+				    snapInInitURL: 'https://dellservices--SIT2.my.salesforce.com',
 					snapInLAURL: 'https://sit2-dellservices.cs36.force.com/LASnapIn',
 					organizationId: '00D2h0000008aOa',
 					componentName: 'Partner_Snap_In',

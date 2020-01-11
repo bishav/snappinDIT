@@ -967,9 +967,19 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
     embedded_svc.addEventHandler("onChasitorMessage", function (data) {
         snapinChatInitiatedState(true);//Fix for defect 7030965
     });
-    //embedded_svc.addEventHandler("onChatRequestSuccess", function(data) {
-    //    snapinChatInitiatedState(true);//Fix for defect 7030965
-    //});
+    //FY21-0202 Fix for defect 7917426 [START]
+    embedded_svc.addEventHandler("onChatRequestSuccess", function(data) {
+        embedded_svc.addEventHandler("onChatRequestSuccess", function (data) {
+            $("body").on('DOMNodeRemoved', function(e) {
+                if(e.target.className){
+                    className = e.target.className.split(" ");
+                    if(className[0] === "modalContainer")
+                        sessionStorage.removeItem("snapInObjectSession");
+                }	
+            });
+        });
+    });
+    //FY21-0202 Fix for defect 7917426 [END]
     embedded_svc.addEventHandler("onAgentMessage", function (data) {
         snapinChatInitiatedState(true);
     });
