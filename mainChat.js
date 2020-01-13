@@ -969,7 +969,6 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
     });
     //FY21-0202 Fix for defect 7917426 [START]
     embedded_svc.addEventHandler("onChatRequestSuccess", function(data) {
-        embedded_svc.addEventHandler("onChatRequestSuccess", function (data) {
             $("body").on('DOMNodeRemoved', function(e) {
                 if(e.target.className){
                     className = e.target.className.split(" ");
@@ -977,7 +976,6 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
                         sessionStorage.removeItem("snapInObjectSession");
                 }	
             });
-        });
     });
     //FY21-0202 Fix for defect 7917426 [END]
     embedded_svc.addEventHandler("onAgentMessage", function (data) {

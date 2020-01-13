@@ -47,22 +47,6 @@ $(document).ready(function() {
 
     if (typeof NodeList.prototype.forEach === "function") return false;
     NodeList.prototype.forEach = Array.prototype.forEach;
-
-
-    if (!document.getElementById('snapinStyle')) {
-        var css = '.embeddedServiceLiveAgentStateChatHeader .content{background: #222 !important;}',
-            head = document.head || document.getElementsByTagName('head')[0],
-            style = document.createElement('style');
-        style.type = 'text/css';
-        style.id = 'snapinStyle';
-        if (style.styleSheet) {
-            style.styleSheet.cssText = css;
-        } else {
-            style.appendChild(document.createTextNode(css));
-        }
-
-        head.appendChild(style);
-    }
 })();
 
 function startPartnerPortalChat(){
@@ -96,8 +80,25 @@ function startPartnerPortalChat(){
         snapInLAURL: $('#snapInLAURL').val(),//'https://chat-dellservices.cs95.force.com/LASnapIn',
         recordType: $('#recordType').val()//'0128A000000Jhee'// Note: Added a new value
     };
-
+    addStyleSheetInDPPChat();
     triggerPartnerPortalSnapin(partnerPortalDetails, sfdcSnapinDetails);
+}
+
+function addStyleSheetInDPPChat(){
+    if (!document.getElementById('snapinStyle')) {
+        var css = '.embeddedServiceLiveAgentStateChatHeader .content{background: #222 !important;}',
+            head = document.head || document.getElementsByTagName('head')[0],
+            style = document.createElement('style');
+        style.type = 'text/css';
+        style.id = 'snapinStyle';
+        if (style.styleSheet) {
+            style.styleSheet.cssText = css;
+        } else {
+            style.appendChild(document.createTextNode(css));
+        }
+
+        head.appendChild(style);
+    }
 }
 
 //Initiate Snapin main code
