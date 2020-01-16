@@ -86,7 +86,7 @@ function startPartnerPortalChat(){
 
 function addStyleSheetInDPPChat(){
     if (!document.getElementById('snapinStyle')) {
-        var css = '.embeddedServiceLiveAgentStateChatHeader .content{background: #222 !important;}',
+        var css = '.invisibleWhileLoading .content,.embeddedServiceLiveAgentStateChatHeader .content{background: #222 !important;}',
             head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
         style.type = 'text/css';
