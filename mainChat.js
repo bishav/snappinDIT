@@ -1249,7 +1249,7 @@ function translation(lang) {
         this.primPhone = "Número de teléfono primario";
         this.issueDesc = "descripcion del problema";
         this.language = "es";
-    } else if (language == "cn" || language == "zh-cn") {
+    } else if (language == "zh" || language == "cn" || language == "zh-cn") {
         this.firstName = "名";
         this.lastName = "姓";
         this.emailAdd = "电子邮件";
