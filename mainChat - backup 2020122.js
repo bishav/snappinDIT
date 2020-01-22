@@ -842,11 +842,11 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
             "transcriptFields": ["Email__c"]
         }, {// New filed
             "label": "Chat Source",
-			"value": snapInObject.Tech,//getTechSupportChatSource(snapInObject),//FY21-0202 Story STORY #7689121
+			"value": getTechSupportChatSource(snapInObject),//FY21-0202 Story STORY #7689121
 			"transcriptFields": ["Chat_Source__c"]
         },{	// New filed
             "label": "Subject",
-            "value": snapInObject.issueVal,//getTechSupportSubject(snapInObject),//snapInObject.issueVal,//FY21-0202 Story STORY #7689121
+            "value": getTechSupportSubject(snapInObject),//snapInObject.issueVal,//FY21-0202 Story STORY #7689121
             "transcriptFields": ["Issue__c"]
         },
         //Story #6614459: Skill Based: Resume Chat Option [START]
@@ -1016,7 +1016,6 @@ function togglePrechatAndSnapin(targetNode) {
 }
 */
 //FY21-0202 Story STORY #7689121 [START]
-/*
 function getTechSupportSubject(snapInObject){
     if(("serviceTag" in snapInObject && snapInObject.serviceTag) || ("issueVal" in snapInObject && snapInObject.issueVal))
         return snapInObject.issueVal;
@@ -1029,7 +1028,6 @@ function getTechSupportChatSource(snapInObject){
     else
         return "Product";
 }
-*/
 //FY21-0202 Story STORY #7689121 [END]
 
 //Story #6614459: Skill Based: Resume Chat Option [START]
@@ -1514,7 +1512,7 @@ function pageObserverForProp20(eleSelector, preChatlableObject) {
                         callDellmetricsTrack("890.220.013");
                         hideResumeSnapinLoader();
                         snapinChatInitiatedState(true);
-                        //addChatPrivacyInfo(preChatlableObject);//BNR0202 - preChatlableObject pulled from top
+                        addChatPrivacyInfo(preChatlableObject);//BNR0202 - preChatlableObject pulled from top
                         
                     } else if (snapInChatEnded && snapInCurrentPage != "snapInChatEnded") {//Fix for defect 7030965
                         snapInCurrentPage = "snapInChatEnded";
@@ -1564,7 +1562,7 @@ function pageObserverForProp20(eleSelector, preChatlableObject) {
     } catch (e) { console.log('Error in Observer - ' + e) }
 }
 //BNR0202 [START]
-/*function addChatPrivacyInfo(preChatlableObject){
+function addChatPrivacyInfo(preChatlableObject){
                             setTimeout(function(){
                                 var snapinChatPopUpMsgDom = document.getElementById("snapinChatPopUpMsg");
                                 var snapinChasnapinCHatEnded  = document.querySelector(".dockableContainer .chatMessage.ended");
@@ -1590,7 +1588,7 @@ function pageObserverForProp20(eleSelector, preChatlableObject) {
                                     snapinChatPopUpMsgDom.style.display = "none";
                                 }
                             }, 50);
-}*/
+}
 //BNR0202 [END]
 function waitChatCounter(eleSelector, findingEle, counterValue) {
     try {
