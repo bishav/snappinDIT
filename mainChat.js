@@ -75,7 +75,7 @@ function triggerSnapin(snapInObject, preChatlableObject) {
                 snapInObject = sendGlobalSnapinObjToJson();
                 if ("snapinChatInitiated" in snapInObject && snapInObject.snapinChatInitiated) {
                     eleExist('.helpButtonEnabled #helpButtonSpan > .message', chatClick);
-                    pageObserverForProp20("body", preChatlableObject);
+                    pageObserverForProp20("body");
                     initSnapIn(snapInObject);
                 }
             } else if (snapInObject) {
@@ -724,7 +724,7 @@ function custPrechatInitiateChat(snapInObject, preChatlableObject) {
         callDellmetricsTrack("890.220.002"); //FY20-1101 STORY 7128491
         snapInObject = addCustFormDetailsTo(snapInObject);
         saveGlobalSnapinObjToSession(snapInObject);
-        pageObserverForProp20("body", preChatlableObject);
+        pageObserverForProp20("body");
         loadingSnapinQueue();
         removecustFormValues();
         custPreFormShowIssueDetailsCharRemaining(preChatlableObject);
@@ -741,26 +741,28 @@ function custPrechatInitiateChat(snapInObject, preChatlableObject) {
 }
 
 //FY20-1102 Avilability and Business Hr Chack [START]
-function checkSnapinQueueStatus(snapInObject) {	
-    var returnValue;	
-    function httpGetAgentAvailability(theUrl) {	
-        try {	
-            var xmlHttp = new XMLHttpRequest();	
-            xmlHttp.onreadystatechange = function () {	
-                if (xmlHttp.readyState == 4 && xmlHttp.status == 200)	
-                    returnValue = xmlHttp.responseText;	
-            }	
-            xmlHttp.open("GET", theUrl, false); // true for asynchronous 	
-            xmlHttp.send(null);	
-        } catch (e) {	
-            console.log("Error in: " + e);	
-        }	
-    }	
-    if (snapInObject.checkQueueStatusInBizHoursUrl && snapInObject.hoursOfOperation && snapInObject.timeZone && (snapInObject.checkQueueStatusInBizHoursUrl != "" || snapInObject.checkQueueStatusInBizHoursUrl != null || snapInObject.checkQueueStatusInBizHoursUrl != undifined) && (snapInObject.hoursOfOperation != "" || snapInObject.hoursOfOperation != null || snapInObject.hoursOfOperation != undifined) && (snapInObject.timeZone != "" || snapInObject.timeZone != null || snapInObject.timeZone != undifined)) {	
-        httpGetAgentAvailability(snapInObject.checkQueueStatusInBizHoursUrl + "?chatHours=" + escape(snapInObject.hoursOfOperation) + "&timeZone=" + escape(snapInObject.timeZone) + "&buttonId=" + snapInObject.buttonId);	
-        return returnValue;	
-    } else	
-        return 1;	
+function checkSnapinQueueStatus(snapInObject) {
+    var returnValue;
+    function httpGetAgentAvailability(theUrl) {
+
+        try {
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.onreadystatechange = function () {
+                if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+                    returnValue = xmlHttp.responseText;
+            }
+            xmlHttp.open("GET", theUrl, false); // true for asynchronous 
+            xmlHttp.send(null);
+        } catch (e) {
+            console.log("Error in: " + e);
+        }
+    }
+
+    if (snapInObject.checkQueueStatusInBizHoursUrl && snapInObject.hoursOfOperation && snapInObject.timeZone && (snapInObject.checkQueueStatusInBizHoursUrl != "" || snapInObject.checkQueueStatusInBizHoursUrl != null || snapInObject.checkQueueStatusInBizHoursUrl != undifined) && (snapInObject.hoursOfOperation != "" || snapInObject.hoursOfOperation != null || snapInObject.hoursOfOperation != undifined) && (snapInObject.timeZone != "" || snapInObject.timeZone != null || snapInObject.timeZone != undifined)) {
+        httpGetAgentAvailability(snapInObject.checkQueueStatusInBizHoursUrl + "?chatHours=" + escape(snapInObject.hoursOfOperation) + "&timeZone=" + escape(snapInObject.timeZone) + "&buttonId=" + snapInObject.buttonId);
+        return returnValue;
+    } else
+        return 1;
 } 
 //FY20-1102 Avilability and Business Hr Chack [END]
 function initOriginalESW(gslbBaseURL, snapInObject) {
@@ -811,16 +813,11 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
         }, {
             "label": translatedLabels.issueDesc,
             "transcriptFields": ["Description__c"]
-        }, /*{// New filed
+        }, {// New filed
             "label": "EMC Flag",
             "value": snapInObject.isEmcProduct,
             "transcriptFields": ["EMC_Flag__c"]
-        },*/ 
-        {// New filed
-            "label": "Chat Source",
-			"value": 'EMC',
-			"transcriptFields": ["Chat_Source__c"]
-        },{	// New filed
+        }, {	// New filed
             "label": "Serial Number",
             "value": snapInObject.serviceTag,
             "transcriptFields": ["Serial_Number__c"]
@@ -840,13 +837,9 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
         }, {
             "label": translatedLabels.emailAdd,
             "transcriptFields": ["Email__c"]
-        }, {// New filed
-            "label": "Chat Source",
-			"value": snapInObject.Tech,//getTechSupportChatSource(snapInObject),//FY21-0202 Story STORY #7689121
-			"transcriptFields": ["Chat_Source__c"]
-        },{	// New filed
+        }, {
             "label": "Subject",
-            "value": snapInObject.issueVal,//getTechSupportSubject(snapInObject),//snapInObject.issueVal,//FY21-0202 Story STORY #7689121
+            "value": snapInObject.issueVal,
             "transcriptFields": ["Issue__c"]
         },
         //Story #6614459: Skill Based: Resume Chat Option [START]
@@ -967,17 +960,9 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
     embedded_svc.addEventHandler("onChasitorMessage", function (data) {
         snapinChatInitiatedState(true);//Fix for defect 7030965
     });
-    //FY21-0202 Fix for defect 7917426 [START]
-    /*embedded_svc.addEventHandler("onChatRequestSuccess", function(data) {
-            $("body").on('DOMNodeRemoved', function(e) {
-                if(e.target.className){
-                    className = e.target.className.split(" ");
-                    if(className[0] === "modalContainer")
-                        sessionStorage.removeItem("snapInObjectSession");
-                }	
-            });
-    });*/
-    //FY21-0202 Fix for defect 7917426 [END]
+    //embedded_svc.addEventHandler("onChatRequestSuccess", function(data) {
+    //    snapinChatInitiatedState(true);//Fix for defect 7030965
+    //});
     embedded_svc.addEventHandler("onAgentMessage", function (data) {
         snapinChatInitiatedState(true);
     });
@@ -1015,23 +1000,6 @@ function togglePrechatAndSnapin(targetNode) {
     }
 }
 */
-//FY21-0202 Story STORY #7689121 [START]
-/*
-function getTechSupportSubject(snapInObject){
-    if(("serviceTag" in snapInObject && snapInObject.serviceTag) || ("issueVal" in snapInObject && snapInObject.issueVal))
-        return snapInObject.issueVal;
-    else if("productFamily" in snapInObject)
-        return snapInObject.productFamily;
-}
-function getTechSupportChatSource(snapInObject){
-    if(("serviceTag" in snapInObject && snapInObject.serviceTag))
-        return "Tech";
-    else
-        return "Product";
-}
-*/
-//FY21-0202 Story STORY #7689121 [END]
-
 //Story #6614459: Skill Based: Resume Chat Option [START]
 function getIssueTypeKey(snapInObject) {
     if ("issueType" in snapInObject && snapInObject.issueType) {
@@ -1251,7 +1219,7 @@ function translation(lang) {
         this.primPhone = "Número de teléfono primario";
         this.issueDesc = "descripcion del problema";
         this.language = "es";
-    } else if (language == "zh" || language == "cn" || language == "zh-cn") {
+    } else if (language == "cn" || language == "zh-cn") {
         this.firstName = "名";
         this.lastName = "姓";
         this.emailAdd = "电子邮件";
@@ -1458,7 +1426,7 @@ function showsAgentOflineMsg(propValue, message) {
     }
 }
 
-function pageObserverForProp20(eleSelector, preChatlableObject) {
+function pageObserverForProp20(eleSelector) {
     try {
         snapInPrechatForm = document.querySelector(".modalContainer  .dockableContainer .sidebarBody .activeFeature .featureBody .embeddedServiceSidebarState .prechatUI");
         snapInWaiting = document.querySelector(".dockableContainer .embeddedServiceLiveAgentStateWaiting .waitingStateContainer");
@@ -1514,8 +1482,6 @@ function pageObserverForProp20(eleSelector, preChatlableObject) {
                         callDellmetricsTrack("890.220.013");
                         hideResumeSnapinLoader();
                         snapinChatInitiatedState(true);
-                        //addChatPrivacyInfo(preChatlableObject);//BNR0202 - preChatlableObject pulled from top
-                        
                     } else if (snapInChatEnded && snapInCurrentPage != "snapInChatEnded") {//Fix for defect 7030965
                         snapInCurrentPage = "snapInChatEnded";
                         snapinQueueLoaded();
@@ -1563,35 +1529,7 @@ function pageObserverForProp20(eleSelector, preChatlableObject) {
         });
     } catch (e) { console.log('Error in Observer - ' + e) }
 }
-//BNR0202 [START]
-/*function addChatPrivacyInfo(preChatlableObject){
-                            setTimeout(function(){
-                                var snapinChatPopUpMsgDom = document.getElementById("snapinChatPopUpMsg");
-                                var snapinChasnapinCHatEnded  = document.querySelector(".dockableContainer .chatMessage.ended");
-                                if (!snapinChatPopUpMsgDom){
-                                    var snapinPopInputMsg;
-                                    if(preChatlableObject && "chatPrivacyInfo" in preChatlableObject && preChatlableObject.snapinChatPopUpMsgDom)
-                                        snapinPopInputMsg = preChatlableObject.snapinChatPopUpMsgDom;
-                                    else
-                                        snapinPopInputMsg = "Please do not share any payment or sensitive information in this chat window.";
-                                    var newItem = document.createElement("DIV");
-                                    newItem.id = 'snapinChatPopUpMsg';
-                                    var embeddedSLAChatInput = document.querySelector(".dockableContainer .embeddedServiceLiveAgentStateChatInputFooter");
-                                    //embeddedSLAChatInput.insertBefore(newItem, embeddedSLAChatInput.childNodes[0]);
-                                    embeddedSLAChatInput.parentNode.insertBefore(newItem, embeddedSLAChatInput);
-                                    innerVal ='<span style="float: left;margin: 11px;fill:#0A6EBE;"><svg x="0px" y="0px" width="20px" height="20px" viewBox="0 0 416.979 416.979" xml:space="preserve"><g><path d="M356.004,61.156c-81.37-81.47-213.377-81.551-294.848-0.182c-81.47,81.371-81.552,213.379-0.181,294.85   c81.369,81.47,213.378,81.551,294.849,0.181C437.293,274.636,437.375,142.626,356.004,61.156z M237.6,340.786   c0,3.217-2.607,5.822-5.822,5.822h-46.576c-3.215,0-5.822-2.605-5.822-5.822V167.885c0-3.217,2.607-5.822,5.822-5.822h46.576   c3.215,0,5.822,2.604,5.822,5.822V340.786z M208.49,137.901c-18.618,0-33.766-15.146-33.766-33.765   c0-18.617,15.147-33.766,33.766-33.766c18.619,0,33.766,15.148,33.766,33.766C242.256,122.755,227.107,137.901,208.49,137.901z"/></g></svg></span><span class="cusPreChat-x-small cusPreChat-embeddedServiceIcon" id="btnCloseSnapinPopMsg" style="float:right;padding:5px;cursor:pointer;"> <svg focusable="false" aria-hidden="true" data-key="close" viewBox="0 0 120 120" style="fill:#333"> <path d="M65.577 53.73l27.5-27.71c1.27-1.27 1.27-3.174 0-4.445l-4.23-4.44c-1.272-1.27-3.175-1.27-4.445 0L56.694 44.847c-.847.845-2.115.845-2.96 0L26.018 16.922c-1.27-1.27-3.174-1.27-4.445 0l-4.44 4.442c-1.27 1.27-1.27 3.174 0 4.444l27.71 27.71c.846.846.846 2.116 0 2.962L16.923 84.403c-1.27 1.27-1.27 3.174 0 4.444l4.442 4.442c1.27 1.268 3.174 1.268 4.444 0l27.71-27.713c.846-.847 2.116-.847 2.962 0L84.19 93.29c1.27 1.268 3.174 1.268 4.445 0l4.44-4.445c1.27-1.268 1.27-3.17 0-4.44l-27.5-27.712c-.847-.847-.847-2.115 0-2.96z"></path></svg></span><p style="text-align:left;padding:7px;margin:0;font-size:13px;background:#DFF1FE;border-top:1px solid #0A6EBE;border-bottom:1px solid #0A6EBE;color:#333;">'+snapinPopInputMsg+'</p>';
-                                    document.getElementById("snapinChatPopUpMsg").innerHTML=innerVal;
-    
-                                    var btnCloseSnapinPopMsg = document.getElementById("btnCloseSnapinPopMsg");
-                                            btnCloseSnapinPopMsg.addEventListener("click", function () {
-                                            document.getElementById("snapinChatPopUpMsg").style.display = "none";
-                                        });
-                                }else if (snapinChasnapinCHatEnded){
-                                    snapinChatPopUpMsgDom.style.display = "none";
-                                }
-                            }, 50);
-}*/
-//BNR0202 [END]
+
 function waitChatCounter(eleSelector, findingEle, counterValue) {
     try {
         if (typeof (dellmetricsTrack) == "function") {
