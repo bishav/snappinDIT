@@ -26,14 +26,15 @@ var coveoHeader = "", isCoveoSearchEnabled = false, isPCFCall = false;
 
         head.appendChild(style);
     }
-    if (!document.getElementById('snapinAdditionalScriptSrc')) {
+    //FY21-0202 DEFECT 7923829 [START]
+    /*if (!document.getElementById('snapinAdditionalScriptSrc')) {
         var sfdc_script = document.createElement('script');
         sfdc_script.setAttribute('src','https://service.force.com/embeddedservice/5.0/esw.min.js');
         sfdc_script.id = 'snapinAdditionalScriptSrc';
         sfdc_script.type = 'text/javascript';
         document.head.appendChild(sfdc_script);   
-    }
-
+    }*/
+    //FY21-0202 DEFECT 7923829 [END]
     if (typeof NodeList.prototype.forEach === "function") return false;
     NodeList.prototype.forEach = Array.prototype.forEach;
 
@@ -475,9 +476,9 @@ function custPreChatShowAdditionalDetailsInUi(snapInObject, preChatlableObject) 
     }
     //STORY 7193456: FY201101[END]
     if (snapInObject.productName == null)
-        topFieldValues = '<div id="readonlyPreChatContainer" class="readonlyContainer" style="margin: 0 1.5em 6px 1.2em; text-align: left;position: relative;font-size: .75em;color: #444444;margin-bottom: 0px;"><div><b>' + preChatlableObject.serviceTag + ':</b> ' + snapInObject.serviceTag + '</div><div><b>' + preChatlableObject.issueType + ':</b> <span class="coveo-query" data-coveo-id="IssueDesc" id="preChatIssueDesc" style="font-size: 12px;">' + snapInObject.issueVal + '</span></div></div>';
+        topFieldValues = '<div id="readonlyPreChatContainer" class="readonlyContainer" style="margin: 0 1.5em 6px 1.2em; text-align: left;position: relative;font-size: .75em;color: #444444;margin-bottom: 0px;">' + getChatServiceTag(preChatlableObject.serviceTag, snapInObject.serviceTag) + '<div><b>' + preChatlableObject.issueType + ':</b> <span class="coveo-query" data-coveo-id="IssueDesc" id="preChatIssueDesc" style="font-size: 12px;">' + snapInObject.issueVal + '</span></div></div>';
     else
-        topFieldValues = '<div id="readonlyPreChatContainer" class="readonlyContainer" style="margin: 0 1.5em 6px 1.2em; text-align: left;position: relative;font-size: .75em;color: #444444;"><div style="font-size: 1.2em;">' + snapInObject.productName + '</div><div><b>' + preChatlableObject.serviceTag + ':</b> ' + snapInObject.serviceTag + '</div><div><b>' + preChatlableObject.issueType + ':</b> <span class="coveo-query" data-coveo-id="IssueDesc" id="preChatIssueDesc" style="font-size:12px;">' + snapInObject.issueVal + '</span></div></div>';
+        topFieldValues = '<div id="readonlyPreChatContainer" class="readonlyContainer" style="margin: 0 1.5em 6px 1.2em; text-align: left;position: relative;font-size: .75em;color: #444444;"><div style="font-size: 1.2em;">' + snapInObject.productName + '</div>' + getChatServiceTag(preChatlableObject.serviceTag, snapInObject.serviceTag) + '<div><b>' + preChatlableObject.issueType + ':</b> <span class="coveo-query" data-coveo-id="IssueDesc" id="preChatIssueDesc" style="font-size:12px;">' + snapInObject.issueVal + '</span></div></div>';
     topFields.insertAdjacentHTML("afterbegin", topFieldValues);
 }
 function custPreFormValidation(preChatlableObject) {
@@ -527,6 +528,15 @@ function custPreFormValidation(preChatlableObject) {
     if (acceptForm === undefined) acceptForm = true;
     return acceptForm;
 }
+//FY21-0202 DEFECT 7980969 [START]
+function getChatServiceTag(label, val){
+    if(val && val != null)
+        return '<div><b>' + label + ':</b> ' + val + '</div>';
+    else
+        return '';
+    }
+//FY21-0202 DEFECT 7980969 [END]
+
 //FY20-1102 DEFECT 7534877 [START]		
 function checkErrMsgValidation(fieldEle, fieldName, format, formatResult) {
     if ((fieldEle.value && format.test(fieldEle.value) == formatResult) || (!fieldEle.value)) {
@@ -1024,10 +1034,16 @@ function togglePrechatAndSnapin(targetNode) {
 */
 //FY21-0202 Story STORY #7689121 [START]
 function getTechSupportSubject(snapInObject){
-    if(("serviceTag" in snapInObject && snapInObject.serviceTag) || ("issueVal" in snapInObject && snapInObject.issueVal))
+    //FY21-0202 Story Defectfix for Defect # 7977210 [START]
+    /*if(("serviceTag" in snapInObject && snapInObject.serviceTag) || ("issueVal" in snapInObject && snapInObject.issueVal))
         return snapInObject.issueVal;
     else if("productFamily" in snapInObject)
-        return snapInObject.productFamily;
+        return snapInObject.productFamily;*/
+    if("productFamily" in snapInObject && snapInObject.productFamily === "security_dell_data" && "productName" in snapInObject)
+        return "Dell Data Security";
+    else if("issueVal" in snapInObject && snapInObject.issueVal)
+        return snapInObject.issueVal;
+    //FY21-0202 Story Defectfix for Defect # 7977210 [END]
 }
 function getTechSupportChatSource(snapInObject){
     if(("serviceTag" in snapInObject && snapInObject.serviceTag))

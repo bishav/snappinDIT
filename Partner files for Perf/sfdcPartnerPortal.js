@@ -62,7 +62,7 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
                     deploymentId: '5720b000000GneC',
                     baseLiveAgentURL: 'https://d.la3-c2cs-ph2.salesforceliveagent.com/chat',
                     eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I2h0000004CBdEAM_16fd14e13a6',
-					snapInJs: 'https://dellservices--Perf1.my.salesforce.com/embeddedservice/5.0/esw.min.js',
+					snapInJs: 'https://dellservices--Perf1.my.salesforce.com/embeddedservice/5.0/esw.min.js'
 					
 					//fixed object values
 					buttonId: routingConfig(partnerPortalDetails),
