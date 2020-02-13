@@ -855,7 +855,9 @@ if (snapInCareObject) {
     sessionStorage.setItem("snapInCareObjectSession", snapInCareObjectGlobal);
 }
 }
-function translationCare(language) {
+function translationCare(lang) {
+    let language = lang.replace("_", "-");
+    language = language.toLowerCase();
     this.primPhone = "Primary Phone Number";
     this.issueDesc = "Issue Description";
 if (language == "de") {
@@ -894,7 +896,7 @@ if (language == "de") {
     this.issueDesc = "descripcion del problema";
     this.characters = "characters";
     this.language = "es";
-} else if (language == "cn") {
+} else if (language == "zh" || language == "cn" || language == "zh-cn") {
     this.issue = "Issue";
     this.firstName = "名";
     this.lastName = "姓";
@@ -903,7 +905,7 @@ if (language == "de") {
     this.issueDesc = "问题说明";
     this.characters = "characters";
     this.language = "zh-CN";
-} else if (language == "pt") {
+} else if (language == "pt" || language == "pt-br") { //Language related issue FY21-0202- Defect 8062138
     this.issue = "Issue";
     this.firstName = "Nome";
     this.lastName = "Sobrenome";
@@ -911,8 +913,15 @@ if (language == "de") {
     this.primPhone = "Número de Telefone Principal";
     this.issueDesc = "descrição do problema";
     this.characters = "characters";
-    this.language = "pt";
-} else if (language == "nl" || language == "nl_NL") {
+    this.language = "pt-br";
+} else if (language == "pt-pt") { //Language related issue FY21-0202- Defect 8062138
+    this.issue = "Issue";
+    this.characters = "characters";//Language related issue FY21-0202- Defect 8062138
+    this.firstName = "Nome próprio";//Language related issue FY21-0202- Defect 8062138
+    this.lastName = "Apelido";//Language related issue FY21-0202- Defect 8062138
+    this.emailAdd = "E-mail";//Language related issue FY21-0202- Defect 8062138
+    this.language = "pt-pt";//Language related issue FY21-0202- Defect 8062138
+} else if (language == "nl" || language == "nl-nl") {//Language related issue FY21-0202- Defect 8062138
     this.issue = "Issue";
     this.firstName = "Voornaam";
     this.lastName = "Achternaam";
@@ -920,7 +929,7 @@ if (language == "de") {
     //this.primPhone = "Primair telefoonnummer";
     //this.issueDesc = "Probleem Beschrijving";
     this.characters = "characters";
-    this.language = "nl";
+    this.language = "nl-NL";//Language related issue FY21-0202- Defect 8062138
 } else if (language == "fr") {
     this.issue = "Issue";
     this.firstName = "Prénom";

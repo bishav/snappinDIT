@@ -1284,18 +1284,18 @@ function translation(lang) {
         this.lastName = "姓氏";
         this.emailAdd = "電子郵件";
         this.language = "zh-TW";
-    } else if (language == "pt" || language == "pt-pt") { //Language related issue FY21-0202
+    } else if (language == "pt-pt") { //Language related issue FY21-0202- Defect 8062138
         this.firstName = "Nome próprio";
         this.lastName = "Apelido";
-        this.emailAdd = "Email";
+        this.emailAdd = "E-mail";
         this.language = "pt-pt";
-    } else if (language == "pt-br") {
+    } else if (language == "pt" || language == "pt-br") { //Language related issue FY21-0202- Defect 8062138
         this.firstName = "Nome";
         this.lastName = "Sobrenome";
         this.emailAdd = "Email";
         this.primPhone = "Número de Telefone Principal";
         this.issueDesc = "descrição do problema";
-        this.language = "pt-br";
+        this.language = "pt";
     } else if (language == "nl" || language == "nl-nl") {
         this.firstName = "Voornaam", this.lastName = "Achternaam",
         this.emailAdd = "E-mail";

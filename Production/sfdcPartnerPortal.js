@@ -8,7 +8,6 @@
         e = e || event;
         e.preventDefault();
     }, false);
-	   //FY21-0202 DEFECT 7923829 [START]
 	   if (!document.getElementById('snapinAdditionalScriptSrc')) {
         var sfdc_script = document.createElement('script');
         sfdc_script.setAttribute('src','https://service.force.com/embeddedservice/5.0/esw.min.js');
@@ -16,55 +15,23 @@
         sfdc_script.type = 'text/javascript';
         document.head.appendChild(sfdc_script);   
     }
-    //FY21-0202 DEFECT 7923829 [END]
     if (typeof NodeList.prototype.forEach === "function") return false;
     NodeList.prototype.forEach = Array.prototype.forEach;
-
 })();
-
-
 function triggerPartnerPortalSnapin(partnerPortalDetails) {
     try {            
 			let sfdcSnapinDetails = {
-					//Chat 
-					baseLiveAgentContentURL: 'https://c.la2-c1cs-ord.salesforceliveagent.com/content',
-					deploymentId: '5720b000000CbfS',
-					baseLiveAgentURL: 'https://d.la2-c1cs-ord.salesforceliveagent.com/chat',
-					eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I0x0000008OPzEAM_16d81041603',             
-                    componentName: "Partner_Portal_Snap_ins",
-                    organizationId: "00D0x0000000WEw",
-                    snapInInitURL: 'https://dellservices--Chat.my.salesforce.com',
-                    snapInJs: "https://service.force.com/embeddedservice/5.0/esw.min.js",
-                    snapInLAURL: 'https://chat-dellservices.cs95.force.com/LASnapIn', 
-					
-					//DEV2
-					snapInInitURL: 'https://dellservices--DEV2.my.salesforce.com',
-					snapInLAURL: 'https://dev2-dellservices.cs45.force.com/LASnapIn',
-					organizationId: '00D8A00000057oF',
+				    snapInInitURL: 'https://dellservices.my.salesforce.com',
+					snapInLAURL: 'https://dellservices.secure.force.com/LASnapIn',
+					organizationId: '00D0b000000GaMp',
 					componentName: 'Partner_Snap_In',
-					baseLiveAgentContentURL: 'https://c.la2-c2cs-ph2.salesforceliveagent.com/content',
-					deploymentId: '5720b000000GneC',
-					baseLiveAgentURL: 'https://d.la2-c2cs-ph2.salesforceliveagent.com/chat',
-					eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I8A0000004CE8UAM_16e214e1296',
-					snapInJs: 'https://dellservices--DEV2.my.salesforce.com/embeddedservice/5.0/esw.min.js',
-					
-					//SIT2
-				  
-				    snapInInitURL: 'https://dellservices--SIT2.my.salesforce.com',
-					snapInLAURL: 'https://sit2-dellservices.cs36.force.com/LASnapIn',
-					organizationId: '00D2h0000008aOa',
-					componentName: 'Partner_Snap_In',
-					baseLiveAgentContentURL: 'https://c.la3-c2cs-ph2.salesforceliveagent.com/content',
+					baseLiveAgentContentURL: 'https://c.la3-c1-ia2.salesforceliveagent.com/content',
                     deploymentId: '5720b000000GneC',
-                    baseLiveAgentURL: 'https://d.la3-c2cs-ph2.salesforceliveagent.com/chat',
-                    eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I2h0000004CBOEA2_16e7ea2ec9b',
-					snapInJs: 'https://dellservices--SIT2.my.salesforce.com/embeddedservice/5.0/esw.min.js',
-					
-					//fixed object values
+                    baseLiveAgentURL: 'https://d.la3-c1-ia2.salesforceliveagent.com/chat',
+                    eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I2R000000PAwuUAG_1703a86ec04',
+					snapInJs: 'https://dellservices.my.salesforce.com/embeddedservice/5.0/esw.min.js',
 					buttonId: routingConfig(partnerPortalDetails),
 					issueSubject: partnerPortalDetails.productGroup +" - "+ partnerPortalDetails.productType,
-					//logsCollected: checkLogGrants(partnerPortalDetails),
-					//logTypeMultiPickList: convertLogToMultiPickList(partnerPortalDetails),
 					logsCollected: checkLogGrants(partnerPortalDetails),
 					concatenatedDescription: concatenatDescription(partnerPortalDetails),
 					caseSeverityTxt: convertToSeverity(partnerPortalDetails.caseSeverity),
@@ -73,11 +40,10 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 					serviceForceURL: "https://service.force.com",
 		}
             var initESW = function (gslbBaseURL) {
-                embedded_svc.settings.displayHelpButton = false;//true;
+                embedded_svc.settings.displayHelpButton = false;
                 embedded_svc.settings.language = "en";
                 embedded_svc.settings.enabledFeatures = ['LiveAgent'];
                 embedded_svc.settings.entryFeature = 'LiveAgent';
-                //embedded_svc.settings.storageDomain = sfdcSnapinDetails.domainName;
                 embedded_svc.settings.defaultMinimizedText = 'Chat Now';
                 
                 embedded_svc.settings.directToButtonRouting = routingConfig(partnerPortalDetails);
@@ -88,7 +54,7 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 						"transcriptFields": ["Type__c"]
 					},{
 						"label": "Chat Source",
-						"value": 'Partner',//chatSourceVal(partnerPortalDetails.productGroup),
+						"value": 'Partner',
 						"transcriptFields": ["Chat_Source__c"]
 					},{
 						"label": "Product Group / Vendor",
@@ -118,13 +84,11 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 						"transcriptFields": ["Description__c"]
 					},{
 						"label":  "Description",
-						//"value": partnerPortalDetails.issueDescription,
 						"value": sfdcSnapinDetails.concatenatedDescription,
 						"transcriptFields": ["Collaborate_Description__c"]
 					},{
                         "label": "First Name",
                         "name": "FirstName",
-						//"value": partnerPortalDetails.firstName,
 						"value": sfdcSnapinDetails.validFirstName,
                         "transcriptFields": ["FirstName__c"],
                         "displayToAgent": true
@@ -151,7 +115,7 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 						"value": partnerPortalDetails.region,
 						"transcriptFields": ["PP_Location__c"]
 					},{
-						"label":  "Case Number From Partner",//"Service Request",
+						"label":  "Case Number From Partner",
 						"value": partnerPortalDetails.caseOrSr,
 						"transcriptFields": ["PP_Case_Number_From_Partner__c"]
 					},{
@@ -174,13 +138,9 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 						"label":  "Logs Collected",
 						"value": sfdcSnapinDetails.logsCollected,
 						"transcriptFields": ["PP_Logs_Collected__c"]
-					}/*,{
-						"label":  "Log Type",
-						"value": sfdcSnapinDetails.logTypeMultiPickList,
-						"transcriptFields": ["PP_Log_Type__c"]
-					}*/,{
+					},{
 						"label":  "Record Type",
-						"value": "0122h0000009xf1",//"0122h0000009xf1" ,//Record type id for partner//DEV2 = "0128A000000Jhee",
+						"value": "0122R000000VrtU", 
 						"transcriptFields": ["RecordType"]
 					}
 				];
@@ -215,11 +175,6 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
                                 location.reload();
                         }	
                     });
-                /*
-                    let bgLoader = document.getElementById('overlay');
-                    if(bgLoader)
-                        bgLoader.style.display = "none"; 
-                */
                $('.overlay-content').hide();
                 });
 
@@ -249,7 +204,7 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
     }
 }
 
-//Click on chat button
+
 function chatClick(eleSelector, findingEle, waitCounter) {
     try {
             if (document.querySelector(eleSelector).innerText === 'Chat Now'){
@@ -261,16 +216,15 @@ function chatClick(eleSelector, findingEle, waitCounter) {
                  
                 var path = window.location.href;
                 var result = path.substring(0, path.lastIndexOf('/'));
-                console.log(result);
                 window.open(result+"/closed.html", "_self"); 
             }else
-                console.log("Searching for Agents = " + waitCounter);
+                console.log("Searching for Agents... " + waitCounter);
     } catch (e) {
         console.log("Error in:" + e);
     }
 }
 
-//If element Exist Run function
+
 function eleExist(eleSelector, callbackFunc) {
     let waitCounter = 0;
     var findingEle = setInterval(function () {
@@ -284,49 +238,31 @@ function eleExist(eleSelector, callbackFunc) {
     }, 1000);
 }
 
-
-//Log Grants optimization
 function checkLogGrants(partnerPortalDetails){
 	let returnVal = convertSeparatorToMultiPickList(partnerPortalDetails.logTypes);
 	return returnVal;
 
 }
 
-//Convert Log to Multi Pick List
-/*function convertLogToMultiPickList(partnerPortalDetails){
-	let returnVal;
-		if (partnerPortalDetails.logsGathered)
-			returnVal = convertSeparatorToMultiPickList(partnerPortalDetails.logTypes);
-		else
-			returnVal = null;
-		return returnVal;
-}*/
-
-//Convert Sepatator to Semicolom
 function convertSeparatorToMultiPickList(logTypes){
 	var returnLogType;
 	var logTypesArr = logTypes.split("Other: ");
 	if(logTypesArr[1]){
 		var logTypesArr1 = logTypesArr[1].replace(/[|]/g, "/");
 		var logTypesArr3 = logTypesArr[0] + "Other: " + logTypesArr1;
-		//returnLogType = logTypesArr3.replace(/[|]/g, ";");
 		returnLogType = logTypesArr3.replace(/[|]/g, " ■ ");
 	}else{
 		var logTypesArr3 = logTypesArr[0]
-		//returnLogType = logTypesArr3.replace(/[|]/g, ";");
 		returnLogType = logTypesArr3.replace(/[|]/g, " ■ ");
 	}
 	return returnLogType;
 }
 
-//concatenat Description
 function concatenatDescription(partnerPortalDetails){
-	//let description = "Customer on the Phone? " + (partnerPortalDetails.customerOnThePhone ? "Yes" : "No") + " | Driver/Firmware updated? " + (partnerPortalDetails.driverFirmwareUpdated ? "Yes" : "No")  + " | Logs Collected? " + checkLogGrants(partnerPortalDetails) + (partnerPortalDetails.logsGathered ? " - " + convertLogToMultiPickList(partnerPortalDetails) : "") + " | Issue Description : "+ partnerPortalDetails.issueDescription;
-	let description = partnerPortalDetails.issueDescription
+	let description = partnerPortalDetails.issueDescription;
 	return description;
 }
 
-// Convert Sev to Priority
 function convertToSeverity(caseSeverity){
 	let returnVal;
 	switch(caseSeverity) {
@@ -347,13 +283,7 @@ function convertToSeverity(caseSeverity){
 	}
 	return returnVal;
 }
-//Routing Config
 
-/*function chatSourceVal(productGroup){
-	//var returnValue = "Partner-"+productGroup;
-	var returnValue = productGroup;
-	return returnValue;
-}*/
 function loginIdNoSpace(loginId){
 	return loginId.replace(/[_]/g, " ");
 }
@@ -361,57 +291,42 @@ function firstNameValidator(partnerPortalDetails){
 	if (partnerPortalDetails.firstName && (partnerPortalDetails.firstName != null || partnerPortalDetails.firstName != undefined  || partnerPortalDetails.firstName != "" || partnerPortalDetails.firstName != " ")){
 		return partnerPortalDetails.firstName;
 	}else{
-		
 		return loginIdNoSpace(partnerPortalDetails.loginId);
 	}
 }
 function routingConfig(partnerPortalDetails){
-	console.log(partnerPortalDetails);
 	var buttonID;
 	if (partnerPortalDetails.productGroup === "GTT"){
-		//STORY 7592112: FY20_Channels : Chat : Partner Portal : GTT_Create Queues on Lightning [START]
 		switch(partnerPortalDetails.productType) {
 		  case "Global Tag Team":
-			//buttonID = "5738A0000008Om2";//GL_DB_INTB_MIX_CH_MU_BLND_GTT
-			buttonID = "5730b000000PnCo";//SIT 2
+			buttonID = "5730b000000PnCo";
 			break;
 		  case "LATAM Tag Team":
-			//buttonID = "5738A0000008Olx";//DEV 2 LA_DB_INTB_MIX_CH_MU_BLND_GTT
-			buttonID = "5730b000000PnCp";//SIT 2
+			buttonID = "5730b000000PnCp";
 			break;
 		  case "OEM Tag Team":
-			//buttonID = "5738A0000008Om7"; //DEV2 GL_DB_INTB_MIX_CH_EN_BLND_OEMGTT
-			buttonID = "5730b000000PnCn";//SIT 2
+			buttonID = "5730b000000PnCn";
 			break;
 		  case "OEM":
-			//buttonID = "5738A0000008Om7"; //DEV2 GL_DB_INTB_MIX_CH_EN_BLND_OEMGTT
-			buttonID = "5730b000000PnCn";//SIT 2
+			buttonID = "5730b000000PnCn";
 			break;
 		  case "Fed Tag Team":
-			//buttonID = "5738A0000008OmH"; //DEV2 NA_DB_INTB_MIX_CH_EN_BLND_FEDGTT
-			buttonID = "5730b000000PnCq";//SIT 2
+			buttonID = "5730b000000PnCq";
 			break;
 		  default:
-			//buttonID = "5738A0000008Om2";//DEV2 GL_DB_INTB_MIX_CH_MU_BLND_GTT
-			buttonID = "5730b000000PnCo";//SIT 2
+			buttonID = "5730b000000PnCo";
 			}
-		//STORY 7592112: FY20_Channels : Chat : Partner Portal : GTT_Create Queues on Lightning [END]
 	}else if (partnerPortalDetails.productGroup === "Mixed IP") {
-		//STORY 7248769 : FY20_Channels : Chat : Partner Portal : VCE_Create Queues on Lightning  [START]
 		switch(partnerPortalDetails.productType) {
 		  case "Azure":
-			//buttonID = "5730R0000004FfB";//DEV2 GL_DB_INTB_ENT_CH_EN_BLND_SST_MSFT
-			buttonID = "5731P000000TSWY";//SIT 2
+			buttonID = "5731P000000TSWY";
 			break;
 		  case "PowerOne Network":
-			//buttonID = "5730R0000004Ff2";//DEV2 GL_DB_INTB_ENT_CH_EN_BLND_NTWK
-			buttonID = "5731P000000TSWP";//SIT 2
+			buttonID = "5731P000000TSWP";
 			break;
 		  default:
-			//buttonID = "5730R0000004Ff5";//GL_DB_INTB_ENT_CH_EN_BLND_SRVR_CPSD
-			buttonID = "5731P000000TSWV";//SIT 2
+			buttonID = "5731P000000TSWV";
 			}
-		//STORY 7248769 : FY20_Channels : Chat : Partner Portal : VCE_Create Queues on Lightning  [END]
 	}
 	return buttonID;
 }
