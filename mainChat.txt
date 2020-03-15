@@ -1284,12 +1284,12 @@ function translation(lang) {
         this.lastName = "姓氏";
         this.emailAdd = "電子郵件";
         this.language = "zh-TW";
-    } else if (language == "pt" || language == "pt-pt") { //Language related issue FY21-0202
+    } else if (language == "pt-pt") { //Language related issue FY21-0202- Defect 8062138
         this.firstName = "Nome próprio";
         this.lastName = "Apelido";
-        this.emailAdd = "Email";
+        this.emailAdd = "E-mail";
         this.language = "pt-pt";
-    } else if (language == "pt-br") {
+    } else if (language == "pt" || language == "pt-br") { //Language related issue FY21-0202- Defect 8062138
         this.firstName = "Nome";
         this.lastName = "Sobrenome";
         this.emailAdd = "Email";
@@ -1715,6 +1715,7 @@ function initLiveAgentWithoutPrechatForm(liveAgentObject, callbackOnline, callba
                 liveagent.showWhenOffline(liveAgentObject.buttonId, document.getElementById('liveagent_button_offline_' + liveAgentObject.buttonId));
                 if ("serviceTag" in liveAgentObject)
                     liveagent.addCustomDetail('serviceTag', liveAgentObject.serviceTag).saveToTranscript('Service_Tag__c');
+				liveagent.addCustomDetail("Chat Source", "Tech").saveToTranscript('Chat_Source__c');//FY21-0202 Defect ID - Defect 8080327
                 liveagent.addCustomDetail("First Name", liveAgentObject.firstName).saveToTranscript('FirstName__c');
                 liveagent.addCustomDetail("Last Name", liveAgentObject.lastName).saveToTranscript('LastName__c');
                 liveagent.addCustomDetail("Phone Number", liveAgentObject.phoneNumber).saveToTranscript('ContactNumber__c');

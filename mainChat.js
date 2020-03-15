@@ -1295,7 +1295,7 @@ function translation(lang) {
         this.emailAdd = "Email";
         this.primPhone = "Número de Telefone Principal";
         this.issueDesc = "descrição do problema";
-        this.language = "pt";
+        this.language = "pt-br";
     } else if (language == "nl" || language == "nl-nl") {
         this.firstName = "Voornaam", this.lastName = "Achternaam",
         this.emailAdd = "E-mail";
@@ -1715,6 +1715,7 @@ function initLiveAgentWithoutPrechatForm(liveAgentObject, callbackOnline, callba
                 liveagent.showWhenOffline(liveAgentObject.buttonId, document.getElementById('liveagent_button_offline_' + liveAgentObject.buttonId));
                 if ("serviceTag" in liveAgentObject)
                     liveagent.addCustomDetail('serviceTag', liveAgentObject.serviceTag).saveToTranscript('Service_Tag__c');
+				liveagent.addCustomDetail("Chat Source", "Tech").saveToTranscript('Chat_Source__c');//FY21-0202 Defect ID - Defect 8080327
                 liveagent.addCustomDetail("First Name", liveAgentObject.firstName).saveToTranscript('FirstName__c');
                 liveagent.addCustomDetail("Last Name", liveAgentObject.lastName).saveToTranscript('LastName__c');
                 liveagent.addCustomDetail("Phone Number", liveAgentObject.phoneNumber).saveToTranscript('ContactNumber__c');

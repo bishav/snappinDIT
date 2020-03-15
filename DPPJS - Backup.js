@@ -67,7 +67,7 @@ function startPartnerPortalChat(){
     };
 
     var sfdcSnapinDetails = { //All SFDC values are supposed to be stored so that it can be updated as it needs Update for each environment change.
-        buttonId: "5738A0000008Om2",//partnerPortalDetails.regionQueues,//'5730x000000Catz',
+        buttonId: partnerPortalDetails.regionQueues,//'5730x000000Catz',//"5738A0000008Om2",//
         baseLiveAgentContentURL:  $('#baseLAContentURL').val(),//'https://c.la2-c1cs-ord.salesforceliveagent.com/content',
         deploymentId: $('#deploymentId').val(),//'5720b000000CbfS',
         baseLiveAgentURL: $('#baseLAURL').val(),//'https://d.la2-c1cs-ord.salesforceliveagent.com/chat',
