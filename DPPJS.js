@@ -103,7 +103,7 @@ function startPartnerPortalChat(){
             serviceTag: getMainSearchValue($('#chatType').val(), "Service Tag", $('#chatTypeValue').val()),
             srNumber: getMainSearchValue($('#chatType').val(), "SR Number", $('#chatTypeValue').val()),
             chatProviderName: $('#chatProviderName').val(),
-			productName: findProductFromQueueName($('#regionQueues').siblings(".form-control")[0]);//FY21-0502: Story #8076479: Find if the product name from Queue name.
+			productName: findProductFromQueueName($('#regionQueues').siblings(".form-control")[0]),//FY21-0502: Story #8076479: Find if the product name from Queue name.
             chatUserName: $('#chatUserName').val()
         };
 

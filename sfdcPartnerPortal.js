@@ -34,12 +34,11 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 					snapInLAURL: 'https://dev2-dellservices.cs45.force.com/LASnapIn',
 					organizationId: '00D8A00000057oF',
 					componentName: 'Partner_Snap_In',
-					baseLiveAgentContentURL: 'https://c.la2-c2cs-ph2.salesforceliveagent.com/content',
+					baseLiveAgentContentURL: 'https://c.la2-c1cs-ph2.salesforceliveagent.com/content',
 					deploymentId: '5720b000000GneC',
-					baseLiveAgentURL: 'https://d.la2-c2cs-ph2.salesforceliveagent.com/chat',
+					baseLiveAgentURL: 'https://d.la2-c1cs-ph2.salesforceliveagent.com/chat',
 					eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I8A0000004CE8UAM_16e214e1296',
 					snapInJs: 'https://dellservices--DEV2.my.salesforce.com/embeddedservice/5.0/esw.min.js',
-					
 					//SIT2
 				  /*
 				    snapInInitURL: 'https://dellservices--SIT2.my.salesforce.com',
@@ -54,6 +53,7 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 					*/
 					
 					//Perf 1
+					/*
 					snapInInitURL: 'https://dellservices--Perf1.my.salesforce.com',
 					snapInLAURL: 'https://perf1-dellservices.cs36.force.com/LASnapIn',
 					organizationId: '00D2h0000000YBM',
@@ -63,7 +63,7 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
                     baseLiveAgentURL: 'https://d.la3-c2cs-ph2.salesforceliveagent.com/chat',
                     eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I2h0000004CBdEAM_16fd14e13a6',
 					snapInJs: 'https://dellservices--Perf1.my.salesforce.com/embeddedservice/5.0/esw.min.js',
-					
+					*/
 					//fixed object values
 					buttonId: routingConfig(partnerPortalDetails),
 					issueSubject: partnerPortalDetails.productGroup +" - "+ partnerPortalDetails.productType,
@@ -184,7 +184,7 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 						"transcriptFields": ["PP_Log_Type__c"]
 					}*/,{
 						"label":  "Record Type",
-						"value": "0122h0000009xnl",//"0128A000000Jhee",//"0122h0000009xf1" ,//Record type id for partner//DEV2 = "0128A000000Jhee",
+						"value": "0128A000000Jhee",//"0122h0000009xnl",//"0122h0000009xf1" ,//Record type id for partner//DEV2 = "0128A000000Jhee",
 						"transcriptFields": ["RecordType"]
 					}
 				];
@@ -372,7 +372,7 @@ function firstNameValidator(partnerPortalDetails){
 function routingConfig(partnerPortalDetails){
 	console.log(partnerPortalDetails);
 	var buttonID;
-	if (partnerPortalDetails.productGroup === "GTT"){
+	/*if (partnerPortalDetails.productGroup === "GTT"){
 		//STORY 7592112: FY20_Channels : Chat : Partner Portal : GTT_Create Queues on Lightning [START]
 		switch(partnerPortalDetails.productType) {
 		  case "Global Tag Team":
@@ -408,5 +408,51 @@ function routingConfig(partnerPortalDetails){
 			}
 		//STORY 7248769 : FY20_Channels : Chat : Partner Portal : VCE_Create Queues on Lightning  [END]
 	}
-	return buttonID;
+	return buttonID;*/
+	if (partnerPortalDetails.productGroup === "GTT"){
+		//STORY 7592112: FY20_Channels : Chat : Partner Portal : GTT_Create Queues on Lightning [START]
+		switch(partnerPortalDetails.productType) {
+		  case "Global Tag Team":
+			buttonID = "5738A0000008Om2";//GL_DB_INTB_MIX_CH_MU_BLND_GTT
+			//buttonID = "5730b000000PnCo";//SIT 2
+			break;
+		  case "LATAM Tag Team":
+			buttonID = "5738A0000008Olx";//DEV 2 LA_DB_INTB_MIX_CH_MU_BLND_GTT
+			//buttonID = "5730b000000PnCp";//SIT 2
+			break;
+		  case "OEM Tag Team":
+			buttonID = "5738A0000008Om7"; //DEV2 GL_DB_INTB_MIX_CH_EN_BLND_OEMGTT
+			//buttonID = "5730b000000PnCn";//SIT 2
+			break;
+		  case "OEM":
+			buttonID = "5738A0000008Om7"; //DEV2 GL_DB_INTB_MIX_CH_EN_BLND_OEMGTT
+			//buttonID = "5730b000000PnCn";//SIT 2
+			break;
+		  case "Fed Tag Team":
+			buttonID = "5738A0000008OmH"; //DEV2 NA_DB_INTB_MIX_CH_EN_BLND_FEDGTT
+			//buttonID = "5730b000000PnCq";//SIT 2
+			break;
+		  default:
+			buttonID = "5738A0000008Om2";//DEV2 GL_DB_INTB_MIX_CH_MU_BLND_GTT
+			//buttonID = "5730b000000PnCo";//SIT 2
+			}
+		//STORY 7592112: FY20_Channels : Chat : Partner Portal : GTT_Create Queues on Lightning [END]
+	}else if (partnerPortalDetails.productGroup === "Mixed IP") {
+		//STORY 7248769 : FY20_Channels : Chat : Partner Portal : VCE_Create Queues on Lightning  [START]
+		switch(partnerPortalDetails.productType) {
+		  case "Azure":
+			buttonID = "5730R0000004FfB";//DEV2 GL_DB_INTB_ENT_CH_EN_BLND_SST_MSFT
+			//buttonID = "5731P000000TSWY";//SIT 2
+			break;
+		  case "PowerOne Network":
+			buttonID = "5730R0000004Ff2";//DEV2 GL_DB_INTB_ENT_CH_EN_BLND_NTWK
+			//buttonID = "5731P000000TSWP";//SIT 2
+			break;
+		  default:
+			buttonID = "5730R0000004Ff5";//GL_DB_INTB_ENT_CH_EN_BLND_SRVR_CPSD
+			//buttonID = "5731P000000TSWV";//SIT 2
+			}
+		//STORY 7248769 : FY20_Channels : Chat : Partner Portal : VCE_Create Queues on Lightning  [END]
+	}
+	return buttonID; 
 }
