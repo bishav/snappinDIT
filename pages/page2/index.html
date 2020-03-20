@@ -122,11 +122,9 @@
                                   <div class="mb-3">
                                         <a  id="liveagent_button_online_Test" class="enabledButton btn btn-primary btn-lg btn-block"  onclick="validateLiveAgent()">Check for agent avilabality first</a>
                                         <span id="buttonVisability" >
-                                          <a id="liveagent_button_online_5730b000000GnqQ" href="javascript://Chat" class="enabledButton btn btn-primary btn-lg btn-block"  style="display: none;" onclick="liveagent.startChat('5730b000000GnqQ')">Start Chat</a>
-                                          <!--<a id="liveagent_button_online_5730b000000Gnrk" href="javascript://Chat" class="enabledButton btn btn-primary btn-lg btn-block"  style="display: none;" onclick="liveagent.startChat('5730b000000Gnrk')">Start Chat</a>-->
+                                          <a id="liveagent_button_online_5730b000000CbhT" href="javascript://Chat" class="enabledButton btn btn-primary btn-lg btn-block"  style="display: none;" onclick="liveagent.startChat('5730b000000CbhT')">Start Chat</a>
                                         </span>
-                                          <div id="liveagent_button_offline_5730b000000GnqQ" href="javascript://Chat" class="" style="display: none;" >Agent not Avilable</div>
-                                         <!--<div id="liveagent_button_offline_5730b000000Gnrk" href="javascript://Chat" class="" style="display: none;" >Agent not Avilable</div> -->
+                                          <div id="liveagent_button_offline_5730b000000CbhT" href="javascript://Chat" class="" style="display: none;" >Agent not Avilable</div>
                                     </div>
                                 </form>
                               
@@ -135,8 +133,8 @@
         </div>
     </div>
     <!-- Dev 3<script type='text/javascript' src='https://c.la4-c2cs-phx.salesforceliveagent.com/content/g/js/44.0/deployment.js'></script>-->
-   <!-- SIT2--> <script type='text/javascript' src='https://c.la2-c1cs-iad.salesforceliveagent.com/content/g/js/44.0/deployment.js'></script>
-    
+   <!-- SIT2 <script type='text/javascript' src='https://c.la2-c1cs-iad.salesforceliveagent.com/content/g/js/44.0/deployment.js'></script>-->
+   <script type='text/javascript' src='https://c.la2-c1cs-ph2.salesforceliveagent.com/content/g/js/48.0/deployment.js'></script>
     <script type="text/javascript">
     
 
@@ -169,13 +167,15 @@
 
                 
               // liveagent.init('https://d.la2-c1cs-iad.salesforceliveagent.com/chat', '5720b000000CbfS', '00D4F0000000TPX');//SIT2 GE4
-              liveagent.init('https://d.la1-c1cs-ord.salesforceliveagent.com/chat', '5720b000000CbfS', '00DL000000629BA');//Dev3
-             // liveagent.init('https://d.la2-c2cs-iad.salesforceliveagent.com/chat', '5720b000000CbfS', '00D2a0000008ftq'); 
+             // liveagent.init('https://d.la1-c1cs-ord.salesforceliveagent.com/chat', '5720b000000CbfS', '00DL000000629BA');//Dev3
+              liveagent.init('https://d.la2-c2cs-ph2.salesforceliveagent.com/chat', '5720b000000GneC', '00D8A00000057oF');//DEV2
+              // liveagent.init('https://d.la2-c2cs-iad.salesforceliveagent.com/chat', '5720b000000CbfS', '00D2a0000008ftq'); 
+            
               if (!window._laq) { window._laq = []; }
                 window._laq.push(function(){
                   
-                      liveagent.showWhenOnline('5730b000000GnqQ', document.getElementById('liveagent_button_online_5730b000000GnqQ'));
-                      liveagent.showWhenOffline('5730b000000GnqQ', document.getElementById('liveagent_button_offline_5730b000000GnqQ'));
+                      liveagent.showWhenOnline('5730b000000CbhT', document.getElementById('liveagent_button_online_5730b000000CbhT'));
+                      liveagent.showWhenOffline('5730b000000CbhT', document.getElementById('liveagent_button_offline_5730b000000CbhT'));
 
                      // liveagent.showWhenOnline('5730b000000Gnrk', document.getElementById('liveagent_button_online_5730b000000Gnrk'));
                      // liveagent.showWhenOffline('5730b000000Gnrk', document.getElementById('liveagent_button_offline_5730b000000Gnrk'));
@@ -190,10 +190,6 @@
               if(document.getElementById(mutationTargetID).style.display != "none"){
                 console.log("working");
                 debugger;
-                //liveagent.startChat('5730b000000GnqQ');
-
-                  //liveagent.startChatWithWindow("5730b000000GnqQ", 'chatchat'); 
-                //liveagent.startChat ('5730b000000GnqQ');
                 
               }
             }
@@ -203,7 +199,7 @@
           attributes: true, 
           attributeFilter: ["style"]
         }; 
-        var targetNode = document.getElementById('liveagent_button_online_5730b000000GnqQ');
+        var targetNode = document.getElementById('liveagent_button_online_5730b000000CbhT');
         observer.observe(targetNode, observerConfig); 
 
               liveagent.addCustomDetail('serviceTag', serviceTag).saveToTranscript('Service_Tag__c');
@@ -219,8 +215,6 @@
           console.log(e);
           
         }
-
-           // document.getElementById("liveagent_button_online_5730b000000GnqQ").click();
       } 
        // Notify me of style changes
                
