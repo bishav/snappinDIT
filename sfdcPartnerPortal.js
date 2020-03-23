@@ -428,44 +428,44 @@ function routingConfig(partnerPortalDetails){
 		//STORY 7592112: FY20_Channels : Chat : Partner Portal : GTT_Create Queues on Lightning [START]
 		switch(partnerPortalDetails.productType) {
 		  case "Global Tag Team":
-			buttonID = "5738A0000008Om2";//GL_DB_INTB_MIX_CH_MU_BLND_GTT
-			//buttonID = "5730b000000PnCo";//SIT 2
+			//buttonID = "5738A0000008Om2";//GL_DB_INTB_MIX_CH_MU_BLND_GTT
+			buttonID = "5730b000000PnCo";//SIT 2
 			break;
 		  case "LATAM Tag Team":
-			buttonID = "5738A0000008Olx";//DEV 2 LA_DB_INTB_MIX_CH_MU_BLND_GTT
-			//buttonID = "5730b000000PnCp";//SIT 2
+			//buttonID = "5738A0000008Olx";//DEV 2 LA_DB_INTB_MIX_CH_MU_BLND_GTT
+			buttonID = "5730b000000PnCp";//SIT 2
 			break;
 		  case "OEM Tag Team":
-			buttonID = "5738A0000008Om7"; //DEV2 GL_DB_INTB_MIX_CH_EN_BLND_OEMGTT
-			//buttonID = "5730b000000PnCn";//SIT 2
+			//buttonID = "5738A0000008Om7"; //DEV2 GL_DB_INTB_MIX_CH_EN_BLND_OEMGTT
+			buttonID = "5730b000000PnCn";//SIT 2
 			break;
 		  case "OEM":
-			buttonID = "5738A0000008Om7"; //DEV2 GL_DB_INTB_MIX_CH_EN_BLND_OEMGTT
-			//buttonID = "5730b000000PnCn";//SIT 2
+			//buttonID = "5738A0000008Om7"; //DEV2 GL_DB_INTB_MIX_CH_EN_BLND_OEMGTT
+			buttonID = "5730b000000PnCn";//SIT 2
 			break;
 		  case "Fed Tag Team":
-			buttonID = "5738A0000008OmH"; //DEV2 NA_DB_INTB_MIX_CH_EN_BLND_FEDGTT
-			//buttonID = "5730b000000PnCq";//SIT 2
+			//buttonID = "5738A0000008OmH"; //DEV2 NA_DB_INTB_MIX_CH_EN_BLND_FEDGTT
+			buttonID = "5730b000000PnCq";//SIT 2
 			break;
 		  default:
-			buttonID = "5738A0000008Om2";//DEV2 GL_DB_INTB_MIX_CH_MU_BLND_GTT
-			//buttonID = "5730b000000PnCo";//SIT 2
+			//buttonID = "5738A0000008Om2";//DEV2 GL_DB_INTB_MIX_CH_MU_BLND_GTT
+			buttonID = "5730b000000PnCo";//SIT 2
 			}
 		//STORY 7592112: FY20_Channels : Chat : Partner Portal : GTT_Create Queues on Lightning [END]
 	}else if (partnerPortalDetails.productGroup === "Mixed IP") {
 		//STORY 7248769 : FY20_Channels : Chat : Partner Portal : VCE_Create Queues on Lightning  [START]
 		switch(partnerPortalDetails.productType) {
 		  case "Azure":
-			buttonID = "5730R0000004FfB";//DEV2 GL_DB_INTB_ENT_CH_EN_BLND_SST_MSFT
-			//buttonID = "5731P000000TSWY";//SIT 2
+			//buttonID = "5730R0000004FfB";//DEV2 GL_DB_INTB_ENT_CH_EN_BLND_SST_MSFT
+			buttonID = "5731P000000TSWY";//SIT 2
 			break;
 		  case "PowerOne Network":
-			buttonID = "5730R0000004Ff2";//DEV2 GL_DB_INTB_ENT_CH_EN_BLND_NTWK
-			//buttonID = "5731P000000TSWP";//SIT 2
+			//buttonID = "5730R0000004Ff2";//DEV2 GL_DB_INTB_ENT_CH_EN_BLND_NTWK
+			buttonID = "5731P000000TSWP";//SIT 2
 			break;
 		  default:
-			buttonID = "5730R0000004Ff5";//GL_DB_INTB_ENT_CH_EN_BLND_SRVR_CPSD
-			//buttonID = "5731P000000TSWV";//SIT 2
+			//buttonID = "5730R0000004Ff5";//GL_DB_INTB_ENT_CH_EN_BLND_SRVR_CPSD
+			buttonID = "5731P000000TSWV";//SIT 2
 			}
 		//STORY 7248769 : FY20_Channels : Chat : Partner Portal : VCE_Create Queues on Lightning  [END]
 	}
