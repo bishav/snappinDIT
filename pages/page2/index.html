@@ -122,9 +122,9 @@
                                   <div class="mb-3">
                                         <a  id="liveagent_button_online_Test" class="enabledButton btn btn-primary btn-lg btn-block"  onclick="validateLiveAgent()">Check for agent avilabality first</a>
                                         <span id="buttonVisability" >
-                                          <a id="liveagent_button_online_5730b000000CbhT" href="javascript://Chat" class="enabledButton btn btn-primary btn-lg btn-block"  style="display: none;" onclick="liveagent.startChat('5730b000000CbhT')">Start Chat</a>
+                                          <a id="liveagent_button_online_5730R000000CbY3" href="javascript://Chat" class="enabledButton btn btn-primary btn-lg btn-block"  style="display: none;" onclick="liveagent.startChat('5730R000000CbY3')">Start Chat</a>
                                         </span>
-                                          <div id="liveagent_button_offline_5730b000000CbhT" href="javascript://Chat" class="" style="display: none;" >Agent not Avilable</div>
+                                          <div id="liveagent_button_offline_5730R000000CbY3" href="javascript://Chat" class="" style="display: none;" >Agent not Avilable</div>
                                     </div>
                                 </form>
                               
@@ -174,8 +174,8 @@
               if (!window._laq) { window._laq = []; }
                 window._laq.push(function(){
                   
-                      liveagent.showWhenOnline('5730b000000CbhT', document.getElementById('liveagent_button_online_5730b000000CbhT'));
-                      liveagent.showWhenOffline('5730b000000CbhT', document.getElementById('liveagent_button_offline_5730b000000CbhT'));
+                      liveagent.showWhenOnline('5730R000000CbY3', document.getElementById('liveagent_button_online_5730R000000CbY3'));
+                      liveagent.showWhenOffline('5730R000000CbY3', document.getElementById('liveagent_button_offline_5730R000000CbY3'));
 
                      // liveagent.showWhenOnline('5730b000000Gnrk', document.getElementById('liveagent_button_online_5730b000000Gnrk'));
                      // liveagent.showWhenOffline('5730b000000Gnrk', document.getElementById('liveagent_button_offline_5730b000000Gnrk'));
@@ -199,7 +199,7 @@
           attributes: true, 
           attributeFilter: ["style"]
         }; 
-        var targetNode = document.getElementById('liveagent_button_online_5730b000000CbhT');
+        var targetNode = document.getElementById('liveagent_button_online_5730R000000CbY3');
         observer.observe(targetNode, observerConfig); 
 
               liveagent.addCustomDetail('serviceTag', serviceTag).saveToTranscript('Service_Tag__c');
