@@ -50,10 +50,13 @@
         <a class="navbar-brand" href="#">
             <img src="assets/DellTech_Logo_Prm_Blue.jpg" class="d-inline-block align-top" alt="">
         </a>
-        <button style="display: block;float: left;margin-right: 20px;" class="btn btn-primary"  data-target=".bd-example-modal-lg" id="chatButton" type="button" onclick="showConfigSettings()"><i class="fa fa-gear"></i></button>
+        <button style="display: block;float: left;margin-right: 20px;" class="btn btn-primary"  data-target=".bd-example-modal-lg" id="chatButton" type="button" onclick="showConfigSettings()">
+            <i class="fa fa-gear"></i>
+            <span>Environment Setup</span>
+        </button>
     </nav>
     <div class="navigationLink">
-        <h5 style="color:#fff; margin-left:30px;">Chat Testing: <span id="environmentName"></span> Environment</h5>
+        <h5 style="color:#fff; margin-left:30px;">Chat Testing: You are currently in <span id="environmentName"></span> Environment</h5>
     </div>
     <div class="container">
         <div class="resume-chat-msg hide">
@@ -148,21 +151,26 @@
                 <span aria-hidden="true">×</span>
               </button>
             </div>
-            <div class="modal-body input-group">
-                <select class="custom-select" onChange="changeEnv()" id="environmentSelection">
-                  <option selected>Choose your preferred environment</option>
-                  <option value="S1">S1</option>
-                  <option value="S4">S4</option>
-                  <option value="S6">S6</option>
-                  <option value="D1">D1</option>
-                  <option value="D2">D2</option>
-                </select>
-                <div class="input-group-append">
-                  <button class="btn btn-outline-primary" type="button" onclick="updateEnvCookie()">Update Cookie</button>
+            <div class="modal-body form-group" style="background: #ddd; margin-bottom: 0px;">
+                <b>Select your prefered Environment</b>
+                <div class="input-group">
+                    <select class="custom-select" onChange="changeEnv()" id="environmentSelection">
+                    <option selected>Choose your preferred environment</option>
+                    <option value="S1">S1</option>
+                    <option value="S4">S4</option>
+                    <option value="S6">S6</option>
+                    <option value="D1">D1</option>
+                    <option value="D2">D2</option>
+                    </select>
+                    <div class="input-group-append">
+                    <button style="background-color: #007bff; color:#fff" class="btn btn-outline-primary" type="button" onclick="updateEnvCookie()">Update Now</button>
+                    </div>
                 </div>
-              </div>
-
+            </div>
               <div class="modal-body config" id="S1" style="display:none">
+                <div class="form-group">
+                    <h5>SIT1 Environment Settings</h5>
+                </div>
                 <div class="form-group">
                     <label for="usr">baseLiveAgentContentURL:</label>
                     <input type="text" class="form-control" data-id="baseLiveAgentContentURL" value="https://c.la3-c1cs-phx.salesforceliveagent.com/content">
@@ -211,6 +219,9 @@
 
             <div class="modal-body config" id="S4" style="display:none">
                 <div class="form-group">
+                    <h5>SIT4 Environment Settings</h5>
+                </div>
+                <div class="form-group">
                     <label for="usr">baseLiveAgentContentURL:</label>
                     <input type="text" class="form-control" data-id="baseLiveAgentContentURL" value="https://c.la1-c1cs-ia2.salesforceliveagent.com/content">
                 </div>
@@ -257,6 +268,9 @@
             </div>
 
             <div class="modal-body config" id="S6" style="display:none">
+                <div class="form-group">
+                    <h5>SIT6 Environment Settings</h5>
+                </div>
                 <div class="form-group">
                     <label for="usr">baseLiveAgentContentURL:</label>
                     <input type="text" class="form-control" data-id="baseLiveAgentContentURL" value="https://c.la1-c1cs-ia2.salesforceliveagent.com/content">
@@ -305,6 +319,9 @@
             
             <div class="modal-body config" id="D1" style="display:none">
                 <div class="form-group">
+                    <h5>DEV1 Environment Settings</h5>
+                </div>
+                <div class="form-group">
                     <label for="usr">baseLiveAgentContentURL:</label>
                     <input type="text" class="form-control" data-id="baseLiveAgentContentURL" value="https://c.la2-c1cs-ph2.salesforceliveagent.com/content">
                 </div>
@@ -352,6 +369,9 @@
 
             <div class="modal-body config" id="D2" style="display:none">
                 <div class="form-group">
+                    <h5>DEV2 Environment Settings</h5>
+                </div>
+                <div class="form-group">
                     <label for="usr">baseLiveAgentContentURL:</label>
                     <input type="text" class="form-control" data-id="baseLiveAgentContentURL" id="baseLiveAgentContentURL" value="https://c.la2-c2cs-ph2.salesforceliveagent.com/content">
                 </div>
@@ -396,9 +416,6 @@
                     <input type="text" class="form-control" data-id="snapInLAURL" id="snapInLAURL" value="https://dev2-dellservices.cs45.force.com/LASnapIn">
                 </div>
             </div>
-
-
-
 
           </div>
         </div>

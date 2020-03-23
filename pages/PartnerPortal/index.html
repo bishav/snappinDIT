@@ -21,9 +21,51 @@
             src: url('https://www.sfdcstatic.com/system/shared/common/assets/fonts/SalesforceSans/SalesforceSans-Regular.woff') format('woff'),
     url('https://www.sfdcstatic.com/system/shared/common/assets/fonts/SalesforceSans/SalesforceSans-Regular.ttf') format('truetype');
             }
+            .overlay {
+              height: 100%;
+              width: 100%;
+              position: fixed;
+              z-index: 1;
+              top: 0;
+              left: 0;
+              background-color: rgb(0,0,0);
+              background-color: rgba(0,0,0, 0.5);
+          }
+          .overlay-content {
+              position: relative;
+              top: 25%;
+              width: 100%;
+              text-align: center;
+              margin-top: 30px;
+          }
+          .loader {
+              border: 16px solid #f3f3f3;
+              border-radius: 50%;
+              border-top: 16px solid #3498db;
+              width: 120px;
+              height: 120px;
+              -webkit-animation: spin 2s linear infinite;
+              animation: spin 2s linear infinite;
+          }
+          @-webkit-keyframes spin {
+            0% { -webkit-transform: rotate(0deg); }
+            100% { -webkit-transform: rotate(360deg); }
+          }
+          
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
     </style>     
 </head>
 <body>
+    <div class="overlay" id="chatPleaseWait" style="display:none">
+        <div class="overlay-content">
+            <center>
+                <div class="loader"></div>
+            </center>
+        </div>
+    </div>
   <nav class="navbar navbar-light bg-light">
      <a class="navbar-brand" href="#">
      <img src="../../assets/DellTech_Logo_Prm_Blue.jpg" class="d-inline-block align-top" alt="">
@@ -117,37 +159,38 @@
               <div id="dppForm" style="display:none">
                   <div class="mb-3">
                       <label for="regionInput">Region</label>
-                      <select class="custom-select d-block w-100" id="regionInput" required="">
+                      <input type="text" class="form-control" id="regionInput" value="AMER" disabled>
+                      <!--<select class="custom-select d-block w-100" id="regionInput" required="">
                               <option value="">Choose...</option>
                               <option>AMER</option>
                               <option>APJ</option>
                               <option>EMEA</option>
                               <option>LATAM</option>
-                      </select>
+                      </select>-->
                       <div class="invalid-feedback">Please enter a value</div>
                   </div>
                   <div class="mb-3">
                               <label for="regionQueues">Queue</label>
                               <select class="custom-select d-block w-100" id="regionQueues" required="">
                                 <option value="">Choose...</option>
-                                <option value="5738A0000008Om2">GCC AP Client PS SBD/NBD</option>
-                                <option value="5738A0000008Om2">GCC AP Enterprise PS SBD/NBD</option>
-                                <option value="5738A0000008Om2">GCC AP Non PS SBD/NBD</option>
-                                <option value="5738A0000008Om2">GCC CN  Client PS SBD/NBD</option>
-                                <option value="5738A0000008Om2">GCC CN Enterprise PS SBD/NBD</option>
-                                <option value="5738A0000008Om2">GCC CN Non PS SBD/NBD</option>
-                                <option value="5738A0000008Om2">GCC EMEA SBD/NBD</option>
-                                <option value="5738A0000008Om2">GCC JP Client PS SBD/NBD</option>
-                                <option value="5738A0000008Om2">GCC JP Enterprise PS SBD/NBD</option>
-                                <option value="5738A0000008Om2">GCC JP Non PS SBD/NBD</option>
-                                <option value="5738A0000008Om2">GCC LA Client Basic NBD</option>
-                                <option value="5738A0000008Om2">GCC LA Client PS NBD</option>
-                                <option value="5738A0000008Om2">GGCC LA Enterprise NBD</option>
-                                <option value="5738A0000008Om2">GCC LA Enterprise SBD</option>
-                                <option value="5738A0000008Om2">GCC US/CA Client Basic NBD</option>
-                                <option value="5738A0000008Om2">GCC US/CA Client PS NBD</option>
-                                <option value="5738A0000008Om2">GCC US/CA Enterprise NBD</option>
-                                <option value="5738A0000008Om2">GCC US/CA Enterprise SBD</option>
+                                <option value="5731P000000TSVg">GCC AP Client PS SBD/NBD</option>
+                                <option value="5731P000000TSVg">GCC AP Enterprise PS SBD/NBD</option>
+                                <option value="5731P000000TSVg">GCC AP Non PS SBD/NBD</option>
+                                <option value="5731P000000TSVg">GCC CN  Client PS SBD/NBD</option>
+                                <option value="5731P000000TSVg">GCC CN Enterprise PS SBD/NBD</option>
+                                <option value="5731P000000TSVg">GCC CN Non PS SBD/NBD</option>
+                                <option value="5731P000000TSVg">GCC EMEA SBD/NBD</option>
+                                <option value="5731P000000TSVg">GCC JP Client PS SBD/NBD</option>
+                                <option value="5731P000000TSVg">GCC JP Enterprise PS SBD/NBD</option>
+                                <option value="5731P000000TSVg">GCC JP Non PS SBD/NBD</option>
+                                <option value="5731P000000TSVg">GCC LA Client Basic NBD</option>
+                                <option value="5731P000000TSVg">GCC LA Client PS NBD</option>
+                                <option value="5731P000000TSVg">GGCC LA Enterprise NBD</option>
+                                <option value="5731P000000TSVg">GCC LA Enterprise SBD</option>
+                                <option value="5731P000000TSVg">GCC US/CA Client Basic NBD</option>
+                                <option value="5731P000000TSVg">GCC US/CA Client PS NBD</option>
+                                <option value="5731P000000TSVg">GCC US/CA Enterprise NBD</option>
+                                <option value="5731P000000TSVg">GCC US/CA Enterprise SBD</option>
                               </select>
                               <div class="invalid-feedback">Please enter Queue.</div>
                   </div>
@@ -245,7 +288,8 @@
       <input id="snapInInitURL" name="snapInInitURL" value='https://dellservices--dev1.my.salesforce.com' />
       <input id="snapInJs" name="snapInJs" value='https://dellservices--dev1.my.salesforce.com/embeddedservice/5.0/esw.min.js' />
       <input id="snapInLAURL" name="snapInLAURL" value='https://dev1-dellservices.cs4.force.com/LASnapIn' />
-      <input id="recordType" name="recordType" value='0128A000000Jhee'/>
+      <input id="recordType" name="recordType" value='0122R000000VrtU'/>
+      
            
 	  
   </div>
@@ -260,8 +304,8 @@
   </style>
   <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
   <script src="../../sfdcPartnerPortal.js"></script>
-  <script src="../../sfdcPartnerPortal_DPP.js"></script>
-  <!--  <script src="../../DPPJS.js"></script>   -->
+  <!--<script src="../../sfdcPartnerPortal_DPP.js"></script>-->
+  <script src="../../DPPJS.js"></script>
   <script type='text/javascript'>
      function portalTypeSelection(){
       if(document.getElementById("portalType").value === "DPP"){
@@ -311,13 +355,30 @@
            
            
        };
+       $('#chatPleaseWait').show();
          triggerPartnerPortalSnapin(partnerPortalDetails);
      }
      
      function startDppChat(){
       startPartnerPortalChat();
      }
-     
+
+     $.extend($.fn, {
+      validate: function( options ) {
+        return true;
+      },
+      valid: function() {
+        return true;
+      },
+      select2:function() {
+        return true;
+      },
+      setDefaults:function(){
+        return true;
+      }
+      });
+      function ajaxGetMessage(){return ""};
+      function addErrorMessage(msg){alert(msg)};
   </script>
 </body>
 </html>
