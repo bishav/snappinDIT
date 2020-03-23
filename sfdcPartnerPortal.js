@@ -39,6 +39,21 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 					baseLiveAgentURL: 'https://d.la2-c1cs-ph2.salesforceliveagent.com/chat',
 					eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I8A0000004CE8UAM_16e214e1296',
 					snapInJs: 'https://dellservices--DEV2.my.salesforce.com/embeddedservice/5.0/esw.min.js',
+					
+					
+					
+					//DEV1
+					snapInInitURL: 'https://dellservices--dev1.my.salesforce.com',
+					snapInLAURL: 'https://dev1-dellservices.cs4.force.com/LASnapIn',
+					organizationId: '00DP0000003pGDL',
+					componentName: 'Partner_Snap_In',
+					baseLiveAgentContentURL: 'https://c.la1-c1cs-ia2.salesforceliveagent.com/content',
+					deploymentId: '5720b000000GneC',
+					baseLiveAgentURL: 'https://d.la1-c1cs-ia2.salesforceliveagent.com/chat',
+					eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I2R000000PAwuUAG_1703a86ec04',
+					snapInJs: 'https://dellservices--dev1.my.salesforce.com/embeddedservice/5.0/esw.min.js',
+					
+					
 					//SIT2
 				  /*
 				    snapInInitURL: 'https://dellservices--SIT2.my.salesforce.com',
@@ -184,7 +199,7 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 						"transcriptFields": ["PP_Log_Type__c"]
 					}*/,{
 						"label":  "Record Type",
-						"value": "0128A000000Jhee",//"0122h0000009xnl",//"0122h0000009xf1" ,//Record type id for partner//DEV2 = "0128A000000Jhee",
+						"value": "0122R000000VrtU",//"0128A000000Jhee",//"0122h0000009xnl",//"0122h0000009xf1" ,//Record type id for partner//DEV2 = "0128A000000Jhee",
 						"transcriptFields": ["RecordType"]
 					}
 				];
