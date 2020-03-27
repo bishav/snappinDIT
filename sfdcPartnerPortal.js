@@ -81,7 +81,7 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 					*/
 					//fixed object values
 					buttonId: routingConfig(partnerPortalDetails),
-					issueSubject: partnerPortalDetails.productGroup +" - "+ partnerPortalDetails.productType,
+					issueSubject: getProductGroup(partnerPortalDetails.productGroup) +" - "+ partnerPortalDetails.productType,
 					//logsCollected: checkLogGrants(partnerPortalDetails),
 					//logTypeMultiPickList: convertLogToMultiPickList(partnerPortalDetails),
 					logsCollected: checkLogGrants(partnerPortalDetails),
@@ -103,101 +103,106 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 
 				 embedded_svc.settings.extraPrechatFormDetails = [{
 						"label": "Type",
-						"value": 'Partner',
+						"value": 'Partner',//Both
 						"transcriptFields": ["Type__c"]
 					},{
 						"label": "Chat Source",
-						"value": 'Partner',//chatSourceVal(partnerPortalDetails.productGroup),
+						"value": 'Partner',//Both
 						"transcriptFields": ["Chat_Source__c"]
 					},{
 						"label": "Product Group / Vendor",
-						"value": partnerPortalDetails.productGroup,
+						"value": getProductGroup(partnerPortalDetails.productGroup),//Both
 						"transcriptFields": ["PP_Vendor_Product_Group__c"]
 					},{
 						"label": "Product Type / Vendor List",
-						"value": partnerPortalDetails.productType,
+						"value": partnerPortalDetails.productType,//Both
 						"transcriptFields": ["PP_Vendor_List_Product_Type__c"]
 					},{
 						"label": "Service Tag",
-						"value": partnerPortalDetails.serviceTag,
+						"value": partnerPortalDetails.serviceTag,//Both
 						"transcriptFields": ["Service_Tag__c"]
 					},{
 						"label": "Service Tag",
-						"value": partnerPortalDetails.serviceTag,
+						"value": partnerPortalDetails.serviceTag,//Both
 						"transcriptFields": ["Asset__c"],
 						"displayToAgent": false
-					},
-					{
+					},{
 						"label": "Subject",
-						"value": sfdcSnapinDetails.issueSubject,
+						"value": sfdcSnapinDetails.issueSubject,//Both
 						"transcriptFields": ["Issue__c"]
 					},{
 						"label":  "Issue Description",
-						"value": sfdcSnapinDetails.concatenatedDescription,
+						"value": sfdcSnapinDetails.concatenatedDescription,//Both
 						"transcriptFields": ["Description__c"]
 					},{
 						"label":  "Description",
-						//"value": partnerPortalDetails.issueDescription,
-						"value": sfdcSnapinDetails.concatenatedDescription,
+						"value": sfdcSnapinDetails.concatenatedDescription,//Both
 						"transcriptFields": ["Collaborate_Description__c"]
 					},{
                         "label": "First Name",
                         "name": "FirstName",
-						//"value": partnerPortalDetails.firstName,
-						"value": sfdcSnapinDetails.validFirstName,
+						"value": sfdcSnapinDetails.validFirstName,//Both
                         "transcriptFields": ["FirstName__c"],
                         "displayToAgent": true
                     },{
                         "label": "Last Name",
-                        "value": partnerPortalDetails.lastName,
+                        "value": partnerPortalDetails.lastName,//Both
                         "transcriptFields": ["LastName__c"],
                         "displayToAgent": true
                     },{
                         "label": "Email Address",
-                        "value": partnerPortalDetails.email,
+                        "value": partnerPortalDetails.email,//Both
                         "transcriptFields": ["Email__c"]
                     },{
                         "label": "Agent Name",
-                        "value": sfdcSnapinDetails.loginIdNoSpace,
+                        "value": sfdcSnapinDetails.loginIdNoSpace,//Both
                         "transcriptFields": ["Agent_Name__c"],
                         "displayToAgent": true
 					},{
 						"label":  "Badge",
-						"value":  partnerPortalDetails.badgeId,
+						"value":  partnerPortalDetails.badgeId,//Both
 						"transcriptFields": ["PP_Badge__c"]
 					},{
 						"label":  "Location",
-						"value": partnerPortalDetails.region,
+						"value": partnerPortalDetails.region,//Both
 						"transcriptFields": ["PP_Location__c"]
 					},{
-						"label":  "Case Number From Partner",//"Service Request",
-						"value": partnerPortalDetails.caseOrSr,
+						"label":  "Case Number From Partner",
+						"value": partnerPortalDetails.caseOrSr,//Both
 						"transcriptFields": ["PP_Case_Number_From_Partner__c"]
 					},{
+						"label":  "Order Number",
+						"value": partnerPortalDetails.orderNumber,//Both //New Field 
+						"transcriptFields": ["Order_Number__c"]
+					},{
+						"label":  "CustomerNumber",
+						"value": partnerPortalDetails.customerNumber,//Both //New Field 
+						"transcriptFields": ["CustomerNumber__c"]
+					},{
 						"label":  "Product",
-						"value": partnerPortalDetails.productName,
+						"value": isRequiredForMixedIP(productGroup,partnerPortalDetails.productName),//Mixed IP only
 						"transcriptFields": ["PP_Product__c"]
 					},{
 						"label":  "Case Severity",
-						"value": sfdcSnapinDetails.caseSeverityTxt,
+						"value": isRequiredForMixedIP(productGroup, sfdcSnapinDetails.caseSeverityTxt),//Mixed IP only
 						"transcriptFields": ["PP_Case_Severity__c"]
 					},{
 						"label":  "Customer Waiting",
-						"value": partnerPortalDetails.customerOnThePhone,
+						"value": isRequiredForMixedIP(productGroup,partnerPortalDetails.customerOnThePhone),//Mixed IP only
 						"transcriptFields": ["PP_Customer_Waiting__c"]
 					},{
 						"label":  "Driver/Firmware Updated",
-						"value": partnerPortalDetails.driverFirmwareUpdated,
+						"value": isRequiredForMixedIP(productGroup,partnerPortalDetails.driverFirmwareUpdated),//Mixed IP only
 						"transcriptFields": ["PP_Driver_Firmware_Updated__c"]
 					},{
 						"label":  "Logs Collected",
-						"value": sfdcSnapinDetails.logsCollected,
+						"value": isRequiredForMixedIP(productGroup,sfdcSnapinDetails.logsCollected),//Mixed IP only
 						"transcriptFields": ["PP_Logs_Collected__c"]
-					}/*,{
-						"label":  "Log Type",
-						"value": sfdcSnapinDetails.logTypeMultiPickList,
-						"transcriptFields": ["PP_Log_Type__c"]
-					}*/,{
+					},{
+						"label":  "Reason",
+						"value": isRequiredForGTT(productGroup,partnerPortalDetails.chatReason),//GTT only //New Field 
+						"transcriptFields": ["Reason__c"]
+					},{
 						"label":  "Record Type",
 						"value": "0122R000000VrtU",//"0128A000000Jhee",//"0122h0000009xnl",//"0122h0000009xf1" ,//Record type id for partner//DEV2 = "0128A000000Jhee",
 						"transcriptFields": ["RecordType"]
@@ -306,9 +311,8 @@ function eleExist(eleSelector, callbackFunc) {
 
 //Log Grants optimization
 function checkLogGrants(partnerPortalDetails){
-	let returnVal = convertSeparatorToMultiPickList(partnerPortalDetails.logTypes);
-	return returnVal;
-
+		let returnVal = convertSeparatorToMultiPickList(partnerPortalDetails.logTypes);
+		return returnVal;
 }
 
 //Convert Log to Multi Pick List
@@ -424,7 +428,7 @@ function routingConfig(partnerPortalDetails){
 		//STORY 7248769 : FY20_Channels : Chat : Partner Portal : VCE_Create Queues on Lightning  [END]
 	}
 	return buttonID;*/
-	if (partnerPortalDetails.productGroup === "GTT"){
+	if (getProductGroup(partnerPortalDetails.productGroup) === "GTT"){
 		//STORY 7592112: FY20_Channels : Chat : Partner Portal : GTT_Create Queues on Lightning [START]
 		switch(partnerPortalDetails.productType) {
 		  case "Global Tag Team":
@@ -471,3 +475,29 @@ function routingConfig(partnerPortalDetails){
 	}
 	return buttonID; 
 }
+
+
+
+//Check Product Group before pushing the values [START]
+function getProductGroup(productGroup){
+	if(productGroup === "GTT" || productGroup === "Tag Team")
+		return "GTT";
+	else if(document.getElementById("productGroup").value === "Mixed IP")
+		return "Mixed IP";
+ }
+ //Check Product Group before pushing the values [END]
+
+function isRequiredForGTT(productGroup,value){
+	if (getProductGroup(productGroup) === "GTT")
+		return value;
+	else
+		return "";
+}
+
+function isRequiredForMixedIP(productGroup,value){
+	if (productGroup === "Mixed IP")
+		return value;
+	else
+		return "";
+}
+

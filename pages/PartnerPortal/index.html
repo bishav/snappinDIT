@@ -93,43 +93,53 @@
               <div id="sharePointForm" style="display:none">
                   <div class="mb-3">
                       <label for="productGroup" style="margin-top: 10px;">Product Group</label>
-                      <select class="custom-select d-block w-100" id="productGroup" required="">
-                      <option value="">Choose...</option>
+                      <select class="custom-select d-block w-100" id="productGroup" required="" onchange="ProductTypeSelection()">
                       <option>GTT</option>
                       <option>Mixed IP</option>
                       </select>
                     </div> 
-                    <div class="mb-3">
+                    <div class="mb-3" class="forMixedIP forGTT">
                       <label for="productType" style="margin-top: 10px;">Product Type</label>
                       <div class="input-group">
-                      <input type="text" class="form-control" id="productType">
+                      <select class="custom-select d-block w-100" id="productType" required="">
+                        <option class="forMixedIP">PowerOne Network</option>
+                        <option class="forMixedIP">PowerOne Server</option>
+                        <option class="forMixedIP">DD3300</option>
+                        <option class="forMixedIP">Azure</option>                      
+                        <option class="forGTT">Global Tag Team</option>
+                        <option class="forGTT">OEM Tag Team</option>   
+                        </select>
                       </div>
                     </div> 
-                    <div class="mb-3">
-                      <label for="serviceTag" style="margin-top: 10px;">Case Number/SR</label>
+                    <div class="mb-3 forMixedIP forGTT">
+                      <label for="idenitifierType">Idenitifier Type?</label>
+                      <select class="custom-select d-block w-100" id="idenitifierType" required="">
+                          <option value="">Choose...</option>
+                          <option>Service Request</option>
+                          <option>Service Tag</option>
+                          <option>Order Number</option>
+                          <option>Customer Number</option>
+                          </select>
+                    </div>
+                    <div class="mb-3 forMixedIP forGTT">
+                      <label for="idenitifier" style="margin-top: 10px;">Idenitifier</label>
                       <div class="input-group">
-                      <input type="text" class="form-control" id="caseNumber" >
+                      <input type="text" class="form-control" id="idenitifier" >
                       </div>
                     </div>
-                    <div class="mb-3">
-                      <label for="serviceTag" style="margin-top: 10px;">Service Tag</label>
-                      <div class="input-group">
-                      <input type="text" class="form-control" id="serviceTag" >
-                      </div>
-                    </div>
-                    <div class="mb-3">
+                    <div class="mb-3 forMixedIP">
                         <label for="productName" style="margin-top: 10px;">Product Name</label>
                         <div class="input-group">
                         <input type="text" class="form-control" id="productName" >
                         </div>
                       </div>
-                    <div class="mb-3">
+                    <div class="mb-3 forMixedIP">
                           <label><input type="checkbox" value="OnPhone" id="customerOnThePhone">Customer Waiting On Phone</label>
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-3 forMixedIP">
                         <label><input type="checkbox" value="Updated" id="driverFirmwareUpdated">Driver/Firmware updated</label>
                   </div>
-                  <div class="mb-3">
+                  <div class="mb-3 forMixedIP">
                       <label for="caseSeverityNumber" style="margin-top: 10px;">Case Severity (In Number)</label>
                       <select class="custom-select d-block w-100" id="caseSeverityNumber" required="">
                       <option value="">Choose...</option>
@@ -139,18 +149,29 @@
                       <option>4</option>
                       </select>
                     </div> 
-                    <div class="mb-3">
+                    <div class="mb-3 forMixedIP">
                       <label for="logsCollected" style="margin-top: 10px;">Logs Collected [User | to differentiate between logs]</label>
                       <div class="input-group">
                       <input type="textarea" class="form-control" id="logsCollected">
                       </div>
                     </div> 
-                    <div class="mb-3">
+                    <div class="mb-3 forGTT">
+                      <label for="issueDescription" style="margin-top: 10px;">Reason</label>
+                      <select class="custom-select d-block w-100" id="reasonVal" required="">
+                        <option value="">Select:</option>
+                        <option>Ownership Transfer</option>
+                        <option>Proof of Purchase Adjustment (3rd party sale)</option>
+                        <option>Entitlement Issue</option>
+                        <option>Dispatch Issue</option>
+                        <option>General Asset Data Update (Other)</option>
+                      </select>
+                    </div> 
+                    <div class="mb-3 forMixedIP forGTT">
                       <label for="issueDescription" style="margin-top: 10px;">Issue Description</label>
                       <div class="input-group">
                       <input type="textarea" class="form-control" id="issueDescription">
                       </div>
-                    </div> 
+                    </div>
                     <hr class="mb-4">
                     <div class="mb-3">
                       <a  id="liveagent_button_online_Test" class="enabledButton btn btn-primary btn-lg btn-block"  onclick="startSharePointChat()">Start Share Point Chat</a>
@@ -303,9 +324,10 @@
      }
   </style>
   <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
+  <script src="../../DPPJS.js"></script>
   <script src="../../sfdcPartnerPortal.js"></script>
   <!--<script src="../../sfdcPartnerPortal_DPP.js"></script>-->
-  <script src="../../DPPJS.js"></script>
+
   <script type='text/javascript'>
      function portalTypeSelection(){
       if(document.getElementById("portalType").value === "DPP"){
@@ -314,6 +336,7 @@
       }else if (document.getElementById("portalType").value === "Share Point"){
         document.querySelector('#sharePointForm').style.display = 'block';
         document.querySelector('#dppForm').style.display = 'none';
+        ProductTypeSelection();
       }else{
         document.querySelector('#sharePointForm').style.display = 'none';
         document.querySelector('#dppForm').style.display = 'none';
@@ -333,13 +356,17 @@
       
        let partnerPortalDetails =  {
      //language: document.getElementById("ppLanguage").value,
-         serviceTag: document.getElementById("serviceTag").value,
+         caseOrSr: idBasedVal("Service Request"),//document.getElementById("caseNumber").value,
+         serviceTag: idBasedVal("Service Tag"),//document.getElementById("serviceTag").value,
+         orderNumber: idBasedVal("Order Number"),//document.getElementById("serviceTag").value,
+         customerNumber: idBasedVal("Customer Number"),//document.getElementById("serviceTag").value,
+         chatReason: document.getElementById("chatReason").value,
+         reasonVal:  document.getElementById("reasonVal").value,
          productType:  document.getElementById("productType").value,
          productGroup:  document.getElementById("productGroup").value,
          issueDescription: document.getElementById("issueDescription").value,
          portalType: document.getElementById("portalType").value,  
          //dpid: document.getElementById("dpid").value,
-         caseNumber: document.getElementById("caseNumber").value,
          productName: document.getElementById("productName").value,
          logTypes: document.getElementById("logsCollected").value,
          customerOnThePhone: customerOnThePhoneValue, 
@@ -350,18 +377,32 @@
          email:"bishav_namrshing_rajb@dell.com",
          loginId: "bishav_namrshing_rajb",
          badgeId: "1234",
-         location: "India"
-         
-           
-           
+         location: "India"  
        };
        $('#chatPleaseWait').show();
          triggerPartnerPortalSnapin(partnerPortalDetails);
      }
-     
+
      function startDppChat(){
       startPartnerPortalChat();
      }
+
+     function ProductTypeSelection(){
+        if(document.getElementById("productGroup").value === "GTT"){
+          $(".forMixedIP").hide();
+          $(".forGTT").show();
+        } else if(document.getElementById("productGroup").value === "Mixed IP"){
+          $(".forGTT").hide();
+          $(".forMixedIP").show();
+        }
+     }
+
+     function idBasedVal(idTypeVal){
+      if(document.getElementById("idenitifierType").value === idTypeVal){
+        return document.getElementById("idenitifier").value;
+      }else
+        return "";
+    }
 
      $.extend($.fn, {
       validate: function( options ) {

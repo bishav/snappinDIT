@@ -122,7 +122,7 @@ function startPartnerPortalChat(){
             recordType: $('#recordType').val()
         };
         addStyleSheetInDPPChat();
-        triggerPartnerPortalSnapin(partnerPortalDetails, sfdcSnapinDetails);
+        triggerPartnerPortalSnapinDPP(partnerPortalDetails, sfdcSnapinDetails);
     }
 }
 
@@ -144,7 +144,7 @@ function addStyleSheetInDPPChat(){
 }
 
 
-function triggerPartnerPortalSnapin(partnerPortalDetails, sfdcSnapinDetails) {
+function triggerPartnerPortalSnapinDPP(partnerPortalDetails, sfdcSnapinDetails) {
     try {
         var initESW = function (gslbBaseURL) {
             embedded_svc.settings.displayHelpButton = false;
