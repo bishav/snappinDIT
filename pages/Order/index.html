@@ -43,9 +43,8 @@
                                     <div class="mb-3">
                                         <label for="viewType">View Type</label>
                                         <select class="custom-select d-block w-100" id="viewType" required="">
-                                                <option value="">Choose...</option>
-                                                <option>GeneralChat</option>
                                                 <option>Order</option>
+                                                <option>GeneralChat</option>
                                                 <option>CustomerNumber</option>
                                                 <option>PONumber</option>
                                               </select>
@@ -56,13 +55,13 @@
                                         <div class="mb-3">
                                                 <label for="serviceTag" style="margin-top: 10px;">Order Number </label>
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" id="orderNumber">
+                                                    <input type="text" class="form-control" id="orderNumber" value="117590363">
                                                 </div>
                                             </div>
                                             <div class="mb-3">
                                               <label for="serviceTag" style="margin-top: 10px;">BUID</label>
                                               <div class="input-group">
-                                                  <input type="text" class="form-control" id="BUID">
+                                                  <input type="text" class="form-control" id="BUID" value="11">
                                               </div>
                                           </div> 
                                   <hr class="mb-4">
@@ -105,58 +104,35 @@
                     irnNumber: DPId,
                     viewType: viewType,//General/Order/CustomerNumber/PONumber
                     issueType:"PC Slow",
-                   /* issueType :"Cool working",
+
+                    //Hard coded prechat values 
                     firstName:"Bishav",
-                    lastName:"Rajbhandari",
-                    emailAddress:"bishav.n.r@gmail.com",
-                    phoneNumber:"889231424565",
-                    issueDescription:"This is a test",*/
-                    baseLiveAgentContentURL: 'https://c.la1-c1cs-ord.salesforceliveagent.com/content',
-                    deploymentId: '5720b000000GneC',
-                    buttonId: '573L0000000024l',
-                    baseLiveAgentURL: 'https://d.la1-c1cs-ord.salesforceliveagent.com/chat',
-                    LiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04IL00000008OLOMA2_16b1ca9ab40',                
-                    componentName: "CARE_Snap_In",
-                    domainName:"bishav.github.io",//"localhost",//
-                    organizationId: "00DL000000629BA",
-                    serviceForceURL: "https://service.force.com",
-                    snapInInitURL: 'https://dellservices--DEV3.my.salesforce.com',
-                    snapInJs: "https://service.force.com/embeddedservice/5.0/esw.min.js",
-                    snapInLAURL: 'https://dev3-dellservices.cs8.force.com/LASnapIn',
-
-
-                     //Dev2
-                     baseLiveAgentContentURL: 'https://c.la2-c2cs-ph2.salesforceliveagent.com/content',
-                     deploymentId: '5720b000000GneC',
-                     buttonId: '5730R000000CbY2',
-                     baseLiveAgentURL: 'https://d.la2-c2cs-ph2.salesforceliveagent.com/chat',
-                     LiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I0R000000005uUAA_16b2c5b7dee',             
-      componentName: "CARE_Snap_In",
-      domainName:"bishav.github.io",//"localhost",//
-      organizationId: "00D8A00000057oF",
-      serviceForceURL: "https://service.force.com",
-      snapInInitURL:  'https://dellservices--DEV2.my.salesforce.com',
-      snapInJs: "https://service.force.com/embeddedservice/5.0/esw.min.js",
-      snapInLAURL: 'https://dev2-dellservices.cs45.force.com/LASnapIn'
-
-
+                    lastName: "Rajbhandari",
+                    email:"bnr@dell.com",
+                    phoneNo:"1234567",
+                    issueDescription:"Test of Description",
+                    productCode:"Latitude",
+                    issueType: "KNY",
+                    BUID: "11",
+                    productName: "Precision M4500",
+                    customernumber: "2701",
                     ////////
                     //SIT-1
                     ///////
-                    /*
-                    baseLiveAgentContentURL: 'https://c.la3-c2cs-phx.salesforceliveagent.com/content',
+                    
+                    baseLiveAgentContentURL: 'https://c.la1-c1cs-ia2.salesforceliveagent.com/content',
                     deploymentId: '5720b000000GneC',
-                    buttonId: '5730j0000004COw',
-                    baseLiveAgentURL: 'https://d.la3-c2cs-phx.salesforceliveagent.com/chat',
-                    LiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I0j0000008OKkEAM_16b2c5b6ad5',             
+                    buttonId: '5730b0000008PaN',
+                    baseLiveAgentURL: 'https://d.la1-c1cs-ia2.salesforceliveagent.com/chat',
+                    LiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I1P0000008OJDUA2_16c8a8a3e09',             
                     componentName: "CARE_Snap_In",
                     domainName:"localhost",
-                    organizationId: '00D0j000000D0v9',
+                    organizationId: '00DP0000003pH21',
                     serviceForceURL: "https://service.force.com",
                     snapInInitURL:  'https://dellservices--SIT1.my.salesforce.com',
                     snapInJs: "https://service.force.com/embeddedservice/5.0/esw.min.js",
-                    snapInLAURL:  'https://sit1-dellservices.cs53.force.com/LASnapIn'
-                   */
+                    snapInLAURL:  'https://sit1-dellservices.cs4.force.com/LASnapIn'
+                   
                     
         };
         var orderSnapinLabelObj = {      

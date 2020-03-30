@@ -89,7 +89,7 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 					caseSeverityTxt: convertToSeverity(partnerPortalDetails.caseSeverity),
 					loginIdNoSpace: loginIdNoSpace(partnerPortalDetails.loginId),
 					validFirstName: firstNameValidator(partnerPortalDetails),
-					serviceForceURL: "https://service.force.com",
+					serviceForceURL: "https://service.force.com"
 		}
             var initESW = function (gslbBaseURL) {
                 embedded_svc.settings.displayHelpButton = false;//true;
@@ -119,11 +119,11 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 						"transcriptFields": ["PP_Vendor_List_Product_Type__c"]
 					},{
 						"label": "Service Tag",
-						"value": partnerPortalDetails.serviceTag,//Both
+						"value": idBasedVal("ST",partnerPortalDetails),//Both
 						"transcriptFields": ["Service_Tag__c"]
 					},{
 						"label": "Service Tag",
-						"value": partnerPortalDetails.serviceTag,//Both
+						"value": idBasedVal("ST",partnerPortalDetails),//Both
 						"transcriptFields": ["Asset__c"],
 						"displayToAgent": false
 					},{
@@ -168,39 +168,39 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 						"transcriptFields": ["PP_Location__c"]
 					},{
 						"label":  "Case Number From Partner",
-						"value": partnerPortalDetails.caseOrSr,//Both
+						"value": idBasedVal("SR",partnerPortalDetails),//Both
 						"transcriptFields": ["PP_Case_Number_From_Partner__c"]
 					},{
 						"label":  "Order Number",
-						"value": partnerPortalDetails.orderNumber,//Both //New Field 
+						"value": idBasedVal("ON",partnerPortalDetails),//Both //New Field 
 						"transcriptFields": ["Order_Number__c"]
 					},{
 						"label":  "CustomerNumber",
-						"value": partnerPortalDetails.customerNumber,//Both //New Field 
+						"value": idBasedVal("CN",partnerPortalDetails),//Both //New Field 
 						"transcriptFields": ["CustomerNumber__c"]
 					},{
 						"label":  "Product",
-						"value": isRequiredForMixedIP(productGroup,partnerPortalDetails.productName),//Mixed IP only
+						"value": isRequiredForMixedIP(partnerPortalDetails.productGroup,partnerPortalDetails,"productName"),//Mixed IP only
 						"transcriptFields": ["PP_Product__c"]
 					},{
 						"label":  "Case Severity",
-						"value": isRequiredForMixedIP(productGroup, sfdcSnapinDetails.caseSeverityTxt),//Mixed IP only
+						"value": isRequiredForMixedIP(partnerPortalDetails.productGroup, sfdcSnapinDetails,"caseSeverityTxt"),//Mixed IP only
 						"transcriptFields": ["PP_Case_Severity__c"]
 					},{
 						"label":  "Customer Waiting",
-						"value": isRequiredForMixedIP(productGroup,partnerPortalDetails.customerOnThePhone),//Mixed IP only
+						"value": isRequiredForMixedIP(partnerPortalDetails.productGroup,partnerPortalDetails,"customerOnThePhone"),//Mixed IP only
 						"transcriptFields": ["PP_Customer_Waiting__c"]
 					},{
 						"label":  "Driver/Firmware Updated",
-						"value": isRequiredForMixedIP(productGroup,partnerPortalDetails.driverFirmwareUpdated),//Mixed IP only
+						"value": isRequiredForMixedIP(partnerPortalDetails.productGroup,partnerPortalDetails,"driverFirmwareUpdated"),//Mixed IP only
 						"transcriptFields": ["PP_Driver_Firmware_Updated__c"]
 					},{
 						"label":  "Logs Collected",
-						"value": isRequiredForMixedIP(productGroup,sfdcSnapinDetails.logsCollected),//Mixed IP only
+						"value": isRequiredForMixedIP(partnerPortalDetails.productGroup,sfdcSnapinDetails,"logsCollected"),//Mixed IP only
 						"transcriptFields": ["PP_Logs_Collected__c"]
 					},{
 						"label":  "Reason",
-						"value": isRequiredForGTT(productGroup,partnerPortalDetails.chatReason),//GTT only //New Field 
+						"value": expandChatReason(isRequiredForGTT(partnerPortalDetails.productGroup,partnerPortalDetails,"chatReason")) ,//GTT only //New Field 
 						"transcriptFields": ["Reason__c"]
 					},{
 						"label":  "Record Type",
@@ -370,13 +370,13 @@ function convertToSeverity(caseSeverity){
 	}
 	return returnVal;
 }
-//Routing Config
 
 /*function chatSourceVal(productGroup){
 	//var returnValue = "Partner-"+productGroup;
 	var returnValue = productGroup;
 	return returnValue;
 }*/
+
 function loginIdNoSpace(loginId){
 	return loginId.replace(/[_]/g, " ");
 }
@@ -391,43 +391,6 @@ function firstNameValidator(partnerPortalDetails){
 function routingConfig(partnerPortalDetails){
 	console.log(partnerPortalDetails);
 	var buttonID;
-	/*if (partnerPortalDetails.productGroup === "GTT"){
-		//STORY 7592112: FY20_Channels : Chat : Partner Portal : GTT_Create Queues on Lightning [START]
-		switch(partnerPortalDetails.productType) {
-		  case "Global Tag Team":
-			buttonID = "5730b000000PnCo";//Perf GL_DB_INTB_MIX_CH_MU_BLND_GTT
-			break;
-		  case "LATAM Tag Team":
-			buttonID = "5730b000000PnCp";//Perf LA_DB_INTB_MIX_CH_MU_BLND_GTT
-			break;
-		  case "OEM Tag Team":
-			buttonID = "5730b000000PnCn"; //Perf GL_DB_INTB_MIX_CH_EN_BLND_OEMGTT
-			break;
-		  case "OEM":
-			buttonID = "5730b000000PnCn"; //Perf GL_DB_INTB_MIX_CH_EN_BLND_OEMGTT
-			break;
-		  case "Fed Tag Team":
-			buttonID = "5730b000000PnCq"; //Perf NA_DB_INTB_MIX_CH_EN_BLND_FEDGTT
-			break;
-		  default:
-			buttonID = "5730b000000PnCo";//Perf GL_DB_INTB_MIX_CH_MU_BLND_GTT
-			}
-		//STORY 7592112: FY20_Channels : Chat : Partner Portal : GTT_Create Queues on Lightning [END]
-	}else if (partnerPortalDetails.productGroup === "Mixed IP") {
-		//STORY 7248769 : FY20_Channels : Chat : Partner Portal : VCE_Create Queues on Lightning  [START]
-		switch(partnerPortalDetails.productType) {
-		  case "Azure":
-			buttonID = "5731P000000TSWY";//Perf GL_DB_INTB_ENT_CH_EN_BLND_SST_MSFT
-			break;
-		  case "PowerOne Network":
-			buttonID = "5731P000000TSWP";//Perf GL_DB_INTB_ENT_CH_EN_BLND_NTWK
-			break;
-		  default:
-			buttonID = "5731P000000TSWV";//Perf GL_DB_INTB_ENT_CH_EN_BLND_SRVR_CPSD
-			}
-		//STORY 7248769 : FY20_Channels : Chat : Partner Portal : VCE_Create Queues on Lightning  [END]
-	}
-	return buttonID;*/
 	if (getProductGroup(partnerPortalDetails.productGroup) === "GTT"){
 		//STORY 7592112: FY20_Channels : Chat : Partner Portal : GTT_Create Queues on Lightning [START]
 		switch(partnerPortalDetails.productType) {
@@ -436,13 +399,25 @@ function routingConfig(partnerPortalDetails){
 			buttonID = "5730b000000PnCo";//SIT 2
 			break;
 		  case "LATAM Tag Team":
-			//buttonID = "5738A0000008Olx";//DEV 2 LA_DB_INTB_MIX_CH_MU_BLND_GTT
-			buttonID = "5730b000000PnCp";//SIT 2
+			  if(partnerPortalDetails.language === "ES")
+				buttonID = "573P0000000CbN1";//DEV1 "LA.DB.INTB.MIX.CH.ES.BLND.GTT"
+			  else if(partnerPortalDetails.language === "PT")
+				buttonID = "573P0000000CbN6";//DEV1 "LA.DB.INTB.MIX.CH.PT.BLND.GTT"
+			  else
+				//buttonID = "5738A0000008Olx";//DEV 2 LA_DB_INTB_MIX_CH_MU_BLND_GTT
+				buttonID = "5730b000000PnCp";//LA_DB_INTB_MIX_CH_MU_BLND_GTT
+			break;
+		  case "APJ Tag Team":
+			  if(partnerPortalDetails.language === "CN")
+				buttonID = "573P0000000CbNB";//DEV1 "GL.DB.INTB.MIX.CH.CN.BLND.GTT" 
+			  else if(partnerPortalDetails.language === "JP")
+				buttonID = "573P0000000CbNG";//DEV1 "GL.DB.INTB.MIX.CH.JA.BLND.GTT" 
+
+			break;
+		  case "Global Tag Team Internal":
+			buttonID = "5732R000000XZHn";//"GL_DB_INTB_MIX_CH_MU_BLND_L2_GTT"
 			break;
 		  case "OEM Tag Team":
-			//buttonID = "5738A0000008Om7"; //DEV2 GL_DB_INTB_MIX_CH_EN_BLND_OEMGTT
-			buttonID = "5730b000000PnCn";//SIT 2
-			break;
 		  case "OEM":
 			//buttonID = "5738A0000008Om7"; //DEV2 GL_DB_INTB_MIX_CH_EN_BLND_OEMGTT
 			buttonID = "5730b000000PnCn";//SIT 2
@@ -476,7 +451,14 @@ function routingConfig(partnerPortalDetails){
 	return buttonID; 
 }
 
-
+//Check identifierType and send the value [START]
+function idBasedVal(idTypeVal,partnerPortalDetails){
+	if(idTypeVal === partnerPortalDetails.identifierType)
+		return partnerPortalDetails.identifier;
+	else
+		return "";
+}
+//Check identifierType and send the value [END]
 
 //Check Product Group before pushing the values [START]
 function getProductGroup(productGroup){
@@ -487,17 +469,42 @@ function getProductGroup(productGroup){
  }
  //Check Product Group before pushing the values [END]
 
-function isRequiredForGTT(productGroup,value){
-	if (getProductGroup(productGroup) === "GTT")
-		return value;
+function isRequiredForGTT(productGroup,object,key){
+	console.log(key,object[key]);
+	if (getProductGroup(productGroup) === "GTT"&& object[key])
+		return object[key];
 	else
 		return "";
 }
 
-function isRequiredForMixedIP(productGroup,value){
-	if (productGroup === "Mixed IP")
-		return value;
+function isRequiredForMixedIP(productGroup,object,key){
+	console.log(key,object[key]);
+	if (productGroup === "Mixed IP" && object[key])
+		return object[key];
 	else
 		return "";
 }
 
+function expandChatReason(chatReason){
+	let returnVal;
+	switch(chatReason) {
+		case "Ownership":
+			returnVal = "Ownership Transfer";
+			break;
+		case "Proof":
+			returnVal = "Proof of Purchase Adjustment (3rd party sale)";
+			break;
+		case "Entitlement":
+			returnVal = "Entitlement Issue";
+			break;
+		case "Dispatch":
+			returnVal = "Dispatch Issue";
+			break;
+		case "AssetUpdate":
+			returnVal = "General Asset Data Update (Other)";
+			break;
+		default:
+			returnVal = "";
+	}
+	return returnVal;
+}

@@ -356,10 +356,12 @@
       
        let partnerPortalDetails =  {
      //language: document.getElementById("ppLanguage").value,
-         caseOrSr: idBasedVal("Service Request"),//document.getElementById("caseNumber").value,
-         serviceTag: idBasedVal("Service Tag"),//document.getElementById("serviceTag").value,
-         orderNumber: idBasedVal("Order Number"),//document.getElementById("serviceTag").value,
-         customerNumber: idBasedVal("Customer Number"),//document.getElementById("serviceTag").value,
+         //caseOrSr: idBasedVal("Service Request"),//document.getElementById("caseNumber").value,
+         //serviceTag: idBasedVal("Service Tag"),//document.getElementById("serviceTag").value,
+         //orderNumber: idBasedVal("Order Number"),//document.getElementById("serviceTag").value,
+         //customerNumber: idBasedVal("Customer Number"),//document.getElementById("serviceTag").value,
+         identifierType: document.getElementById("idenitifierType").value,
+         identifier: document.getElementById("idenitifier").value,
          chatReason: document.getElementById("chatReason").value,
          reasonVal:  document.getElementById("reasonVal").value,
          productType:  document.getElementById("productType").value,
@@ -397,12 +399,12 @@
         }
      }
 
-     function idBasedVal(idTypeVal){
+     /*function idBasedVal(idTypeVal){
       if(document.getElementById("idenitifierType").value === idTypeVal){
         return document.getElementById("idenitifier").value;
       }else
         return "";
-    }
+    }*/
 
      $.extend($.fn, {
       validate: function( options ) {
@@ -415,7 +417,6 @@
         return true;
       },
       setDefaults:function(){
-        return true;
       }
       });
       function ajaxGetMessage(){return ""};
