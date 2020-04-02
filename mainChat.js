@@ -779,9 +779,9 @@ function checkSprinklrChatBot(snapInObject){
 //FY21-0502:[Sprinklr Chat Bot] Start either SprinklrChatBot or start Normal SnapIn Chat [END]
 
 //FY21-0502:[Sprinklr Chat Bot] If customer wants to talk to an agent after sprinklr chat bot is opened.[START]
-function  triggerSnapinPostSprinkler(caseNumber){
+function  triggerSnapinPostSprinkler(sprinklrChatBotObject){
     snapInObject = sendGlobalSnapinObjToJson();
-    snapInObject.caseNumber = caseNumber;
+    snapInObject.caseNumber = sprinklrChatBotObject.caseNumber;
     saveGlobalSnapinObjToSession(snapInObject);//Added caseNumber to SnapInObject 
     connectToSnapInAgent(snapInObject);
 }

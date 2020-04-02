@@ -324,7 +324,7 @@
                 </div>
                 <div class="form-group">
                     <label for="usr">baseLiveAgentContentURL:</label>
-                    <input type="text" class="form-control" data-id="baseLiveAgentContentURL" value="https://c.la2-c1cs-ph2.salesforceliveagent.com/content">
+                    <input type="text" class="form-control" data-id="baseLiveAgentContentURL" value="https://c.la1-c1cs-ia2.salesforceliveagent.com/content">
                 </div>
                 <div class="form-group">
                     <label for="usr">deploymentId:</label>
@@ -332,11 +332,11 @@
                 </div>
                 <div class="form-group">
                     <label for="usr">buttonId:</label>
-                    <input type="text" class="form-control" data-id="buttonId" value="5730R0000004FcY">
+                    <input type="text" class="form-control" data-id="buttonId" value="5730b000000CbhT">
                 </div>
                 <div class="form-group">
                     <label for="usr">baseLiveAgentURL:</label>
-                    <input type="text" class="form-control" data-id="baseLiveAgentURL" value="https://d.la2-c1cs-ph2.salesforceliveagent.com/chat">
+                    <input type="text" class="form-control" data-id="baseLiveAgentURL" value="https://d.la1-c1cs-ia2.salesforceliveagent.com/chat">
                 </div>
                 <div class="form-group">
                     <label for="usr">LiveAgentDevName:</label>
@@ -348,7 +348,7 @@
                 </div>
                 <div class="form-group">
                     <label for="usr">organizationId:</label>
-                    <input type="text" class="form-control" data-id="organizationId" value="00D56000000AHQR">
+                    <input type="text" class="form-control" data-id="organizationId" value="00DP0000003pGDL">
                 </div>
                 <div class="form-group">
                     <label for="usr">serviceForceURL:</label>
@@ -364,7 +364,7 @@
                 </div>
                 <div class="form-group">
                     <label for="usr">snapInLAURL:</label>
-                    <input type="text" class="form-control" data-id="snapInLAURL" value="https://dev1-dellservices.cs42.force.com/LASnapIn">
+                    <input type="text" class="form-control" data-id="snapInLAURL" value="https://dev1-dellservices.cs4.force.com/LASnapIn">
                 </div>
             </div>
 
@@ -880,17 +880,20 @@
 
         //eSupportCode
         function startSprinklrChatBot(sprinklrChatBotVal){
-            /*if (confirm("Do you want want start Sprinklr Chat Bot?")){
+            if (confirm("Do you want want start Sprinklr Chat Bot?")){
                 setTimeout(function(){ 
-                    if (confirm("Click on OK to trasnfer to an agent, cancel to successfully end the chat."))
-                        triggerSnapinPostSprinkler("12345");
-                    else
+                    if (confirm("Click on OK to trasnfer to an agent, cancel to successfully end the chat.")){
+                        var sprinklrChatBotObject = {
+                            caseNumber: "50711675"
+                        }
+                            triggerSnapinPostSprinkler(sprinklrChatBotObject);
+                    } else
                         sprinklerChatEnded();
                 }, 5000);
                 return true;
             }else{
                 return false; 
-            }*/
+            }
             return false; 
         }
     </script>
