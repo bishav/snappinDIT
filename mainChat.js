@@ -805,28 +805,35 @@ function connectToSnapInAgent(snapInObject){
 }
 //FY21-0502:[Sprinklr Chat Bot] Connect to and Agent[END]
 
+//FY21-0502:[DEFECT 7917426] pushing new Values to SFDC if its changed[START]
 function pushValsToSnapinInit(snapInObject){
     var extraPrechatFormVals = embedded_svc.settings.extraPrechatFormDetails, i=0;
      extraPrechatFormVals.forEach(function (extraPrechatFormVal) { 
                 var fieldAPI = extraPrechatFormVal.transcriptFields[0];
+                //console.log("Values in forEach Condition:",embedded_svc.settings.extraPrechatFormDetails[i]);
                 switch (fieldAPI) {
                     case "Issue__c":
-                            embedded_svc.settings.extraPrechatFormDetails[i++].value = snapInObject.issueVal;
+                            embedded_svc.settings.extraPrechatFormDetails[i].value = snapInObject.issueVal;
                         break;
                     case "Issue_Key__c":
-                            embedded_svc.settings.extraPrechatFormDetails[i++].value = snapInObject.issueType;
+                            embedded_svc.settings.extraPrechatFormDetails[i].value = snapInObject.issueType;
                             break;
                     case "Service_Tag__c":
-                            embedded_svc.settings.extraPrechatFormDetails[i++].value = snapInObject.serviceTag;
+                            embedded_svc.settings.extraPrechatFormDetails[i].value = snapInObject.serviceTag;
                             break;
                     case "Case_Number__c": //FY21-0502:[Sprinklr Chat Bot] Sending Lightning Case Number from sprinklr to SFDC chat via eSupport
-                            embedded_svc.settings.extraPrechatFormDetails[i++].value = snapInObject.caseNumber;
+                            if(snapInObject.caseNumber)
+                                embedded_svc.settings.extraPrechatFormDetails[i].value = snapInObject.caseNumber;
+                            else
+                                embedded_svc.settings.extraPrechatFormDetails[i].value = "";
                             break;
                     default:
                         break;
                 }
+                i++;
             });
 }
+//FY21-0502:[DEFECT 7917426] pushing new Values to SFDC if its changed[END]
 
 //FY20-1102 Avilability and Business Hr Chack [START]
 function checkSnapinQueueStatus(snapInObject) {	
@@ -904,7 +911,12 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
             "label": "EMC Flag",
             "value": snapInObject.isEmcProduct,
             "transcriptFields": ["EMC_Flag__c"]
-        },*/ 
+        },*/
+        {//FY21-0502:[Sprinklr Chat Bot]: Adding new Field to be pushed to transcript[START]
+            "label": "Case Number",
+            "value": "",
+            "transcriptFields": ["Case_Number__c"]
+        },//FY21-0502:[Sprinklr Chat Bot]: Adding new Field to be pushed to transcript[END]
         {// New filed
             "label": "Chat Source",
 			"value": 'EMC',
@@ -945,6 +957,11 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
             "transcriptFields": ["Issue_Key__c"]
         },
         //Story #6614459: Skill Based: Resume Chat Option [END]
+        {//FY21-0502:[Sprinklr Chat Bot]: Adding new Field to be pushed to transcript[START]
+            "label": "Case Number",
+            "value": "",
+            "transcriptFields": ["Case_Number__c"]
+        },//FY21-0502:[Sprinklr Chat Bot]: Adding new Field to be pushed to transcript[END]
         {
             "label": "Service Tag",
             "value": snapInObject.serviceTag,
