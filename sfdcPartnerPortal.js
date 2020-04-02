@@ -395,56 +395,62 @@ function routingConfig(partnerPortalDetails){
 		//STORY 7592112: FY20_Channels : Chat : Partner Portal : GTT_Create Queues on Lightning [START]
 		switch(partnerPortalDetails.productType) {
 		  case "Global Tag Team":
-			//buttonID = "5738A0000008Om2";//GL_DB_INTB_MIX_CH_MU_BLND_GTT
-			buttonID = "5730b000000PnCo";//SIT 2
+			//buttonID = "5738A0000008Om2";//Old //GL_DB_INTB_MIX_CH_MU_BLND_GTT
+			buttonID = "5730b000000PnCo";//New
 			break;
 		  case "LATAM Tag Team":
 			  if(partnerPortalDetails.language === "ES")
-				buttonID = "573P0000000CbN1";//DEV1 "LA.DB.INTB.MIX.CH.ES.BLND.GTT"
+				//buttonID = "573P0000000CbN1";//DEV1 "LA.DB.INTB.MIX.CH.ES.BLND.GTT"
+				buttonID = "5732h0000008Ovh";//SIT2
 			  else if(partnerPortalDetails.language === "PT")
-				buttonID = "573P0000000CbN6";//DEV1 "LA.DB.INTB.MIX.CH.PT.BLND.GTT"
+				//buttonID = "573P0000000CbN6";//DEV1 "LA.DB.INTB.MIX.CH.PT.BLND.GTT"
+				buttonID = "5732h0000008Ovm";
+
 			  else
-				//buttonID = "5738A0000008Olx";//DEV 2 LA_DB_INTB_MIX_CH_MU_BLND_GTT
+				//buttonID = "5738A0000008Olx";//Old //LA_DB_INTB_MIX_CH_MU_BLND_GTT
 				buttonID = "5730b000000PnCp";//LA_DB_INTB_MIX_CH_MU_BLND_GTT
 			break;
 		  case "APJ Tag Team":
 			  if(partnerPortalDetails.language === "CN")
-				buttonID = "573P0000000CbNB";//DEV1 "GL.DB.INTB.MIX.CH.CN.BLND.GTT" 
+				//buttonID = "573P0000000CbNB";//DEV1 "GL.DB.INTB.MIX.CH.ZH.BLND.GTT"
+				buttonID = "5732h0000008Ovr"; //SIT2
 			  else if(partnerPortalDetails.language === "JP")
-				buttonID = "573P0000000CbNG";//DEV1 "GL.DB.INTB.MIX.CH.JA.BLND.GTT" 
+				//buttonID = "573P0000000CbNG";//DEV1 "GL.DB.INTB.MIX.CH.JA.BLND.GTT" GL.DB.INTB.MIX.CH.JA.BLND.GTT
+				buttonID = "5732h0000008Ovw";//SIT2
 
 			break;
 		  case "Global Tag Team Internal":
-			buttonID = "5732R000000XZHn";//"GL_DB_INTB_MIX_CH_MU_BLND_L2_GTT"
+			//buttonID = "5732R000000XZHn";//DEV1 "GL_DB_INTB_MIX_CH_MU_BLND_L2_GTT"
+			buttonID = "5732h0000008Ork"; //SIT2
 			break;
 		  case "OEM Tag Team":
 		  case "OEM":
-			//buttonID = "5738A0000008Om7"; //DEV2 GL_DB_INTB_MIX_CH_EN_BLND_OEMGTT
-			buttonID = "5730b000000PnCn";//SIT 2
+			//buttonID = "5738A0000008Om7";//Old  //DEV2 GL_DB_INTB_MIX_CH_EN_BLND_OEMGTT
+			buttonID = "5730b000000PnCn";//New
 			break;
 		  case "Fed Tag Team":
-			//buttonID = "5738A0000008OmH"; //DEV2 NA_DB_INTB_MIX_CH_EN_BLND_FEDGTT
-			buttonID = "5730b000000PnCq";//SIT 2
+			//buttonID = "5738A0000008OmH";//Old  //DEV2 NA_DB_INTB_MIX_CH_EN_BLND_FEDGTT
+			buttonID = "5730b000000PnCq";//New
 			break;
 		  default:
-			//buttonID = "5738A0000008Om2";//DEV2 GL_DB_INTB_MIX_CH_MU_BLND_GTT
-			buttonID = "5730b000000PnCo";//SIT 2
+			//buttonID = "5738A0000008Om2";//Old //DEV2 GL_DB_INTB_MIX_CH_MU_BLND_GTT
+			buttonID = "5730b000000PnCo";//New
 			}
 		//STORY 7592112: FY20_Channels : Chat : Partner Portal : GTT_Create Queues on Lightning [END]
 	}else if (partnerPortalDetails.productGroup === "Mixed IP") {
 		//STORY 7248769 : FY20_Channels : Chat : Partner Portal : VCE_Create Queues on Lightning  [START]
 		switch(partnerPortalDetails.productType) {
 		  case "Azure":
-			//buttonID = "5730R0000004FfB";//DEV2 GL_DB_INTB_ENT_CH_EN_BLND_SST_MSFT
-			buttonID = "5731P000000TSWY";//SIT 2
+			//buttonID = "5730R0000004FfB";//Old //DEV2 GL_DB_INTB_ENT_CH_EN_BLND_SST_MSFT
+			buttonID = "5731P000000TSWY";//New
 			break;
 		  case "PowerOne Network":
-			//buttonID = "5730R0000004Ff2";//DEV2 GL_DB_INTB_ENT_CH_EN_BLND_NTWK
-			buttonID = "5731P000000TSWP";//SIT 2
+			//buttonID = "5730R0000004Ff2";//Old //DEV2 GL_DB_INTB_ENT_CH_EN_BLND_NTWK
+			buttonID = "5731P000000TSWP";//New
 			break;
 		  default:
-			//buttonID = "5730R0000004Ff5";//GL_DB_INTB_ENT_CH_EN_BLND_SRVR_CPSD
-			buttonID = "5731P000000TSWV";//SIT 2
+			//buttonID = "5730R0000004Ff5";//Old //GL_DB_INTB_ENT_CH_EN_BLND_SRVR_CPSD
+			buttonID = "5731P000000TSWV";//New
 			}
 		//STORY 7248769 : FY20_Channels : Chat : Partner Portal : VCE_Create Queues on Lightning  [END]
 	}

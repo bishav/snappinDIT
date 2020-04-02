@@ -741,14 +741,10 @@ function custPrechatInitiateChat(snapInObject, preChatlableObject) {
         custPreFormShowIssueDetailsCharRemaining(preChatlableObject);
         snapInObject = sendGlobalSnapinObjToJson();
         if(!checkSprinklrChatBot(snapInObject)){//FY21-0502:[Sprinklr Chat Bot] If Normal snapIn chat has to open
-            if(checkSnapinQueueStatus(snapInObject) == 1){//FY20-1102 Avilability and Business Hr Chack
-                if (("snapinChatInitiated" in snapInObject && snapInObject.snapinChatInitiated) || ("snapinButtonClicked" in snapInObject && snapInObject.snapinButtonClicked))
-                    eleExistWithVariable('.helpButtonEnabled #helpButtonSpan > .message', chatClick);
-                    eleExistWithVariable('.embeddedServiceSidebar .startButton', chatStarted, snapInObject);
-            }else //FY20-1102 Avilability and Business Hr Chack
-                agentsOfflinePostChatForm(); //FY20-1102 Avilability and Business Hr Chack
+            connectToSnapInAgent(snapInObject);////FY21-0502:[Sprinklr Chat Bot] New reusable methode to connect to snapin Agent
         }else{//FY21-0502:[Sprinklr Chat Bot] If SprinklrChatBot Has to open
             document.getElementById("cusPreChatSnapinDom").style.display = 'none';
+            //More calls if required.
         }
     }
 
@@ -781,6 +777,56 @@ function checkSprinklrChatBot(snapInObject){
     }
 }
 //FY21-0502:[Sprinklr Chat Bot] Start either SprinklrChatBot or start Normal SnapIn Chat [END]
+
+//FY21-0502:[Sprinklr Chat Bot] If customer wants to talk to an agent after sprinklr chat bot is opened.[START]
+function  triggerSnapinPostSprinkler(caseNumber){
+    snapInObject = sendGlobalSnapinObjToJson();
+    snapInObject.caseNumber = caseNumber;
+    saveGlobalSnapinObjToSession(snapInObject);//Added caseNumber to SnapInObject 
+    connectToSnapInAgent(snapInObject);
+}
+//FY21-0502:[Sprinklr Chat Bot] If customer wants to talk to an agent after sprinklr chat bot is opened.[END]
+
+//FY21-0502:[Sprinklr Chat Bot] If sprinklr successfully ended the chat.[START]
+function  sprinklerChatEnded(){
+    console.log("Sprinklr Chat ended Successfully");
+}
+//FY21-0502:[Sprinklr Chat Bot] If sprinklr successfully ended the chat.[END]
+
+//FY21-0502:[Sprinklr Chat Bot] Connect to and Agent[START]
+function connectToSnapInAgent(snapInObject){
+    pushValsToSnapinInit(snapInObject);//FY21-0502:[Sprinklr Chat Bot] Send CaseNumberand other detailsback to Snap-in before connecting to an agent.
+    if(checkSnapinQueueStatus(snapInObject) == 1){//FY20-1102 Avilability and Business Hr Chack
+        if (("snapinChatInitiated" in snapInObject && snapInObject.snapinChatInitiated) || ("snapinButtonClicked" in snapInObject && snapInObject.snapinButtonClicked))
+            eleExistWithVariable('.helpButtonEnabled #helpButtonSpan > .message', chatClick);
+            eleExistWithVariable('.embeddedServiceSidebar .startButton', chatStarted, snapInObject);
+    }else //FY20-1102 Avilability and Business Hr Chack
+        agentsOfflinePostChatForm(); //FY20-1102 Avilability and Business Hr Chack
+}
+//FY21-0502:[Sprinklr Chat Bot] Connect to and Agent[END]
+
+function pushValsToSnapinInit(snapInObject){
+    var extraPrechatFormVals = embedded_svc.settings.extraPrechatFormDetails, i=0;
+     extraPrechatFormVals.forEach(function (extraPrechatFormVal) { 
+                var fieldAPI = extraPrechatFormVal.transcriptFields[0];
+                switch (fieldAPI) {
+                    case "Issue__c":
+                            embedded_svc.settings.extraPrechatFormDetails[i++].value = snapInObject.issueVal;
+                        break;
+                    case "Issue_Key__c":
+                            embedded_svc.settings.extraPrechatFormDetails[i++].value = snapInObject.issueType;
+                            break;
+                    case "Service_Tag__c":
+                            embedded_svc.settings.extraPrechatFormDetails[i++].value = snapInObject.serviceTag;
+                            break;
+                    case "Case_Number__c": //FY21-0502:[Sprinklr Chat Bot] Sending Lightning Case Number from sprinklr to SFDC chat via eSupport
+                            embedded_svc.settings.extraPrechatFormDetails[i++].value = snapInObject.caseNumber;
+                            break;
+                    default:
+                        break;
+                }
+            });
+}
 
 //FY20-1102 Avilability and Business Hr Chack [START]
 function checkSnapinQueueStatus(snapInObject) {	
@@ -2141,7 +2187,6 @@ function ResgisterChatBotHandler() {
 
     });
 }
-//Not requiredfor now BNR
 function OmniChatBotTrackerListner() {
     // clearInterval(findingEle);
     try {

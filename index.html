@@ -161,6 +161,7 @@
                     <option value="S6">S6</option>
                     <option value="D1">D1</option>
                     <option value="D2">D2</option>
+                    <option value="Chat-POC">Chat-POC</option>
                     </select>
                     <div class="input-group-append">
                     <button style="background-color: #007bff; color:#fff" class="btn btn-outline-primary" type="button" onclick="updateEnvCookie()">Update Now</button>
@@ -414,6 +415,56 @@
 				<div class="form-group">
                     <label for="usr">snapInLAURL:</label>
                     <input type="text" class="form-control" data-id="snapInLAURL" id="snapInLAURL" value="https://dev2-dellservices.cs45.force.com/LASnapIn">
+                </div>
+            </div>
+
+            <div class="modal-body config" id="Chat-POC" style="display:none">
+                <div class="form-group">
+                    <h5>Chat-POC Environment Settings</h5>
+                </div>
+                <div class="form-group">
+                    <label for="usr">baseLiveAgentContentURL:</label>
+                    <input type="text" class="form-control" data-id="baseLiveAgentContentURL" value="https://c.la2-c1cs-ia2.salesforceliveagent.com/content">
+                </div>
+				<div class="form-group">
+                    <label for="usr">deploymentId:</label>
+                    <input type="text" class="form-control" data-id="deploymentId" value="5720b000000GneC">
+                </div>
+                <div class="form-group">
+                    <label for="usr">buttonId:</label>
+                    <input type="text" class="form-control" data-id="buttonId" value="5730b000000CbhT">
+                </div>
+				<div class="form-group">
+                    <label for="usr">baseLiveAgentURL:</label>
+                    <input type="text" class="form-control" data-id="baseLiveAgentURL" value="https://d.la2-c1cs-ia2.salesforceliveagent.com/chat">
+                </div>
+				<div class="form-group">
+                    <label for="usr">LiveAgentDevName:</label>
+                    <input type="text" class="form-control" data-id="LiveAgentDevName" value="EmbeddedServiceLiveAgent_Parent04I0b000000blJJEAY_16520d15b68">
+                </div>
+				<div class="form-group">
+                    <label for="usr">componentName:</label>
+                    <input type="text" class="form-control" data-id="componentName" value="Snap_Ins_Chat_Deployment">
+                </div>
+				<div class="form-group">
+                    <label for="usr">organizationId:</label>
+                    <input type="text" class="form-control" data-id="organizationId" value="00D7A0000009Lip">
+                </div>
+				<div class="form-group">
+                    <label for="usr">serviceForceURL:</label>
+                    <input type="text" class="form-control" data-id="serviceForceURL" value="https://service.force.com">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInInitURL:</label>
+                    <input type="text" class="form-control" data-id="snapInInitURL" value="https://dellservices--chat.my.salesforce.com">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInJs:</label>
+                    <input type="text" class="form-control" data-id="snapInJs" value="https://dellservices--chat.my.salesforce.com/embeddedservice/5.0/esw.min.js">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInLAURL:</label>
+                    <input type="text" class="form-control" data-id="snapInLAURL" value="https://chat-dellservices.cs44.force.com/LASnapIn">
                 </div>
             </div>
 
@@ -824,12 +875,22 @@
         function showEnvironmentdetail(env){
             document.querySelector('#environmentName').innerText = env;
           }
+
+        //eSupportCode
         function startSprinklrChatBot(sprinklrChatBotVal){
-            return confirm("Do you want want start Sprinklr Chat Bot?");
+            /*if (confirm("Do you want want start Sprinklr Chat Bot?")){
+                setTimeout(function(){ 
+                    if (confirm("Click on OK to trasnfer to an agent, cancel to successfully end the chat."))
+                        triggerSnapinPostSprinkler("12345");
+                    else
+                        sprinklerChatEnded();
+                }, 5000);
+                return true;
+            }else{
+                return false; 
+            }*/
+            return false; 
         }
-        
-
-
     </script>
     
 </body>
