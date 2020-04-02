@@ -841,6 +841,8 @@
                     setOrgCookie(otherValues[i].getAttribute("data-id"),otherValues[i].value,30);
                 }
                 showEnvironmentdetail(env);
+                alert("Envirment has been updated to "+env+".");
+                hideSettingConfig();
             }else{
                 alert("Please select a proper environment");
             }
