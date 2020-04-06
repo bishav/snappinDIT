@@ -183,7 +183,6 @@ function initOrderSnapin(orderSnapinObject, orderSnapinLabelObj){
         
         //let lookupOnName
         if("orderNumber" in orderSnapinObject && orderSnapinObject.orderNumber != ""){
-            console.log("Has Order Number [Case:1]");
             //Order Number and BUID merger[START]
             if (orderSnapinObject.BUID){
                 sendOrderNumber = orderSnapinObject.orderNumber+'-'+orderSnapinObject.BUID;
@@ -274,12 +273,19 @@ function initOrderSnapin(orderSnapinObject, orderSnapinLabelObj){
                     "isExactMatch": true,
                     "label": translatedLabels.issueDesc
                 }
+                //FY21-0502 Defect #8096827 [START]
+                ,{
+                    "doCreate": false,
+                    "doFind": true,
+                    "fieldName": "CARE_Chat_Order_Number__c",
+                    "isExactMatch": true,
+                    "label": "CARE Chat Order Number"
+                }//FY21-0502 Defect #8096827 [END]
                 ],
                 "entityName": "Case"
             }
             ];
         }else{
-                console.log("Order Number is empty [Case:2]");
                 embedded_svc.settings.extraPrechatFormDetails = [{
                     "label": translatedLabels.firstName,
                     "transcriptFields": ["FirstName__c"]
