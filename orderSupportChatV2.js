@@ -183,6 +183,7 @@ function initOrderSnapin(orderSnapinObject, orderSnapinLabelObj){
         
         //let lookupOnName
         if("orderNumber" in orderSnapinObject && orderSnapinObject.orderNumber != ""){
+            console.log("Has Order Number [Case:1]");
             //Order Number and BUID merger[START]
             if (orderSnapinObject.BUID){
                 sendOrderNumber = orderSnapinObject.orderNumber+'-'+orderSnapinObject.BUID;
@@ -278,6 +279,7 @@ function initOrderSnapin(orderSnapinObject, orderSnapinLabelObj){
             }
             ];
         }else{
+                console.log("Order Number is empty [Case:2]");
                 embedded_svc.settings.extraPrechatFormDetails = [{
                     "label": translatedLabels.firstName,
                     "transcriptFields": ["FirstName__c"]
@@ -560,7 +562,7 @@ function changeCarePrechatValues(snapInObject) {
         //     prechatField.value = 'Test'		
         // }
     });
-    //state.set("v.prechatFields", prechatFields); BNR SFDC Testing
+    state.set("v.prechatFields", prechatFields);
 }
 function addCustCareFormDetailsTo(snapInObject) {
     snapInObject.c_firstName = document.getElementById("cusCAREPreChat-FirstName").value;
