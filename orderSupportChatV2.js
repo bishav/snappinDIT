@@ -540,8 +540,8 @@ function CareChatStarted(eleSelector, findingEle, orderSnapinObject) {
     }
 }
 function changeCarePrechatValues(snapInObject) {
-    let state = "";//embedded_svc.sidebarInstanceMap[Object.keys(embedded_svc.sidebarInstanceMap)[0]].getActiveState();
-    let prechatFields = "";//state.get("v.prechatFields");
+    let state = embedded_svc.sidebarInstanceMap[Object.keys(embedded_svc.sidebarInstanceMap)[0]].getActiveState();
+    let prechatFields = state.get("v.prechatFields");
     prechatFields.forEach(function (prechatField) {
         if (prechatField.name === "FirstName") {
             prechatField.value = snapInObject.c_firstName
