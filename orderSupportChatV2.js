@@ -560,7 +560,7 @@ function changeCarePrechatValues(snapInObject) {
         //     prechatField.value = 'Test'		
         // }
     });
-    state.set("v.prechatFields", prechatFields);
+    //state.set("v.prechatFields", prechatFields); BNR SFDC Testing
 }
 function addCustCareFormDetailsTo(snapInObject) {
     snapInObject.c_firstName = document.getElementById("cusCAREPreChat-FirstName").value;
@@ -865,8 +865,8 @@ if (language == "de") {
     this.firstName = "Vorname";
     this.lastName = "Nachname";
     this.emailAdd = "E-Mail";
-    this.primPhone = "Primair telefoonnummer";
-    this.issueDesc = "Probleem Beschrijving";
+    //this.primPhone = "Primair telefoonnummer"; //FY21-0502: Story #8348201
+    //this.issueDesc = "Probleem Beschrijving"; //FY21-0502: Story #8348201
     this.characters = "characters";
     this.language = "de";
 } else if (language == "ja") {
@@ -874,8 +874,8 @@ if (language == "de") {
     this.firstName = "名";
     this.lastName = "姓";
     this.emailAdd = "メール";
-    this.primPhone = "主に使う電話番号";
-    this.issueDesc = "問題の説明";
+    //this.primPhone = "主に使う電話番号"; //FY21-0502: Story #8348201
+    //this.issueDesc = "問題の説明"; //FY21-0502: Story #8348201
     this.characters = "characters";
     this.language = "ja";
 } else if (language == "ko") {
@@ -883,8 +883,8 @@ if (language == "de") {
     this.firstName = "이름";
     this.lastName = "성";
     this.emailAdd = "이메일";
-    this.primPhone = "기본 전화 번호";
-    this.issueDesc = "문제 설명";
+    //this.primPhone = "기본 전화 번호"; //FY21-0502: Story #8348201
+    //this.issueDesc = "문제 설명"; //FY21-0502: Story #8348201
     this.characters = "characters";
     this.language = "ko";
 } else if (language == "es") {
@@ -892,8 +892,8 @@ if (language == "de") {
     this.firstName = "Nombre";
     this.lastName = "Apellidos";
     this.emailAdd = "Correo electrónico";
-    this.primPhone = "Número de teléfono primario";
-    this.issueDesc = "descripcion del problema";
+    //this.primPhone = "Número de teléfono primario";//FY21-0502: Story #8348201
+    //this.issueDesc = "descripcion del problema";//FY21-0502: Story #8348201
     this.characters = "characters";
     this.language = "es";
 } else if (language == "zh" || language == "cn" || language == "zh-cn") {
@@ -901,8 +901,8 @@ if (language == "de") {
     this.firstName = "名";
     this.lastName = "姓";
     this.emailAdd = "电子邮件";
-    this.primPhone = "最常用的电话号码";
-    this.issueDesc = "问题说明";
+    //this.primPhone = "最常用的电话号码";//FY21-0502: Story #8348201
+    //this.issueDesc = "问题说明";//FY21-0502: Story #8348201
     this.characters = "characters";
     this.language = "zh-CN";
 } else if (language == "pt" || language == "pt-br") { //Language related issue FY21-0202- Defect 8062138
@@ -910,8 +910,8 @@ if (language == "de") {
     this.firstName = "Nome";
     this.lastName = "Sobrenome";
     this.emailAdd = "Email";
-    this.primPhone = "Número de Telefone Principal";
-    this.issueDesc = "descrição do problema";
+    //this.primPhone = "Número de Telefone Principal";//FY21-0502: Story #8348201
+    //this.issueDesc = "descrição do problema";//FY21-0502: Story #8348201
     this.characters = "characters";
     this.language = "pt-br";
 } else if (language == "pt-pt") { //Language related issue FY21-0202- Defect 8062138
@@ -1020,7 +1020,7 @@ try {
                     snapInCurrentPage = "snapInChatStarted";
                     snapinCAREChatInitiatedState(true);//Fix for defect 7030965
                     snapinCareQueueLoaded();
-                    addChatPrivacyInfoCARE(orderSnapinLabelObj);//BNR0202 - preChatlableObject pulled from top
+                    addChatPrivacyInfoCARE(orderSnapinLabelObj);//FY21-0202 - preChatlableObject pulled from top
                 } else if (snapInChatEnded && snapInCurrentPage != "snapInChatEnded") {//Fix for defect 7030965
                     snapInCurrentPage = "snapInChatEnded";
                     sessionStorage.removeItem("snapInCareObjectSession");
@@ -1063,7 +1063,7 @@ try {
     });
 } catch (e) { console.log('Error in Observer - ' + e) }
 }
-//BNR0202 [START]
+//FY21-0202 [START]
 function addChatPrivacyInfoCARE(preChatlableObject){
     setTimeout(function(){
         var snapinChatPopUpMsgDom = document.getElementById("snapinChatPopUpMsg");
@@ -1091,7 +1091,7 @@ function addChatPrivacyInfoCARE(preChatlableObject){
         }
     }, 50);
 }
-//BNR0202 [END]
+//FY21-0202 [END]
 function eleExistCareWithVariable(eleSelector, callbackFunc, value) {
 var findingEle = setInterval(function () {
     if (document.querySelector(eleSelector)) {

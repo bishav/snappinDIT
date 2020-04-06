@@ -18,6 +18,7 @@
 function triggerPartnerPortalSnapin(partnerPortalDetails) {
     try {            
 			let sfdcSnapinDetails = {
+				/*
 					//Chat 
 					baseLiveAgentContentURL: 'https://c.la2-c1cs-ord.salesforceliveagent.com/content',
 					deploymentId: '5720b000000CbfS',
@@ -52,20 +53,19 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 					baseLiveAgentURL: 'https://d.la1-c1cs-ia2.salesforceliveagent.com/chat',
 					eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I2R000000PAwuUAG_1703a86ec04',
 					snapInJs: 'https://dellservices--dev1.my.salesforce.com/embeddedservice/5.0/esw.min.js',
-					
+				*/	
 					
 					//SIT2
-				  /*
-				    snapInInitURL: 'https://dellservices--SIT2.my.salesforce.com',
-					snapInLAURL: 'https://sit2-dellservices.cs36.force.com/LASnapIn',
-					organizationId: '00D2h0000008aOa',
-					componentName: 'Partner_Snap_In',
-					baseLiveAgentContentURL: 'https://c.la3-c2cs-ph2.salesforceliveagent.com/content',
-                    deploymentId: '5720b000000GneC',
-                    baseLiveAgentURL: 'https://d.la3-c2cs-ph2.salesforceliveagent.com/chat',
-                    eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I2h0000004CBOEA2_16e7ea2ec9b',
-					snapInJs: 'https://dellservices--SIT2.my.salesforce.com/embeddedservice/5.0/esw.min.js',
-					*/
+					baseLiveAgentContentURL: "https://c.la3-c1cs-ph2.salesforceliveagent.com/content",
+					deploymentId: "5720b000000GneC",
+					baseLiveAgentURL: "https://d.la3-c1cs-ph2.salesforceliveagent.com/chat",
+					eswLiveAgentDevName: "EmbeddedServiceLiveAgent_Parent04I2h0000004CBOEA2_16e7ea2ec9b",
+					componentName: "Partner_Snap_In",
+					organizationId: "00D2h0000008aOa",
+					snapInInitURL: "https://dellservices--SIT2.my.salesforce.com",
+					snapInJs: "https://service.force.com/embeddedservice/5.0/esw.min.js",
+					snapInLAURL: "https://sit2-dellservices.cs36.force.com/LASnapIn",
+					recordType: "0122h0000009xf1",
 					
 					//Perf 1
 					/*
@@ -204,7 +204,7 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 						"transcriptFields": ["Reason__c"]
 					},{
 						"label":  "Record Type",
-						"value": "0122R000000VrtU",//"0128A000000Jhee",//"0122h0000009xnl",//"0122h0000009xf1" ,//Record type id for partner//DEV2 = "0128A000000Jhee",
+						"value": sfdcSnapinDetails.recordType,//"0122R000000VrtU",//"0128A000000Jhee",//"0122h0000009xnl",//"0122h0000009xf1" ,//Record type id for partner//DEV2 = "0128A000000Jhee",
 						"transcriptFields": ["RecordType"]
 					}
 				];

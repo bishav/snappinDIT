@@ -1334,36 +1334,36 @@ function translation(lang) {
         this.firstName = "Vorname";
         this.lastName = "Nachname";
         this.emailAdd = "E-Mail";
-        this.primPhone = "Primair telefoonnummer";
-        this.issueDesc = "Probleem Beschrijving";
+        //this.primPhone = "Primair telefoonnummer"; //FY21-0502: Story #8348201
+        //this.issueDesc = "Probleem Beschrijving"; //FY21-0502: Story #8348201
         this.language = "de";
     } else if (language == "ja") {
         this.firstName = "名";
         this.lastName = "姓";
         this.emailAdd = "メール";
-        this.primPhone = "主に使う電話番号";
-        this.issueDesc = "問題の説明";
+        //this.primPhone = "主に使う電話番号"; //FY21-0502: Story #8348201
+        //this.issueDesc = "問題の説明"; //FY21-0502: Story #8348201
         this.language = "ja";
     } else if (language == "ko") {
         this.firstName = "이름";
         this.lastName = "성";
         this.emailAdd = "이메일";
-        this.primPhone = "기본 전화 번호";
-        this.issueDesc = "문제 설명";
+        //this.primPhone = "기본 전화 번호"; //FY21-0502: Story #8348201
+        //this.issueDesc = "문제 설명"; //FY21-0502: Story #8348201
         this.language = "ko";
     } else if (language == "es") {
         this.firstName = "Nombre";
         this.lastName = "Apellidos";
         this.emailAdd = "Correo electrónico";
-        this.primPhone = "Número de teléfono primario";
-        this.issueDesc = "descripcion del problema";
+        //this.primPhone = "Número de teléfono primario"; //FY21-0502: Story #8348201
+        //this.issueDesc = "descripcion del problema"; //FY21-0502: Story #8348201
         this.language = "es";
     } else if (language == "zh" || language == "cn" || language == "zh-cn") {
         this.firstName = "名";
         this.lastName = "姓";
         this.emailAdd = "电子邮件";
-        this.primPhone = "最常用的电话号码";
-        this.issueDesc = "问题说明";
+        //this.primPhone = "最常用的电话号码"; //FY21-0502: Story #8348201
+        //this.issueDesc = "问题说明"; //FY21-0502: Story #8348201
         this.language = "zh-CN";
     } else if (language == "zh-tw") {
         this.firstName = "名字";
@@ -1379,14 +1379,14 @@ function translation(lang) {
         this.firstName = "Nome";
         this.lastName = "Sobrenome";
         this.emailAdd = "Email";
-        this.primPhone = "Número de Telefone Principal";
-        this.issueDesc = "descrição do problema";
+        //this.primPhone = "Número de Telefone Principal"; //FY21-0502: Story #8348201
+        //this.issueDesc = "descrição do problema"; //FY21-0502: Story #8348201
         this.language = "pt-br";
     } else if (language == "nl" || language == "nl-nl") {
         this.firstName = "Voornaam", this.lastName = "Achternaam",
         this.emailAdd = "E-mail";
-        this.primPhone = "Primair telefoonnummer";
-        this.issueDesc = "Probleem Beschrijving";
+        //this.primPhone = "Primair telefoonnummer"; //FY21-0502: Story #8348201
+        //this.issueDesc = "Probleem Beschrijving";//FY21-0502: Story #8348201
         this.language = "nl-NL";//Language related issue FY21-0202
     } else if (language == "fr") {
         this.firstName = "Prénom";
