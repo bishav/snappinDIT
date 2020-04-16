@@ -110,11 +110,11 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 						"value": 'Partner',//Both
 						"transcriptFields": ["Chat_Source__c"]
 					},{
-						"label": "Product Group / Vendor",
+						"label": "Group / Vendor", //FY21:0502 STORY 8244329: Change Label Name
 						"value": getProductGroup(partnerPortalDetails.productGroup),//Both
 						"transcriptFields": ["PP_Vendor_Product_Group__c"]
 					},{
-						"label": "Product Type / Vendor List",
+						"label": "Type / Vendor List",//FY21:0502 STORY 8244329: Change Label Name
 						"value": partnerPortalDetails.productType,//Both
 						"transcriptFields": ["PP_Vendor_List_Product_Type__c"]
 					},{
@@ -470,7 +470,7 @@ function idBasedVal(idTypeVal,partnerPortalDetails){
 function getProductGroup(productGroup){
 	if(productGroup === "GTT" || productGroup === "Tag Team")
 		return "GTT";
-	else if(document.getElementById("productGroup").value === "Mixed IP")
+	else if(productGroup === "Mixed IP")
 		return "Mixed IP";
  }
  //Check Product Group before pushing the values [END]

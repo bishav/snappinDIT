@@ -1750,6 +1750,14 @@ function eleExist(eleSelector, callbackFunc) {
 
 
 /////////////////////////////ChatBot Code///////////////////////////////////
+//0202 changes start
+function isTechOrCare(chatBotObject) {
+    if (chatBotObject.applicationContext === "ChatBot-CareBot") {
+        return "CARE";
+    } else
+        return "Tech";
+}//0202 changes end
+
 
 function triggerChatBot(chatBotObject) {
     //Console.log(chatBotObject);
@@ -1791,7 +1799,7 @@ function initiateChatBot(chatBotObject) {
     var initESW = function (gslbBaseURL) {
         //FIX for CSS related issue in Chat bot[START]
         if (!document.getElementById('chatBotStyle')) {
-            let css = '.embeddedServiceLiveAgentStateChatHeader .message,.embeddedServiceLiveAgentStateChatHeaderOption .optionName,.embeddedServiceSidebarFormField .uiInput .uiLabel-left{font-size:.75em!important}.embeddedServiceLiveAgentStateChatPlaintextMessageDefaultUI.plaintextContent,.embeddedServiceSidebarDialogState #dialogTextBody,.embeddedServiceSidebarFormField .slds-style-inputtext,.embeddedServiceSidebarFormField .slds-style-select,.embeddedServiceSidebarHeader .shortHeader,.embeddedServiceSidebarMinimizedDefaultUI .minimizedText{font-size:.875em!important}.embeddedServiceSidebar .headerItem,.embeddedServiceSidebarButton{font-size:1em!important}.embeddedServiceLiveAgentStateChatInputFooter .footerMenuWrapper .footer-menu .slds-button__icon{width:1.5em!important;height:1.5em!important}.embeddedServiceLiveAgentStateChatInputFooter .footerMenuWrapper .footer-menu .slds-button_icon-container-more{line-height:1.875em!important}.embeddedServiceLiveAgentStateChatInputFooter .footerMenuWrapper .footer-menu .slds-dropdown-trigger{padding:.5em .5em!important}';
+            let css = '.embeddedServiceLiveAgentStateChatHeader .message,.embeddedServiceLiveAgentStateChatHeaderOption .optionName,.embeddedServiceSidebarFormField .uiInput .uiLabel-left{font-size:.75em!important}.embeddedServiceLiveAgentStateChatPlaintextMessageDefaultUI.plaintextContent,.embeddedServiceSidebarDialogState #dialogTextBody,.embeddedServiceSidebarFormField .slds-style-inputtext,.embeddedServiceSidebarFormField .slds-style-select,.embeddedServiceSidebarHeader .shortHeader,.embeddedServiceSidebarMinimizedDefaultUI .minimizedText{font-size:.875em!important}.embeddedServiceSidebar .headerItem,.embeddedServiceSidebarButton{font-size:1em!important}.embeddedServiceLiveAgentStateChatInputFooter .footerMenuWrapper .footer-menu .slds-button__icon{width:1.5em!important;height:1.5em!important}.embeddedServiceLiveAgentStateChatInputFooter .footerMenuWrapper .footer-menu .slds-button_icon-container-more{line-height:1.875em!important}.embeddedServiceLiveAgentStateChatInputFooter .footerMenuWrapper .footer-menu .slds-dropdown-trigger{padding:.5em .5em!important}.embeddedServiceLiveAgentStateChatInputFooter .footerMenuWrapper .footer-menu .data-metrics={btnname:chgprod,appcode:880.130.862}';
             head = document.head || document.getElementsByTagName('head')[0],
                 style = document.createElement('style');
             style.type = 'text/css';
@@ -1808,17 +1816,22 @@ function initiateChatBot(chatBotObject) {
         //snapinBotPageObserver('body');
 
         //FY21-0202 Story 7728368 [START]
-        snapinBotPageObserver('body');
-        var chatBotForm = "ChatBot";
-        if ("applicationContext" in chatBotObject && chatBotObject.applicationContext === "ChatBot-CareBot")
-        chatBotForm = "Chatbot-CareBot";
+		//FY21-0403 Defect 8363466 //First language needs to be translated. So moving this conditon on top
         if ("applicationContext" in chatBotObject && chatBotObject.applicationContext === "ChatBot-CareBot" && "language" in chatBotObject) 
             translatedLabels = translation(chatBotObject.language);
-        
         else
             translatedLabels = translation("en");
 
         embedded_svc.settings.language = translatedLabels.language;
+
+        snapinBotPageObserver('body');
+        var chatBotForm = "ChatBot", phoenNumberValues=null;//FY21-0403 [Defect] prop 20 value change 
+        if ("applicationContext" in chatBotObject && chatBotObject.applicationContext === "ChatBot-CareBot"){
+           chatBotForm = "Chatbot-CareBot";
+           phoenNumberValues = { "label": translatedLabels.primPhone, "transcriptFields": ["ContactNumber__c"], "displayToAgent": true };//FY21-0403 [Defect] prop 20 value change //For Care
+        }else{
+            phoenNumberValues = { "label": "Phone", "transcriptFields": ["Phone"], "displayToAgent": true };//FY21-0403 [Defect] prop 20 value change //For tech
+        }
         //FY21-0202 Story 7728368 [END]
 
         embedded_svc.settings.displayHelpButton = false;
@@ -1828,7 +1841,8 @@ function initiateChatBot(chatBotObject) {
             { "label": "Service Tag",/* "value": chatBotObject.Service_Tag,*/ "transcriptFields": ["Service_Tag__c"], "displayToAgent": true },
             { "label": "CARE_Chat_Order_Number", "transcriptFields": ["CARE_Chat_Order_Number__c"], "displayToAgent": true }, // Change for BOT phone March 19 2020
         //  { "label": "Order_Number", "value":  chatBotObject.CARE_Chat_Order_Number, "transcriptFields": ["Order_Number__c"], "displayToAgent": true },
-            { "label": translatedLabels.primPhone, /*"value": '00 61 2 9876', */"transcriptFields": ["ContactNumber__c"], "displayToAgent": true },
+            //{ "label": translatedLabels.primPhone, /*"value": '00 61 2 9876', */"transcriptFields": ["ContactNumber__c"], "displayToAgent": true },
+            phoenNumberValues,//FY21-0403 [Defect] prop 20 value change
             { "label": translatedLabels.firstName, /*"value": chatBotObject.FirstName, */"transcriptFields": ["FirstName__c"], "displayToAgent": true },
             { "label": translatedLabels.lastName, /*"value": chatBotObject.LastName, */"transcriptFields": ["LastName__c"], "displayToAgent": true },
             { "label": translatedLabels.emailAdd, /*"value":chatBotObject.Email,*/ "transcriptFields": ["Email__c"], "displayToAgent": true },
@@ -1905,12 +1919,12 @@ function initiateChatBot(chatBotObject) {
         else
             applicationContextval = "testing";
 
-
         embedded_svc.settings.prepopulatedPrechatFields = {
             FirstName: firstNameVal,
             LastName: lastNameVal,
             Email: emailVal,
-            ContactNumber__c: primePhoneVal,
+            ContactNumber__c: primePhoneVal,//FY21-0403 [Defect] //For CARE
+            Phone: primePhoneVal,//FY21-0403 [Defect] //For Tech
             Service_Tag__c: ServiceTagVal,
             Application_Context__c: applicationContextval,
             CARE_Chat_Order_Number__c: CAREChatOrderNumberval,
@@ -2028,6 +2042,7 @@ function ResgisterChatBotHandler() {
     });
     embedded_svc.addEventHandler("onChatEndedByChasitor", function (data) {
         console.log('onChatEndedByChasitor event triggerred');
+		callDellmetricsTrackForBot("880.130.860", data.liveAgentSessionKey);
         CloseAndClearChatBot();
         SetToDefaultValues();
     });
@@ -2069,10 +2084,11 @@ function ResgisterChatBotHandler() {
         console.log('onChatEstablished event triggerred');
         callDellmetricsTrackForBot("880.130.864", data.liveAgentSessionKey);
         setTimeout(function () {
-            var hamburgerMenuIconDOM = document.querySelector(".slds-dropdown-trigger_click .slds-button.slds-button_icon.slds-button_icon-container-more");
-            hamburgerMenuIconDOM.addEventListener("click", function () {
-                callDellmetricsTrackForBot("880.130.861", data.liveAgentSessionKey);
-            });
+            var hamburgerMenuIconDOM = document.querySelector("embeddedservice-chat-input-footer-menu");//FY21-0403 [Defect-8363466] prop 20 value change
+            if(hamburgerMenuIconDOM)
+				hamburgerMenuIconDOM.addEventListener("click", function () {
+					callDellmetricsTrackForBot("880.130.861", data.liveAgentSessionKey);
+				});
             var chatButtons = document.querySelectorAll(".embeddedServiceLiveAgentStateChatHeaderOption");
 
             chatButtons[0].addEventListener("click", function () {
@@ -2091,7 +2107,7 @@ function ResgisterChatBotHandler() {
         setTimeout(function () {
             var nodes = document.querySelectorAll(".chatContent");
             var lastmessage = nodes[nodes.length - 1];
-            if (lastmessage.innerText === "Transfer to Agent")
+            if (lastmessage.innerText === "Chat with Live Agent" || lastmessage.innerText === "Conversar com o Live Agent" || lastmessage.innerText === "Transfer to Agent")//FY21-0403 [Defect] prop 20 value change
                 callDellmetricsTrackForBot("880.130.862", data.liveAgentSessionKey);
         }, 300);
 
@@ -2134,11 +2150,11 @@ function OmniChatBotTrackerListner() {
                             callDellmetricsTrackForBot("880.130.854");
                             break;
                         case "dialogButton dialog-button-0 uiButton embeddedServiceSidebarButton":
-                            if (event.target.innerText === "Leave" && event.target.parentNode.parentNode.parentNode.firstElementChild.textContent === "Leave?")
+                            if ((event.target.innerText === "Leave" || event.target.innerText === "Sair") &&  (event.target.parentNode.parentNode.parentNode.firstElementChild.textContent === "Leave?" || event.target.parentNode.parentNode.parentNode.firstElementChild.textContent === "Sair?"))//FY21-0403 [Defect] prop 20 value change
                                 callDellmetricsTrackForBot("880.130.857");
                             break;
                         case "dialogButton dialog-button-1 uiButton--inverse uiButton embeddedServiceSidebarButton":
-                            if (event.target.innerText === "Continue to Wait" && event.target.parentNode.parentNode.parentNode.firstElementChild.textContent === "Leave?")
+                            if ((event.target.innerText === "Continue to Wait" || event.target.innerText === "Continuar esperando") && (event.target.parentNode.parentNode.parentNode.firstElementChild.textContent === "Leave?" || event.target.parentNode.parentNode.parentNode.firstElementChild.textContent === "Sair?"))//FY21-0403 [Defect] prop 20 value change
                                 callDellmetricsTrackForBot("880.130.858");
                             chasitorTextMaintainState();
                             isBinded = false;
@@ -2270,7 +2286,6 @@ function ChatBotStarted(eleSelector, findingEle, chatBotObject) {
 function changeBotPrechatValues(snapInObject) {
     let state = embedded_svc.sidebarInstanceMap[Object.keys(embedded_svc.sidebarInstanceMap)[0]].getActiveState();
     let prechatFields = state.get("v.prechatFields");
-    debugger;
     prechatFields.forEach(function (prechatField) {
         if (prechatField.name === "FirstName") {
             prechatField.value = snapInObject.c_firstName
@@ -2278,13 +2293,14 @@ function changeBotPrechatValues(snapInObject) {
             prechatField.value = snapInObject.c_lastName
         } else if (prechatField.name === "Email") {
             prechatField.value = snapInObject.c_email
-        } else if (prechatField.name === "Primary_Phone__c") { // Change for BOT phone March 19 2020
+        } else if (prechatField.name === "Primary_Phone__c") { //FY21-0403 [Defect] prop 20 value change
             prechatField.value = snapInObject.c_phoneNo
-        } else if (prechatField.name === "Service_Tag__c") {
+        } else if (prechatField.name === "Phone") {//FY21-0403 [Defect] prop 20 value change
+            prechatField.value = snapInObject.c_phoneNo
+        }else if (prechatField.name === "Service_Tag__c") {
             prechatField.value = snapInObject.Service_Tag
         }
         else if (prechatField.name === "Application_Context__c") {
-
             prechatField.value = snapInObject.applicationContext
         }else if (prechatField.name === "CARE_Chat_Order_Number__c") {
             prechatField.value = snapInObject.CARE_Chat_Order_Number
@@ -2330,7 +2346,7 @@ function prePopulateCustBotPreFormValues(chatBotObject) {
         if (document.getElementById("botServiceTagLabel"))
             document.getElementById("botServiceTagLabel").value = chatBotObject.Service_Tag;
     }
-    if ("CARE_Chat_Order_Number" in chatBotObject) {
+    if ("CARE_Chat_Order_Number" in chatBotObject && document.getElementById("botCareChatOrderNumberLabel")) {
         console.log("chatBotObject.CARE_Chat_Order_Number", chatBotObject.CARE_Chat_Order_Number);
         // document.getElementById("cusBotPreChat-ServiceTag").value = chatBotObject.Service_Tag;
         document.getElementById("botCareChatOrderNumberLabel").innerText = chatBotObject.CARE_Chat_Order_Number;

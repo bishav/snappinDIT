@@ -103,7 +103,7 @@
                                 Select Issue Type
                             </button>
                             <div id="issueDropdown" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item dropdown-item1" href="#">None</a>
+                                <a class="dropdown-item dropdown-item1" href="#">None</a>
                                 <a class="dropdown-item dropdown-item1" href="#">Slow Performance</a>
                                 <a class="dropdown-item dropdown-item2" href="#">Keyboard not working</a>
                                 <a class="dropdown-item dropdown-item3" href="#">Touch pad not working</a>
@@ -880,11 +880,11 @@
 
         //eSupportCode
         function startSprinklrChatBot(sprinklrChatBotVal){
-            if (confirm("Do you want want start Sprinklr Chat Bot?")){
+            if (confirm("Do you want start Sprinklr Chat Bot?")){
                 setTimeout(function(){ 
                     if (confirm("Click on OK to trasnfer to an agent, cancel to successfully end the chat.")){
                         var sprinklrChatBotObject = {
-                            caseNumber: "50711675"
+                            caseNumber: "50711843"//"50711675"
                         }
                             triggerSnapinPostSprinkler(sprinklrChatBotObject);
                     } else

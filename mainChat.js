@@ -734,6 +734,7 @@ function custPrechatInitiateChat(snapInObject, preChatlableObject) {
     if (custPreFormValidation(preChatlableObject)) {
         callDellmetricsTrack("890.220.002"); //FY20-1101 STORY 7128491
         snapInObject = addCustFormDetailsTo(snapInObject);
+        snapInObject.sprinklrChatbotRouted = false;//FY21-0502:[Sprinklr Chat Bot] insure sprinklr routed is false in the start
         saveGlobalSnapinObjToSession(snapInObject);
         pageObserverForProp20("body", preChatlableObject);
         loadingSnapinQueue();
@@ -745,6 +746,7 @@ function custPrechatInitiateChat(snapInObject, preChatlableObject) {
         }else{//FY21-0502:[Sprinklr Chat Bot] If SprinklrChatBot Has to open
             document.getElementById("cusPreChatSnapinDom").style.display = 'none';
             //More calls if required.
+            
         }
     }
 
@@ -782,6 +784,7 @@ function checkSprinklrChatBot(snapInObject){
 function  triggerSnapinPostSprinkler(sprinklrChatBotObject){
     snapInObject = sendGlobalSnapinObjToJson();
     snapInObject.caseNumber = sprinklrChatBotObject.caseNumber;
+    snapInObject.sprinklrChatbotRouted = true;//FY21-0502:[Sprinklr Chat Bot] sprinkler chat bot reoted is true only in this scenario.
     saveGlobalSnapinObjToSession(snapInObject);//Added caseNumber to SnapInObject 
     connectToSnapInAgent(snapInObject);
 }
@@ -789,7 +792,13 @@ function  triggerSnapinPostSprinkler(sprinklrChatBotObject){
 
 //FY21-0502:[Sprinklr Chat Bot] If sprinklr successfully ended the chat.[START]
 function  sprinklerChatEnded(){
-    console.log("Sprinklr Chat ended Successfully");
+    snapinChatInitiatedState(false);//Dont Initiate SnapIn Chat
+    var originalPrechatDOM = document.querySelector(".modalContainer  .dockableContainer .sidebarBody .activeFeature .featureBody .embeddedServiceSidebarState .prechatUI");
+    var closeOriginalPrechatDOM = document.querySelector(".modalContainer  .dockableContainer .closeButton.headerItem");
+    if (originalPrechatDOM && closeOriginalPrechatDOM)
+        closeOriginalPrechatDOM.click();
+    console.log("Sprinklr Chat ended Successfully");  
+    console.log(sendGlobalSnapinObjToJson());  
 }
 //FY21-0502:[Sprinklr Chat Bot] If sprinklr successfully ended the chat.[END]
 
@@ -826,6 +835,12 @@ function pushValsToSnapinInit(snapInObject){
                                 embedded_svc.settings.extraPrechatFormDetails[i].value = snapInObject.caseNumber;
                             else
                                 embedded_svc.settings.extraPrechatFormDetails[i].value = "";
+                            break;
+                    case "Sprinklr_Chatbot_Routed__c": //FY21-0502:[Sprinklr Chat Bot] Sending Lightning Case Number from sprinklr to SFDC chat via eSupport
+                            if(snapInObject.sprinklrChatbotRouted)
+                                embedded_svc.settings.extraPrechatFormDetails[i].value = snapInObject.sprinklrChatbotRouted;
+                            else
+                                embedded_svc.settings.extraPrechatFormDetails[i].value = false;
                             break;
                     default:
                         break;
@@ -916,7 +931,12 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
             "label": "Case Number",
             "value": "",
             "transcriptFields": ["Case_Number__c"]
-        },//FY21-0502:[Sprinklr Chat Bot]: Adding new Field to be pushed to transcript[END]
+        },{
+            "label": "Sprinklr Chatbot Routed",
+            "value": "", 
+            "transcriptFields": ["Sprinklr_Chatbot_Routed__c"]
+        },
+        //FY21-0502:[Sprinklr Chat Bot]: Adding new Field to be pushed to transcript[END]
         {// New filed
             "label": "Chat Source",
 			"value": 'EMC',
@@ -961,6 +981,10 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
             "label": "Case Number",
             "value": "",
             "transcriptFields": ["Case_Number__c"]
+        },{
+            "label": "Sprinklr Chatbot Routed",
+            "value": false, 
+            "transcriptFields": ["Sprinklr_Chatbot_Routed__c"]
         },//FY21-0502:[Sprinklr Chat Bot]: Adding new Field to be pushed to transcript[END]
         {
             "label": "Service Tag",
@@ -1706,9 +1730,11 @@ function addChatPrivacyInfo(preChatlableObject){
                                     newItem.id = 'snapinChatPopUpMsg';
                                     var embeddedSLAChatInput = document.querySelector(".dockableContainer .embeddedServiceLiveAgentStateChatInputFooter");
                                     //embeddedSLAChatInput.insertBefore(newItem, embeddedSLAChatInput.childNodes[0]);
-                                    embeddedSLAChatInput.parentNode.insertBefore(newItem, embeddedSLAChatInput);
+                                    if(embeddedSLAChatInput)//FY21-0502 Unit testing issue
+                                        embeddedSLAChatInput.parentNode.insertBefore(newItem, embeddedSLAChatInput);
                                     innerVal ='<span style="float: left;margin: 11px;fill:#0A6EBE;"><svg x="0px" y="0px" width="20px" height="20px" viewBox="0 0 416.979 416.979" xml:space="preserve"><g><path d="M356.004,61.156c-81.37-81.47-213.377-81.551-294.848-0.182c-81.47,81.371-81.552,213.379-0.181,294.85   c81.369,81.47,213.378,81.551,294.849,0.181C437.293,274.636,437.375,142.626,356.004,61.156z M237.6,340.786   c0,3.217-2.607,5.822-5.822,5.822h-46.576c-3.215,0-5.822-2.605-5.822-5.822V167.885c0-3.217,2.607-5.822,5.822-5.822h46.576   c3.215,0,5.822,2.604,5.822,5.822V340.786z M208.49,137.901c-18.618,0-33.766-15.146-33.766-33.765   c0-18.617,15.147-33.766,33.766-33.766c18.619,0,33.766,15.148,33.766,33.766C242.256,122.755,227.107,137.901,208.49,137.901z"/></g></svg></span><span class="cusPreChat-x-small cusPreChat-embeddedServiceIcon" id="btnCloseSnapinPopMsg" style="float:right;padding:5px;cursor:pointer;"> <svg focusable="false" aria-hidden="true" data-key="close" viewBox="0 0 120 120" style="fill:#333"> <path d="M65.577 53.73l27.5-27.71c1.27-1.27 1.27-3.174 0-4.445l-4.23-4.44c-1.272-1.27-3.175-1.27-4.445 0L56.694 44.847c-.847.845-2.115.845-2.96 0L26.018 16.922c-1.27-1.27-3.174-1.27-4.445 0l-4.44 4.442c-1.27 1.27-1.27 3.174 0 4.444l27.71 27.71c.846.846.846 2.116 0 2.962L16.923 84.403c-1.27 1.27-1.27 3.174 0 4.444l4.442 4.442c1.27 1.268 3.174 1.268 4.444 0l27.71-27.713c.846-.847 2.116-.847 2.962 0L84.19 93.29c1.27 1.268 3.174 1.268 4.445 0l4.44-4.445c1.27-1.268 1.27-3.17 0-4.44l-27.5-27.712c-.847-.847-.847-2.115 0-2.96z"></path></svg></span><p style="text-align:left;padding:7px;margin:0;font-size:13px;background:#DFF1FE;border-top:1px solid #0A6EBE;border-bottom:1px solid #0A6EBE;color:#333;">'+snapinPopInputMsg+'</p>';
-                                    document.getElementById("snapinChatPopUpMsg").innerHTML=innerVal;
+                                    if(document.getElementById("snapinChatPopUpMsg"))//FY21-0502 Unit testing.
+                                        document.getElementById("snapinChatPopUpMsg").innerHTML=innerVal;
     
                                     var btnCloseSnapinPopMsg = document.getElementById("btnCloseSnapinPopMsg");
                                             btnCloseSnapinPopMsg.addEventListener("click", function () {

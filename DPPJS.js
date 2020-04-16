@@ -164,11 +164,11 @@ function triggerPartnerPortalSnapinDPP(partnerPortalDetails, sfdcSnapinDetails) 
                 "value": 'Partner',
                 "transcriptFields": ["Chat_Source__c"]
             },{
-                "label": "Product Group / Vendor",
+                "label": "Group / Vendor", //FY21:0502 STORY 8244329: Change Label Name
                 "value": partnerPortalDetails.vendorType,
                 "transcriptFields": ["PP_Vendor_Product_Group__c"]
             },{
-                "label": "Product Type / Vendor List",
+                "label": "Type / Vendor List",//FY21:0502 STORY 8244329: Change Label Name
                 "value": partnerPortalDetails.chatProviderName,
                 "transcriptFields": ["PP_Vendor_List_Product_Type__c"]
             },{
