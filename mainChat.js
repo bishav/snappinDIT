@@ -935,7 +935,7 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
             "label": "Sprinklr Chatbot Routed",
             "value": "", 
             "transcriptFields": ["Sprinklr_Chatbot_Routed__c"]
-        },
+        }, 
         //FY21-0502:[Sprinklr Chat Bot]: Adding new Field to be pushed to transcript[END]
         {// New filed
             "label": "Chat Source",
@@ -985,7 +985,8 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
             "label": "Sprinklr Chatbot Routed",
             "value": false, 
             "transcriptFields": ["Sprinklr_Chatbot_Routed__c"]
-        },//FY21-0502:[Sprinklr Chat Bot]: Adding new Field to be pushed to transcript[END]
+        },
+        //FY21-0502:[Sprinklr Chat Bot]: Adding new Field to be pushed to transcript[END]
         {
             "label": "Service Tag",
             "value": snapInObject.serviceTag,

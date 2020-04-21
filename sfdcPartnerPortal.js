@@ -89,6 +89,7 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 					caseSeverityTxt: convertToSeverity(partnerPortalDetails.caseSeverity),
 					loginIdNoSpace: loginIdNoSpace(partnerPortalDetails.loginId),
 					validFirstName: firstNameValidator(partnerPortalDetails),
+					role: "GLOBAL TAG TEAM",//FY21:0502 STORY 7994527: Add Role value
 					serviceForceURL: "https://service.force.com"
 		}
             var initESW = function (gslbBaseURL) {
@@ -202,7 +203,12 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 						"label":  "Reason",
 						"value": expandChatReason(isRequiredForGTT(partnerPortalDetails.productGroup,partnerPortalDetails,"chatReason")) ,//GTT only //New Field 
 						"transcriptFields": ["Reason__c"]
-					},{
+					},{//FY21:0502 STORY 7994527: Add Role value[START]
+						"label": "Support Team",
+						"value": isRequiredForGTT(partnerPortalDetails.productGroup,sfdcSnapinDetails,"role"),
+						"transcriptFields": ["Role__c"]
+					},//FY21:0502 STORY 7994527: Add Role value[END]
+					{
 						"label":  "Record Type",
 						"value": sfdcSnapinDetails.recordType,//"0122R000000VrtU",//"0128A000000Jhee",//"0122h0000009xnl",//"0122h0000009xf1" ,//Record type id for partner//DEV2 = "0128A000000Jhee",
 						"transcriptFields": ["RecordType"]

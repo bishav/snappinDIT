@@ -104,6 +104,7 @@ function startPartnerPortalChat(){
             srNumber: getMainSearchValue($('#chatType').val(), "SR Number", $('#chatTypeValue').val()),
             chatProviderName: $('#chatProviderName').val(),
 			productName: findProductFromQueueName($('#regionQueues').siblings(".form-control")[0]),//FY21-0502: Story #8076479: Find if the product name from Queue name.
+            role: getRoleValue($('#regionQueues').siblings(".form-control")[0]),//FY21:0502 STORY 7994527: Add Role value
             chatUserName: $('#chatUserName').val()
         };
 
@@ -171,7 +172,12 @@ function triggerPartnerPortalSnapinDPP(partnerPortalDetails, sfdcSnapinDetails) 
                 "label": "Type / Vendor List",//FY21:0502 STORY 8244329: Change Label Name
                 "value": partnerPortalDetails.chatProviderName,
                 "transcriptFields": ["PP_Vendor_List_Product_Type__c"]
-            },{
+            },{//FY21:0502 STORY 7994527: Add Role value[START]
+                "label": "Support Team",
+                "value": partnerPortalDetails.role,
+                "transcriptFields": ["Role__c"]
+            },//FY21:0502 STORY 7994527: Add Role value[END]
+            {
                 "label": "Region",
                 "value": partnerPortalDetails.regionInput,
                 "transcriptFields": ["PP_Region__c"]
@@ -350,3 +356,19 @@ function findProductFromQueueName(queueNameEle){
 		return "";		
 }
 //FY21-0502: Story #8076479: Find if the product name from Queue name. [END]
+
+//FY21:0502 STORY 7994527: Add Role value [START]
+function getRoleValue(queueNameEle){
+    let queueName = ""; 
+    let queueType = "";
+	if (queueNameEle){
+        queueName = queueNameEle.innerText;
+        queueType = queueName.match(/GCC /g); 
+    } 
+    console.log("queueType = ", queueType);
+    if (queueType == "GCC ")
+        return "GLOBAL COMMAND CENTER";
+    else 
+        return "";
+}
+//FY21:0502 STORY 7994527: Add Role value [END]
