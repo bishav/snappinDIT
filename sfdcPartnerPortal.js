@@ -41,7 +41,7 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 					eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I8A0000004CE8UAM_16e214e1296',
 					snapInJs: 'https://dellservices--DEV2.my.salesforce.com/embeddedservice/5.0/esw.min.js',
 					
-					
+				*/	
 					
 					//DEV1
 					snapInInitURL: 'https://dellservices--dev1.my.salesforce.com',
@@ -53,8 +53,8 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 					baseLiveAgentURL: 'https://d.la1-c1cs-ia2.salesforceliveagent.com/chat',
 					eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I2R000000PAwuUAG_1703a86ec04',
 					snapInJs: 'https://dellservices--dev1.my.salesforce.com/embeddedservice/5.0/esw.min.js',
-				*/	
 					
+				/*	
 					//SIT2
 					baseLiveAgentContentURL: "https://c.la3-c1cs-ph2.salesforceliveagent.com/content",
 					deploymentId: "5720b000000GneC",
@@ -66,7 +66,7 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 					snapInJs: "https://service.force.com/embeddedservice/5.0/esw.min.js",
 					snapInLAURL: "https://sit2-dellservices.cs36.force.com/LASnapIn",
 					recordType: "0122h0000009xf1",
-					
+				*/	
 					//Perf 1
 					/*
 					snapInInitURL: 'https://dellservices--Perf1.my.salesforce.com',

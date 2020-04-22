@@ -822,13 +822,19 @@ function pushValsToSnapinInit(snapInObject){
                 //console.log("Values in forEach Condition:",embedded_svc.settings.extraPrechatFormDetails[i]);
                 switch (fieldAPI) {
                     case "Issue__c":
-                            embedded_svc.settings.extraPrechatFormDetails[i].value = snapInObject.issueVal;
+                            if ("isEmcProduct" in snapInObject && snapInObject.isEmcProduct && "chatSeverity" in snapInObject) {//FY21-0502: DEFECT 8455167 value not mapping to chatSeverity for EMC [START]
+                                embedded_svc.settings.extraPrechatFormDetails[i].value = snapInObject.chatSeverity + " " + snapInObject.issueVal;
+                            }else                                                                                               //FY21-0502: DEFECT 8455167 value not mapping to chatSeverity for EMC [END]
+                                embedded_svc.settings.extraPrechatFormDetails[i].value = snapInObject.issueVal;
                         break;
                     case "Issue_Key__c":
                             embedded_svc.settings.extraPrechatFormDetails[i].value = snapInObject.issueType;
                             break;
                     case "Service_Tag__c":
-                            embedded_svc.settings.extraPrechatFormDetails[i].value = snapInObject.serviceTag;
+                            if ("isEmcProduct" in snapInObject && snapInObject.isEmcProduct && "cpid" in snapInObject) {//FY21-0502: DEFECT 8455167 value not mapping to CPID for EMC [START]
+                                embedded_svc.settings.extraPrechatFormDetails[i].value = snapInObject.cpid;
+                            }else                                                                                       //FY21-0502: DEFECT 8455167 value not mapping to CPID for EMC [END]
+                                embedded_svc.settings.extraPrechatFormDetails[i].value = snapInObject.serviceTag;
                             break;
                     case "Case_Number__c": //FY21-0502:[Sprinklr Chat Bot] Sending Lightning Case Number from sprinklr to SFDC chat via eSupport
                             if(snapInObject.caseNumber)
