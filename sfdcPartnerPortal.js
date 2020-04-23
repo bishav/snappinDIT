@@ -53,7 +53,7 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 					baseLiveAgentURL: 'https://d.la1-c1cs-ia2.salesforceliveagent.com/chat',
 					eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I2R000000PAwuUAG_1703a86ec04',
 					snapInJs: 'https://dellservices--dev1.my.salesforce.com/embeddedservice/5.0/esw.min.js',
-					
+					recordType: "0122R000000VrtU",
 				/*	
 					//SIT2
 					baseLiveAgentContentURL: "https://c.la3-c1cs-ph2.salesforceliveagent.com/content",
