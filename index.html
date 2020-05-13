@@ -88,6 +88,7 @@
                                 <span id="orginazationName">
                                     <label><input id = "dellOrg" type="radio" name="optradio" checked>&nbsp&nbspDell legacy</label>
                                     <label><input id = "emcOrg" type="radio" name="optradio" style="margin-left: 20px;">&nbsp&nbspEMC legacy</label>
+                                    <label><input id = "routSprinklrBot" type="radio" name="optradio" style="margin-left: 20px;">&nbsp&nbspSprinklr Bot Routing</label>
                                 </span>
                             <div><label for="serviceTag">Service Tag / CPID (for EMC legacy)</label></div>
                             
@@ -157,6 +158,7 @@
                     <select class="custom-select" onChange="changeEnv()" id="environmentSelection">
                     <option selected>Choose your preferred environment</option>
                     <option value="S1">S1</option>
+                    <option value="S2">S2</option>
                     <option value="S4">S4</option>
                     <option value="S6">S6</option>
                     <option value="D1">D1</option>
@@ -315,6 +317,56 @@
 				<div class="form-group">
                     <label for="usr">snapInLAURL:</label>
                     <input type="text" class="form-control" data-id="snapInLAURL" value="https://sit6-dellservices.cs22.force.com/LASnapIn">
+                </div>
+            </div>
+
+            <div class="modal-body config" id="S2" style="display:none">
+                <div class="form-group">
+                    <h5>SIT2 Environment Settings</h5>
+                </div>
+                <div class="form-group">
+                    <label for="usr">baseLiveAgentContentURL:</label>
+                    <input type="text" class="form-control" data-id="baseLiveAgentContentURL" value="https://c.la3-c1cs-ph2.salesforceliveagent.com/content">
+                </div>
+				<div class="form-group">
+                    <label for="usr">deploymentId:</label>
+                    <input type="text" class="form-control" data-id="deploymentId" value="5720b000000GneC">
+                </div>
+                <div class="form-group">
+                    <label for="usr">buttonId:</label>
+                    <input type="text" class="form-control" data-id="buttonId" value="5730b0000008Pa1">
+                </div>
+				<div class="form-group">
+                    <label for="usr">baseLiveAgentURL:</label>
+                    <input type="text" class="form-control" data-id="baseLiveAgentURL" value="https://d.la3-c1cs-ph2.salesforceliveagent.com/chat">
+                </div>
+				<div class="form-group">
+                    <label for="usr">LiveAgentDevName:</label>
+                    <input type="text" class="form-control" data-id="LiveAgentDevName" value="EmbeddedServiceLiveAgent_Parent04I0b000000blJJEAY_16520d15b68">
+                </div>
+				<div class="form-group">
+                    <label for="usr">componentName:</label>
+                    <input type="text" class="form-control" data-id="componentName" value="Snap_Ins_Chat_Deployment">
+                </div>
+				<div class="form-group">
+                    <label for="usr">organizationId:</label>
+                    <input type="text" class="form-control" data-id="organizationId" value="00D2h0000008aOa">
+                </div>
+				<div class="form-group">
+                    <label for="usr">serviceForceURL:</label>
+                    <input type="text" class="form-control" data-id="serviceForceURL" value="https://service.force.com">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInInitURL:</label>
+                    <input type="text" class="form-control" data-id="snapInInitURL" value="https://dellservices--SIT2.my.salesforce.com">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInJs:</label>
+                    <input type="text" class="form-control" data-id="snapInJs" value="https://dellservices--SIT2.my.salesforce.com/embeddedservice/5.0/esw.min.js">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInLAURL:</label>
+                    <input type="text" class="form-control" data-id="snapInLAURL" value="https://sit2-dellservices.cs36.force.com/LASnapIn">
                 </div>
             </div>
             
@@ -635,7 +687,7 @@
                     //Hard coded prechat values 
                     firstName:"Bishav",
                     lastName: "Rajbhandari",
-                    email:"bnr@dell.com",
+                    email:"BNR@dell.com",
                     phoneNo:"1234567",
                     issueDescription:"Test of Description",
                     productCode:"Latitude",
@@ -702,7 +754,7 @@
                 if (document.getElementById('emcOrg').checked){
                     snapInObject.firstName="Bishav",
                     snapInObject.lastName= "Rajbhandari",
-                    snapInObject.email="bnr@dell.com",
+                    snapInObject.email="BNr@dell.com",
                     snapInObject.phoneNo="1234567",
                     snapInObject.chatSeverity = "S2",
                     snapInObject.cpid = "2K8V821",//snapInObject.serviceTag,
@@ -879,12 +931,14 @@
           }
 
         //eSupportCode
-        function startSprinklrChatBot(sprinklrChatBotVal){
+        function canSupportSprinklr(sprinklrChatBotVal){
+           // if(document.getElementById('routSprinklrBot').checked){
+             //   routSprinklrBotScreen();
             if (confirm("Do you want start Sprinklr Chat Bot?")){
                 setTimeout(function(){ 
                     if (confirm("Click on OK to trasnfer to an agent, cancel to successfully end the chat.")){
                         var sprinklrChatBotObject = {
-                            caseNumber: "50711843"//"50711675"
+                            caseNumber: "50711422"//"50711843"//"50711675"
                         }
                             triggerSnapinPostSprinkler(sprinklrChatBotObject);
                     } else
@@ -895,6 +949,10 @@
                 return false; 
             }
             return false; 
+        }
+
+        function routSprinklrBotScreen(){
+            return true;
         }
     </script>
     
