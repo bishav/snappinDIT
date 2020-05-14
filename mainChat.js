@@ -845,10 +845,10 @@ function pushValsToSnapinInit(snapInObject){
                             if ("isEmcProduct" in snapInObject && snapInObject.isEmcProduct && "chatSeverity" in snapInObject) {//FY21-0502: DEFECT 8455167 value not mapping to chatSeverity for EMC [START]
                                 embedded_svc.settings.extraPrechatFormDetails[i].value = snapInObject.chatSeverity + " " + snapInObject.issueVal;
                             }else                                                                                               //FY21-0502: DEFECT 8455167 value not mapping to chatSeverity for EMC [END]
-                                embedded_svc.settings.extraPrechatFormDetails[i].value = snapInObject.issueVal;
+                                embedded_svc.settings.extraPrechatFormDetails[i].value = getTechSupportSubject(snapInObject); //FY21-0502: DEFECT 8624995 Check for DDS
                         break;
                     case "Issue_Key__c":
-                            embedded_svc.settings.extraPrechatFormDetails[i].value = snapInObject.issueType;
+                            embedded_svc.settings.extraPrechatFormDetails[i].value = getIssueTypeKey(snapInObject); //FY21-0502: DEFECT 8624995 Check for DDS
                             break;
                     case "Service_Tag__c":
                             if ("isEmcProduct" in snapInObject && snapInObject.isEmcProduct && "cpid" in snapInObject) {//FY21-0502: DEFECT 8455167 value not mapping to CPID for EMC [START]
@@ -1072,9 +1072,9 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
     }, {
         "entityFieldMaps": [{
             "doCreate": false,
-            "doFind": true,
+            "doFind": false,//FY21-0502: Tech DEFECT: Make doFind =False
             "fieldName": "Issue_Description__c",
-            "isExactMatch": true,
+            //"isExactMatch": true,//FY21-0502: Tech DEFECT: remove Exact Match
             "label": translatedLabels.issueDesc
         }
         ],

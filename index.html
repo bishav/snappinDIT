@@ -139,6 +139,24 @@
             </div>
         </div>
     </div>
+    <div id="sprinklrBotEle" style="display:none; background: #00447C;color: #fff;width: 320px;max-height: 720px;border-radius: 8px 8px 0 0;position: fixed;left: auto;bottom: 0;right: 20px;margin: 0;height: 90%;box-shadow: 2px 2px 20px rgba(0,0,0,.2);z-index: 15;text-align: center;overflow: hidden;max-width: 40em;pointer-events: all;">
+        <dev>
+           <h5 style="padding: 10px;background: #000;">SprinklrBot</h5>
+           <button id="closeSprinklrChat" onclick="endSprinklrChatBotSuccessfully()" class="" style="position: absolute;right: 7px;top: 8px;margin: 0px;padding: 7px;background: #333;border: none;cursor: pointer;border-radius: 6px;">
+              <span class="cusPreChat-assistiveText">Close chat</span> 
+              <span class="cusPreChat-x-small cusPreChat-embeddedServiceIcon">
+                 <svg viewBox="0 0 100 100" data-key="close" aria-hidden="true" focusable="false">
+                    <path d="M65.577 53.73l27.5-27.71c1.27-1.27 1.27-3.174 0-4.445l-4.23-4.44c-1.272-1.27-3.175-1.27-4.445 0L56.694 44.847c-.847.845-2.115.845-2.96 0L26.018 16.922c-1.27-1.27-3.174-1.27-4.445 0l-4.44 4.442c-1.27 1.27-1.27 3.174 0 4.444l27.71 27.71c.846.846.846 2.116 0 2.962L16.923 84.403c-1.27 1.27-1.27 3.174 0 4.444l4.442 4.442c1.27 1.268 3.174 1.268 4.444 0l27.71-27.713c.846-.847 2.116-.847 2.962 0L84.19 93.29c1.27 1.268 3.174 1.268 4.445 0l4.44-4.445c1.27-1.268 1.27-3.17 0-4.44l-27.5-27.712c-.847-.847-.847-2.115 0-2.96z"> </path>
+                 </svg>
+              </span>
+           </button>
+        </dev>
+        <div class="form-group" style="margin: 28px;height: 152px;">
+           <div><label for="serviceTag" style="font-size: 13px;">Enter Case Number created by Sprinklr Bot</label></div>
+           <input type="text" class="form-control" id="caseNumberInputField" aria-describedby="caseNumberInputField" placeholder="Required if you click on Transfer" value="">
+           <button type="button" id="transfertoAgentViaSprinklr" class="btn btn-primary" onclick="transfertoAgentViaSprinklr()" style="display: block;float: left;margin-top: 20px;width: 100%;">Transfer To Agent</button>
+        </div>
+     </div>
 
     
     
@@ -157,6 +175,7 @@
                 <div class="input-group">
                     <select class="custom-select" onChange="changeEnv()" id="environmentSelection">
                     <option selected>Choose your preferred environment</option>
+                    <option value="FY21_0602_DVE">FY21_0602_DVE</option>
                     <option value="S1">S1</option>
                     <option value="S2">S2</option>
                     <option value="S4">S4</option>
@@ -168,6 +187,55 @@
                     <div class="input-group-append">
                     <button style="background-color: #007bff; color:#fff" class="btn btn-outline-primary" type="button" onclick="updateEnvCookie()">Update Now</button>
                     </div>
+                </div>
+            </div>
+                <div class="modal-body config" id="FY21_0602_DVE" style="display:none">
+                <div class="form-group">
+                    <h5>FY21_0602_DVE</h5>
+                </div>
+                <div class="form-group">
+                    <label for="usr">baseLiveAgentContentURL:</label>
+                    <input type="text" class="form-control" data-id="baseLiveAgentContentURL" value="https://c.la1-c1cs-ia2.salesforceliveagent.com/content">
+                </div>
+				<div class="form-group">
+                    <label for="usr">deploymentId:</label>
+                    <input type="text" class="form-control" data-id="deploymentId" value="5720b000000GneC">
+                </div>
+                <div class="form-group">
+                    <label for="usr">buttonId:</label>
+                    <input type="text" class="form-control" data-id="buttonId" value="5730b000000CbhT">
+                </div>
+				<div class="form-group">
+                    <label for="usr">baseLiveAgentURL:</label>
+                    <input type="text" class="form-control" data-id="baseLiveAgentURL" value="https://d.la1-c1cs-ia2.salesforceliveagent.com/chat">
+                </div>
+				<div class="form-group">
+                    <label for="usr">LiveAgentDevName:</label>
+                    <input type="text" class="form-control" data-id="LiveAgentDevName" value="EmbeddedServiceLiveAgent_Parent04I0b000000blJJEAY_16520d15b68">
+                </div>
+				<div class="form-group">
+                    <label for="usr">componentName:</label>
+                    <input type="text" class="form-control" data-id="componentName" value="Snap_Ins_Chat_Deployment">
+                </div>
+				<div class="form-group">
+                    <label for="usr">organizationId:</label>
+                    <input type="text" class="form-control" data-id="organizationId" value="00D17000000DmNu">
+                </div>
+				<div class="form-group">
+                    <label for="usr">serviceForceURL:</label>
+                    <input type="text" class="form-control" data-id="serviceForceURL" value="https://service.force.com">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInInitURL:</label>
+                    <input type="text" class="form-control" data-id="snapInInitURL" value="https://dellservices--0602ccks.my.salesforce.com">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInJs:</label>
+                    <input type="text" class="form-control" data-id="snapInJs" value="https://dellservices--SIT2.my.salesforce.com/embeddedservice/5.0/esw.min.js">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInLAURL:</label>
+                    <input type="text" class="form-control" data-id="snapInLAURL" value="https://0602ccks-dellservices.cs22.force.com/LASnapIn">
                 </div>
             </div>
               <div class="modal-body config" id="S1" style="display:none">
@@ -932,27 +1000,26 @@
 
         //eSupportCode
         function canSupportSprinklr(sprinklrChatBotVal){
-           // if(document.getElementById('routSprinklrBot').checked){
-             //   routSprinklrBotScreen();
-            if (confirm("Do you want start Sprinklr Chat Bot?")){
-                setTimeout(function(){ 
-                    if (confirm("Click on OK to trasnfer to an agent, cancel to successfully end the chat.")){
-                        var sprinklrChatBotObject = {
-                            caseNumber: "50711422"//"50711843"//"50711675"
-                        }
-                            triggerSnapinPostSprinkler(sprinklrChatBotObject);
-                    } else
-                        sprinklerChatEnded();
-                }, 5000);
+            if(document.getElementById('routSprinklrBot').checked){
                 return true;
-            }else{
-                return false; 
             }
             return false; 
         }
 
-        function routSprinklrBotScreen(){
-            return true;
+        function startSprinklr(){
+            document.getElementById('sprinklrBotEle').style.display = "block";
+        }
+        function transfertoAgentViaSprinklr(){
+            var caseNumberInputField = document.getElementById('caseNumberInputField').value;
+            var sprinklrChatBotObject = {
+                caseNumber: caseNumberInputField//"50711422"//"50711843"//"50711675"
+                }
+            document.getElementById('sprinklrBotEle').style.display = "none";
+            triggerSnapinPostSprinkler(sprinklrChatBotObject);
+        }
+        function endSprinklrChatBotSuccessfully(){
+            document.getElementById('sprinklrBotEle').style.display = "none";
+            sprinklerChatEnded();
         }
     </script>
     
