@@ -92,7 +92,8 @@
                         <span id="selectLanguage" style="float: right;">
                             <span>Select Enveironment</span>
                                 <select id="envSelect">
-                                    <option>FY21-0602-DEV</option> 
+                                    <option>FY21-0602-DEV</option>
+                                    <option>GE2 </option>
                                     <option>DEV1</option> 
                                     <option>DEV3</option>
                                     <option>SIT1</option>
@@ -203,10 +204,9 @@
             
             var env = $("#envSelect").val();
             var chatBotObject;
-            //alert(Application_Context);
+
             if(env === "DEV3")
             chatBotObject = {
-             //DEV3 careBOT
                chatBotInitURL: 'https://dellservices--dev3.my.salesforce.com',
                chatBotLAURL: 'https://dev3-dellservices.cs2.force.com/LASnapIn',
                organizationId: '00DR00000020Cae',
@@ -214,74 +214,10 @@
                deploymentId: '5720b000000GneC',
                baseLiveAgentURL: 'https://d.la1-c1cs-ia2.salesforceliveagent.com/chat',
                serviceForceURL: "https://service.force.com",
-               snapInJs: 'https://dellservices--dev3.my.salesforce.com/embeddedservice/5.0/esw.min.js', 
-
-/*
-                //SIT2
-              
-                chatBotInitURL: 'https://dellservices--SIT2.my.salesforce.com',
-               chatBotLAURL: 'https://sit2-dellservices.cs36.force.com/LASnapIn',
-               organizationId: '00D2h0000008aOa',
-               componentName: 'DellChatBot',
-               baseLiveAgentContentURL: 'https://c.la3-c1cs-ph2.salesforceliveagent.com/content',
-               deploymentId: '5720b000000GneC',
-               buttonId: '5730b000000Gnxf',
-               baseLiveAgentURL: 'https://d.la3-c1cs-ph2.salesforceliveagent.com/chat',
-               LiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I0b000000blJYEAY_168ebc6d15d',
-               serviceForceURL: "https://service.force.com",
-               snapInJs: 'https://dellservices--SIT2.my.salesforce.com/embeddedservice/5.0/esw.min.js', 
-
- */ 
-
-/*
-  //DEV1 
-                 chatBotInitURL:  'https://dellservices--dev1.my.salesforce.com',
-                 chatBotLAURL:  'https://dev1-dellservices.cs4.force.com/LASnapIn',
-                 organizationId: '00DP0000003pGDL',
-                 baseLiveAgentContentURL: 'https://c.la1-c1cs-ia2.salesforceliveagent.com/content',
-                 deploymentId: '5720b000000GneC',
-                 baseLiveAgentURL: 'https://d.la1-c1cs-ia2.salesforceliveagent.com/chat',  
-                 serviceForceURL: "https://service.force.com",
-                 snapInJs: 'https://dellservices--dev1.my.salesforce.com/embeddedservice/5.0/esw.min.js', 
-*/
-            
- 
-              me  : 'Bishav',
-                domainName: "localhost",
-                Kb_Article:'Check this One',
-                First_Name  : 'sujay',	
-                Last_Name:'jp',	
-                Phone:'9611329319',	
-                Email:'sujay_jp@dell.com',
-                product_Model:'Latitude',
-                issue_Description:'Slow PC',
-                warranty_Details:'',
-                windows_Version:'',
-                BIOS_Version:'',
-                recent_Software_Updated_Date:'',
-                is_External_Peripherals_Connected:'',
-                is_SA_Diagnostic_Passed:'',
-                is_Error_Related_HWorSW:'',
-                is_BIOSandDrivers_Updated:'',
-                is_AnyAntivirus_Installed:'',
-                is_Related_Heat_Issue:'',
-                is_Warranty_Covered:'',
-                is_HardDrive_Test_Passed:'',
-                is_Memory_Test_Passed:'',
-                is_MotherBoard_Test_Passed:'',
-                is_HDD_IDE:'',
-                last_time_scan_run:'',
-                isDsdnstalled: '',
-                isHwAlert:'',
-                isSwAlert:'',
-
-               applicationContext: Application_Context,
-               issue_Description: issueVal,
-               language: botLang
+               snapInJs: 'https://dellservices--dev3.my.salesforce.com/embeddedservice/5.0/esw.min.js'
             }
             else if (env === "DEV1") 
-            chatBotObject = {
-                    //DEV1 
+            chatBotObject = { 
                     chatBotInitURL:  'https://dellservices--dev1.my.salesforce.com',
                     chatBotLAURL:  'https://dev1-dellservices.cs4.force.com/LASnapIn',
                     organizationId: '00DP0000003pGDL',
@@ -289,46 +225,10 @@
                     deploymentId: '5720b000000GneC',
                     baseLiveAgentURL: 'https://d.la1-c1cs-ia2.salesforceliveagent.com/chat',  
                     serviceForceURL: "https://service.force.com",
-                    snapInJs: 'https://dellservices--dev1.my.salesforce.com/embeddedservice/5.0/esw.min.js', 
-               
-    
-                 me  : 'Bishav',
-                   domainName: "localhost",
-                   Kb_Article:'Check this One',
-                   First_Name  : 'Bishav',	
-                   Last_Name:'Nr',	
-                   Phone:'12345',	
-                   Email:'bnr@dell.com',
-                   product_Model:'Latitude',
-                   issue_Description:'Slow PC',
-                   warranty_Details:'',
-                   windows_Version:'',
-                   BIOS_Version:'',
-                   recent_Software_Updated_Date:'',
-                   is_External_Peripherals_Connected:'',
-                   is_SA_Diagnostic_Passed:'',
-                   is_Error_Related_HWorSW:'',
-                   is_BIOSandDrivers_Updated:'',
-                   is_AnyAntivirus_Installed:'',
-                   is_Related_Heat_Issue:'',
-                   is_Warranty_Covered:'',
-                   is_HardDrive_Test_Passed:'',
-                   is_Memory_Test_Passed:'',
-                   is_MotherBoard_Test_Passed:'',
-                   is_HDD_IDE:'',
-                   last_time_scan_run:'',
-                   isDsdnstalled: '',
-                   isHwAlert:'',
-                   isSwAlert:'',
-   
-                  applicationContext: Application_Context,
-                  issue_Description: issueVal,
-                  language: botLang
+                    snapInJs: 'https://dellservices--dev1.my.salesforce.com/embeddedservice/5.0/esw.min.js'
                }
             else if(env === "SIT2")
             chatBotObject = {
-                //SIT2 
-
                 chatBotInitURL: 'https://dellservices--SIT2.my.salesforce.com',
                 chatBotLAURL: 'https://sit2-dellservices.cs36.force.com/LASnapIn',
                 organizationId: '00D2h0000008aOa',
@@ -336,41 +236,7 @@
                 deploymentId: '5720b000000GneC',
                 baseLiveAgentURL: 'https://d.la3-c1cs-ph2.salesforceliveagent.com/chat',
                 serviceForceURL: "https://service.force.com",
-                snapInJs: 'https://dellservices--SIT2.my.salesforce.com/embeddedservice/5.0/esw.min.js',
-           
-
-               me  : 'Bishav',
-               domainName: "localhost",
-               Kb_Article:'Check this One',
-               First_Name  : 'sujay',	
-               Last_Name:'jp',	
-               Phone:'9611329319',	
-               Email:'sujay_jp@dell.com',
-               product_Model:'Latitude',
-               issue_Description:'Slow PC',
-               warranty_Details:'',
-               windows_Version:'',
-               BIOS_Version:'',
-               recent_Software_Updated_Date:'',
-               is_External_Peripherals_Connected:'',
-               is_SA_Diagnostic_Passed:'',
-               is_Error_Related_HWorSW:'',
-               is_BIOSandDrivers_Updated:'',
-               is_AnyAntivirus_Installed:'',
-               is_Related_Heat_Issue:'',
-               is_Warranty_Covered:'',
-               is_HardDrive_Test_Passed:'',
-               is_Memory_Test_Passed:'',
-               is_MotherBoard_Test_Passed:'',
-               is_HDD_IDE:'',
-               last_time_scan_run:'',
-               isDsdnstalled: '',
-               isHwAlert:'',
-               isSwAlert:'',
-
-              applicationContext: Application_Context,
-              issue_Description: issueVal,
-              language: botLang
+                snapInJs: 'https://dellservices--SIT2.my.salesforce.com/embeddedservice/5.0/esw.min.js'
            }  
            else if(env === "FY21-0602-DEV")
             chatBotObject = {
@@ -381,42 +247,50 @@
                 deploymentId: '5720b000000GneC',
                 baseLiveAgentURL: 'https://d.la1-c1cs-ia2.salesforceliveagent.com/chat',
                 serviceForceURL: "https://service.force.com",
-                snapInJs: 'https://dellservices--SIT2.my.salesforce.com/embeddedservice/5.0/esw.min.js',
-           
-
-               me  : 'Bishav',
-               domainName: "localhost",
-               Kb_Article:'Check this One',
-               First_Name  : 'sujay',	
-               Last_Name:'jp',	
-               Phone:'9611329319',	
-               Email:'sujay_jp@dell.com',
-               product_Model:'Latitude',
-               issue_Description:'Slow PC',
-               warranty_Details:'',
-               windows_Version:'',
-               BIOS_Version:'',
-               recent_Software_Updated_Date:'',
-               is_External_Peripherals_Connected:'',
-               is_SA_Diagnostic_Passed:'',
-               is_Error_Related_HWorSW:'',
-               is_BIOSandDrivers_Updated:'',
-               is_AnyAntivirus_Installed:'',
-               is_Related_Heat_Issue:'',
-               is_Warranty_Covered:'',
-               is_HardDrive_Test_Passed:'',
-               is_Memory_Test_Passed:'',
-               is_MotherBoard_Test_Passed:'',
-               is_HDD_IDE:'',
-               last_time_scan_run:'',
-               isDsdnstalled: '',
-               isHwAlert:'',
-               isSwAlert:'',
-
-              applicationContext: Application_Context,
-              issue_Description: issueVal,
-              language: botLang
-           } 
+                snapInJs: 'https://dellservices--0602ccks.my.salesforce.com/embeddedservice/5.0/esw.min.js'     
+           }
+           else if(env === "GE2")
+           chatBotObject = {
+               chatBotInitURL: 'https://dellservices--ge2.my.salesforce.com',
+               chatBotLAURL: 'https://0602ccks-dellservices.cs22.force.com/LASnapIn',
+               organizationId: '00D170000004F8A',
+               baseLiveAgentContentURL: 'https://c.la1-c1cs-ia2.salesforceliveagent.com/content',
+               deploymentId: '5720b000000GneC',
+               baseLiveAgentURL: 'https://d.la1-c1cs-ia2.salesforceliveagent.com/chat',
+               serviceForceURL: "https://service.force.com",
+               snapInJs: 'https://dellservices--ge2.my.salesforce.com/embeddedservice/5.0/esw.min.js'     
+          }
+           chatBotObject.me  = 'Bishav',
+           chatBotObject.domainName= "localhost",
+           chatBotObject.Kb_Article='Check this One',
+           chatBotObject.First_Name  = 'Bishav',	
+           chatBotObject.Last_Name='NR',	
+           chatBotObject.Phone='9611329319',	
+           chatBotObject.Email='bnr@dell.com',
+           chatBotObject.product_Model='Latitude',
+           chatBotObject.issue_Description='Slow PC',
+           chatBotObject.warranty_Details='',
+           chatBotObject.windows_Version='',
+           chatBotObject.BIOS_Version='',
+           chatBotObject.recent_Software_Updated_Date='',
+           chatBotObject.is_External_Peripherals_Connected='',
+           chatBotObject.is_SA_Diagnostic_Passed='',
+           chatBotObject.is_Error_Related_HWorSW='',
+           chatBotObject.is_BIOSandDrivers_Updated='',
+           chatBotObject.is_AnyAntivirus_Installed='',
+           chatBotObject.is_Related_Heat_Issue='',
+           chatBotObject.is_Warranty_Covered='',
+           chatBotObject.is_HardDrive_Test_Passed='',
+           chatBotObject.is_Memory_Test_Passed='',
+           chatBotObject.is_MotherBoard_Test_Passed='',
+           chatBotObject.is_HDD_IDE='',
+           chatBotObject.last_time_scan_run='',
+           chatBotObject.isDsdnstalled= '',
+           chatBotObject.isHwAlert='',
+           chatBotObject.isSwAlert='',
+           chatBotObject.applicationContext= Application_Context,
+           chatBotObject.issue_Description= issueVal,
+           chatBotObject.language= botLang,
            chatBotObject.Agent_QueueName="5730b00000097Kk";//"5730b00000097Kk";//"5730b000000Gnxf";
            if (issueVal === "CARE Bot"){
                 chatBotObject.CARE_Chat_Order_Number = mainInputVal;
@@ -425,8 +299,10 @@
                 if (env === "SIT2"){
                     chatBotObject.buttonId = '5732h0000008OtZ';
                     chatBotObject.LiveAgentDevName = 'EmbeddedServiceLiveAgent_Parent04I2h0000004CBYEA2_16fa30a6c99';
-                }
-                else{
+                }else if(env === "GE2"){
+                    chatBotObject.buttonId = '5731P000000TSXF';
+                    chatBotObject.LiveAgentDevName = 'EmbeddedServiceLiveAgent_Parent04I2R000000PAwzUAG_1704330fc3e';
+                } else{
                     chatBotObject.buttonId = '5731P000000TScM';
                     chatBotObject.LiveAgentDevName = 'EmbeddedServiceLiveAgent_Parent04I2R000000PAwzUAG_1704330fc3e';
                 }

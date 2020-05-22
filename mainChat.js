@@ -139,6 +139,7 @@ function appendCustPreChatSnapinDom(snapInObject, preChatlableObject) {
         custPreFormShowIssueDetailsCharRemainingOnKeyUp(preChatlableObject);
         custPreChatKeypressFieldValidation(preChatlableObject);
         custPreChatShowAdditionalDetailsInUi(snapInObject, preChatlableObject);
+        snapInObject = create_snapinChatUuid(snapInObject); //FY21-0602:[Sprinklr Chat Bot] Reporting Story:  create UUID for reporting
         document.getElementById("cusPreChat-startChat").addEventListener("click", function () { custPrechatInitiateChat(snapInObject, preChatlableObject) });
         document.getElementById("cusPreChat-minimize-btn").addEventListener("click", function () { 
             callDellmetricsTrack("890.220.007", "SNAPIN: Minimize"); //FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn
@@ -751,7 +752,7 @@ function custPrechatInitiateChat(snapInObject, preChatlableObject) {
         removecustFormValues();
         custPreFormShowIssueDetailsCharRemaining(preChatlableObject);
         snapInObject = sendGlobalSnapinObjToJson();
-        ////FY21-0502:[Sprinklr Chat Bot] Defect 8520090: Check for agent avilability after prechat form before connecting to sprinklr Bot [START]
+        //FY21-0502:[Sprinklr Chat Bot] Defect 8520090: Check for agent avilability after prechat form before connecting to sprinklr Bot [START]
         if(checkSnapinQueueStatus(snapInObject) == 1){
             if(!checkSprinklrChatBot(snapInObject)){//FY21-0502:[Sprinklr Chat Bot] If Normal snapIn chat has to open
                 connectToSnapInAgent(snapInObject);////FY21-0502:[Sprinklr Chat Bot] New reusable methode to connect to snapin Agent
@@ -761,7 +762,7 @@ function custPrechatInitiateChat(snapInObject, preChatlableObject) {
             }
         }else{
             agentsOfflinePostChatForm();
-        }////FY21-0502:[Sprinklr Chat Bot] Defect 8520090: Check for agent avilability after prechat form before connecting to sprinklr Bot [END]
+        }//FY21-0502:[Sprinklr Chat Bot] Defect 8520090: Check for agent avilability after prechat form before connecting to sprinklr Bot [END]
     }
 
     CoveoPopoverDispose();
@@ -833,6 +834,32 @@ function connectToSnapInAgent(snapInObject){
         agentsOfflinePostChatForm(); //FY20-1102 Avilability and Business Hr Chack
 }
 //FY21-0502:[Sprinklr Chat Bot] Connect to and Agent[END]
+
+//FY21-0602:[Sprinklr Chat Bot] Reporting Story: create UUID for reporting [START]
+function create_snapinChatUuid(snapInObject) {
+    var dt = new Date().getTime();
+    var uuid = 'xxxxxxxx-xxxx-5xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        var r = (dt + Math.random() * 18) % 18 | 0;
+        dt = Math.floor(dt / 18);
+        return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(18);
+    });
+	snapInObject.uuid = uuid;
+	saveGlobalSnapinObjToSession(snapInObject);
+	return snapInObject;
+}
+function append_snapinChatUuid(msg){
+    var snapInObject = sendGlobalSnapinObjToJson();
+    if (snapInObject && 'uuid' in snapInObject){
+        var addUdid = "|UUID:"+ snapInObject.uuid;
+        var msgMaxChar = 100 - addUdid.length;
+        if(msgMaxChar < msg.length){
+            msg.slice(0, msgMaxChar);
+        }
+        msg = msg + addUdid;
+    }
+    return msg;
+}
+//FY21-0602:[Sprinklr Chat Bot] Reporting Story:  create UUID for reporting [END]
 
 //FY21-0502:[DEFECT 7917426] pushing new Values to SFDC if its changed[START]
 function pushValsToSnapinInit(snapInObject){
@@ -1072,9 +1099,9 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
     }, {
         "entityFieldMaps": [{
             "doCreate": false,
-            "doFind": false,//FY21-0502: Tech DEFECT: Make doFind =False
+            "doFind": true,
             "fieldName": "Issue_Description__c",
-            //"isExactMatch": true,//FY21-0502: Tech DEFECT: remove Exact Match
+            "isExactMatch": true,
             "label": translatedLabels.issueDesc
         }
         ],
@@ -1599,9 +1626,10 @@ function callDellmetricsTrack(propValue, message) {
     if (typeof (dellmetricsTrack) == "function") {
         if (dellmetricsTrack) {
             if (trackevent) {
-                if (message)
+                if (message){
+                    message = append_snapinChatUuid(message);//FY21-0602:[Sprinklr Chat Bot] Reporting Story:  Append UUID for reporting
                     dellmetricsTrack(propValue, message);
-                else
+                }else
                     dellmetricsTrack(propValue);
             } else {
                 trackevent = true;
