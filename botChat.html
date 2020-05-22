@@ -60,7 +60,7 @@
                             <label for="exampleFormControlTextarea1">Description</label>
                             <textarea class="form-control" id="description-textarea" rows="5"></textarea>
                         </div> -->
-                        <div class="dropdown hide">
+                        <div class="dropdown">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Select Issue Type
                             </button>
@@ -149,15 +149,6 @@
             }
         });
 
-        function showIssue() {
-            if( $('#serviceTag').val().length != 0 ) {
-                $('.dropdown').removeClass('hide');
-            } else {
-                $('.dropdown').addClass('hide');
-                $('#dropdownMenuButton').text('Select Issue Type');
-                $('#contact-row').addClass("hide");
-            }
-        }
         
       
   
