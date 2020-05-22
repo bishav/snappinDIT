@@ -117,33 +117,7 @@
    <script src="botChatjS.js"></script>
     <script>
 
-        (function() {
-            if( window.location.href.split("?").length > 1 ) {
-                var urlParameters = window.location.href.split("?")[1];
-                var serviceTag = urlParameters.split("&")[0].split("=")[1].toLowerCase();
-                var srNumber = urlParameters.split("&")[1].split("=")[1].toLowerCase();
-                var FirstName = urlParameters.split("&")[2].split("=")[1].toLowerCase();
-                var lastName = urlParameters.split("&")[3].split("=")[1].toLowerCase();
-                if( serviceTag === '10cy091' ) {
-                    resumeChat("5733B0000004D95", "00Dm0000000DQXs", serviceTag, srNumber, FirstName, lastName, 'liveAgent');
-                    $('.resume-chat-msg').removeClass('hide');
-                    $('.new-chat').addClass('hide');
-                } else {
-                    if( serviceTag != '' ) {
-                        //DIT4
-                        resumeChat("5730b000000CbhY", "572Z000000000KC", serviceTag, srNumber, FirstName, lastName, 'snapIn');
-                       //DEV3
-                       // resumeChat("573m00000004DCd", "572m00000004Cl7", serviceTag, srNumber, FirstName, lastName, 'snapIn');
-                        eleExist('#helpButtonSpan > .message', chatClick);
-                    }
-                    $('.resume-chat-msg').removeClass('hide');
-                    $('.new-chat').addClass('hide');
-                }
-            } else {
-                $('.resume-chat-msg').addClass('hide');
-                $('.new-chat').removeClass('hide');
-            }
-        })();
+       
 
         $('#issueDropdown > a').click(function() {
             var val = $(this).text();
@@ -322,17 +296,7 @@
            // console.log(chatBotObject);
             //debugger;
             triggerChatBot(chatBotObject);
-        }
-            function liveAgent() {
-            var liveAgentObject = {
-                deploymentUrl: 'https://c.la1-c1cs-dfw.salesforceliveagent.com/content/g/js/45.0/deployment.js',
-                liveAgentInitUrl: 'https://d.la1-c1cs-dfw.salesforceliveagent.com/chat',
-                buttonId: '5730b000000Gnxf',
-                deploymentId: '5720b000000GneC',
-                organizationId: '00D5B00000096d9'
-            }
-            //initLiveAgent(liveAgentObject);
-        }        
+        }     
 
         // calling live agent
         liveAgent()
