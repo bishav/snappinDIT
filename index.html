@@ -175,7 +175,8 @@
                 <div class="input-group">
                     <select class="custom-select" onChange="changeEnv()" id="environmentSelection">
                     <option selected>Choose your preferred environment</option>
-                    <option value="FY21_0602_DVE">FY21_0602_DVE</option>
+                    <option value="FY21_0803_DEV">FY21_0803_DEV</option>
+                    <option value="FY21_0602_DEV">FY21_0602_DEV</option>
                     <option value="GE2">GE2</option>
                     <option value="S1">S1</option>
                     <option value="S2">S2</option>
@@ -190,9 +191,58 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-body config" id="FY21_0602_DVE" style="display:none">
+            <div class="modal-body config" id="FY21_0803_DEV" style="display:none">
                 <div class="form-group">
-                    <h5>FY21_0602_DVE</h5>
+                    <h5>FY21_0803_DEV</h5>
+                </div>
+                <div class="form-group">
+                    <label for="usr">baseLiveAgentContentURL:</label>
+                    <input type="text" class="form-control" data-id="baseLiveAgentContentURL" value="https://c.la1-c1cs-ia2.salesforceliveagent.com/content">
+                </div>
+				<div class="form-group">
+                    <label for="usr">deploymentId:</label>
+                    <input type="text" class="form-control" data-id="deploymentId" value="5720b000000GneC">
+                </div>
+                <div class="form-group">
+                    <label for="usr">buttonId:</label>
+                    <input type="text" class="form-control" data-id="buttonId" value="5730b000000CbhT">
+                </div>
+				<div class="form-group">
+                    <label for="usr">baseLiveAgentURL:</label>
+                    <input type="text" class="form-control" data-id="baseLiveAgentURL" value="https://d.la1-c1cs-ia2.salesforceliveagent.com/chat">
+                </div>
+				<div class="form-group">
+                    <label for="usr">LiveAgentDevName:</label>
+                    <input type="text" class="form-control" data-id="LiveAgentDevName" value="EmbeddedServiceLiveAgent_Parent04I0b000000blJJEAY_16520d15b68">
+                </div>
+				<div class="form-group">
+                    <label for="usr">componentName:</label>
+                    <input type="text" class="form-control" data-id="componentName" value="Snap_Ins_Chat_Deployment">
+                </div>
+				<div class="form-group">
+                    <label for="usr">organizationId:</label>
+                    <input type="text" class="form-control" data-id="organizationId" value="00D550000001KdZ">
+                </div>
+				<div class="form-group">
+                    <label for="usr">serviceForceURL:</label>
+                    <input type="text" class="form-control" data-id="serviceForceURL" value="https://service.force.com">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInInitURL:</label>
+                    <input type="text" class="form-control" data-id="snapInInitURL" value="https://dellservices--0803ccks.my.salesforce.com">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInJs:</label>
+                    <input type="text" class="form-control" data-id="snapInJs" value="https://dellservices--0803ccks.my.salesforce.com/embeddedservice/5.0/esw.min.js">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInLAURL:</label>
+                    <input type="text" class="form-control" data-id="snapInLAURL" value="https://0803ccks-dellservices.cs41.force.com/LASnapIn">
+                </div>
+            </div>
+            <div class="modal-body config" id="FY21_0602_DEV" style="display:none">
+                <div class="form-group">
+                    <h5>FY21_0602_DEV</h5>
                 </div>
                 <div class="form-group">
                     <label for="usr">baseLiveAgentContentURL:</label>
