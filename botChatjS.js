@@ -2194,7 +2194,7 @@ function initiateChatBot(chatBotObject) {
 function appendBuidForCareBot(chatBotObject){
     var orderNumber=null;
     if ("buid" in chatBotObject && chatBotObject.buid){
-        orderNumber = orderSnapinObject.CARE_Chat_Order_Number+'-'+chatBotObject.buid;
+        orderNumber = chatBotObject.CARE_Chat_Order_Number+'-'+chatBotObject.buid;
     }
     else{
         orderNumber = chatBotObject.CARE_Chat_Order_Number;
