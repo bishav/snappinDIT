@@ -141,13 +141,13 @@ function appendCustPreChatSnapinDom(snapInObject, preChatlableObject) {
         custPreChatShowAdditionalDetailsInUi(snapInObject, preChatlableObject);
         snapInObject = create_snapinChatUuid(snapInObject); //FY21-0602:[Sprinklr Chat Bot] Reporting Story:  create UUID for reporting
         document.getElementById("cusPreChat-startChat").addEventListener("click", function () { custPrechatInitiateChat(snapInObject, preChatlableObject) });
-        document.getElementById("cusPreChat-minimize-btn").addEventListener("click", function () { 
+        document.getElementById("cusPreChat-minimize-btn").addEventListener("click", function () {
             callDellmetricsTrack("890.220.007", "SNAPIN: Minimize"); //FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn
             minimizeCustPrechat();
         });
         document.getElementById("cusPreChat-close-btn").addEventListener("click", function () {
             callDellmetricsTrack("890.220.006", "SNAPIN: Close (x)"); //FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn
-            closeCustPrechat(preChatlableObject); 
+            closeCustPrechat(preChatlableObject);
         });
         document.getElementById("cusPreChat-helpButtonEnabled").addEventListener("click", function () {
             callDellmetricsTrack("890.220.008", "SNAPIN: Maximize"); //FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn
@@ -176,7 +176,7 @@ function appendCustPreChatSnapinDom(snapInObject, preChatlableObject) {
 
     }
     prechatSettingForEmc();//STORY 7193456: FY201101
-    callDellmetricsTrack("890.220.010","SNAPIN: Window Load"); //FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn
+    callDellmetricsTrack("890.220.010", "SNAPIN: Window Load"); //FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn
 }
 
 //STORY 7193456: FY201101[START]
@@ -539,12 +539,12 @@ function custPreFormValidation(preChatlableObject) {
     return acceptForm;
 }
 //FY21-0202 DEFECT 7980969 [START]
-function getChatServiceTag(label, val){
-    if(val && val != null)
+function getChatServiceTag(label, val) {
+    if (val && val != null)
         return '<div><b>' + label + ':</b> ' + val + '</div>';
     else
         return '';
-    }
+}
 //FY21-0202 DEFECT 7980969 [END]
 
 //FY20-1102 DEFECT 7534877 [START]		
@@ -743,7 +743,7 @@ function snapinChatInitiatedState(booleanValue) {
 }
 function custPrechatInitiateChat(snapInObject, preChatlableObject) {
     if (custPreFormValidation(preChatlableObject)) {
-        callDellmetricsTrack("890.220.002","SNAPIN: Submit"); //FY20-1101 STORY 7128491 //FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn
+        callDellmetricsTrack("890.220.002", "SNAPIN: Submit"); //FY20-1101 STORY 7128491 //FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn
         snapInObject = addCustFormDetailsTo(snapInObject);
         snapInObject.sprinklrChatbotRouted = false;//FY21-0502:[Sprinklr Chat Bot] insure sprinklr routed is false in the start
         saveGlobalSnapinObjToSession(snapInObject);
@@ -753,14 +753,14 @@ function custPrechatInitiateChat(snapInObject, preChatlableObject) {
         custPreFormShowIssueDetailsCharRemaining(preChatlableObject);
         snapInObject = sendGlobalSnapinObjToJson();
         //FY21-0502:[Sprinklr Chat Bot] Defect 8520090: Check for agent avilability after prechat form before connecting to sprinklr Bot [START]
-        if(checkSnapinQueueStatus(snapInObject) == 1){
-            if(!checkSprinklrChatBot(snapInObject)){//FY21-0502:[Sprinklr Chat Bot] If Normal snapIn chat has to open
+        if (checkSnapinQueueStatus(snapInObject) == 1) {
+            if (!checkSprinklrChatBot(snapInObject)) {//FY21-0502:[Sprinklr Chat Bot] If Normal snapIn chat has to open
                 connectToSnapInAgent(snapInObject);////FY21-0502:[Sprinklr Chat Bot] New reusable methode to connect to snapin Agent
-            }else{//FY21-0502:[Sprinklr Chat Bot] If SprinklrChatBot Has to open
+            } else {//FY21-0502:[Sprinklr Chat Bot] If SprinklrChatBot Has to open
                 document.getElementById("cusPreChatSnapinDom").style.display = 'none';
-                startSprinklr();  
+                startSprinklr();
             }
-        }else{
+        } else {
             agentsOfflinePostChatForm();
         }//FY21-0502:[Sprinklr Chat Bot] Defect 8520090: Check for agent avilability after prechat form before connecting to sprinklr Bot [END]
     }
@@ -777,15 +777,18 @@ function checkSprinklrChatBot(snapInObject) {
                 "payloadTags": {
                     "lng": snapInObject.language,
                     "productCode": snapInObject.productCode,
-                    "issueType": snapInObject.issueVal,
-                    "serviceTag":snapInObject.serviceTag
+                    "issueType": snapInObject.issueType,
+                    "serviceTag": snapInObject.serviceTag
                 },
-                "requestId": "someuniqueId",
+                "requestId": snapInObject.uuid,
                 "text": snapInObject.c_issueDescription,
                 "user_firstName": snapInObject.c_firstName,
                 "user_lastName": snapInObject.c_lastName,
                 "user_email": snapInObject.c_email,
-                "user_phoneNo": snapInObject.c_phoneNo
+                "user_phoneNo": snapInObject.c_phoneNo,
+                "sprinklrURL": snapInObject.sprinklrURL,
+                "intentApiURL": snapInObject.intentApiURL,
+                "sprinklrLoadingMessage": snapInObject.sprinklrLoadingMessage
             };
             var res = canSupportSprinklr(sprinklrChatBotVal);
             return res;//If true open sprinklr chatBOt, If false open Snap-in
@@ -802,7 +805,7 @@ function checkSprinklrChatBot(snapInObject) {
 //FY21-0502:[Sprinklr Chat Bot] Start either SprinklrChatBot or start Normal SnapIn Chat [END]
 
 //FY21-0502:[Sprinklr Chat Bot] If customer wants to talk to an agent after sprinklr chat bot is opened.[START]
-function  triggerSnapinPostSprinkler(sprinklrChatBotObject){
+function triggerSnapinPostSprinkler(sprinklrChatBotObject) {
     snapInObject = sendGlobalSnapinObjToJson();
     snapInObject.caseNumber = sprinklrChatBotObject.caseNumber;
     snapInObject.sprinklrChatbotRouted = true;//FY21-0502:[Sprinklr Chat Bot] sprinkler chat bot reoted is true only in this scenario.
@@ -812,25 +815,25 @@ function  triggerSnapinPostSprinkler(sprinklrChatBotObject){
 //FY21-0502:[Sprinklr Chat Bot] If customer wants to talk to an agent after sprinklr chat bot is opened.[END]
 
 //FY21-0502:[Sprinklr Chat Bot] If sprinklr successfully ended the chat.[START]
-function  sprinklerChatEnded(){
+function sprinklerChatEnded() {
     snapinChatInitiatedState(false);//Dont Initiate SnapIn Chat
     var originalPrechatDOM = document.querySelector(".modalContainer  .dockableContainer .sidebarBody .activeFeature .featureBody .embeddedServiceSidebarState .prechatUI");
     var closeOriginalPrechatDOM = document.querySelector(".modalContainer  .dockableContainer .closeButton.headerItem");
     if (originalPrechatDOM && closeOriginalPrechatDOM)
         closeOriginalPrechatDOM.click();
-    console.log("Sprinklr Chat ended Successfully");  
-    console.log(sendGlobalSnapinObjToJson());  
+    console.log("Sprinklr Chat ended Successfully");
+    console.log(sendGlobalSnapinObjToJson());
 }
 //FY21-0502:[Sprinklr Chat Bot] If sprinklr successfully ended the chat.[END]
 
 //FY21-0502:[Sprinklr Chat Bot] Connect to and Agent[START]
-function connectToSnapInAgent(snapInObject){
+function connectToSnapInAgent(snapInObject) {
     pushValsToSnapinInit(snapInObject);//FY21-0502:[Sprinklr Chat Bot] Send CaseNumberand other detailsback to Snap-in before connecting to an agent.
-    if(checkSnapinQueueStatus(snapInObject) == 1){//FY20-1102 Avilability and Business Hr Chack
+    if (checkSnapinQueueStatus(snapInObject) == 1) {//FY20-1102 Avilability and Business Hr Chack
         if (("snapinChatInitiated" in snapInObject && snapInObject.snapinChatInitiated) || ("snapinButtonClicked" in snapInObject && snapInObject.snapinButtonClicked))
             eleExistWithVariable('.helpButtonEnabled #helpButtonSpan > .message', chatClick);
-            eleExistWithVariable('.embeddedServiceSidebar .startButton', chatStarted, snapInObject);
-    }else //FY20-1102 Avilability and Business Hr Chack
+        eleExistWithVariable('.embeddedServiceSidebar .startButton', chatStarted, snapInObject);
+    } else //FY20-1102 Avilability and Business Hr Chack
         agentsOfflinePostChatForm(); //FY20-1102 Avilability and Business Hr Chack
 }
 //FY21-0502:[Sprinklr Chat Bot] Connect to and Agent[END]
@@ -843,16 +846,16 @@ function create_snapinChatUuid(snapInObject) {
         dt = Math.floor(dt / 18);
         return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(18);
     });
-	snapInObject.uuid = uuid;
-	saveGlobalSnapinObjToSession(snapInObject);
-	return snapInObject;
+    snapInObject.uuid = uuid;
+    saveGlobalSnapinObjToSession(snapInObject);
+    return snapInObject;
 }
-function append_snapinChatUuid(msg){
+function append_snapinChatUuid(msg) {
     var snapInObject = sendGlobalSnapinObjToJson();
-    if (snapInObject && 'uuid' in snapInObject){
-        var addUdid = "|UUID:"+ snapInObject.uuid;
+    if (snapInObject && 'uuid' in snapInObject) {
+        var addUdid = "|UUID:" + snapInObject.uuid;
         var msgMaxChar = 100 - addUdid.length;
-        if(msgMaxChar < msg.length){
+        if (msgMaxChar < msg.length) {
             msg.slice(0, msgMaxChar);
         }
         msg = msg + addUdid;
@@ -862,69 +865,69 @@ function append_snapinChatUuid(msg){
 //FY21-0602:[Sprinklr Chat Bot] Reporting Story:  create UUID for reporting [END]
 
 //FY21-0502:[DEFECT 7917426] pushing new Values to SFDC if its changed[START]
-function pushValsToSnapinInit(snapInObject){
-    var extraPrechatFormVals = embedded_svc.settings.extraPrechatFormDetails, i=0;
-     extraPrechatFormVals.forEach(function (extraPrechatFormVal) { 
-                var fieldAPI = extraPrechatFormVal.transcriptFields[0];
-                //console.log("Values in forEach Condition:",embedded_svc.settings.extraPrechatFormDetails[i]);
-                switch (fieldAPI) {
-                    case "Issue__c":
-                            if ("isEmcProduct" in snapInObject && snapInObject.isEmcProduct && "chatSeverity" in snapInObject) {//FY21-0502: DEFECT 8455167 value not mapping to chatSeverity for EMC [START]
-                                embedded_svc.settings.extraPrechatFormDetails[i].value = snapInObject.chatSeverity + " " + snapInObject.issueVal;
-                            }else                                                                                               //FY21-0502: DEFECT 8455167 value not mapping to chatSeverity for EMC [END]
-                                embedded_svc.settings.extraPrechatFormDetails[i].value = getTechSupportSubject(snapInObject); //FY21-0502: DEFECT 8624995 Check for DDS
-                        break;
-                    case "Issue_Key__c":
-                            embedded_svc.settings.extraPrechatFormDetails[i].value = getIssueTypeKey(snapInObject); //FY21-0502: DEFECT 8624995 Check for DDS
-                            break;
-                    case "Service_Tag__c":
-                            if ("isEmcProduct" in snapInObject && snapInObject.isEmcProduct && "cpid" in snapInObject) {//FY21-0502: DEFECT 8455167 value not mapping to CPID for EMC [START]
-                                embedded_svc.settings.extraPrechatFormDetails[i].value = snapInObject.cpid;
-                            }else                                                                                       //FY21-0502: DEFECT 8455167 value not mapping to CPID for EMC [END]
-                                embedded_svc.settings.extraPrechatFormDetails[i].value = snapInObject.serviceTag;
-                            break;
-                    case "Case_Number__c": //FY21-0502:[Sprinklr Chat Bot] Sending Lightning Case Number from sprinklr to SFDC chat via eSupport
-                            if(snapInObject.caseNumber)
-                                embedded_svc.settings.extraPrechatFormDetails[i].value = snapInObject.caseNumber;
-                            else
-                                embedded_svc.settings.extraPrechatFormDetails[i].value = "";
-                            break;
-                    case "Sprinklr_Chatbot_Routed__c": //FY21-0502:[Sprinklr Chat Bot] Sending Lightning Case Number from sprinklr to SFDC chat via eSupport
-                            if(snapInObject.sprinklrChatbotRouted)
-                                embedded_svc.settings.extraPrechatFormDetails[i].value = snapInObject.sprinklrChatbotRouted;
-                            else
-                                embedded_svc.settings.extraPrechatFormDetails[i].value = false;
-                            break;
-                    default:
-                        break;
-                }
-                i++;
-            });
+function pushValsToSnapinInit(snapInObject) {
+    var extraPrechatFormVals = embedded_svc.settings.extraPrechatFormDetails, i = 0;
+    extraPrechatFormVals.forEach(function (extraPrechatFormVal) {
+        var fieldAPI = extraPrechatFormVal.transcriptFields[0];
+        //console.log("Values in forEach Condition:",embedded_svc.settings.extraPrechatFormDetails[i]);
+        switch (fieldAPI) {
+            case "Issue__c":
+                if ("isEmcProduct" in snapInObject && snapInObject.isEmcProduct && "chatSeverity" in snapInObject) {//FY21-0502: DEFECT 8455167 value not mapping to chatSeverity for EMC [START]
+                    embedded_svc.settings.extraPrechatFormDetails[i].value = snapInObject.chatSeverity + " " + snapInObject.issueVal;
+                } else                                                                                               //FY21-0502: DEFECT 8455167 value not mapping to chatSeverity for EMC [END]
+                    embedded_svc.settings.extraPrechatFormDetails[i].value = getTechSupportSubject(snapInObject); //FY21-0502: DEFECT 8624995 Check for DDS
+                break;
+            case "Issue_Key__c":
+                embedded_svc.settings.extraPrechatFormDetails[i].value = getIssueTypeKey(snapInObject); //FY21-0502: DEFECT 8624995 Check for DDS
+                break;
+            case "Service_Tag__c":
+                if ("isEmcProduct" in snapInObject && snapInObject.isEmcProduct && "cpid" in snapInObject) {//FY21-0502: DEFECT 8455167 value not mapping to CPID for EMC [START]
+                    embedded_svc.settings.extraPrechatFormDetails[i].value = snapInObject.cpid;
+                } else                                                                                       //FY21-0502: DEFECT 8455167 value not mapping to CPID for EMC [END]
+                    embedded_svc.settings.extraPrechatFormDetails[i].value = snapInObject.serviceTag;
+                break;
+            case "Case_Number__c": //FY21-0502:[Sprinklr Chat Bot] Sending Lightning Case Number from sprinklr to SFDC chat via eSupport
+                if (snapInObject.caseNumber)
+                    embedded_svc.settings.extraPrechatFormDetails[i].value = snapInObject.caseNumber;
+                else
+                    embedded_svc.settings.extraPrechatFormDetails[i].value = "";
+                break;
+            case "Sprinklr_Chatbot_Routed__c": //FY21-0502:[Sprinklr Chat Bot] Sending Lightning Case Number from sprinklr to SFDC chat via eSupport
+                if (snapInObject.sprinklrChatbotRouted)
+                    embedded_svc.settings.extraPrechatFormDetails[i].value = snapInObject.sprinklrChatbotRouted;
+                else
+                    embedded_svc.settings.extraPrechatFormDetails[i].value = false;
+                break;
+            default:
+                break;
+        }
+        i++;
+    });
 }
 //FY21-0502:[DEFECT 7917426] pushing new Values to SFDC if its changed[END]
 
 //FY20-1102 Avilability and Business Hr Chack [START]
-function checkSnapinQueueStatus(snapInObject) {	
-    var returnValue;	
-    function httpGetAgentAvailability(theUrl) {	
-        try {	
-            var xmlHttp = new XMLHttpRequest();	
-            xmlHttp.onreadystatechange = function () {	
-                if (xmlHttp.readyState == 4 && xmlHttp.status == 200)	
-                    returnValue = xmlHttp.responseText;	
-            }	
+function checkSnapinQueueStatus(snapInObject) {
+    var returnValue;
+    function httpGetAgentAvailability(theUrl) {
+        try {
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.onreadystatechange = function () {
+                if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+                    returnValue = xmlHttp.responseText;
+            }
             xmlHttp.open("GET", theUrl, false); // true for asynchronous 	
-            xmlHttp.send(null);	
-        } catch (e) {	
-            console.log("Error in: " + e);	
-        }	
-    }	
-    if (snapInObject.checkQueueStatusInBizHoursUrl && snapInObject.hoursOfOperation && snapInObject.timeZone && (snapInObject.checkQueueStatusInBizHoursUrl != "" || snapInObject.checkQueueStatusInBizHoursUrl != null || snapInObject.checkQueueStatusInBizHoursUrl != undifined) && (snapInObject.hoursOfOperation != "" || snapInObject.hoursOfOperation != null || snapInObject.hoursOfOperation != undifined) && (snapInObject.timeZone != "" || snapInObject.timeZone != null || snapInObject.timeZone != undifined)) {	
-        httpGetAgentAvailability(snapInObject.checkQueueStatusInBizHoursUrl + "?chatHours=" + escape(snapInObject.hoursOfOperation) + "&timeZone=" + escape(snapInObject.timeZone) + "&buttonId=" + snapInObject.buttonId);	
-        return returnValue;	
-    } else	
-        return 1;	
-} 
+            xmlHttp.send(null);
+        } catch (e) {
+            console.log("Error in: " + e);
+        }
+    }
+    if (snapInObject.checkQueueStatusInBizHoursUrl && snapInObject.hoursOfOperation && snapInObject.timeZone && (snapInObject.checkQueueStatusInBizHoursUrl != "" || snapInObject.checkQueueStatusInBizHoursUrl != null || snapInObject.checkQueueStatusInBizHoursUrl != undifined) && (snapInObject.hoursOfOperation != "" || snapInObject.hoursOfOperation != null || snapInObject.hoursOfOperation != undifined) && (snapInObject.timeZone != "" || snapInObject.timeZone != null || snapInObject.timeZone != undifined)) {
+        httpGetAgentAvailability(snapInObject.checkQueueStatusInBizHoursUrl + "?chatHours=" + escape(snapInObject.hoursOfOperation) + "&timeZone=" + escape(snapInObject.timeZone) + "&buttonId=" + snapInObject.buttonId);
+        return returnValue;
+    } else
+        return 1;
+}
 //FY20-1102 Avilability and Business Hr Chack [END]
 
 function initOriginalESW(gslbBaseURL, snapInObject) {
@@ -984,11 +987,11 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
             "label": "Case Number",
             "value": "",
             "transcriptFields": ["Case_Number__c"]
-        },{
+        }, {
             "label": "Sprinklr Chatbot Routed",
-            "value": "", 
+            "value": "",
             "transcriptFields": ["Sprinklr_Chatbot_Routed__c"]
-        }, 
+        },
         //FY21-0502:[Sprinklr Chat Bot]: Adding new Field to be pushed to transcript[END]
         //Story FY21-0502 Soty 8020202: Pass issue key to Lightnig for HES Chat [START]
         {
@@ -999,9 +1002,9 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
         //Story FY21-0502 Soty 8020202: Pass issue key to Lightnig for HES Chat [END]
         {// New filed
             "label": "Chat Source",
-			"value": 'EMC',
-			"transcriptFields": ["Chat_Source__c"]
-        },{	// New filed
+            "value": 'EMC',
+            "transcriptFields": ["Chat_Source__c"]
+        }, {	// New filed
             "label": "Serial Number",
             "value": snapInObject.serviceTag,
             "transcriptFields": ["Serial_Number__c"]
@@ -1023,9 +1026,9 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
             "transcriptFields": ["Email__c"]
         }, {// New filed
             "label": "Chat Source",
-			"value": getTechSupportChatSource(snapInObject),//FY21-0202 Story STORY #7689121
-			"transcriptFields": ["Chat_Source__c"]
-        },{	// New filed
+            "value": getTechSupportChatSource(snapInObject),//FY21-0202 Story STORY #7689121
+            "transcriptFields": ["Chat_Source__c"]
+        }, {	// New filed
             "label": "Subject",
             "value": getTechSupportSubject(snapInObject),//snapInObject.issueVal,//FY21-0202 Story STORY #7689121
             "transcriptFields": ["Issue__c"]
@@ -1041,9 +1044,9 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
             "label": "Case Number",
             "value": "",
             "transcriptFields": ["Case_Number__c"]
-        },{
+        }, {
             "label": "Sprinklr Chatbot Routed",
-            "value": false, 
+            "value": false,
             "transcriptFields": ["Sprinklr_Chatbot_Routed__c"]
         },
         //FY21-0502:[Sprinklr Chat Bot]: Adding new Field to be pushed to transcript[END]
@@ -1213,20 +1216,20 @@ function togglePrechatAndSnapin(targetNode) {
 }
 */
 //FY21-0202 Story STORY #7689121 [START]
-function getTechSupportSubject(snapInObject){
+function getTechSupportSubject(snapInObject) {
     //FY21-0202 Story Defectfix for Defect # 7977210 [START]
     /*if(("serviceTag" in snapInObject && snapInObject.serviceTag) || ("issueVal" in snapInObject && snapInObject.issueVal))
         return snapInObject.issueVal;
     else if("productFamily" in snapInObject)
         return snapInObject.productFamily;*/
-    if("productFamily" in snapInObject && snapInObject.productFamily === "security_dell_data" && "productName" in snapInObject)
+    if ("productFamily" in snapInObject && snapInObject.productFamily === "security_dell_data" && "productName" in snapInObject)
         return "Dell Data Security";
-    else if("issueVal" in snapInObject && snapInObject.issueVal)
+    else if ("issueVal" in snapInObject && snapInObject.issueVal)
         return snapInObject.issueVal;
     //FY21-0202 Story Defectfix for Defect # 7977210 [END]
 }
-function getTechSupportChatSource(snapInObject){
-    if(("serviceTag" in snapInObject && snapInObject.serviceTag))
+function getTechSupportChatSource(snapInObject) {
+    if (("serviceTag" in snapInObject && snapInObject.serviceTag))
         return "Tech";
     else
         return "Product";
@@ -1475,7 +1478,7 @@ function translation(lang) {
         this.language = "pt-br";
     } else if (language == "nl" || language == "nl-nl") {
         this.firstName = "Voornaam", this.lastName = "Achternaam",
-        this.emailAdd = "E-mail";
+            this.emailAdd = "E-mail";
         //this.primPhone = "Primair telefoonnummer"; //FY21-0502: Story #8348201
         //this.issueDesc = "Probleem Beschrijving";//FY21-0502: Story #8348201
         this.language = "nl-NL";//Language related issue FY21-0202
@@ -1602,7 +1605,7 @@ function snapInClickListners() {
                         } else if (document.getElementById("cusPreChatSnapinDom") && document.getElementById("cusPreChatSnapinDom").display === "none") //FY20-1101 STORY 7128491
                             callDellmetricsTrack("890.220.001", "AgentOffline for " + snapinChatGlobalServiceTag + "|" + snapinChatGlobalIssueType + "|" + snapinChatGlobalProductName);
                         break;
-                    FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn [END] */ 
+                    FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn [END] */
                     default:
                         if (closestByTagName(clickedElement, 'a').className == "chatOption embeddedServiceLiveAgentStateChatHeaderOption") {
                             //callDellmetricsTrack("880.130.857", "ClickedOn " + closestByTagName(clickedElement, 'a').text); //FY21-0502: Unwanted Prop values for CareBot
@@ -1626,10 +1629,10 @@ function callDellmetricsTrack(propValue, message) {
     if (typeof (dellmetricsTrack) == "function") {
         if (dellmetricsTrack) {
             if (trackevent) {
-                if (message){
+                if (message) {
                     message = append_snapinChatUuid(message);//FY21-0602:[Sprinklr Chat Bot] Reporting Story:  Append UUID for reporting
                     dellmetricsTrack(propValue, message);
-                }else
+                } else
                     dellmetricsTrack(propValue);
             } else {
                 trackevent = true;
@@ -1651,25 +1654,25 @@ function showsAgentOflineMsg(propValue, message) {
             message.includes("Es tut uns Leid, aber momentan können wir nicht mit Ihnen chatten. Versuchen Sie es später noch einmal.") ||
             message.includes("Sorry that we are not able to chat with you. Come back later or try again.")*/
             message.includes("Im Moment kann nicht gechattet werden. Versuchen Sie es später erneut.") ||
-			message.includes("ただいまチャットできません。 後でもう一度お試しください。") ||
+            message.includes("ただいまチャットできません。 後でもう一度お試しください。") ||
             message.includes("지금은 채팅을 할 수 없습니다. 나중에 다시 시도하십시오.") ||
             message.includes("No podemos chatear en estos momentos. Inténtelo de nuevo más tarde.") ||
             message.includes("我们现在无法聊天。 请稍后重试。") ||
-			message.includes("我們目前無法聊天。 請稍後再試一次。") ||
+            message.includes("我們目前無法聊天。 請稍後再試一次。") ||
             message.includes("Não podemos conversar neste momento. Tente novamente mais tarde.") ||
             message.includes("Não podemos conversar agora. Tente novamente mais tarde.") ||
-			message.includes("We kunnen momenteel niet chatten. Probeer het later opnieuw.") ||
-			message.includes("Nous ne pouvons pas discuter pour le moment. Veuillez réessayer ultérieurement.") ||
-			message.includes("Vi kan ikke chatte lige nu. Prøv igen senere.") ||
-			message.includes("Emme voi chatata juuri nyt. Yritä myöhemmin uudelleen.") ||
-			message.includes("Non possiamo chattare al momento Riprova più tardi.") ||
-			message.includes("Vi kan ikke chatte akkurat nå. Prøv på nytt senere.") ||
-			message.includes("В настоящее время чат недоступен. Повторите попытку позже.") ||
-			message.includes("Vi kan inte chatta just nu. Försök igen senare.") ||
-			message.includes("เราไม่สามารถสนทนาได้ในตอนนี้ ลองอีกครั้งในภายหลัง") ||
-			message.includes("Nie możemy w tej chwili rozmawiać na czacie Spróbuj ponownie później.") ||
-			message.includes("Momenálne nemôžeme četovať. Skúste to znova.") ||
-			message.includes("Não podemos conversar agora. Tente novamente mais tarde.") ||
+            message.includes("We kunnen momenteel niet chatten. Probeer het later opnieuw.") ||
+            message.includes("Nous ne pouvons pas discuter pour le moment. Veuillez réessayer ultérieurement.") ||
+            message.includes("Vi kan ikke chatte lige nu. Prøv igen senere.") ||
+            message.includes("Emme voi chatata juuri nyt. Yritä myöhemmin uudelleen.") ||
+            message.includes("Non possiamo chattare al momento Riprova più tardi.") ||
+            message.includes("Vi kan ikke chatte akkurat nå. Prøv på nytt senere.") ||
+            message.includes("В настоящее время чат недоступен. Повторите попытку позже.") ||
+            message.includes("Vi kan inte chatta just nu. Försök igen senare.") ||
+            message.includes("เราไม่สามารถสนทนาได้ในตอนนี้ ลองอีกครั้งในภายหลัง") ||
+            message.includes("Nie możemy w tej chwili rozmawiać na czacie Spróbuj ponownie później.") ||
+            message.includes("Momenálne nemôžeme četovať. Skúste to znova.") ||
+            message.includes("Não podemos conversar agora. Tente novamente mais tarde.") ||
             message.includes("We can't chat right now. Try again later.")
             //FY:21-0202 Fix for language related issues[END]
         )
@@ -1737,7 +1740,7 @@ function pageObserverForProp20(eleSelector, preChatlableObject) {
                         hideResumeSnapinLoader();
                         snapinChatInitiatedState(true);
                         addChatPrivacyInfo(preChatlableObject);//FY20-0202 - preChatlableObject pulled from top
-                        
+
                     } else if (snapInChatEnded && snapInCurrentPage != "snapInChatEnded") {//Fix for defect 7030965
                         snapInCurrentPage = "snapInChatEnded";
                         snapinQueueLoaded();
@@ -1786,34 +1789,34 @@ function pageObserverForProp20(eleSelector, preChatlableObject) {
     } catch (e) { console.log('Error in Observer - ' + e) }
 }
 //FY20-0202 [START]
-function addChatPrivacyInfo(preChatlableObject){
-                            setTimeout(function(){
-                                var snapinChatPopUpMsgDom = document.getElementById("snapinChatPopUpMsg");
-                                var snapinChasnapinCHatEnded  = document.querySelector(".dockableContainer .chatMessage.ended");
-                                if (!snapinChatPopUpMsgDom){
-                                    var snapinPopInputMsg;
-                                    if(preChatlableObject && "chatPrivacyInfo" in preChatlableObject && preChatlableObject.snapinChatPopUpMsgDom)
-                                        snapinPopInputMsg = preChatlableObject.snapinChatPopUpMsgDom;
-                                    else
-                                        snapinPopInputMsg = "Please do not share any payment or sensitive information in this chat window.";
-                                    var newItem = document.createElement("DIV");
-                                    newItem.id = 'snapinChatPopUpMsg';
-                                    var embeddedSLAChatInput = document.querySelector(".dockableContainer .embeddedServiceLiveAgentStateChatInputFooter");
-                                    //embeddedSLAChatInput.insertBefore(newItem, embeddedSLAChatInput.childNodes[0]);
-                                    if(embeddedSLAChatInput)//FY21-0502 Unit testing issue
-                                        embeddedSLAChatInput.parentNode.insertBefore(newItem, embeddedSLAChatInput);
-                                    innerVal ='<span style="float: left;margin: 11px;fill:#0A6EBE;"><svg x="0px" y="0px" width="20px" height="20px" viewBox="0 0 416.979 416.979" xml:space="preserve"><g><path d="M356.004,61.156c-81.37-81.47-213.377-81.551-294.848-0.182c-81.47,81.371-81.552,213.379-0.181,294.85   c81.369,81.47,213.378,81.551,294.849,0.181C437.293,274.636,437.375,142.626,356.004,61.156z M237.6,340.786   c0,3.217-2.607,5.822-5.822,5.822h-46.576c-3.215,0-5.822-2.605-5.822-5.822V167.885c0-3.217,2.607-5.822,5.822-5.822h46.576   c3.215,0,5.822,2.604,5.822,5.822V340.786z M208.49,137.901c-18.618,0-33.766-15.146-33.766-33.765   c0-18.617,15.147-33.766,33.766-33.766c18.619,0,33.766,15.148,33.766,33.766C242.256,122.755,227.107,137.901,208.49,137.901z"/></g></svg></span><span class="cusPreChat-x-small cusPreChat-embeddedServiceIcon" id="btnCloseSnapinPopMsg" style="float:right;padding:5px;cursor:pointer;"> <svg focusable="false" aria-hidden="true" data-key="close" viewBox="0 0 120 120" style="fill:#333"> <path d="M65.577 53.73l27.5-27.71c1.27-1.27 1.27-3.174 0-4.445l-4.23-4.44c-1.272-1.27-3.175-1.27-4.445 0L56.694 44.847c-.847.845-2.115.845-2.96 0L26.018 16.922c-1.27-1.27-3.174-1.27-4.445 0l-4.44 4.442c-1.27 1.27-1.27 3.174 0 4.444l27.71 27.71c.846.846.846 2.116 0 2.962L16.923 84.403c-1.27 1.27-1.27 3.174 0 4.444l4.442 4.442c1.27 1.268 3.174 1.268 4.444 0l27.71-27.713c.846-.847 2.116-.847 2.962 0L84.19 93.29c1.27 1.268 3.174 1.268 4.445 0l4.44-4.445c1.27-1.268 1.27-3.17 0-4.44l-27.5-27.712c-.847-.847-.847-2.115 0-2.96z"></path></svg></span><p style="text-align:left;padding:7px;margin:0;font-size:13px;background:#DFF1FE;border-top:1px solid #0A6EBE;border-bottom:1px solid #0A6EBE;color:#333;">'+snapinPopInputMsg+'</p>';
-                                    if(document.getElementById("snapinChatPopUpMsg"))//FY21-0502 Unit testing.
-                                        document.getElementById("snapinChatPopUpMsg").innerHTML=innerVal;
-    
-                                    var btnCloseSnapinPopMsg = document.getElementById("btnCloseSnapinPopMsg");
-                                            btnCloseSnapinPopMsg.addEventListener("click", function () {
-                                            document.getElementById("snapinChatPopUpMsg").style.display = "none";
-                                        });
-                                }else if (snapinChasnapinCHatEnded){
-                                    snapinChatPopUpMsgDom.style.display = "none";
-                                }
-                            }, 50);
+function addChatPrivacyInfo(preChatlableObject) {
+    setTimeout(function () {
+        var snapinChatPopUpMsgDom = document.getElementById("snapinChatPopUpMsg");
+        var snapinChasnapinCHatEnded = document.querySelector(".dockableContainer .chatMessage.ended");
+        if (!snapinChatPopUpMsgDom) {
+            var snapinPopInputMsg;
+            if (preChatlableObject && "chatPrivacyInfo" in preChatlableObject && preChatlableObject.snapinChatPopUpMsgDom)
+                snapinPopInputMsg = preChatlableObject.snapinChatPopUpMsgDom;
+            else
+                snapinPopInputMsg = "Please do not share any payment or sensitive information in this chat window.";
+            var newItem = document.createElement("DIV");
+            newItem.id = 'snapinChatPopUpMsg';
+            var embeddedSLAChatInput = document.querySelector(".dockableContainer .embeddedServiceLiveAgentStateChatInputFooter");
+            //embeddedSLAChatInput.insertBefore(newItem, embeddedSLAChatInput.childNodes[0]);
+            if (embeddedSLAChatInput)//FY21-0502 Unit testing issue
+                embeddedSLAChatInput.parentNode.insertBefore(newItem, embeddedSLAChatInput);
+            innerVal = '<span style="float: left;margin: 11px;fill:#0A6EBE;"><svg x="0px" y="0px" width="20px" height="20px" viewBox="0 0 416.979 416.979" xml:space="preserve"><g><path d="M356.004,61.156c-81.37-81.47-213.377-81.551-294.848-0.182c-81.47,81.371-81.552,213.379-0.181,294.85   c81.369,81.47,213.378,81.551,294.849,0.181C437.293,274.636,437.375,142.626,356.004,61.156z M237.6,340.786   c0,3.217-2.607,5.822-5.822,5.822h-46.576c-3.215,0-5.822-2.605-5.822-5.822V167.885c0-3.217,2.607-5.822,5.822-5.822h46.576   c3.215,0,5.822,2.604,5.822,5.822V340.786z M208.49,137.901c-18.618,0-33.766-15.146-33.766-33.765   c0-18.617,15.147-33.766,33.766-33.766c18.619,0,33.766,15.148,33.766,33.766C242.256,122.755,227.107,137.901,208.49,137.901z"/></g></svg></span><span class="cusPreChat-x-small cusPreChat-embeddedServiceIcon" id="btnCloseSnapinPopMsg" style="float:right;padding:5px;cursor:pointer;"> <svg focusable="false" aria-hidden="true" data-key="close" viewBox="0 0 120 120" style="fill:#333"> <path d="M65.577 53.73l27.5-27.71c1.27-1.27 1.27-3.174 0-4.445l-4.23-4.44c-1.272-1.27-3.175-1.27-4.445 0L56.694 44.847c-.847.845-2.115.845-2.96 0L26.018 16.922c-1.27-1.27-3.174-1.27-4.445 0l-4.44 4.442c-1.27 1.27-1.27 3.174 0 4.444l27.71 27.71c.846.846.846 2.116 0 2.962L16.923 84.403c-1.27 1.27-1.27 3.174 0 4.444l4.442 4.442c1.27 1.268 3.174 1.268 4.444 0l27.71-27.713c.846-.847 2.116-.847 2.962 0L84.19 93.29c1.27 1.268 3.174 1.268 4.445 0l4.44-4.445c1.27-1.268 1.27-3.17 0-4.44l-27.5-27.712c-.847-.847-.847-2.115 0-2.96z"></path></svg></span><p style="text-align:left;padding:7px;margin:0;font-size:13px;background:#DFF1FE;border-top:1px solid #0A6EBE;border-bottom:1px solid #0A6EBE;color:#333;">' + snapinPopInputMsg + '</p>';
+            if (document.getElementById("snapinChatPopUpMsg"))//FY21-0502 Unit testing.
+                document.getElementById("snapinChatPopUpMsg").innerHTML = innerVal;
+
+            var btnCloseSnapinPopMsg = document.getElementById("btnCloseSnapinPopMsg");
+            btnCloseSnapinPopMsg.addEventListener("click", function () {
+                document.getElementById("snapinChatPopUpMsg").style.display = "none";
+            });
+        } else if (snapinChasnapinCHatEnded) {
+            snapinChatPopUpMsgDom.style.display = "none";
+        }
+    }, 50);
 }
 //FY20-0202 [END]
 function waitChatCounter(eleSelector, findingEle, counterValue) {
@@ -1896,7 +1899,7 @@ function initLiveAgentWithoutPrechatForm(liveAgentObject, callbackOnline, callba
                 liveagent.showWhenOffline(liveAgentObject.buttonId, document.getElementById('liveagent_button_offline_' + liveAgentObject.buttonId));
                 if ("serviceTag" in liveAgentObject)
                     liveagent.addCustomDetail('serviceTag', liveAgentObject.serviceTag).saveToTranscript('Service_Tag__c');
-				liveagent.addCustomDetail("Chat Source", "Tech").saveToTranscript('Chat_Source__c');//FY21-0202 Defect ID - Defect 8080327
+                liveagent.addCustomDetail("Chat Source", "Tech").saveToTranscript('Chat_Source__c');//FY21-0202 Defect ID - Defect 8080327
                 liveagent.addCustomDetail("First Name", liveAgentObject.firstName).saveToTranscript('FirstName__c');
                 liveagent.addCustomDetail("Last Name", liveAgentObject.lastName).saveToTranscript('LastName__c');
                 liveagent.addCustomDetail("Phone Number", liveAgentObject.phoneNumber).saveToTranscript('ContactNumber__c');

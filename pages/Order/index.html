@@ -140,7 +140,7 @@
                 lastName:"Last Name",
                 emailAddress:"Email Address",
                 phoneNumber:"Primary Phone Number",
-                issueDescription:"Issue Description",
+                issueDescription:"Issue Description", //Not required as bot doesnot have description
                 startChat:"Start Chat",
                 orderPreChatHeader: "Please fill out the form below",
                 customerNumber: "Customer Number",
@@ -151,20 +151,18 @@
                 optional: "(optional)",
                 lblOrdNoOptional : "Order Number or Purchase ID",
                 characters:"characters",
-                issueDescriptionLength:"20",
+                issueDescriptionLength:"250",  //Not required as bot doesnot have description
                 customerPrivacyDesc:"\u003cb\u003eBisahv Your privacy is important to us.\u003c/b\u003e We will only use your information to process your request. We will not share it with anyone. To learn more about how we use and protect your data, see the \u003ca target=\u0027_blank\u0027 href=\u0027//www.dell.com/learn/policies-privacy\u0027\u003eDell Privacy Statement.\u003c/a\u003e",
                 emailValidation:"Invalid Email Validation",
                 firstNameValidation: "First name required",
                 lastNameValidation:"Last name required",
                 emailRequiredValidation:"Email name required",
                 phoneRequiredValidation:"Phone name required",
-                issueDescriptionValidation:"Descritpion name required",
-         //     phoneValidation:preChatModel.PhoneValidation,
+                issueDescriptionValidation:"Descritpion name required",  //Not required as bot doesnot have description
                 chatUnavailableMessage:"Sorry, no agents are available at this moment.",
                 chatHeader:"Chat Now",
                 blocklistEmails:"noreply@Dell.com|testing@dell.com|cool@dell.com|ok@dell.com",
                 issueType :"Issue Type"
-
         };
       
         triggerOrderSnapin(orderSnapinObject, orderSnapinLabelObj);

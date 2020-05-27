@@ -257,9 +257,12 @@
            chatBotObject.applicationContext= Application_Context,
            chatBotObject.issue_Description= issueVal,
            chatBotObject.language= botLang,
+           chatBotObject.buid= '',
            chatBotObject.Agent_QueueName="5730b00000097Kk";//"5730b00000097Kk";//"5730b000000Gnxf";
+
            if (issueVal === "CARE Bot"){
                 chatBotObject.CARE_Chat_Order_Number = mainInputVal;
+                chatBotObject.buid= '3696',
                 chatBotObject.componentName = 'Care_Dellchatbot';
                
                 if (env === "SIT2"){

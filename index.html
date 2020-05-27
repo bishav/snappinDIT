@@ -50,13 +50,13 @@
         <a class="navbar-brand" href="#">
             <img src="assets/DellTech_Logo_Prm_Blue.jpg" class="d-inline-block align-top" alt="">
         </a>
-        <button style="display: block;float: left;margin-right: 20px;" class="btn btn-primary"  data-target=".bd-example-modal-lg" id="chatButton" type="button" onclick="showConfigSettings()">
+        <button style="display: block;float: left;" class="btn btn-primary"  data-target=".bd-example-modal-lg" id="chatButton" type="button" onclick="showConfigSettings()">
             <i class="fa fa-gear"></i>
             <span>Environment Setup</span>
         </button>
     </nav>
-    <div class="navigationLink">
-        <h5 style="color:#fff; margin-left:30px;">Chat Testing : You are currently in <span id="environmentName"></span> Environment</h5>
+    <div class="navigationLink " style="text-align: center;">
+        <dev style="color:#fff;">You are currently in <span id="environmentName" style="font-size: 20px;"></span> environment</dev>
     </div>
     <div class="container">
         <div class="resume-chat-msg hide">
@@ -1020,9 +1020,14 @@
 
         //Config Box: hide config settings
         function hideSettingConfig(){
-            var element = document.getElementById("settingConfig");
-            element.style.display = "none";
-            element.classList.remove("show");
+            if(getOrgCookie('buttonId') != ""){
+                var element = document.getElementById("settingConfig");
+                element.style.display = "none";
+                element.classList.remove("show");
+            }else{
+                alert("Please select an environment before you close the popup.");
+            }
+
         }
 
         //Config Box: Environment Changed trigger

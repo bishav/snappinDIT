@@ -1998,7 +1998,7 @@ function initiateChatBot(chatBotObject) {
             { "label": "Chat Source", "value": isTechOrCare(chatBotObject), "transcriptFields": ["Chat_Source__c"] },
             { "label": "Service Tag",/* "value": chatBotObject.Service_Tag,*/ "transcriptFields": ["Service_Tag__c"], "displayToAgent": true },
             { "label": "CARE_Chat_Order_Number", "transcriptFields": ["CARE_Chat_Order_Number__c"], "displayToAgent": true }, // Change for BOT phone March 19 2020
-            //  { "label": "Order_Number", "value":  chatBotObject.CARE_Chat_Order_Number, "transcriptFields": ["Order_Number__c"], "displayToAgent": true },
+            { "label": "Order Number", "value": appendBuidForCareBot(chatBotObject), "transcriptFields": ["Order_Number__c"]},//FY21-0602: Story #8151253 add BUID to order number
             //{ "label": translatedLabels.primPhone, /*"value": '00 61 2 9876', */"transcriptFields": ["ContactNumber__c"], "displayToAgent": true },
             phoenNumberValues,//FY21-0403 [Defect] prop 20 value change
             { "label": translatedLabels.firstName, /*"value": chatBotObject.FirstName, */"transcriptFields": ["FirstName__c"], "displayToAgent": true },
@@ -2190,6 +2190,16 @@ function initiateChatBot(chatBotObject) {
         onBotStart();
     }
     HookClosePreChatForm();
+}
+function appendBuidForCareBot(chatBotObject){
+    var orderNumber=null;
+    if ("buid" in chatBotObject && chatBotObject.buid){
+        orderNumber = orderSnapinObject.CARE_Chat_Order_Number+'-'+chatBotObject.buid;
+    }
+    else{
+        orderNumber = chatBotObject.CARE_Chat_Order_Number;
+    }
+    return orderNumber;
 }
 function ResgisterChatBotHandler() {
     embedded_svc.addEventHandler("onAgentMessage", function (data) {
