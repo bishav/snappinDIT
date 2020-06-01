@@ -1116,11 +1116,11 @@
         }
         function transfertoAgentViaSprinklr(){
             var caseNumberInputField = document.getElementById('caseNumberInputField').value;
-            var sprinklrChatBotObject = {
+            /*var sprinklrChatBotObject = {
                 caseNumber: caseNumberInputField//"50711422"//"50711843"//"50711675"
-                }
+                }*/
             document.getElementById('sprinklrBotEle').style.display = "none";
-            triggerSnapinPostSprinkler(sprinklrChatBotObject);
+            triggerSnapinPostSprinkler(caseNumberInputField);
         }
         function endSprinklrChatBotSuccessfully(){
             document.getElementById('sprinklrBotEle').style.display = "none";

@@ -876,6 +876,7 @@ function append_snapinChatUuid(msg) {
 
 //FY21-0502:[DEFECT 7917426] pushing new Values to SFDC if its changed[START]
 function pushValsToSnapinInit(snapInObject) {
+    console.log("pushValsToSnapinInit",snapInObject);
     var extraPrechatFormVals = embedded_svc.settings.extraPrechatFormDetails, i = 0;
     extraPrechatFormVals.forEach(function (extraPrechatFormVal) {
         var fieldAPI = extraPrechatFormVal.transcriptFields[0];
