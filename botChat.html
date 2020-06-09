@@ -70,7 +70,8 @@
                                 <a class="dropdown-item" href="#">Slow Performance</a>
                                 <a class="dropdown-item" href="#">Keyboard not working</a>
                                 <a class="dropdown-item" href="#">Touch pad not working</a>
-                                <a class="dropdown-item" href="#">CARE Bot</a>
+                                <a class="dropdown-item" href="#">ChatBot-CareBot</a>
+                                <a class="dropdown-item" href="#">ChatBot-CareEnglish</a>
                             </div>
                         </div>
                     </form>
@@ -162,9 +163,12 @@
             if(issueVal === "Slow Performance"){
                 Application_Context = "ChatBot-PCSlow";
             }  
-            else if (issueVal === "CARE Bot"){
+            else if (issueVal === "ChatBot-CareBot"){
                 Application_Context = "ChatBot-CareBot";
                 botLang = "pt-br";
+            } else if (issueVal === "ChatBot-CareEnglish"){
+                Application_Context = "ChatBot-CareEnglish";
+                botLang = "en";
             } else{
                 Application_Context = "ChatBot-ServiceEvents-Warranty";
             }
@@ -272,7 +276,7 @@
            chatBotObject.buid= '',
            chatBotObject.Agent_QueueName="5730b00000097Kk";//"5730b00000097Kk";//"5730b000000Gnxf";
 
-           if (issueVal === "CARE Bot"){
+           if (issueVal === "ChatBot-CareBot" || issueVal === "ChatBot-CareEnglish"){
                 chatBotObject.CARE_Chat_Order_Number = mainInputVal;
                 //chatBotObject.buid= '3696',
                 chatBotObject.componentName = 'Care_Dellchatbot';

@@ -2455,7 +2455,7 @@ function createBotCustPreChat(chatBotObject) {
 }
 function createFixedLabels(chatBotObject) {
     let product_ModelDomEle = '', issue_DescriptionDomEle = '';
-    if ("applicationContext" in chatBotObject && chatBotObject.applicationContext !== "ChatBot-CareBot")//FY21-0202 Story 7728368 [START]
+    if ("applicationContext" in chatBotObject && chatBotObject.applicationContext !== "ChatBot-CareBot" && chatBotObject.applicationContext !== "ChatBot-CareEnglish")//FY21-0202 Story 7728368 [START] //FY21-0802 US Care bot
     {
         if ("product_Model" in chatBotObject && !(chatBotObject.product_Model === "" || chatBotObject.product_Model === null || chatBotObject.product_Model === undefined)) {
             product_ModelDomEle = '<div style="font-size: 1.2em;">' + chatBotObject.product_Model + '</div>';
@@ -2467,8 +2467,14 @@ function createFixedLabels(chatBotObject) {
 
     }
     //FY21-0202 Story 7728368 [START]
-    else
-        return '<div id="readonlyPreChatContainer" class="cusPreChat-readonlyContainer" style="margin: 1em 0px 0px 15px; text-align: left;position: relative;font-size: .75em;color: #444444;" bis_skin_checked="1">' + '<div> <b>ID do pedido:</b> <span  id="botCareChatOrderNumberLabel">' + chatBotObject.CARE_Chat_Order_Number + '</span></div></div>';
+    else{
+        var orderIdLabel;
+        if("applicationContext" in chatBotObject && chatBotObject.applicationContext === "ChatBot-CareBot")
+            orderIdLabel = "ID do pedido";
+        else
+            orderIdLabel = "Order ID";
+        return '<div id="readonlyPreChatContainer" class="cusPreChat-readonlyContainer" style="margin: 1em 0px 0px 15px; text-align: left;position: relative;font-size: .75em;color: #444444;" bis_skin_checked="1">' + '<div> <b>'+orderIdLabel+':</b> <span  id="botCareChatOrderNumberLabel">' + chatBotObject.CARE_Chat_Order_Number + '</span></div></div>';
+    }
     //FY21-0202 Story 7728368 [END]
 }
 function startSnapinChatBot(chatBotObject) {
