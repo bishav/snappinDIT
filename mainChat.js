@@ -1069,6 +1069,14 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
             "label": translatedLabels.issueDesc,
             "transcriptFields": ["Description__c"]
         }
+        /*//Testing Need to remove
+        ,
+					{
+						"label":  "Record Type",
+						"value": '0120b000000IiF7', //"0122R000000VrtU",//"0128A000000Jhee",//"0122h0000009xnl",//"0122h0000009xf1" ,//Record type id for partner//DEV2 = "0128A000000Jhee",
+						"transcriptFields": ["RecordTypeId"]
+                    }
+        //Testing Need to remove*/
         ];
     embedded_svc.settings.extraPrechatInfo = [{
         "entityFieldMaps": [{
