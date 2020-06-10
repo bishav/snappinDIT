@@ -1069,7 +1069,7 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
             "label": translatedLabels.issueDesc,
             "transcriptFields": ["Description__c"]
         }
-        /*//Testing Need to remove
+        //Testing Need to remove
         ,
 					{
 						"label":  "Record Type",
