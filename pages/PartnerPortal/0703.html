@@ -319,11 +319,11 @@
       <input id="componentName" name="componentName" value='Partner_Snap_In' />
       <input id="deploymentId" name="deploymentId" value='5720b000000GneC' />
       <input id="eswLADevName" name="eswLADevName" value='EmbeddedServiceLiveAgent_Parent04I2R000000PAwuUAG_1703a86ec04' />
-      <input id="organizationId" name="organizationId" value='00D550000001KdZ' />
+      <input id="organizationId" name="organizationId" value='00DR00000020bLo' />
       <input id="serviceForceURL" name="serviceForceURL" value="https://service.force.com" />
-      <input id="snapInInitURL" name="snapInInitURL" value='https://dellservices--0803ccks.my.salesforce.com' />
-      <input id="snapInJs" name="snapInJs" value='https://dellservices--0803ccks.my.salesforce.com/embeddedservice/5.0/esw.min.js' />
-      <input id="snapInLAURL" name="snapInLAURL" value='https://0803ccks-dellservices.cs41.force.com/LASnapIn' />
+      <input id="snapInInitURL" name="snapInInitURL" value='https://dellservices--0703ccks.my.salesforce.com' />
+      <input id="snapInJs" name="snapInJs" value='https://dellservices--0703ccks.my.salesforce.com/embeddedservice/5.0/esw.min.js' />
+      <input id="snapInLAURL" name="snapInLAURL" value='https://0703ccks-dellservices.cs2.force.com/LASnapIn' />
       <input id="recordType" name="recordType" value='0122R000000VrtU'/> 
       
            
@@ -340,8 +340,7 @@
   </style>
   <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
   <script src="../../DPPJS.js"></script>
-  <script src="../../sfdcPartnerPortal.js"></script>
-  <!--<script src="../../sfdcPartnerPortal_DPP.js"></script>-->
+  <script src="sfdcPartnerPortalFY210703.js"></script>
 
   <script type='text/javascript'>
      function portalTypeSelection(){
@@ -413,13 +412,6 @@
           $(".forMixedIP").show();
         }
      }
-
-     /*function idBasedVal(idTypeVal){
-      if(document.getElementById("idenitifierType").value === idTypeVal){
-        return document.getElementById("idenitifier").value;
-      }else
-        return "";
-    }*/
 
      $.extend($.fn, {
       validate: function( options ) {

@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google" content="notranslate" />
+    <title>Page Title</title>
+    <script src="https://code.jquery.com/jquery-2.0.0.min.js" integrity="sha256-1IKHGl6UjLSIT6CXLqmKgavKBXtr0/jJlaGMEkh+dhw=" crossorigin="anonymous"></script>
+    <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../../main.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="main.js"></script> -->
+    <style type='text/css'>
+            .embeddedServiceHelpButton .helpButton .uiButton { background-color: #005290; font-family: "Salesforce Sans", sans-serif; }
+            .embeddedServiceHelpButton .helpButton .uiButton:focus { outline: 1px solid #005290; }
+            @font-face {
+            font-family: 'Salesforce Sans';
+            src: url('https://www.sfdcstatic.com/system/shared/common/assets/fonts/SalesforceSans/SalesforceSans-Regular.woff') format('woff'),
+    url('https://www.sfdcstatic.com/system/shared/common/assets/fonts/SalesforceSans/SalesforceSans-Regular.ttf') format('truetype');
+            }
+            .overlay {
+              height: 100%;
+              width: 100%;
+              position: fixed;
+              z-index: 1;
+              top: 0;
+              left: 0;
+              background-color: rgb(0,0,0);
+              background-color: rgba(0,0,0, 0.5);
+          }
+          .overlay-content {
+              position: relative;
+              top: 25%;
+              width: 100%;
+              text-align: center;
+              margin-top: 30px;
+          }
+          .loader {
+              border: 16px solid #f3f3f3;
+              border-radius: 50%;
+              border-top: 16px solid #3498db;
+              width: 120px;
+              height: 120px;
+              -webkit-animation: spin 2s linear infinite;
+              animation: spin 2s linear infinite;
+          }
+          @-webkit-keyframes spin {
+            0% { -webkit-transform: rotate(0deg); }
+            100% { -webkit-transform: rotate(360deg); }
+          }
+          
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+    </style>     
+</head>
+<body>
+    <div class="overlay" id="chatPleaseWait" style="display:none">
+        <div class="overlay-content">
+            <center>
+                <div class="loader"></div>
+            </center>
+        </div>
+    </div>
+  <nav class="navbar navbar-light bg-light">
+     <a class="navbar-brand" href="#">
+     <img src="../../assets/DellTech_Logo_Prm_Blue.jpg" class="d-inline-block align-top" alt="">
+     </a>
+  </nav>
+  <div class="navigationLink">
+     <h3 style="color:#fff; margin-left: 30px;">Partner Portal</h3>
+  </div>
+  <div id="prechatFormCanvas" class="new-chat" style="margin-top: 20px;">
+     <div class="row justify-content-md-center">
+        <div class="col-lg-6 col-md-8 col-sm-12 order-md-1  border rounded">
+           <form class="needs-validation" novalidate="">
+              <div class="mb-3">
+                 <label for="portalType">Portal Type</label>
+                 <select class="custom-select d-block w-100" id="portalType" required="" onchange="portalTypeSelection()">
+                    <option value="">Choose...</option>
+                    <option>Share Point</option>
+                    <option>DPP</option>
+                 </select>
+                 <div class="invalid-feedback">
+                    Please enter your Partner Portal Type.
+                 </div>
+              </div>
+        
+              <div id="sharePointForm" style="display:none">
+                  <div class="mb-3">
+                      <label for="productGroup" style="margin-top: 10px;">Product Group</label>
+                      <select class="custom-select d-block w-100" id="productGroup" required="" onchange="ProductTypeSelection()">
+                      <option>GTT</option>
+                      <option>Mixed IP</option>
+                      </select>
+                    </div> 
+                    <div class="mb-3" class="forMixedIP forGTT">
+                      <label for="productType" style="margin-top: 10px;">Product Type</label>
+                      <div class="input-group">
+                      <select class="custom-select d-block w-100" id="productType" required="">
+                        <option class="forMixedIP">PowerOne Network</option>
+                        <option class="forMixedIP">PowerOne Server</option>
+                        <option class="forMixedIP">DD3300</option>
+                        <option class="forMixedIP">Azure</option>                      
+                        <option class="forGTT">Global Tag Team</option>
+                        <option class="forGTT">OEM Tag Team</option>  
+                        <option class="forGTT">Fed Tag Team</option> 
+                        </select>
+                      </div>
+                    </div> 
+                    <div class="mb-3 forMixedIP forGTT">
+                      <label for="idenitifierType">Idenitifier Type?</label>
+                      <select class="custom-select d-block w-100" id="idenitifierType" required="">
+                          <option value="">Choose...</option>
+                          <option value="SR">Service Request</option>
+                          <option value="ST">Service Tag</option>
+                          <option value="ON">Order Number</option>
+                          <option value="CN">Customer Number</option>
+                          </select>
+                    </div>
+                    <div class="mb-3 forMixedIP forGTT">
+                      <label for="idenitifier" style="margin-top: 10px;">Idenitifier</label>
+                      <div class="input-group">
+                      <input type="text" class="form-control" id="idenitifier" >
+                      </div>
+                    </div>
+                    <div class="mb-3 forMixedIP">
+                        <label for="productName" style="margin-top: 10px;">Product Name</label>
+                        <div class="input-group">
+                        <input type="text" class="form-control" id="productName" >
+                        </div>
+                      </div>
+                    <div class="mb-3 forMixedIP">
+                          <label><input type="checkbox" value="OnPhone" id="customerOnThePhone">Customer Waiting On Phone</label>
+                    </div>
+                    <div class="mb-3 forMixedIP">
+                        <label><input type="checkbox" value="Updated" id="driverFirmwareUpdated">Driver/Firmware updated</label>
+                  </div>
+                  <div class="mb-3 forMixedIP">
+                      <label for="caseSeverityNumber" style="margin-top: 10px;">Case Severity (In Number)</label>
+                      <select class="custom-select d-block w-100" id="caseSeverityNumber" required="">
+                      <option value="">Choose...</option>
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      </select>
+                    </div> 
+                    <div class="mb-3 forMixedIP">
+                      <label for="logsCollected" style="margin-top: 10px;">Logs Collected [User | to differentiate between logs]</label>
+                      <div class="input-group">
+                      <input type="textarea" class="form-control" id="logsCollected">
+                      </div>
+                    </div> 
+                    <div class="mb-3 forGTT">
+                      <label for="issueDescription" style="margin-top: 10px;">Reason</label>
+                      <select class="custom-select d-block w-100" id="reasonVal" required="">
+                        <option value="">Select:</option>
+                        <option>Ownership Transfer</option>
+                        <option>Proof of Purchase Adjustment (3rd party sale)</option>
+                        <option>Entitlement Issue</option>
+                        <option>Dispatch Issue</option>
+                        <option>General Asset Data Update (Other)</option>
+                      </select>
+                    </div> 
+                    <div class="mb-3 forMixedIP forGTT">
+                      <label for="issueDescription" style="margin-top: 10px;">Issue Description</label>
+                      <div class="input-group">
+                      <input type="textarea" class="form-control" id="issueDescription">
+                      </div>
+                    </div>
+                    <hr class="mb-4">
+                    <div class="mb-3">
+                      <a  id="liveagent_button_online_Test" class="enabledButton btn btn-primary btn-lg btn-block"  onclick="startSharePointChat()">Start Share Point Chat</a>
+                    </div>
+              </div>
+              <div id="dppForm" style="display:none">
+                  <div class="mb-3">
+                      <label for="regionInput">Region</label>
+                      <input type="text" class="form-control" id="regionInput" value="AMER" disabled>
+                      <!--<select class="custom-select d-block w-100" id="regionInput" required="">
+                              <option value="">Choose...</option>
+                              <option>AMER</option>
+                              <option>APJ</option>
+                              <option>EMEA</option>
+                              <option>LATAM</option>
+                      </select>-->
+                      <div class="invalid-feedback">Please enter a value</div>
+                  </div>
+                  <div class="mb-3">
+                              <label for="regionQueues">Queue</label>
+                              <select class="custom-select d-block w-100" id="regionQueues" required="">
+                                <option value="">Choose...</option>
+                                <option value="5731P000000TSVg">GCC AP Client PS SBD/NBD</option>
+                                <option value="5731P000000TSVg">GCC AP Enterprise PS SBD/NBD</option>
+                                <option value="5731P000000TSVg">GCC AP Non PS SBD/NBD</option>
+                                <option value="5731P000000TSVg">GCC CN  Client PS SBD/NBD</option>
+                                <option value="5731P000000TSVg">GCC CN Enterprise PS SBD/NBD</option>
+                                <option value="5731P000000TSVg">GCC CN Non PS SBD/NBD</option>
+                                <option value="5731P000000TSVg">GCC EMEA SBD/NBD</option>
+                                <option value="5731P000000TSVg">GCC JP Client PS SBD/NBD</option>
+                                <option value="5731P000000TSVg">GCC JP Enterprise PS SBD/NBD</option>
+                                <option value="5731P000000TSVg">GCC JP Non PS SBD/NBD</option>
+                                <option value="5731P000000TSVg">GCC LA Client Basic NBD</option>
+                                <option value="5731P000000TSVg">GCC LA Client PS NBD</option>
+                                <option value="5731P000000TSVg">GGCC LA Enterprise NBD</option>
+                                <option value="5731P000000TSVg">GCC LA Enterprise SBD</option>
+                                <option value="5731P000000TSVg">GCC US/CA Client Basic NBD</option>
+                                <option value="5731P000000TSVg">GCC US/CA Client PS NBD</option>
+                                <option value="5731P000000TSVg">GCC US/CA Enterprise NBD</option>
+                                <option value="5731P000000TSVg">GCC US/CA Enterprise SBD</option>
+                              </select>
+                              <div class="invalid-feedback">Please enter Queue.</div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="vendorType" style="margin-top: 10px;">Vendor</label>
+                    <select class="custom-select d-block w-100" id="vendorType" required="">
+                    <option value="">Choose...</option>
+                    <option>DSP</option>
+                    <option>DLP</option>
+                    </select>
+                  </div> 
+                  <div class="mb-3">
+                    <label for="productType" style="margin-top: 10px;">Vendor List</label>
+                    <div class="input-group">
+                    <input type="text" class="form-control" id="chatProviderName">
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="vendor">Chat Type</label>
+                    <select class="custom-select d-block w-100" id="chatType" required="">
+                        <option value="">Choose...</option>
+                        <option>DPID</option>
+                        <option>Service Tag</option>
+                        <option>SR Number</option>
+                        </select>
+                    <div class="invalid-feedback">
+                      Please enter a value
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="chatTypeValue" style="margin-top: 10px;"><span>DPID/SR#/Service Tag</label>
+                    <div class="input-group">
+                      <input type="text" class="form-control" id="chatTypeValue">
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                      <label for="chatReason" style="margin-top: 10px;">Reason</label>
+                      <div class="input-group">
+                        <input type="text" class="form-control" id="chatReason" >
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <label for="chatDescription" style="margin-top: 10px;">Issue Description</label>
+                      <div class="input-group">
+                      <input type="textarea" class="form-control" id="chatDescription">
+                      </div>
+                    </div> 
+                    <div class="mb-3">
+                        <label for="chatUserName" style="margin-top: 10px;">Name/LoginId</label>
+                        <div class="input-group">
+                        <input type="textarea" class="form-control" id="chatUserName" value="Bishav Narshing Rajb">
+                        </div>
+                      </div> 
+                    <hr class="mb-4">
+                    <div class="mb-3">
+                      <a  id="liveagent_button_online_Test" class="enabledButton btn btn-primary btn-lg btn-block"  onclick="startDppChat()">Start DPP Chat</a>
+                    </div>
+              </div> 
+        </form>
+      </div>
+     </div>
+  </div>
+  <div id="configurations" style="display:none">
+    	<!--<input id="baseLAContentURL" name="baseLAContentURL" value='https://c.la2-c2cs-ph2.salesforceliveagent.com/content' />
+      <input id="baseLAURL" name="baseLAURL" value='https://d.la2-c2cs-ph2.salesforceliveagent.com/chat' />
+      <input id="componentName" name="componentName" value='Partner_Snap_In' />
+      <input id="deploymentId" name="deploymentId" value='5720b000000GneC' />
+      <input id="eswLADevName" name="eswLADevName" value='EmbeddedServiceLiveAgent_Parent04I8A0000004CE8UAM_16e214e1296' />
+      <input id="organizationId" name="organizationId" value='00D8A00000057oF' />
+      <input id="serviceForceURL" name="serviceForceURL" value="https://service.force.com" />
+      <input id="snapInInitURL" name="snapInInitURL" value='https://dellservices--DEV2.my.salesforce.com' />
+      <input id="snapInJs" name="snapInJs" value='https://dellservices--DEV2.my.salesforce.com/embeddedservice/5.0/esw.min.js' />
+      <input id="snapInLAURL" name="snapInLAURL" value='https://dev2-dellservices.cs45.force.com/LASnapIn' />
+      <input id="recordType" name="recordType" value='0128A000000Jhee'/>
+
+	  <input id="baseLAContentURL" name="baseLAContentURL" value='https://c.la2-c1cs-ph2.salesforceliveagent.com/content' />
+      <input id="baseLAURL" name="baseLAURL" value='https://d.la2-c1cs-ph2.salesforceliveagent.com/chat' />
+      <input id="componentName" name="componentName" value='Partner_Snap_In' />
+      <input id="deploymentId" name="deploymentId" value='5720b000000GneC' />
+      <input id="eswLADevName" name="eswLADevName" value='EmbeddedServiceLiveAgent_Parent04I8A0000004CE8UAM_16e214e1296' />
+      <input id="organizationId" name="organizationId" value='00D8A00000057oF' />
+      <input id="serviceForceURL" name="serviceForceURL" value="https://service.force.com" />
+      <input id="snapInInitURL" name="snapInInitURL" value='https://dellservices--DEV2.my.salesforce.com' />
+      <input id="snapInJs" name="snapInJs" value='https://dellservices--DEV2.my.salesforce.com/embeddedservice/5.0/esw.min.js' />
+      <input id="snapInLAURL" name="snapInLAURL" value='https://dev2-dellservices.cs45.force.com/LASnapIn' />
+      <input id="recordType" name="recordType" value='0128A000000Jhee'/>
+	  
+      <input id="baseLAContentURL" name="baseLAContentURL" value='https://c.la1-c1cs-ia2.salesforceliveagent.com/content' />
+      <input id="baseLAURL" name="baseLAURL" value='https://d.la1-c1cs-ia2.salesforceliveagent.com/chat' />
+      <input id="componentName" name="componentName" value='Partner_Snap_In' />
+      <input id="deploymentId" name="deploymentId" value='5720b000000GneC' />
+      <input id="eswLADevName" name="eswLADevName" value='EmbeddedServiceLiveAgent_Parent04I2R000000PAwuUAG_1703a86ec04' />
+      <input id="organizationId" name="organizationId" value='00DP0000003pGDL' />
+      <input id="serviceForceURL" name="serviceForceURL" value="https://service.force.com" />
+      <input id="snapInInitURL" name="snapInInitURL" value='https://dellservices--dev1.my.salesforce.com' />
+      <input id="snapInJs" name="snapInJs" value='https://dellservices--dev1.my.salesforce.com/embeddedservice/5.0/esw.min.js' />
+      <input id="snapInLAURL" name="snapInLAURL" value='https://dev1-dellservices.cs4.force.com/LASnapIn' />
+      <input id="recordType" name="recordType" value='0122R000000VrtU'/>
+	  -->
+	  
+	  
+      <input id="baseLAContentURL" name="baseLAContentURL" value='https://c.la1-c1cs-ia2.salesforceliveagent.com/content' />
+      <input id="baseLAURL" name="baseLAURL" value='https://d.la1-c1cs-ia2.salesforceliveagent.com/chat' />
+      <input id="componentName" name="componentName" value='Partner_Snap_In' />
+      <input id="deploymentId" name="deploymentId" value='5720b000000GneC' />
+      <input id="eswLADevName" name="eswLADevName" value='EmbeddedServiceLiveAgent_Parent04I2R000000PAwuUAG_1703a86ec04' />
+      <input id="organizationId" name="organizationId" value='00D550000001KdZ' />
+      <input id="serviceForceURL" name="serviceForceURL" value="https://service.force.com" />
+      <input id="snapInInitURL" name="snapInInitURL" value='https://dellservices--0803ccks.my.salesforce.com' />
+      <input id="snapInJs" name="snapInJs" value='https://dellservices--0803ccks.my.salesforce.com/embeddedservice/5.0/esw.min.js' />
+      <input id="snapInLAURL" name="snapInLAURL" value='https://0803ccks-dellservices.cs41.force.com/LASnapIn' />
+      <input id="recordType" name="recordType" value='0122R000000VrtU'/> 
+      
+           
+	  
+  </div>
+  <style type='text/css'>
+     .embeddedServiceHelpButton .helpButton .uiButton {
+     background-color: #007db8;
+     font-family: "Roboto Regular", sans-serif;
+     }
+     .embeddedServiceHelpButton .helpButton .uiButton:focus {
+     outline: 1px solid #007db8;
+     }
+  </style>
+  <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
+  <script src="../../DPPJS.js"></script>
+  <script src="sfdcPartnerPortalFY210803.js"></script>
+
+  <script type='text/javascript'>
+     function portalTypeSelection(){
+      if(document.getElementById("portalType").value === "DPP"){
+        document.querySelector('#sharePointForm').style.display = 'none';
+        document.querySelector('#dppForm').style.display = 'block';
+      }else if (document.getElementById("portalType").value === "Share Point"){
+        document.querySelector('#sharePointForm').style.display = 'block';
+        document.querySelector('#dppForm').style.display = 'none';
+        ProductTypeSelection();
+      }else{
+        document.querySelector('#sharePointForm').style.display = 'none';
+        document.querySelector('#dppForm').style.display = 'none';
+      }
+    }
+
+     function startSharePointChat(){
+       if (document.getElementById("customerOnThePhone").value== "OnPhone")
+        var customerOnThePhoneValue = true;
+      else
+        var customerOnThePhoneValue = true;
+      
+      if (document.getElementById("driverFirmwareUpdated").value== "Updated")
+        var driverFirmwareUpdatedValue = true;
+      else
+        var driverFirmwareUpdatedValue = true;
+      
+       let partnerPortalDetails =  {
+     //language: document.getElementById("ppLanguage").value,
+         //caseOrSr: idBasedVal("Service Request"),//document.getElementById("caseNumber").value,
+         //serviceTag: idBasedVal("Service Tag"),//document.getElementById("serviceTag").value,
+         //orderNumber: idBasedVal("Order Number"),//document.getElementById("serviceTag").value,
+         //customerNumber: idBasedVal("Customer Number"),//document.getElementById("serviceTag").value,
+         identifierType: document.getElementById("idenitifierType").value,
+         identifier: document.getElementById("idenitifier").value,
+         chatReason: document.getElementById("chatReason").value,
+         reasonVal:  document.getElementById("reasonVal").value,
+         productType:  document.getElementById("productType").value,
+         productGroup:  document.getElementById("productGroup").value,
+         issueDescription: document.getElementById("issueDescription").value,
+         portalType: document.getElementById("portalType").value,  
+         //dpid: document.getElementById("dpid").value,
+         productName: document.getElementById("productName").value,
+         logTypes: document.getElementById("logsCollected").value,
+         customerOnThePhone: customerOnThePhoneValue, 
+         driverFirmwareUpdated: driverFirmwareUpdatedValue,
+         caseSeverity: document.getElementById("caseSeverityNumber").value,
+         firstName: "bishav",
+         lastName: "Rajbhandari",
+         email:"bishav_namrshing_rajb@dell.com",
+         loginId: "bishav_namrshing_rajb",
+         badgeId: "1234",
+         location: "India"  
+       };
+       $('#chatPleaseWait').show();
+         triggerPartnerPortalSnapin(partnerPortalDetails);
+     }
+
+     function startDppChat(){
+      startPartnerPortalChat();
+     }
+
+     function ProductTypeSelection(){
+        if(document.getElementById("productGroup").value === "GTT"){
+          $(".forMixedIP").hide();
+          $(".forGTT").show();
+        } else if(document.getElementById("productGroup").value === "Mixed IP"){
+          $(".forGTT").hide();
+          $(".forMixedIP").show();
+        }
+     }
+
+     /*function idBasedVal(idTypeVal){
+      if(document.getElementById("idenitifierType").value === idTypeVal){
+        return document.getElementById("idenitifier").value;
+      }else
+        return "";
+    }*/
+
+     $.extend($.fn, {
+      validate: function( options ) {
+        return true;
+      },
+      valid: function() {
+        return true;
+      },
+      select2:function() {
+        return true;
+      },
+      setDefaults:function(){
+      }
+      });
+      function ajaxGetMessage(){return ""};
+      function addErrorMessage(msg){alert(msg)};
+  </script>
+</body>
+</html>

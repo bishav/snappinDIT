@@ -1068,40 +1068,32 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
         }, {
             "label": translatedLabels.issueDesc,
             "transcriptFields": ["Description__c"]
-        }/*
-        //Testing Need to remove
-        ,
-					{
-						"label":  "Record Type",
-						"value": '0120b000000IiF7', //"0122R000000VrtU",//"0128A000000Jhee",//"0122h0000009xnl",//"0122h0000009xf1" ,//Record type id for partner//DEV2 = "0128A000000Jhee",
-						"transcriptFields": ["RecordTypeId"]
-                    }
-        //Testing Need to remove*/
+        }
         ];
     embedded_svc.settings.extraPrechatInfo = [{
         "entityFieldMaps": [{
             "doCreate": false,
-            "doFind": true,
+            "doFind": false,
             "fieldName": "LastName",
-            "isExactMatch": true,
+            "isExactMatch": false,
             "label": translatedLabels.lastName
         }, {
             "doCreate": false,
-            "doFind": true,
+            "doFind": false,
             "fieldName": "FirstName",
-            "isExactMatch": true,
+            "isExactMatch": false,
             "label": translatedLabels.firstName
         }, {
             "doCreate": false,
-            "doFind": true,
+            "doFind": false,
             "fieldName": "Email",
-            "isExactMatch": true,
+            "isExactMatch": false,
             "label": translatedLabels.emailAdd
         }, {
             "doCreate": false,
-            "doFind": true,
+            "doFind": false,
             "fieldName": "Primary_Phone__c",
-            "isExactMatch": true,
+            "isExactMatch": false,
             "label": translatedLabels.primPhone
         }
         ],
@@ -1110,9 +1102,9 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
     }, {
         "entityFieldMaps": [{
             "doCreate": false,
-            "doFind": true,
+            "doFind": false,
             "fieldName": assetFieldName,//STORY 7193324: FY201101
-            "isExactMatch": true,
+            "isExactMatch": false,
             "label": "Service Tag"
         }
         ],
@@ -1121,9 +1113,9 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
     }, {
         "entityFieldMaps": [{
             "doCreate": false,
-            "doFind": true,
+            "doFind": false,
             "fieldName": "Issue_Description__c",
-            "isExactMatch": true,
+            "isExactMatch": false,
             "label": translatedLabels.issueDesc
         }
         ],
