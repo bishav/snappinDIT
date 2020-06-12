@@ -1073,27 +1073,27 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
     embedded_svc.settings.extraPrechatInfo = [{
         "entityFieldMaps": [{
             "doCreate": false,
-            "doFind": false,
+            "doFind": true,
             "fieldName": "LastName",
-            "isExactMatch": false,
+            "isExactMatch": true,
             "label": translatedLabels.lastName
         }, {
             "doCreate": false,
-            "doFind": false,
+            "doFind": true,
             "fieldName": "FirstName",
-            "isExactMatch": false,
+            "isExactMatch": true,
             "label": translatedLabels.firstName
         }, {
             "doCreate": false,
-            "doFind": false,
+            "doFind": true,
             "fieldName": "Email",
-            "isExactMatch": false,
+            "isExactMatch": true,
             "label": translatedLabels.emailAdd
         }, {
             "doCreate": false,
-            "doFind": false,
+            "doFind": true,
             "fieldName": "Primary_Phone__c",
-            "isExactMatch": false,
+            "isExactMatch": true,
             "label": translatedLabels.primPhone
         }
         ],
@@ -1102,9 +1102,9 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
     }, {
         "entityFieldMaps": [{
             "doCreate": false,
-            "doFind": false,
+            "doFind": true,
             "fieldName": assetFieldName,//STORY 7193324: FY201101
-            "isExactMatch": false,
+            "isExactMatch": true,
             "label": "Service Tag"
         }
         ],
@@ -1113,9 +1113,9 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
     }, {
         "entityFieldMaps": [{
             "doCreate": false,
-            "doFind": false,
+            "doFind": true,
             "fieldName": "Issue_Description__c",
-            "isExactMatch": false,
+            "isExactMatch": true,
             "label": translatedLabels.issueDesc
         }
         ],
