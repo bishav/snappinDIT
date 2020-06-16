@@ -2047,10 +2047,10 @@ function initiateChatBot(chatBotObject) {
         if ("applicationContext" in chatBotObject && (chatBotObject.applicationContext === "ChatBot-CareBot" || chatBotObject.applicationContext === "ChatBot-CareEnglish")) {//FY21-0803 US Care bot
             chatBotForm = "Chatbot-CareBot";
             phoenNumberValues = { "label": translatedLabels.primPhone, "transcriptFields": ["ContactNumber__c"], "displayToAgent": true };//FY21-0403 [Defect] prop 20 value change //For Care
-            VA_FlagValues = { "label": 'VA Flag', "transcriptFields": [" VA_Flag__C"], "value": chatBotObject.VA_Flag, "displayToAgent": false };
+            VA_FlagValues = { "label": 'VA Flag', "transcriptFields": [" VA_Flag__c"], "value": chatBotObject.VA_Flag, "displayToAgent": false };
         } else {
             phoenNumberValues = { "label": "Phone", "transcriptFields": ["Phone"], "displayToAgent": true };//FY21-0403 [Defect] prop 20 value change //For tech
-            VA_FlagValues = { "label": 'VA Flag', "transcriptFields": [" VA_Flag__C"], "value": false, "displayToAgent": false };
+            VA_FlagValues = { "label": 'VA Flag', "transcriptFields": [" VA_Flag__c"], "value": false, "displayToAgent": false };
         }
         //FY21-0202 Story 7728368 [END]
 
