@@ -55,7 +55,7 @@
                     <form>
                         <div class="form-group">
                             <label for="serviceTag">Service Tag / Order Number</label>
-                            <input type="text" class="form-control"  id="serviceTag" aria-describedby="serviceTag" placeholder="Enter Service Tag">
+                            <input type="text" class="form-control"  id="serviceTag" aria-describedby="serviceTag" placeholder="Enter Service Tag" value="800313819">
                             <p>Based on asset warranty contact channel will be displayed</p>
                         </div>
                         <!-- <div class="form-group">
@@ -90,7 +90,9 @@
                     </div>
                     <div class="chat-with-us">
                         <h5>Chat with us</h5>
-                        <p>Start a chat session with one of our technical support experts.</p>
+                        <div class="checkbox">
+                            <label><input id='VA_Coustomer' type="checkbox" value="" style="margin-right: 5px;margin-top: 10px;">Verified Customer</label>
+                          </div>
                         <button type="button" id="chatBotButton" class="btn btn-primary" onclick="initChatBot()">Start Chat With Bot</button>
                         <span id="selectLanguage" style="float: right;">
                             <span>Select Enveironment</span>
@@ -104,6 +106,7 @@
                                     <option>SIT2</option>
                                 </select>
                             </span>
+                        
                         <div class="live-agent-button">
                             <a id="liveagent_button_online_5733B0000004D90" class="btn btn-primary" href="javascript://Chat" onclick="startLiveAgentChat('5733B0000004D90')">Start Chat</a><div id="liveagent_button_offline_5733B0000004D90" style="display: none;"><!-- Offline Chat Content --></div>
                         </div>
@@ -160,6 +163,8 @@
             var botLang = "en";
             var mainInputVal = document.querySelector('#serviceTag').value; 
             var inputValue;
+            
+
             if(issueVal === "Slow Performance"){
                 Application_Context = "ChatBot-PCSlow";
             }  
@@ -274,6 +279,7 @@
            chatBotObject.issue_Description= issueVal,
            chatBotObject.language= botLang,
            chatBotObject.buid= '',
+           chatBotObject.VA_Flag = document.getElementById('VA_Coustomer').checked,
            chatBotObject.Agent_QueueName="5730b00000097Kk";//"5730b00000097Kk";//"5730b000000Gnxf";
 
            if (issueVal === "ChatBot-CareBot" || issueVal === "ChatBot-CareEnglish"){

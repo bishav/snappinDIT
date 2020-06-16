@@ -1968,7 +1968,7 @@ function eleExist(eleSelector, callbackFunc) {
 /////////////////////////////ChatBot Code///////////////////////////////////
 //0202 changes start
 function isTechOrCare(chatBotObject) {
-    if (chatBotObject.applicationContext === "ChatBot-CareBot") {
+    if (chatBotObject.applicationContext === "ChatBot-CareBot" || chatBotObject.applicationContext === "ChatBot-CareEnglish") {//FY21-0803 US Care bot
         return "CARE";
     } else
         return "Tech";
@@ -2043,12 +2043,14 @@ function initiateChatBot(chatBotObject) {
         embedded_svc.settings.language = translatedLabels.language;
 
         snapinBotPageObserver('body');
-        var chatBotForm = "ChatBot", phoenNumberValues = null;//FY21-0403 [Defect] prop 20 value change 
-        if ("applicationContext" in chatBotObject && chatBotObject.applicationContext === "ChatBot-CareBot") {
+        var chatBotForm = "ChatBot", phoenNumberValues = null, VA_FlagValues= null;//FY21-0403 [Defect] prop 20 value change 
+        if ("applicationContext" in chatBotObject && (chatBotObject.applicationContext === "ChatBot-CareBot" || chatBotObject.applicationContext === "ChatBot-CareEnglish")) {//FY21-0803 US Care bot
             chatBotForm = "Chatbot-CareBot";
             phoenNumberValues = { "label": translatedLabels.primPhone, "transcriptFields": ["ContactNumber__c"], "displayToAgent": true };//FY21-0403 [Defect] prop 20 value change //For Care
+            VA_FlagValues = { "label": 'VA Flag', "transcriptFields": [" VA_Flag__C"], "value": chatBotObject.VA_Flag, "displayToAgent": false };
         } else {
             phoenNumberValues = { "label": "Phone", "transcriptFields": ["Phone"], "displayToAgent": true };//FY21-0403 [Defect] prop 20 value change //For tech
+            VA_FlagValues = { "label": 'VA Flag', "transcriptFields": [" VA_Flag__C"], "value": false, "displayToAgent": false };
         }
         //FY21-0202 Story 7728368 [END]
 
@@ -2062,6 +2064,7 @@ function initiateChatBot(chatBotObject) {
             { "label": "Order Number", "value": appendBuidForCareBot(chatBotObject), "transcriptFields": ["Order_Number__c"]},//FY21-0602: Story #8151253 add BUID to order number
             //{ "label": translatedLabels.primPhone, /*"value": '00 61 2 9876', */"transcriptFields": ["ContactNumber__c"], "displayToAgent": true },
             phoenNumberValues,//FY21-0403 [Defect] prop 20 value change
+            VA_FlagValues, //FY21-0803 US Care bot
             { "label": translatedLabels.firstName, /*"value": chatBotObject.FirstName, */"transcriptFields": ["FirstName__c"], "displayToAgent": true },
             { "label": translatedLabels.lastName, /*"value": chatBotObject.LastName, */"transcriptFields": ["LastName__c"], "displayToAgent": true },
             { "label": translatedLabels.emailAdd, /*"value":chatBotObject.Email,*/ "transcriptFields": ["Email__c"], "displayToAgent": true },
@@ -2455,7 +2458,7 @@ function createBotCustPreChat(chatBotObject) {
 }
 function createFixedLabels(chatBotObject) {
     let product_ModelDomEle = '', issue_DescriptionDomEle = '';
-    if ("applicationContext" in chatBotObject && chatBotObject.applicationContext !== "ChatBot-CareBot" && chatBotObject.applicationContext !== "ChatBot-CareEnglish")//FY21-0202 Story 7728368 [START] //FY21-0802 US Care bot
+    if ("applicationContext" in chatBotObject && chatBotObject.applicationContext !== "ChatBot-CareBot" && chatBotObject.applicationContext !== "ChatBot-CareEnglish")//FY21-0202 Story 7728368 [START] //FY21-0803 US Care bot
     {
         if ("product_Model" in chatBotObject && !(chatBotObject.product_Model === "" || chatBotObject.product_Model === null || chatBotObject.product_Model === undefined)) {
             product_ModelDomEle = '<div style="font-size: 1.2em;">' + chatBotObject.product_Model + '</div>';
@@ -2472,8 +2475,8 @@ function createFixedLabels(chatBotObject) {
         if("applicationContext" in chatBotObject && chatBotObject.applicationContext === "ChatBot-CareBot")
             orderIdLabel = "ID do pedido";
         else
-            orderIdLabel = "Order ID";
-        return '<div id="readonlyPreChatContainer" class="cusPreChat-readonlyContainer" style="margin: 1em 0px 0px 15px; text-align: left;position: relative;font-size: .75em;color: #444444;" bis_skin_checked="1">' + '<div> <b>'+orderIdLabel+':</b> <span  id="botCareChatOrderNumberLabel">' + chatBotObject.CARE_Chat_Order_Number + '</span></div></div>';
+            orderIdLabel = "Order ID";//FY21-0803 US Care bot
+        return '<div id="readonlyPreChatContainer" class="cusPreChat-readonlyContainer" style="margin: 1em 0px 0px 15px; text-align: left;position: relative;font-size: .75em;color: #444444;" bis_skin_checked="1">' + '<div> <b>'+orderIdLabel+':</b> <span  id="botCareChatOrderNumberLabel">' + chatBotObject.CARE_Chat_Order_Number + '</span></div></div>';//FY21-0803 US Care bot
     }
     //FY21-0202 Story 7728368 [END]
 }
