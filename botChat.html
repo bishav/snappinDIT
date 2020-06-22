@@ -299,13 +299,17 @@
                 //chatBotObject.buid= '3696',
                 chatBotObject.componentName = 'Care_Dellchatbot';
                
-                if (env === "SIT2" || env === "FY21-0703-DEV"){
+                if (env === "SIT2"){
                     chatBotObject.buttonId = '5732h0000008OtZ';
                     chatBotObject.LiveAgentDevName = 'EmbeddedServiceLiveAgent_Parent04I2h0000004CBYEA2_16fa30a6c99';
                 }else if(env === "GE2"){
                     chatBotObject.buttonId = '5732h0000008OtZ';
                     chatBotObject.LiveAgentDevName = 'EmbeddedServiceLiveAgent_Parent04I2R000000PAwzUAG_1704330fc3e';
-                } else{
+                } else if(env === "FY21-0703-DEV"){
+                    chatBotObject.buttonId = '5731P000000TScM';
+                    chatBotObject.LiveAgentDevName = 'EmbeddedServiceLiveAgent_Parent04I2h0000004CBYEA2_16fa30a6c99';
+                }
+                else{
                     chatBotObject.buttonId = '5731P000000TScM';
                     chatBotObject.LiveAgentDevName = 'EmbeddedServiceLiveAgent_Parent04I2R000000PAwzUAG_1704330fc3e';
                 }
