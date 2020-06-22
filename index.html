@@ -1137,8 +1137,6 @@
                 snapInJs: 'https://dellservices--SIT2.cs93.my.salesforce.com/embeddedservice/5.0/esw.min.js',
                 domainName: "bishav.github.io",//"localhost" //
             }
-            console.log(chatBotObject);
-            debugger;
             triggerChatBot(chatBotObject);
         }
         
@@ -1155,9 +1153,9 @@
         //print tracker value in console
         function dellmetricsTrack(elementId,Message){
            if(Message)
-				console.log("PropValue = "+elementId+": "+Message);
+				console.log("PropValue = %c"+elementId+": "+Message, 'color:#0e0; background: #000;');
 			else
-                console.log("PropValue = "+elementId);
+                console.log("PropValue = %c"+elementId, 'color:#0e0; background: #000;');
         }
         
         //Config Box: Show config settings
@@ -1213,8 +1211,6 @@
                 setOrgCookie("environment",env,30);
                 var otherValues = document.querySelectorAll("#" + env + " .form-group .form-control");
                 for(var i=0; i<otherValues.length; i++){
-                    //console.log("key",otherValues[i].getAttribute("data-id"));
-                    //console.log("values",otherValues[i].value);
                     setOrgCookie(otherValues[i].getAttribute("data-id"),otherValues[i].value,30);
                 }
                 showEnvironmentdetail(env);

@@ -70,7 +70,7 @@ $(document).ready(function() {
 
 
     if (!document.getElementById('snapinStyle')) {
-        var css = '.embeddedServiceLiveAgentStateChatHeader .content{background: #222 !important;}',
+        var css = '.embeddedServiceLiveAgentStateChatHeader .content{background: #222 !important;}.embeddedServiceLiveAgentStateChatItem.chatMessage{margin-top: 0px !important; min-height: 0px !important;} .embeddedServiceSidebarMinimizedDefaultUI .content {background: #222 !important;}', //FY21-0702 Summer patch Design Change.
             head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
         style.type = 'text/css';

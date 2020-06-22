@@ -226,7 +226,9 @@ function httpCoveoGetAsync(theUrl, callback) {
             if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
                 callback(xmlHttp.responseText);
         }
-        xmlHttp.open("GET", theUrl, true); // true for asynchronous 
+        xmlHttp.open("GET", theUrl, true); // true for asynchronous
+        xmlHttp.setRequestHeader('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest');//FY21-0702 eSupport call Changes
+        xmlHttp.setRequestHeader("Content-Type", "text/plain; charset=utf-8"); //FY21-0702 eSupport call Changes 
         xmlHttp.send(null);
     } catch (e) {
         console.log("Error in: " + e);
@@ -786,6 +788,7 @@ function checkSprinklrChatBot(snapInObject) {
                 "payloadTags": {
                     "lng": snapInObject.language,
                     "productCode": snapInObject.productCode,
+                    "productName": snapInObject.productName,
                     "issueType": snapInObject.issueType,
                     "issueVal": snapInObject.issueVal,
                     "serviceTag": snapInObject.serviceTag
@@ -927,7 +930,9 @@ function checkSnapinQueueStatus(snapInObject) {
                 if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
                     returnValue = xmlHttp.responseText;
             }
-            xmlHttp.open("GET", theUrl, false); // true for asynchronous 	
+            xmlHttp.open("GET", theUrl, false); // true for asynchronous 
+            xmlHttp.setRequestHeader('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest');//FY21-0702 eSupport call Changes
+            xmlHttp.setRequestHeader("Content-Type", "application/json; charset=utf-8"); //FY21-0702 eSupport call Changes
             xmlHttp.send(null);
         } catch (e) {
             console.log("Error in: " + e);
@@ -1579,9 +1584,30 @@ function snapInClickListners() {
     window.addEventListener("click", function (event) {
         if (document.querySelector(".embeddedServiceSidebar") || document.querySelector(".embeddedServiceHelpButton")) {
             var clickedElement = event.target || event.srcElement;
-            if (closestByTagName(clickedElement, 'button') != null) {
+            //FY21-0702: Prop value Fix [Start]
+            if(clickedElement.tagName.toLowerCase() === 'embeddedservice-chat-header'){
+                if(closestByTagName(event.toElement, 'svg').dataset.key === 'minimize_window' || closestByTagName(event.toElement, 'button').className === 'minimizeButton')
+                    callDellmetricsTrack("890.220.007", "SNAPIN: Minimize");
+                else if(closestByTagName(event.toElement, 'svg').dataset.key === 'close'  || closestByTagName(event.toElement, 'button').className === 'closeButton'){
+                    callDellmetricsTrack("890.220.006", "SNAPIN: Close (x)");
+                    if (!document.querySelector(".dockableContainer .activeFeature .stateBody .dialogState .dialogTextContainer"))//Fix for on click of (x) button from End Chat confirmation Page: FYI we have created a SFDC case 23872982 
+                        snapinChatInitiatedState(false);
+                }  
+            }else if(clickedElement.tagName.toLowerCase() === 'embeddedservice-chat-input-footer-menu'){
+                if(closestByTagName(event.toElement, 'svg').dataset.key === 'rows' || closestByTagName(event.toElement, 'button').className === 'slds-button slds-button_icon slds-button_icon-container-more slds-button_icon-large')
+                    callDellmetricsTrack("890.220.015", "SNAPIN: Hamburger Menu");
+                else{
+                    var snapInfooterMenuElm= closestByTagName(event.toElement, 'a');
+                    if(snapInfooterMenuElm != undefined && snapInfooterMenuElm != null && snapInfooterMenuElm.innerText)
+                        callDellmetricsTrack("890.220.003", "SNAPIN: '" + snapInfooterMenuElm.innerText + "' Button Clicked");//FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn
+                }
+            }else 
+            //FY21-0702: Prop value Fix [END]
+            if (closestByTagName(clickedElement, 'button') != null && closestByTagName(clickedElement, 'button') != undefined) {
                 switch (closestByTagName(clickedElement, 'button').className) {
                     case "dialogButton dialog-button-0 uiButton embeddedServiceSidebarButton":
+                    case "endChatButton postChatButton uiButton--default uiButton embeddedServiceSidebarButton": //FY21-0702: Prop value Fix
+                    case "endChatButton saveTranscriptButton uiButton--inverse uiButton embeddedServiceSidebarButton": //FY21-0702: Prop value Fix 
                         callDellmetricsTrack("890.220.003", "SNAPIN: '" + clickedElement.innerText + "' Button Clicked");//FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn
                         break;
                     case "dialogButton dialog-button-1 uiButton embeddedServiceSidebarButton":
@@ -1593,10 +1619,10 @@ function snapInClickListners() {
                     case "waitingCancelChat uiButton--inverse uiButton embeddedServiceSidebarButton":
                         callDellmetricsTrack("890.220.005", "SNAPIN: Cancel Chat");
                         break;
-                    case "closeButton headerItem":
+                    case "closeButton": //FY21-0702: DomElement position change
                         callDellmetricsTrack("890.220.006", "SNAPIN: Close (x)");//FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn
                         break;
-                    case "minimizeButton headerItem":
+                    case "minimizeButton": //FY21-0702: DomElement position change
                         callDellmetricsTrack("890.220.007", "SNAPIN: Minimize");//FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn
                         break;
                     case "sidebarHeader minimizedContainer helpButton embeddedServiceSidebarMinimizedDefaultUI":
@@ -1618,10 +1644,12 @@ function snapInClickListners() {
                         break;
                     FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn [END] */
                     default:
-                        if (closestByTagName(clickedElement, 'a').className == "chatOption embeddedServiceLiveAgentStateChatHeaderOption") {
+                        //FY21-0702- omnichar value
+                        /*if (closestByTagName(clickedElement, 'a').className == "chatOption embeddedServiceLiveAgentStateChatHeaderOption") {
                             //callDellmetricsTrack("880.130.857", "ClickedOn " + closestByTagName(clickedElement, 'a').text); //FY21-0502: Unwanted Prop values for CareBot
                             callDellmetricsTrack("890.220.009", "ClickedOn " + closestByTagName(clickedElement, 'a').text); //FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn
-                        }
+                        }*/
+                        
                         break;
                 }
             } /*else if (closestByTagName(clickedElement, 'a').className == "chatOption embeddedServiceLiveAgentStateChatHeaderOption") {//FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn [START]
@@ -1738,13 +1766,14 @@ function pageObserverForProp20(eleSelector, preChatlableObject) {
                         document.querySelector(".modalContainer.embeddedServiceSidebar").style.display = "none";
                         snapinChatInitiatedState(false);
                         //DEFECT 6915122[END]
-                    } else if (snapInWaiting && snapInCurrentPage != "snapInWaiting") {
+                    }else if (snapInWaiting && snapInCurrentPage != "snapInWaiting") {
                         snapInCurrentPage = "snapInWaiting";
                         callDellmetricsTrack("890.220.011", "SNAPIN: You are up next Window load"); //FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn
                         snapinQueueLoaded();
                         hideResumeSnapinLoader();
                         snapinChatInitiatedState(false);
-                    } else if (snapInChatStarted && snapInCurrentPage != "snapInChatStarted") {
+                        eleExistWithVariable('.dockableContainer .embeddedServiceLiveAgentStateWaiting .waitingStateContainer .queuePositionNumber', waitChatCounter); //FY21-0702 dom element changes
+                    }else if (snapInChatStarted && snapInCurrentPage != "snapInChatStarted") {
                         snapInCurrentPage = "snapInChatStarted";
                         snapinQueueLoaded();
                         //callDellmetricsTrack("890.220.013", "SNAPIN: Chat Started 1"); //FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn
@@ -1757,17 +1786,18 @@ function pageObserverForProp20(eleSelector, preChatlableObject) {
                         snapinQueueLoaded();
                         hideResumeSnapinLoader();
                         snapinChatInitiatedState(false);
+                        callDellmetricsTrack("890.220.009", "SNAPIN: Chat Ended"); //FY21-702: Omnichar changes
                     } else if (snapInConfirmationDialoug && snapInCurrentPage != "snapInConfirmationDialoug") {
                         snapInCurrentPage = "snapInConfirmationDialoug";
                         snapinQueueLoaded();
                         callDellmetricsTrack("890.220.016", document.querySelector(".dockableContainer .activeFeature .stateBody .dialogState .dialogTextContainer").innerText);
-                        //Fix for on click of (x) button from End Chat confirmation Page: FYI we have created a SFDC case 23872982 [START] 
-                        let closeBtn = document.querySelector(".modalContainer .dockableContainer .embeddedServiceSidebarHeader .closeButton.headerItem");
-                        closeBtn.addEventListener("click", function () {
-                            if (!snapInConfirmationDialoug) {
-                                snapinChatInitiatedState(false);
-                            }
-                        });
+                        //Fix for on click of (x) button from End Chat confirmation Page: FYI we have created a SFDC case 23872982 [START] //FY21-0702: DomElement position change so the code is moved to different location
+                        /*let closeBtn = document.querySelector(".modalContainer .dockableContainer .embeddedServiceSidebarHeader .closeButton"); 
+                        if (closeBtn && !snapInConfirmationDialoug)
+                            closeBtn.addEventListener("click", function () {
+                                    snapinChatInitiatedState(false);
+                            });
+                        */
                         //Fix for on click of (x) button from End Chat confirmation Page: FYI we have created a SFDC case 23872982 [END] 
 
                         hideResumeSnapinLoader();
@@ -1784,9 +1814,9 @@ function pageObserverForProp20(eleSelector, preChatlableObject) {
                             snapInCurrentPage = "snapInhelpBtnEnabled";
                             //togglePrechatAndSnapin(snapInCurrentPage);
                             snapInhelpBtnEnabled.style.display = "none";
-                        } /*else {
+                        } else {
                             console.log("Snap-In: Not Loaded"); //FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn
-                        }*/
+                        }
                     }
                 }
             });
@@ -1821,36 +1851,35 @@ function addChatPrivacyInfo(preChatlableObject) {
                 document.getElementById("snapinChatPopUpMsg").innerHTML = innerVal;
 
             var btnCloseSnapinPopMsg = document.getElementById("btnCloseSnapinPopMsg");
-            btnCloseSnapinPopMsg.addEventListener("click", function () {
-                document.getElementById("snapinChatPopUpMsg").style.display = "none";
-            });
+            if(btnCloseSnapinPopMsg){//FY21-0702: DomElement position change
+                btnCloseSnapinPopMsg.addEventListener("click", function () {
+                    document.getElementById("snapinChatPopUpMsg").style.display = "none";
+                });
+            }
         } else if (snapinChasnapinCHatEnded) {
             snapinChatPopUpMsgDom.style.display = "none";
         }
     }, 50);
 }
 //FY20-0202 [END]
+//FY21-0702 : Wait time changes [START]
 function waitChatCounter(eleSelector, findingEle, counterValue) {
     try {
-        if (typeof (dellmetricsTrack) == "function") {
-            if (dellmetricsTrack) {
-                if (counterValue != document.querySelector(eleSelector).innerText) {
-                    dellmetricsTrack("890.220.012", "SNAPIN: Queue number " + document.querySelector(eleSelector).innerText);
+                var currentcountVal = document.querySelector(eleSelector).innerText;
+                if (counterValue != currentcountVal) {
+                    callDellmetricsTrack("890.220.012", "SNAPIN: Queue number " + currentcountVal);
                     clearInterval(findingEle);
-                    if (document.querySelector(eleSelector).innerText > 0 && document.querySelector(eleSelector).innerText != "You're up next!") {
-                        eleExistWithVariable('.dockableContainer .embeddedServiceLiveAgentStateWaiting .waitingStateContainer .waitingStateContent .queuePositionContent .header', waitChatCounter, document.querySelector(eleSelector).innerText);
+                    if (currentcountVal > 0 && currentcountVal != "" && currentcountVal != null && currentcountVal != undefined && currentcountVal != ' ') {
+                        eleExistWithVariable('.dockableContainer .embeddedServiceLiveAgentStateWaiting .waitingStateContainer .queuePositionNumber', waitChatCounter, document.querySelector('.dockableContainer .embeddedServiceLiveAgentStateWaiting .waitingStateContainer .queuePositionNumber').innerText);
                     }
                 }
-            } else {
-                clearInterval(findingEle);
-            }
-        } else {
-            clearInterval(findingEle);
-        }
     } catch (e) {
+        clearInterval(findingEle);
         console.log("Error in:" + e);
     }
 }
+//FY21-0702 : Wait time changes [END]
+
 function eleExistWithVariable(eleSelector, callbackFunc, value) {
     var findingEle = setInterval(function () {
         if (document.querySelector(eleSelector)) {
@@ -2320,6 +2349,8 @@ function ResgisterChatBotHandler() {
                 hamburgerMenuIconDOM.addEventListener("click", function () {
                     callDellmetricsTrackForBot("880.130.861", data.liveAgentSessionKey);
                 });
+            //FY21-0702: Prop value Fix [START]
+            /*
             var chatButtons = document.querySelectorAll(".embeddedServiceLiveAgentStateChatHeaderOption");
 
             chatButtons[0].addEventListener("click", function () {
@@ -2328,6 +2359,8 @@ function ResgisterChatBotHandler() {
             chatButtons[1].addEventListener("click", function () {
                 callDellmetricsTrackForBot("880.130.860", data.liveAgentSessionKey);
             });
+            */
+           //FY21-0702: Prop value Fix [END]
         }, 300);
 
     });
@@ -2362,6 +2395,20 @@ function OmniChatBotTrackerListner() {
         window.addEventListener("click", function (event) {
             if (document.querySelector(".embeddedServiceSidebar") || document.querySelector(".embeddedServiceHelpButton")) {
                 var clickedElement = event.target || event.srcElement;
+                //FY21-0702: Prop value Fix [Start]
+                if(clickedElement.tagName.toLowerCase() === 'embeddedservice-chat-header'){
+                    if(closestByTagName(event.toElement, 'svg').dataset.key === 'minimize_window' || closestByTagName(event.toElement, 'button').className === 'minimizeButton')
+                        callDellmetricsTrackForBot("880.130.854");
+                    else if(closestByTagName(event.toElement, 'svg').dataset.key === 'close'  || closestByTagName(event.toElement, 'button').className === 'closeButton')
+                        callDellmetricsTrackForBot("880.130.855");
+                }else if(clickedElement.tagName.toLowerCase() === 'embeddedservice-chat-input-footer-menu'){
+                    if(closestByTagName(event.toElement, 'svg').dataset.key !== 'rows' && closestByTagName(event.toElement, 'button').className !== 'slds-button slds-button_icon slds-button_icon-container-more slds-button_icon-large'){
+                        var snapInfooterMenuElm= closestByTagName(event.toElement, 'a');
+                        if(snapInfooterMenuElm != undefined && snapInfooterMenuElm != null && snapInfooterMenuElm.innerText)
+                            callDellmetricsTrackForBot("880.130.859");
+                    }
+                }else 
+                //FY21-0702: Prop value Fix [END]
                 if (closestByTagName(clickedElement, 'button') != null) {
                     switch (closestByTagName(clickedElement, 'button').className) {
                         /*case "startButton uiButton--default uiButton embeddedServiceSidebarButton":
