@@ -1154,6 +1154,23 @@ function snapInCareClickListners() {
     window.addEventListener("click", function (event) {
         if (document.querySelector(".embeddedServiceSidebar") || document.querySelector(".embeddedServiceHelpButton")) {
             var clickedElement = event.target || event.srcElement;
+             //FY21-0702: Prop value Fix [Start]
+             if(clickedElement.tagName.toLowerCase() === 'embeddedservice-chat-header'){
+                if(closestByTagName(event.toElement, 'svg').dataset.key === 'minimize_window' || closestByTagName(event.toElement, 'button').className === 'minimizeButton')
+                    assignCarePropVal("890.130.143","890.130.154");// FY20-1101 STORY 7089672
+                else if(closestByTagName(event.toElement, 'svg').dataset.key === 'close'  || closestByTagName(event.toElement, 'button').className === 'closeButton'){
+                    assignCarePropVal("890.130.145","890.130.156");// FY20-1101 STORY 7089672
+                }  
+            }else if(clickedElement.tagName.toLowerCase() === 'embeddedservice-chat-input-footer-menu'){
+                if(closestByTagName(event.toElement, 'svg').dataset.key === 'rows' || closestByTagName(event.toElement, 'button').className === 'slds-button slds-button_icon slds-button_icon-container-more slds-button_icon-large')
+                    this.console.log("CARE: Hamburger Menu");//For future Prop values
+                else{
+                    var snapInfooterMenuElm= closestByTagName(event.toElement, 'a');
+                    if(snapInfooterMenuElm != undefined && snapInfooterMenuElm != null && snapInfooterMenuElm.innerText)
+                    this.console.log("CARE: '" + snapInfooterMenuElm.innerText + "' Button Clicked");//FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn
+                }
+            }else 
+            //FY21-0702: Prop value Fix [END]
             if (closestByTagName(clickedElement, 'button') != null) {
                 switch (closestByTagName(clickedElement, 'button').className) {
                     case "dialogButton dialog-button-0 uiButton embeddedServiceSidebarButton":
