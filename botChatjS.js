@@ -2043,18 +2043,22 @@ function initiateChatBot(chatBotObject) {
         embedded_svc.settings.language = translatedLabels.language;
 
         snapinBotPageObserver('body');
-        var chatBotForm = "ChatBot", phoenNumberValues = null, VA_FlagValues= null;//FY21-0403 [Defect] prop 20 value change 
+
+        var chatBotForm = "ChatBot", phoenNumberValues = null, VA_FlagValues= null, careBotAppContext= null;//FY21-0403 [Defect] prop 20 value change 
+       debugger;
         if ("applicationContext" in chatBotObject && (chatBotObject.applicationContext === "ChatBot-CareBot" || chatBotObject.applicationContext === "ChatBot-CareEnglish")) {//FY21-0803 US Care bot
             chatBotForm = "Chatbot-CareBot";
             phoenNumberValues = { "label": translatedLabels.primPhone, "transcriptFields": ["ContactNumber__c"], "displayToAgent": true };//FY21-0403 [Defect] prop 20 value change //For Care
-            VA_FlagValues = { "label": 'VA Flag', "transcriptFields": ["VA_Flag__c"], "value": chatBotObject.VA_Flag, "displayToAgent": false };
+            VA_FlagValues = { "label": 'VA Flag', "value": chatBotObject.VA_Flag, "transcriptFields": ["VA_Flag__c"], "displayToAgent": true };
+            careBotAppContext = { "label": "Application_Context", "value": chatBotObject.applicationContext, "transcriptFields": ["Application_Context__c"], "displayToAgent": true};
         } else {
             phoenNumberValues = { "label": "Phone", "transcriptFields": ["Phone"], "displayToAgent": true };//FY21-0403 [Defect] prop 20 value change //For tech
-            VA_FlagValues = { "label": 'VA Flag', "transcriptFields": ["VA_Flag__c"], "value": false, "displayToAgent": false };
+            VA_FlagValues = { "label": 'VA Flag', "value": chatBotObject.VA_Flag, "transcriptFields": ["VA_Flag__c"], "displayToAgent": true };
         }
         //FY21-0202 Story 7728368 [END]
 
         embedded_svc.settings.displayHelpButton = false;
+        debugger;
         embedded_svc.settings.extraPrechatFormDetails = [
 
             { "label": "Transcript From", "value": chatBotForm, "transcriptFields": ["Transcript_From__c"], "displayToAgent": true },
@@ -2065,6 +2069,7 @@ function initiateChatBot(chatBotObject) {
             //{ "label": translatedLabels.primPhone, /*"value": '00 61 2 9876', */"transcriptFields": ["ContactNumber__c"], "displayToAgent": true },
             phoenNumberValues,//FY21-0403 [Defect] prop 20 value change
             VA_FlagValues, //FY21-0803 US Care bot
+            careBotAppContext,
             { "label": translatedLabels.firstName, /*"value": chatBotObject.FirstName, */"transcriptFields": ["FirstName__c"], "displayToAgent": true },
             { "label": translatedLabels.lastName, /*"value": chatBotObject.LastName, */"transcriptFields": ["LastName__c"], "displayToAgent": true },
             { "label": translatedLabels.emailAdd, /*"value":chatBotObject.Email,*/ "transcriptFields": ["Email__c"], "displayToAgent": true },
@@ -2090,8 +2095,7 @@ function initiateChatBot(chatBotObject) {
             { "label": "isDsdnstalled", "value": chatBotObject.isDsdnstalled, "transcriptFields": ["isDsdnstalled__c"], "displayToAgent": true },
             { "label": "isHwAlert", "value": chatBotObject.isHwAlert, "transcriptFields": ["isHwAlert__c"], "displayToAgent": true },
             { "label": "isSwAlert", "value": chatBotObject.isSwAlert, "transcriptFields": ["isSwAlert__c"], "displayToAgent": true },
-            // { "label": "Application_Context", "value": chatBotObject.applicationContext, "transcriptFields": ["Application_Context__c"]/*, "displayToAgent": true */ },
-            { "label": "Application_Context", "transcriptFields": ["Application_Context__c"], "displayToAgent": true },
+            //{ "label": "Application_Context", "transcriptFields": ["Application_Context__c"], "displayToAgent": true },
             { "label": "StepName_Manual_Bot", "value": chatBotObject.StepName_Manual_Bot, "transcriptFields": ["StepName_Manual_Bot__c"], "displayToAgent": true },
             { "label": "Agent_QueueName", "value": chatBotObject.Agent_QueueName, "transcriptFields": ["Agent_QueueName__c"], "displayToAgent": true },
             { "label": "BotFutureUse_2", "value": chatBotObject.BotFutureUse_2, "transcriptFields": ["BotFutureUse_2__c"], "displayToAgent": true },
@@ -2322,14 +2326,7 @@ function ResgisterChatBotHandler() {
                 hamburgerMenuIconDOM.addEventListener("click", function () {
                     callDellmetricsTrackForBot("880.130.861", data.liveAgentSessionKey);
                 });
-            var chatButtons = document.querySelectorAll(".embeddedServiceLiveAgentStateChatHeaderOption");
 
-            chatButtons[0].addEventListener("click", function () {
-                callDellmetricsTrackForBot("880.130.859", data.liveAgentSessionKey);
-            });
-            chatButtons[1].addEventListener("click", function () {
-                callDellmetricsTrackForBot("880.130.860", data.liveAgentSessionKey);
-            });
         }, 300);
 
     });

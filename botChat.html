@@ -259,6 +259,7 @@
                serviceForceURL: "https://service.force.com",
                snapInJs: 'https://dellservices--ge2.my.salesforce.com/embeddedservice/5.0/esw.min.js'     
           }
+          debugger;
            chatBotObject.me  = 'Bishav',
            chatBotObject.domainName= "localhost",
            chatBotObject.Kb_Article='Check this One',
@@ -293,7 +294,7 @@
            chatBotObject.buid= '',
            chatBotObject.VA_Flag = document.getElementById('VA_Coustomer').checked,
            chatBotObject.Agent_QueueName="5730b00000097Kk";//"5730b00000097Kk";//"5730b000000Gnxf";
-
+          console.log("testing", chatBotObject);
            if (issueVal === "ChatBot-CareBot" || issueVal === "ChatBot-CareEnglish"){
                 chatBotObject.CARE_Chat_Order_Number = mainInputVal;
                 //chatBotObject.buid= '3696',
@@ -326,7 +327,7 @@
                 }
                 
             }
-           // console.log(chatBotObject);
+           console.log(chatBotObject);
             //debugger;
             triggerChatBot(chatBotObject);
         }     

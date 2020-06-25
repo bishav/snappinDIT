@@ -18,19 +18,44 @@
 function triggerPartnerPortalSnapin(partnerPortalDetails) {
     try {            
 			let sfdcSnapinDetails = {
-					/*				
-					 //FY21-0703 Dev
-					 snapInInitURL: 'https://dellservices--0703ccks.my.salesforce.com',
-					 snapInLAURL: 'https://0703ccks-dellservices.cs2.force.com/LASnapIn',
-					 organizationId: '00DR00000020bLo',
-					 componentName: 'Partner_Snap_In',
-					 baseLiveAgentContentURL: 'https://c.la1-c1cs-ia2.salesforceliveagent.com/content',
-					 deploymentId: '5720b000000GneC',
-					 baseLiveAgentURL: 'https://d.la1-c1cs-ia2.salesforceliveagent.com/chat',
-					 eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I2R000000PAwuUAG_1703a86ec04',
-					 snapInJs: 'https://dellservices--0703ccks.my.salesforce.com/embeddedservice/5.0/esw.min.js',
-					 recordType: "0122R000000VrtU",
-					*/
+				/*
+					//Chat 
+					baseLiveAgentContentURL: 'https://c.la2-c1cs-ord.salesforceliveagent.com/content',
+					deploymentId: '5720b000000CbfS',
+					baseLiveAgentURL: 'https://d.la2-c1cs-ord.salesforceliveagent.com/chat',
+					eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I0x0000008OPzEAM_16d81041603',             
+                    componentName: "Partner_Portal_Snap_ins",
+                    organizationId: "00D0x0000000WEw",
+                    snapInInitURL: 'https://dellservices--Chat.my.salesforce.com',
+                    snapInJs: "https://service.force.com/embeddedservice/5.0/esw.min.js",
+                    snapInLAURL: 'https://chat-dellservices.cs95.force.com/LASnapIn', 
+					
+					//DEV2
+					snapInInitURL: 'https://dellservices--DEV2.my.salesforce.com',
+					snapInLAURL: 'https://dev2-dellservices.cs45.force.com/LASnapIn',
+					organizationId: '00D8A00000057oF',
+					componentName: 'Partner_Snap_In',
+					baseLiveAgentContentURL: 'https://c.la2-c1cs-ph2.salesforceliveagent.com/content',
+					deploymentId: '5720b000000GneC',
+					baseLiveAgentURL: 'https://d.la2-c1cs-ph2.salesforceliveagent.com/chat',
+					eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I8A0000004CE8UAM_16e214e1296',
+					snapInJs: 'https://dellservices--DEV2.my.salesforce.com/embeddedservice/5.0/esw.min.js',
+					
+					
+					
+					//DEV1
+					snapInInitURL: 'https://dellservices--dev1.my.salesforce.com',
+					snapInLAURL: 'https://dev1-dellservices.cs4.force.com/LASnapIn',
+					organizationId: '00DP0000003pGDL',
+					componentName: 'Partner_Snap_In',
+					baseLiveAgentContentURL: 'https://c.la1-c1cs-ia2.salesforceliveagent.com/content',
+					deploymentId: '5720b000000GneC',
+					baseLiveAgentURL: 'https://d.la1-c1cs-ia2.salesforceliveagent.com/chat',
+					eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I2R000000PAwuUAG_1703a86ec04',
+					snapInJs: 'https://dellservices--dev1.my.salesforce.com/embeddedservice/5.0/esw.min.js',
+	*/ 				
+					
+
 					 //FY21-0703
 					componentName: "Partner_Snap_In",
 					organizationId: "00D2C000000D19k",
@@ -43,6 +68,22 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
                     baseLiveAgentURL: 'https://d.la1-c1cs-ia4.salesforceliveagent.com/chat',
                     eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I2h0000004CBOEA2_16e7ea2ec9b',
 
+                
+/*
+					//Perf 1
+				
+					snapInInitURL: 'https://dellservices--Perf1.my.salesforce.com',
+					snapInLAURL: 'https://perf1-dellservices.cs36.force.com/LASnapIn',
+					organizationId: '00D2h0000000YBM',
+					componentName: 'Partner_Snap_In',
+					baseLiveAgentContentURL: 'https://c.la3-c1cs-ph2.salesforceliveagent.com/content',
+                    deploymentId: '5720b000000GneC',
+                    baseLiveAgentURL: 'https://d.la3-c1cs-ph2.salesforceliveagent.com/chat',
+                    eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I2h0000004CBdEAM_16fd14e13a6',
+					snapInJs: 'https://dellservices--Perf1.my.salesforce.com/embeddedservice/5.0/esw.min.js',
+					recordType: "0122h0000009xf1",
+	*/				
+					
 					//fixed object values
 					buttonId: routingConfig(partnerPortalDetails),
 					issueSubject: getProductGroup(partnerPortalDetails.productGroup) +" - "+ partnerPortalDetails.productType,
@@ -57,7 +98,8 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 					serviceForceURL: "https://service.force.com"
 		}
             var initESW = function (gslbBaseURL) {
-                embedded_svc.settings.displayHelpButton = false;//true;
+				try{
+					embedded_svc.settings.displayHelpButton = false;//true;
                 embedded_svc.settings.language = "en";
                 embedded_svc.settings.enabledFeatures = ['LiveAgent'];
                 embedded_svc.settings.entryFeature = 'LiveAgent';
@@ -225,8 +267,11 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
                     eswLiveAgentDevName: sfdcSnapinDetails.eswLiveAgentDevName,
                     isOfflineSupportEnabled: false
                 });
-
                 eleExist('#helpButtonSpan > .message', chatClick);
+				}catch (e) {
+					console.log("Error in: " + e);
+				}
+                
             };
             if (!window.embedded_svc) {
                 var s = document.createElement('script');
