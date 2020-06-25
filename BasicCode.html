@@ -9,86 +9,7 @@
 		console.log("From " + fromPage + " to " + currentPage, "Lag time in mSec: "+ lagTime);
 		timerStarted = Date.now();
 	}
-	function domObserver(eleSelector) {
-		try {
-			timerStarted = Date.now();
-			
-			snapInPrechatForm = document.querySelector(".modalContainer  .dockableContainer .sidebarBody .activeFeature .featureBody .embeddedServiceSidebarState .prechatUI");
-			snapInWaiting = document.querySelector(".dockableContainer .embeddedServiceLiveAgentStateWaiting .waitingStateContainer");
-			snapInQueueAssignment = document.querySelector(".dockableContainer .queuePositionContent.queuePositionWaiting.embeddedServiceLiveAgentQueuePosition");
-			snapInChatStarted = document.querySelector(".dockableContainer .activeFeature .embeddedServiceLiveAgentStateChat .chasitorControls .chasitorText");
-			snapInChatEnded = document.querySelector(".dockableContainer .activeFeature .embeddedServiceLiveAgentStateChat .endChatContainer");//Fix for defect 7030965
-			snapInConfirmationDialoug = document.querySelector(".dockableContainer .activeFeature .stateBody .dialogState .dialogTextContainer");
-			snapInhelpBtnDisabled = document.querySelector(".embeddedServiceHelpButton .helpButton .helpButtonDisabled");
-			snapInhelpBtnEnabled = document.querySelector(".embeddedServiceHelpButton .helpButton .helpButtonEnabled");
-			if (snapInPrechatForm)
-				snapInCurrentPage = "snapInPrechatForm";
-			else if (snapInWaiting)
-				snapInCurrentPage = "snapInWaiting";
-			else if (snapInQueueAssignment)
-				snapInCurrentPage = "snapInQueueAssignment";
-			else if (snapInChatStarted)
-				snapInCurrentPage = "snapInChatStarted";
-			else if (snapInChatEnded)
-				snapInCurrentPage = "snapInChatEnded";
-			else if (snapInConfirmationDialoug)
-				snapInCurrentPage = "snapInConfirmationDialoug";
-			else if (snapInhelpBtnDisabled) {
-				snapInCurrentPage = "snapInhelpBtnDisabled";
-			} else if (snapInhelpBtnEnabled)
-				snapInhelpBtnEnabled = "snapInhelpBtnEnabled";
-			else
-				snapInCurrentPage = "ScriptStarted";
-			var MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
-			var attributeChangeCallback = function (mutations) {
-				mutations.forEach(function (mutation) {
-					if (mutation.addedNodes.length > 0) {
-						snapInPrechatForm = document.querySelector(".modalContainer  .dockableContainer .sidebarBody .activeFeature .featureBody .embeddedServiceSidebarState .prechatUI");
-						snapInWaiting = document.querySelector(".dockableContainer .embeddedServiceLiveAgentStateWaiting .waitingStateContainer");
-						snapInChatStarted = document.querySelector(".dockableContainer .activeFeature .embeddedServiceLiveAgentStateChat .chasitorControls .chasitorText");
-						snapInChatEnded = document.querySelector(".dockableContainer .activeFeature .embeddedServiceLiveAgentStateChat .endChatContainer");//Fix for defect 7030965
-						snapInConfirmationDialoug = document.querySelector(".dockableContainer .activeFeature .stateBody .dialogState .dialogTextContainer");
-						snapInhelpBtnDisabled = document.querySelector(".embeddedServiceHelpButton .helpButton .helpButtonDisabled");
-						snapInhelpBtnEnabled = document.querySelector(".embeddedServiceHelpButton .helpButton .helpButtonEnabled");
-						snapInEmbeddedServiceHelpBtn = document.querySelector(".embeddedServiceHelpButton");
-						if (snapInPrechatForm && snapInCurrentPage != "snapInPrechatForm") {
-							lagCounter(snapInCurrentPage ,"snapInPrechatForm");
-							snapInCurrentPage = "snapInPrechatForm";
-							document.querySelector(".startButton").click();
-						} else if (snapInWaiting && snapInCurrentPage != "snapInWaiting") {
-							lagCounter(snapInCurrentPage ,"snapInWaiting");
-							snapInCurrentPage = "snapInWaiting";
-						}else if (snapInQueueAssignment && snapInCurrentPage != "snapInQueueAssignment"){
-							lagCounter(snapInCurrentPage ,"snapInQueueAssignment");
-							snapInCurrentPage = "snapInQueueAssignment"; 
-						} else if (snapInChatEnded && snapInCurrentPage != "snapInChatEnded") {//Fix for defect 7030965
-							lagCounter(snapInCurrentPage ,"snapInChatEnded");
-							snapInCurrentPage = "snapInChatEnded";
-						} else if (snapInConfirmationDialoug && snapInCurrentPage != "snapInConfirmationDialoug") {
-							lagCounter(snapInCurrentPage ,"snapInConfirmationDialoug");
-							snapInCurrentPage = "snapInConfirmationDialoug";
-						} else if (snapInEmbeddedServiceHelpBtn && window.getComputedStyle(snapInEmbeddedServiceHelpBtn).display === 'block') {
-							if (snapInhelpBtnDisabled && window.getComputedStyle(snapInhelpBtnDisabled).display === 'flex' && snapInCurrentPage != "snapInhelpBtnDisabled") {
-								lagCounter(snapInCurrentPage ,"snapInhelpBtnDisabled");
-								snapInCurrentPage = "snapInhelpBtnDisabled";
-							} else if (snapInhelpBtnEnabled && window.getComputedStyle(snapInhelpBtnEnabled).display === 'flex' && snapInCurrentPage != "snapInhelpBtnEnabled") {
-								lagCounter(snapInCurrentPage ,"snapInhelpBtnEnabled");
-								if(snapInCurrentPage == 'snapInhelpBtnDisabled')
-									document.querySelector(".uiButton.helpButtonEnabled").click();
-								snapInCurrentPage = "snapInhelpBtnEnabled";
-							}
-						}
-					}
-				});
-			}
-			var observer = new MutationObserver(attributeChangeCallback);
-			var domElement = document.querySelector(eleSelector);
-			observer.observe(domElement, {
-				childList: true,
-				subtree: true
-			});
-		} catch (e) { console.log('Error in Observer - ' + e) }
-	}
+	
 </script>
 </head>
 <body>
@@ -150,7 +71,6 @@
 			}
 		);
 
-		domObserver("body");
 	};
 
 	if (!window.embedded_svc) {
