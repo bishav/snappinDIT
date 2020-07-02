@@ -2045,7 +2045,6 @@ function initiateChatBot(chatBotObject) {
         snapinBotPageObserver('body');
 
         var chatBotForm = "ChatBot", phoenNumberValues = null, VA_FlagValues= null;//FY21-0403 [Defect] prop 20 value change 
-       debugger;
         if ("applicationContext" in chatBotObject && (chatBotObject.applicationContext === "ChatBot-CareBot" || chatBotObject.applicationContext === "ChatBot-CareEnglish")) {//FY21-0803 US Care bot
             chatBotForm = "Chatbot-CareBot";
             phoenNumberValues = { "label": translatedLabels.primPhone, "transcriptFields": ["ContactNumber__c"], "displayToAgent": true };//FY21-0403 [Defect] prop 20 value change //For Care
@@ -2057,7 +2056,6 @@ function initiateChatBot(chatBotObject) {
         //FY21-0202 Story 7728368 [END]
 
         embedded_svc.settings.displayHelpButton = false;
-        debugger;
         embedded_svc.settings.extraPrechatFormDetails = [
 
             { "label": "Transcript From", "value": chatBotForm, "transcriptFields": ["Transcript_From__c"], "displayToAgent": true },
@@ -2093,6 +2091,7 @@ function initiateChatBot(chatBotObject) {
             { "label": "isDsdnstalled", "value": chatBotObject.isDsdnstalled, "transcriptFields": ["isDsdnstalled__c"], "displayToAgent": true },
             { "label": "isHwAlert", "value": chatBotObject.isHwAlert, "transcriptFields": ["isHwAlert__c"], "displayToAgent": true },
             { "label": "isSwAlert", "value": chatBotObject.isSwAlert, "transcriptFields": ["isSwAlert__c"], "displayToAgent": true },
+            { "label": "Application_Context", "transcriptFields": ["Application_Context__c"], "displayToAgent": true },
             { "label": "StepName_Manual_Bot", "value": chatBotObject.StepName_Manual_Bot, "transcriptFields": ["StepName_Manual_Bot__c"], "displayToAgent": true },
             { "label": "Agent_QueueName", "value": chatBotObject.Agent_QueueName, "transcriptFields": ["Agent_QueueName__c"], "displayToAgent": true },
             { "label": "BotFutureUse_2", "value": chatBotObject.BotFutureUse_2, "transcriptFields": ["BotFutureUse_2__c"], "displayToAgent": true },
