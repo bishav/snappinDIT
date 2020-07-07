@@ -1126,10 +1126,19 @@
                     snapInObject.lastName= "Rajbhandari",
                     snapInObject.email="BNr@dell.com",
                     snapInObject.phoneNo="1234567",
-                    snapInObject.chatSeverity = "S2",
-                    snapInObject.cpid = "2K8V821",//snapInObject.serviceTag,
+                    snapInObject.chatSeverity = "S2";
+                    if(document.getElementById('serviceTag').value){
+                        snapInObject.serviceTag = "2K8V821",
+                        snapInObject.cpid = "2K8V821";
+                    }else{
+                        snapInObject.serviceTag = '',
+                        snapInObject.cpid = '';
+                    }
+                        
+                    
                     snapInObject.isEmcProduct = true,
-                    snapInObject.serviceTag = "2K8V821",
+                    snapInObject.siteId = '12345',
+                    snapInObject.epdmId='1234',
                     snapInObject.emcProductId = "ABC1235";
                 }
                 snapInObject.domainName = "localhost";//"bishav.github.io";//
