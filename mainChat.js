@@ -1813,7 +1813,7 @@ function pageObserverForProp20(eleSelector, preChatlableObject) {
                             snapInhelpBtnDisabled.style.display = "none";
                             removeLoaderIn10();
                         } else if (snapInhelpBtnEnabled && window.getComputedStyle(snapInhelpBtnEnabled).display === 'flex' && snapInCurrentPage != "snapInhelpBtnEnabled") {
-                            if (snapInCurrentPage === "snapInhelpBtnDisabled")
+                            if (snapInCurrentPage === "snapInhelpBtnDisabled" && document.getElementById("cusCAREPreChatSnapinDom")) //FY21-0702 Unit Testing Additional check
                                 document.getElementById("cusPreChatSnapinDom").style.display = "block";
                             snapInCurrentPage = "snapInhelpBtnEnabled";
                             //togglePrechatAndSnapin(snapInCurrentPage);
