@@ -540,6 +540,7 @@ function snapinCareQueueLoaded() {
 } 
 function CareChatStarted(eleSelector, findingEle, orderSnapinObject) {
     try {
+        alert("Working");
         changeCarePrechatValues(orderSnapinObject);
         document.querySelector(" .embeddedServiceSidebar .dockableContainer .prechatUI  .embeddedServiceSidebarForm .embeddedServiceSidebarButton").click();
         clearInterval(findingEle);
@@ -1053,7 +1054,8 @@ try {
                             document.getElementById("cusCAREPreChatSnapinDom").style.display = "block";
                         snapInCurrentPage = "snapInhelpBtnEnabled";
                         //If the button is enabled open Prechat form by clicking on enabled button
-                            snapInhelpBtnEnabled.click();
+                         alert("working1");   
+                        snapInhelpBtnEnabled.click();
 
                     } else {
                         snapInCurrentPage = 'snapInNotAvilable';
