@@ -208,6 +208,7 @@ function initOrderSnapin(orderSnapinObject, orderSnapinLabelObj){
         embedded_svc.settings.displayHelpButton = true; //Or false
         embedded_svc.settings.enabledFeatures = ['LiveAgent'];
         embedded_svc.settings.entryFeature = 'LiveAgent';
+        embedded_svc.settings.defaultMinimizedText = 'Chat Now'; //FY21-0702
         if ("language" in orderSnapinObject)
             translatedLabels = translationCare(orderSnapinObject.language);
         else
@@ -1272,7 +1273,7 @@ function snapInCareClickListners() {
                         break;
                     case "uiButton helpButtonEnabled":
                     case "uiButton no-hover helpButtonEnabled":
-                        if (document.querySelector(".helpButtonEnabled #helpButtonSpan > .message")) {
+                        if (document.querySelector(".helpButtonEnabled #helpButtonSpan > .message").innerText == "Chat Now") {
                             snapInCurrentPage = null;
                             if (document.getElementById("cusCAREPreChatSnapinDom").display === "none")
                             console.log("StartsChat for " + snapinChatGlobalServiceTag + "|" + snapinChatGlobalIssueType + "|" + snapinChatGlobalProductName);
