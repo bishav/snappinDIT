@@ -489,6 +489,7 @@ function startCAREChat(orderSnapinObject, orderSnapinLabelObj){
         loadingSnapinCareQueue();
         orderSnapinObject = addCustCareFormDetailsTo(orderSnapinObject);
         saveGlobalSnapinCareObjToSession(orderSnapinObject);
+        eleExistCare('.helpButtonEnabled #helpButtonSpan > .message', chatCareClick);
         eleExistCareWithVariable('.embeddedServiceSidebar .startButton', CareChatStarted, orderSnapinObject);
         removecustCareFormValues();// FY20-1101 DEFECT 7204725
     }
@@ -541,7 +542,7 @@ function snapinCareQueueLoaded() {
 } 
 function CareChatStarted(eleSelector, findingEle, orderSnapinObject) {
     try {
-        alert("Working");
+        console.log("CareChatStarted");
         changeCarePrechatValues(orderSnapinObject);
         document.querySelector(" .embeddedServiceSidebar .dockableContainer .prechatUI  .embeddedServiceSidebarForm .embeddedServiceSidebarButton").click();
         clearInterval(findingEle);
