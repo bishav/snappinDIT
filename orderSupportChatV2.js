@@ -206,15 +206,14 @@ function initOrderSnapin(orderSnapinObject, orderSnapinLabelObj){
     snapInCareClickListners();// FY20-1101 STORY 7089672
     var initESW = function(gslbBaseURL) {
         embedded_svc.settings.displayHelpButton = true; //Or false
-        embedded_svc.settings.enabledFeatures = ['LiveAgent'];
-        embedded_svc.settings.entryFeature = 'LiveAgent';
-        embedded_svc.settings.defaultMinimizedText = 'Chat Now'; //FY21-0702
         if ("language" in orderSnapinObject)
             translatedLabels = translationCare(orderSnapinObject.language);
         else
             translatedLabels = translationCare("en");
         embedded_svc.settings.language = translatedLabels.language;
-        
+        embedded_svc.settings.defaultMinimizedText = 'Chat Now';
+        embedded_svc.settings.enabledFeatures = ['LiveAgent'];
+        embedded_svc.settings.entryFeature = 'LiveAgent';
         let issueVal
         if("issueType" in orderSnapinObject && orderSnapinObject.issueType != "" && orderSnapinObject.issueType != null && orderSnapinObject.issueType != undefined && orderSnapinObject.issueType !='None')
             issueVal = orderSnapinObject.issueType;
@@ -1091,12 +1090,12 @@ try {
                         snapInCurrentPage = "snapInhelpBtnDisabled";
 
                     } else if (snapInhelpBtnEnabled && window.getComputedStyle(snapInhelpBtnEnabled).display === 'flex' && snapInCurrentPage != "snapInhelpBtnEnabled") {
-                        if (snapInCurrentPage === "snapInhelpBtnDisabled" && document.getElementById("cusCAREPreChatSnapinDom")) //FY21-0702 Unit Testing Additional check
+                        if (snapInCurrentPage === "snapInhelpBtnDisabled")
                             document.getElementById("cusCAREPreChatSnapinDom").style.display = "block";
                         snapInCurrentPage = "snapInhelpBtnEnabled";
                         //If the button is enabled open Prechat form by clicking on enabled button 
-                        //snapInhelpBtnEnabled.click();//FY21-0702
-                        eleExistCare('.helpButtonEnabled #helpButtonSpan > .message', chatCareClick);//FY21-0702
+                        snapInhelpBtnEnabled.click();//FY21-0702
+                        //eleExistCare('.helpButtonEnabled #helpButtonSpan > .message', chatCareClick);//FY21-0702
 
                     } else {
                         snapInCurrentPage = 'snapInNotAvilable';
