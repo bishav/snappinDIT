@@ -1118,7 +1118,7 @@ try {
 //FY21-0702[START]
 function chatCareClick(eleSelector, findingEle) {
     try {
-        if (document.querySelector(eleSelector).innerText === 'Chat Now') {
+        if (document.querySelector(eleSelector)) {
             document.querySelector(eleSelector).click();
         }
         clearInterval(findingEle);
