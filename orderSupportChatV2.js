@@ -169,6 +169,7 @@ function initOrderSnapin(orderSnapinObject, orderSnapinLabelObj){
         embedded_svc.settings.displayHelpButton = true; //Or false
         embedded_svc.settings.enabledFeatures = ['LiveAgent'];
         embedded_svc.settings.entryFeature = 'LiveAgent';
+        embedded_svc.settings.defaultMinimizedText = 'Chat Now'; //FY21-0702
         if ("language" in orderSnapinObject)
             translatedLabels = translationCare(orderSnapinObject.language);
         else
@@ -1053,9 +1054,9 @@ try {
                         if (snapInCurrentPage === "snapInhelpBtnDisabled" && document.getElementById("cusCAREPreChatSnapinDom")) //FY21-0702 Unit Testing Additional check
                             document.getElementById("cusCAREPreChatSnapinDom").style.display = "block";
                         snapInCurrentPage = "snapInhelpBtnEnabled";
-                        //If the button is enabled open Prechat form by clicking on enabled button
-                         alert("working1");   
-                        snapInhelpBtnEnabled.click();
+                        //If the button is enabled open Prechat form by clicking on enabled button 
+                        //snapInhelpBtnEnabled.click();//FY21-0702
+                        eleExistCare('.helpButtonEnabled #helpButtonSpan > .message', chatCareClick);//FY21-0702
 
                     } else {
                         snapInCurrentPage = 'snapInNotAvilable';
@@ -1073,6 +1074,31 @@ try {
     });
 } catch (e) { console.log('Error in Observer - ' + e) }
 }
+
+//FY21-0702[START]
+function chatCareClick(eleSelector, findingEle) {
+    try {
+        if (document.querySelector(eleSelector).innerText === 'Chat Now') {
+            document.querySelector(eleSelector).click();
+        }
+        clearInterval(findingEle);
+    } catch (e) {
+        console.log("Error in:" + e);
+    }
+}
+function eleExistCare(eleSelector, callbackFunc) {
+    var findingEle = setInterval(function () {
+        if (document.querySelector(eleSelector)) {
+            try {
+                callbackFunc(eleSelector, findingEle);
+            } catch (e) {
+                console.log('error in ' + callbackFunc + ' function: ' + e);
+            }
+        }
+    }, 1000);
+}
+//FY21-0702[END]
+
 //FY21-0202 [START]
 function addChatPrivacyInfoCARE(preChatlableObject){
     setTimeout(function(){
