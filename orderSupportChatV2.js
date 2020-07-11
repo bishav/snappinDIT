@@ -205,7 +205,7 @@ function initOrderSnapin(orderSnapinObject, orderSnapinLabelObj){
     snapinCAREPageObserver("body", orderSnapinLabelObj);
     snapInCareClickListners();// FY20-1101 STORY 7089672
     var initESW = function(gslbBaseURL) {
-        embedded_svc.settings.displayHelpButton = true; //Or false
+        embedded_svc.settings.displayHelpButton = false; //Or false
         embedded_svc.settings.defaultMinimizedText = 'Chat Now'; //FY21-0702
         embedded_svc.settings.enabledFeatures = ['LiveAgent'];
         embedded_svc.settings.entryFeature = 'LiveAgent';
