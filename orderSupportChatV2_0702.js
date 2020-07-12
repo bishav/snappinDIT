@@ -488,7 +488,6 @@ function startCAREChat(orderSnapinObject, orderSnapinLabelObj){
         loadingSnapinCareQueue();
         orderSnapinObject = addCustCareFormDetailsTo(orderSnapinObject);
         saveGlobalSnapinCareObjToSession(orderSnapinObject);
-        //eleExistCare('.helpButtonEnabled #helpButtonSpan > .message', chatCareClick);
         eleExistCareWithVariable('.embeddedServiceSidebar .startButton', CareChatStarted, orderSnapinObject);
         removecustCareFormValues();// FY20-1101 DEFECT 7204725
     }
@@ -541,7 +540,6 @@ function snapinCareQueueLoaded() {
 } 
 function CareChatStarted(eleSelector, findingEle, orderSnapinObject) {
     try {
-        console.log("CareChatStarted");
         changeCarePrechatValues(orderSnapinObject);
         document.querySelector(" .embeddedServiceSidebar .dockableContainer .prechatUI  .embeddedServiceSidebarForm .embeddedServiceSidebarButton").click();
         clearInterval(findingEle);
@@ -1055,8 +1053,8 @@ try {
                             document.getElementById("cusCAREPreChatSnapinDom").style.display = "block";
                         snapInCurrentPage = "snapInhelpBtnEnabled";
                         //If the button is enabled open Prechat form by clicking on enabled button 
-                        //snapInhelpBtnEnabled.click();//FY21-0702
-                        eleExistCare('.helpButtonEnabled #helpButtonSpan > .message', chatCareClick);//FY21-0702
+                        //snapInhelpBtnEnabled.click();//FY21-0702-Defect 902225:Unable to initiate a chat using IE
+                        eleExistCare('.helpButtonEnabled #helpButtonSpan > .message', chatCareClick);//FY21-0702-Defect 902225:Unable to initiate a chat using IE
 
                     } else {
                         snapInCurrentPage = 'snapInNotAvilable';
@@ -1075,7 +1073,7 @@ try {
 } catch (e) { console.log('Error in Observer - ' + e) }
 }
 
-//FY21-0702[START]
+//FY21-0702-Defect 902225:Unable to initiate a chat using IE[START]
 function chatCareClick(eleSelector, findingEle) {
     try {
         if (document.querySelector(eleSelector)) {
@@ -1097,7 +1095,7 @@ function eleExistCare(eleSelector, callbackFunc) {
         }
     }, 1000);
 }
-//FY21-0702[END]
+//FY21-0702-Defect 902225:Unable to initiate a chat using IE[END]
 
 //FY21-0202 [START]
 function addChatPrivacyInfoCARE(preChatlableObject){
