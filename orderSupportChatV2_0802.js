@@ -1055,8 +1055,8 @@ try {
                             document.getElementById("cusCAREPreChatSnapinDom").style.display = "block";
                         snapInCurrentPage = "snapInhelpBtnEnabled";
                         //If the button is enabled open Prechat form by clicking on enabled button 
-                        snapInhelpBtnEnabled.click();//FY21-0702
-                        //eleExistCare('.helpButtonEnabled #helpButtonSpan > .message', chatCareClick);//FY21-0702
+                        //snapInhelpBtnEnabled.click();//FY21-0702
+                        eleExistCare('.helpButtonEnabled #helpButtonSpan > .message', chatCareClick);//FY21-0702
 
                     } else {
                         snapInCurrentPage = 'snapInNotAvilable';
@@ -1184,7 +1184,7 @@ function snapInCareClickListners() {
         if (document.querySelector(".embeddedServiceSidebar") || document.querySelector(".embeddedServiceHelpButton")) {
             var clickedElement = event.target || event.srcElement;
              //FY21-0702: Prop value Fix [Start]
-           /* if(clickedElement && clickedElement.tagName.toLowerCase() === 'embeddedservice-chat-header' && (closestByTagName(event.toElement, 'svg') || closestByTagName(event.toElement, 'button'))){//FY21-0702 DEFECT 9007902: Adding additional checks
+            if(clickedElement && clickedElement.tagName.toLowerCase() === 'embeddedservice-chat-header' && (closestByTagName(event.toElement, 'svg') || closestByTagName(event.toElement, 'button'))){//FY21-0702 DEFECT 9007902: Adding additional checks
                 if(closestByTagName(event.toElement, 'svg').dataset.key === 'minimize_window' || closestByTagName(event.toElement, 'button').className === 'minimizeButton')
                     assignCarePropVal("890.130.143","890.130.154");// FY20-1101 STORY 7089672
                 else if(closestByTagName(event.toElement, 'svg').dataset.key === 'close'  || closestByTagName(event.toElement, 'button').className === 'closeButton'){
@@ -1198,7 +1198,7 @@ function snapInCareClickListners() {
                     if(snapInfooterMenuElm != undefined && snapInfooterMenuElm != null && snapInfooterMenuElm.innerText)
                     this.console.log("CARE: '" + snapInfooterMenuElm.innerText + "' Button Clicked");//FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn
                 }
-            }else */
+            }else 
             //FY21-0702: Prop value Fix [END]
             if (closestByTagName(clickedElement, 'button') != null) {
                 switch (closestByTagName(clickedElement, 'button').className) {
