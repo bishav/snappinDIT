@@ -1,3 +1,4 @@
+
 function triggerOrderSnapin(orderSnapinObject, orderSnapinLabelObj){
     let snapinExists = document.querySelector(".embeddedServiceSidebar"), custCarePrechatForm = document.getElementById("cusCAREPreChatSnapinDom");
     if ((!snapinExists || (snapinExists && window.getComputedStyle(snapinExists).display == 'none')) && !custCarePrechatForm){
@@ -174,7 +175,6 @@ function initOrderSnapin(orderSnapinObject, orderSnapinLabelObj){
         else
             translatedLabels = translationCare("en");
         embedded_svc.settings.language = translatedLabels.language;
-        
         let issueVal
         if("issueType" in orderSnapinObject && orderSnapinObject.issueType != "" && orderSnapinObject.issueType != null && orderSnapinObject.issueType != undefined && orderSnapinObject.issueType !='None')
             issueVal = orderSnapinObject.issueType;
@@ -488,6 +488,7 @@ function startCAREChat(orderSnapinObject, orderSnapinLabelObj){
         loadingSnapinCareQueue();
         orderSnapinObject = addCustCareFormDetailsTo(orderSnapinObject);
         saveGlobalSnapinCareObjToSession(orderSnapinObject);
+        //eleExistCare('.helpButtonEnabled #helpButtonSpan > .message', chatCareClick);
         eleExistCareWithVariable('.embeddedServiceSidebar .startButton', CareChatStarted, orderSnapinObject);
         removecustCareFormValues();// FY20-1101 DEFECT 7204725
     }
@@ -540,6 +541,7 @@ function snapinCareQueueLoaded() {
 } 
 function CareChatStarted(eleSelector, findingEle, orderSnapinObject) {
     try {
+        console.log("CareChatStarted");
         changeCarePrechatValues(orderSnapinObject);
         document.querySelector(" .embeddedServiceSidebar .dockableContainer .prechatUI  .embeddedServiceSidebarForm .embeddedServiceSidebarButton").click();
         clearInterval(findingEle);
@@ -1052,8 +1054,9 @@ try {
                         if (snapInCurrentPage === "snapInhelpBtnDisabled")
                             document.getElementById("cusCAREPreChatSnapinDom").style.display = "block";
                         snapInCurrentPage = "snapInhelpBtnEnabled";
-                        //If the button is enabled open Prechat form by clicking on enabled button
-                            snapInhelpBtnEnabled.click();
+                        //If the button is enabled open Prechat form by clicking on enabled button 
+                        snapInhelpBtnEnabled.click();//FY21-0702
+                        //eleExistCare('.helpButtonEnabled #helpButtonSpan > .message', chatCareClick);//FY21-0702
 
                     } else {
                         snapInCurrentPage = 'snapInNotAvilable';
@@ -1071,6 +1074,31 @@ try {
     });
 } catch (e) { console.log('Error in Observer - ' + e) }
 }
+
+//FY21-0702[START]
+function chatCareClick(eleSelector, findingEle) {
+    try {
+        if (document.querySelector(eleSelector)) {
+            document.querySelector(eleSelector).click();
+        }
+        clearInterval(findingEle);
+    } catch (e) {
+        console.log("Error in:" + e);
+    }
+}
+function eleExistCare(eleSelector, callbackFunc) {
+    var findingEle = setInterval(function () {
+        if (document.querySelector(eleSelector)) {
+            try {
+                callbackFunc(eleSelector, findingEle);
+            } catch (e) {
+                console.log('error in ' + callbackFunc + ' function: ' + e);
+            }
+        }
+    }, 1000);
+}
+//FY21-0702[END]
+
 //FY21-0202 [START]
 function addChatPrivacyInfoCARE(preChatlableObject){
     setTimeout(function(){
@@ -1152,8 +1180,26 @@ function assignCarePropVal(onOrderVal, yesOrderVal, onOrderMsg, yesOrderMsg){
 
 function snapInCareClickListners() {
     window.addEventListener("click", function (event) {
+    try{//FY21-0702 DEFECT 9007902: Adding additional checks
         if (document.querySelector(".embeddedServiceSidebar") || document.querySelector(".embeddedServiceHelpButton")) {
             var clickedElement = event.target || event.srcElement;
+             //FY21-0702: Prop value Fix [Start]
+           /* if(clickedElement && clickedElement.tagName.toLowerCase() === 'embeddedservice-chat-header' && (closestByTagName(event.toElement, 'svg') || closestByTagName(event.toElement, 'button'))){//FY21-0702 DEFECT 9007902: Adding additional checks
+                if(closestByTagName(event.toElement, 'svg').dataset.key === 'minimize_window' || closestByTagName(event.toElement, 'button').className === 'minimizeButton')
+                    assignCarePropVal("890.130.143","890.130.154");// FY20-1101 STORY 7089672
+                else if(closestByTagName(event.toElement, 'svg').dataset.key === 'close'  || closestByTagName(event.toElement, 'button').className === 'closeButton'){
+                    assignCarePropVal("890.130.145","890.130.156");// FY20-1101 STORY 7089672
+                }  
+            }else if(clickedElement && clickedElement.tagName.toLowerCase() === 'embeddedservice-chat-input-footer-menu' && (closestByTagName(event.toElement, 'svg') || closestByTagName(event.toElement, 'button'))){//FY21-0702 DEFECT 9007902: Adding additional checks
+                if(closestByTagName(event.toElement, 'svg').dataset.key === 'rows' || closestByTagName(event.toElement, 'button').className === 'slds-button slds-button_icon slds-button_icon-container-more slds-button_icon-large')
+                    this.console.log("CARE: Hamburger Menu");//For future Prop values
+                else{
+                    var snapInfooterMenuElm= closestByTagName(event.toElement, 'a');
+                    if(snapInfooterMenuElm != undefined && snapInfooterMenuElm != null && snapInfooterMenuElm.innerText)
+                    this.console.log("CARE: '" + snapInfooterMenuElm.innerText + "' Button Clicked");//FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn
+                }
+            }else */
+            //FY21-0702: Prop value Fix [END]
             if (closestByTagName(clickedElement, 'button') != null) {
                 switch (closestByTagName(clickedElement, 'button').className) {
                     case "dialogButton dialog-button-0 uiButton embeddedServiceSidebarButton":
@@ -1207,6 +1253,10 @@ function snapInCareClickListners() {
 
             }
         }
+    }catch(e){
+        this.console.log("Error in function", e);
+        }
+        
     });
 }
 // FY20-1101 STORY 7089672 [END]
