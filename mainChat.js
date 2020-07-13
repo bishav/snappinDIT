@@ -28,13 +28,13 @@ var coveoHeader = "", isCoveoSearchEnabled = false, isPCFCall = false;
         head.appendChild(style);
     }
     //FY21-0702 DEFECT 8897670 [START]
-    if (!document.getElementById('snapinAdditionalScriptSrc')) {
+    /*if (!document.getElementById('snapinAdditionalScriptSrc')) {
         var sfdc_script = document.createElement('script');
         sfdc_script.setAttribute('src','https://service.force.com/embeddedservice/5.0/esw.min.js');
         sfdc_script.id = 'snapinAdditionalScriptSrc';
         sfdc_script.type = 'text/javascript';
         document.head.appendChild(sfdc_script);   
-    }
+    }*/
     //FY21-0702 DEFECT 8897670 [END]
     if (typeof NodeList.prototype.forEach === "function") return false;
     NodeList.prototype.forEach = Array.prototype.forEach;
@@ -879,7 +879,6 @@ function append_snapinChatUuid(msg) {
 
 //FY21-0502:[DEFECT 7917426] pushing new Values to SFDC if its changed[START]
 function pushValsToSnapinInit(snapInObject) {
-    console.log("pushValsToSnapinInit",snapInObject);
     var extraPrechatFormVals = embedded_svc.settings.extraPrechatFormDetails, i = 0;
     extraPrechatFormVals.forEach(function (extraPrechatFormVal) {
         var fieldAPI = extraPrechatFormVal.transcriptFields[0];
@@ -895,9 +894,10 @@ function pushValsToSnapinInit(snapInObject) {
                 embedded_svc.settings.extraPrechatFormDetails[i].value = getIssueTypeKey(snapInObject); //FY21-0502: DEFECT 8624995 Check for DDS
                 break;
             case "Service_Tag__c":
+                /* //FY210803: HES Story changes
                 if ("isEmcProduct" in snapInObject && snapInObject.isEmcProduct && "cpid" in snapInObject) {//FY21-0502: DEFECT 8455167 value not mapping to CPID for EMC [START]
                     embedded_svc.settings.extraPrechatFormDetails[i].value = snapInObject.cpid;
-                } else                                                                                       //FY21-0502: DEFECT 8455167 value not mapping to CPID for EMC [END]
+                } else */                                                                                //FY21-0502: DEFECT 8455167 value not mapping to CPID for EMC [END]
                     embedded_svc.settings.extraPrechatFormDetails[i].value = snapInObject.serviceTag;
                 break;
             case "Case_Number__c": //FY21-0502:[Sprinklr Chat Bot] Sending Lightning Case Number from sprinklr to SFDC chat via eSupport
@@ -967,67 +967,30 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
         translatedLabels = translation("en");
     embedded_svc.settings.language = translatedLabels.language;
 
-    //STORY 7193324: FY201101[START]
+    //STORY 7193324: FY201101[START] //FY210803: HES Generic chat changes [START]
     let assetFieldName = "Name";
     if (snapInObject.isEmcProduct) {
         assetFieldName = "External_ID__c";
-        embedded_svc.settings.extraPrechatFormDetails = [{
-            "label": translatedLabels.firstName,
-            "transcriptFields": ["FirstName__c"]
-        }, {
-            "label": translatedLabels.lastName,
-            "transcriptFields": ["LastName__c"]
-        }, {
-            "label": translatedLabels.primPhone,
-            "transcriptFields": ["ContactNumber__c"]
-        }, {
-            "label": translatedLabels.emailAdd,
-            "transcriptFields": ["Email__c"]
-        }, {
-            "label": "Subject",
-            "value": snapInObject.chatSeverity + " " + snapInObject.issueVal,
-            "transcriptFields": ["Issue__c"]
-        }, {
-            "label": "Service Tag",
-            "value": snapInObject.cpid,
-            "transcriptFields": ["Service_Tag__c"]
-        }, {
-            "label": translatedLabels.issueDesc,
-            "transcriptFields": ["Description__c"]
-        }, /*{// New filed
-            "label": "EMC Flag",
-            "value": snapInObject.isEmcProduct,
-            "transcriptFields": ["EMC_Flag__c"]
-        },*/
-        {//FY21-0502:[Sprinklr Chat Bot]: Adding new Field to be pushed to transcript[START]
-            "label": "Case Number",
-            "value": "",
-            "transcriptFields": ["Case_Number__c"]
-        }, {
-            "label": "Sprinklr Chatbot Routed",
-            "value": "",
-            "transcriptFields": ["Sprinklr_Chatbot_Routed__c"]
-        },
-        //FY21-0502:[Sprinklr Chat Bot]: Adding new Field to be pushed to transcript[END]
-        //Story FY21-0502 Soty 8020202: Pass issue key to Lightnig for HES Chat [START]
-        {
-            "label": "SubIssue Key",
-            "value": getIssueTypeKey(snapInObject),
-            "transcriptFields": ["Issue_Key__c"]
-        },
-        //Story FY21-0502 Soty 8020202: Pass issue key to Lightnig for HES Chat [END]
-        {// New filed
-            "label": "Chat Source",
-            "value": 'EMC',
-            "transcriptFields": ["Chat_Source__c"]
-        }, {	// New filed
-            "label": "Serial Number",
-            "value": snapInObject.serviceTag,
-            "transcriptFields": ["Serial_Number__c"]
-        }
-        ];
-    } else
-        //STORY 7193324: FY201101[END]
+        embedded_svc.settings.extraPrechatFormDetails = [
+        {"label": translatedLabels.firstName,"transcriptFields": ["FirstName__c"]}, 
+        {"label": translatedLabels.lastName,"transcriptFields": ["LastName__c"]}, 
+        {"label": translatedLabels.primPhone,"transcriptFields": ["ContactNumber__c"]}, 
+        {"label": translatedLabels.emailAdd,"transcriptFields": ["Email__c"]}, 
+        {"label": "Subject","value": snapInObject.chatSeverity + " " + snapInObject.issueVal,"transcriptFields": ["Issue__c"]},
+        {"label": translatedLabels.issueDesc,"transcriptFields": ["Description__c"]},
+        {"label": "Case Number","value": "","transcriptFields": ["Case_Number__c"]}, //FY21-0502:[Sprinklr Chat Bot]: Adding new Field to be pushed to transcript
+        {"label": "Sprinklr Chatbot Routed","value": "","transcriptFields": ["Sprinklr_Chatbot_Routed__c"]},//FY21-0502:[Sprinklr Chat Bot]: Adding new Field to be pushed to transcript
+        {"label": "Service Tag","value": "","transcriptFields": ["Service_Tag__c"]},//FY21-0502:[Sprinklr Chat Bot]: Adding new Field to be pushed to transcript
+        {"label": "SubIssue Key","value": getIssueTypeKey(snapInObject),"transcriptFields": ["Issue_Key__c"]},//Story FY21-0502 Soty 8020202: Pass issue key to Lightnig for HES Chat
+        {"label": "Chat Source","value": 'EMC',"transcriptFields": ["Chat_Source__c"]}, 
+        {"label": "Serial Number","value": snapInObject.serviceTag,"transcriptFields": ["Serial_Number__c"]}, 
+        {"label": "CPID","value": snapInObject.cpid,"transcriptFields": ["CPID__c"]},  
+        {"label": "EPDM Id", "value": snapInObject.epdmId, "transcriptFields": ["EPDM_Id__c"]},
+        {"label": "Product", "value": snapInObject.productName, "transcriptFields": ["Product_Name__c"]},
+        {"label": "Site Id", "value": snapInObject.siteId, "transcriptFields": ["Site_Id__c"]}
+    ];
+    } //STORY 7193324: FY201101[END] //FY210803: HES Generic chat changes [END] 
+    else
         embedded_svc.settings.extraPrechatFormDetails = [{
             "label": translatedLabels.firstName,
             "transcriptFields": ["FirstName__c"]
@@ -2002,8 +1965,9 @@ function eleExist(eleSelector, callbackFunc) {
 /////////////////////////////ChatBot Code///////////////////////////////////
 //0202 changes start
 function isTechOrCare(chatBotObject) {
-    if (chatBotObject.applicationContext === "ChatBot-CareBot") {
-        return "CARE";
+    //if (chatBotObject.applicationContext === "ChatBot-CareBot") {
+        if (chatBotObject.applicationContext === "ChatBot-CareBot" || chatBotObject.applicationContext === "ChatBot-CareEnglish") {//FY21-0803 US Care bot
+            return "CARE";
     } else
         return "Tech";
 }//0202 changes end
@@ -2077,12 +2041,21 @@ function initiateChatBot(chatBotObject) {
         embedded_svc.settings.language = translatedLabels.language;
 
         snapinBotPageObserver('body');
+        var VA_FlagValues= null;//FY21-0803 US CARE BOT changes
         var chatBotForm = "ChatBot", phoenNumberValues = null;//FY21-0403 [Defect] prop 20 value change 
-        if ("applicationContext" in chatBotObject && chatBotObject.applicationContext === "ChatBot-CareBot") {
+        if ("applicationContext" in chatBotObject && (chatBotObject.applicationContext === "ChatBot-CareBot" || chatBotObject.applicationContext === "ChatBot-CareEnglish")) {//FY21-0803 US Care bot
             chatBotForm = "Chatbot-CareBot";
             phoenNumberValues = { "label": translatedLabels.primPhone, "transcriptFields": ["ContactNumber__c"], "displayToAgent": true };//FY21-0403 [Defect] prop 20 value change //For Care
+            if('VA_Flag' in chatBotObject)
+                VA_FlagValues = { "label": 'VA Flag', "value": chatBotObject.VA_Flag, "transcriptFields": ["VA_Flag__c"], "displayToAgent": true };//FY21-0803 US Care bot
+            else
+                VA_FlagValues = { "label": 'VA Flag', "value": false, "transcriptFields": ["VA_Flag__c"], "displayToAgent": true };//FY21-0803 US Care bot 
         } else {
             phoenNumberValues = { "label": "Phone", "transcriptFields": ["Phone"], "displayToAgent": true };//FY21-0403 [Defect] prop 20 value change //For tech
+            if('VA_Flag' in chatBotObject)
+                VA_FlagValues = { "label": 'VA Flag', "value": chatBotObject.VA_Flag, "transcriptFields": ["VA_Flag__c"], "displayToAgent": true };//FY21-0803 US Care bot
+            else
+                VA_FlagValues = { "label": 'VA Flag', "value": false, "transcriptFields": ["VA_Flag__c"], "displayToAgent": true };//FY21-0803 US Care bot
         }
         //FY21-0202 Story 7728368 [END]
 
@@ -2096,6 +2069,7 @@ function initiateChatBot(chatBotObject) {
             { "label": "Order Number", "value": appendBuidForCareBot(chatBotObject), "transcriptFields": ["Order_Number__c"]},//FY21-0602: Story #8151253 add BUID to order number
             //{ "label": translatedLabels.primPhone, /*"value": '00 61 2 9876', */"transcriptFields": ["ContactNumber__c"], "displayToAgent": true },
             phoenNumberValues,//FY21-0403 [Defect] prop 20 value change
+            VA_FlagValues, //FY21-0803 US Care bot
             { "label": translatedLabels.firstName, /*"value": chatBotObject.FirstName, */"transcriptFields": ["FirstName__c"], "displayToAgent": true },
             { "label": translatedLabels.lastName, /*"value": chatBotObject.LastName, */"transcriptFields": ["LastName__c"], "displayToAgent": true },
             { "label": translatedLabels.emailAdd, /*"value":chatBotObject.Email,*/ "transcriptFields": ["Email__c"], "displayToAgent": true },
@@ -2511,7 +2485,7 @@ function createBotCustPreChat(chatBotObject) {
 }
 function createFixedLabels(chatBotObject) {
     let product_ModelDomEle = '', issue_DescriptionDomEle = '';
-    if ("applicationContext" in chatBotObject && chatBotObject.applicationContext !== "ChatBot-CareBot")//FY21-0202 Story 7728368 [START]
+    if ("applicationContext" in chatBotObject && chatBotObject.applicationContext !== "ChatBot-CareBot" && chatBotObject.applicationContext !== "ChatBot-CareEnglish")//FY21-0202 Story 7728368 [START] //FY21-0803 US Care bot
     {
         if ("product_Model" in chatBotObject && !(chatBotObject.product_Model === "" || chatBotObject.product_Model === null || chatBotObject.product_Model === undefined)) {
             product_ModelDomEle = '<div style="font-size: 1.2em;">' + chatBotObject.product_Model + '</div>';
@@ -2522,10 +2496,15 @@ function createFixedLabels(chatBotObject) {
         return '<div id="readonlyPreChatContainer" class="cusPreChat-readonlyContainer" style="margin: 1em 0px 0px 15px; text-align: left;position: relative;font-size: .75em;color: #444444;" bis_skin_checked="1">' + product_ModelDomEle + issue_DescriptionDomEle + '<div> <b>Service Tag:</b> <span  id="botServiceTagLabel">' + chatBotObject.Service_Tag + '</span></div></div>';
 
     }
-    //FY21-0202 Story 7728368 [START]
-    else
-        return '<div id="readonlyPreChatContainer" class="cusPreChat-readonlyContainer" style="margin: 1em 0px 0px 15px; text-align: left;position: relative;font-size: .75em;color: #444444;" bis_skin_checked="1">' + '<div> <b>ID do pedido:</b> <span  id="botCareChatOrderNumberLabel">' + chatBotObject.CARE_Chat_Order_Number + '</span></div></div>';
-    //FY21-0202 Story 7728368 [END]
+    //FY21-0202 Story 7728368  //FY21-0803 US Care bot [START]
+    else{
+        var orderIdLabel;
+        if("applicationContext" in chatBotObject && chatBotObject.applicationContext === "ChatBot-CareBot")
+            orderIdLabel = "ID do pedido";
+        else
+            orderIdLabel = "Order ID";//FY21-0803 US Care bot
+        return '<div id="readonlyPreChatContainer" class="cusPreChat-readonlyContainer" style="margin: 1em 0px 0px 15px; text-align: left;position: relative;font-size: .75em;color: #444444;" bis_skin_checked="1">' + '<div> <b>'+orderIdLabel+':</b> <span  id="botCareChatOrderNumberLabel">' + chatBotObject.CARE_Chat_Order_Number + '</span></div></div>';//FY21-0803 US Care bot
+    }//FY21-0202 Story 7728368  //FY21-0803 US Care bot [END]
 }
 function startSnapinChatBot(chatBotObject) {
     if (chatBotFieldsValidated(chatBotObject)) {

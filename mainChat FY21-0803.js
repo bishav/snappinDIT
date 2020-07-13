@@ -28,13 +28,13 @@ var coveoHeader = "", isCoveoSearchEnabled = false, isPCFCall = false;
         head.appendChild(style);
     }
     //FY21-0702 DEFECT 8897670 [START]
-    if (!document.getElementById('snapinAdditionalScriptSrc')) {
+    /*if (!document.getElementById('snapinAdditionalScriptSrc')) {
         var sfdc_script = document.createElement('script');
         sfdc_script.setAttribute('src','https://service.force.com/embeddedservice/5.0/esw.min.js');
         sfdc_script.id = 'snapinAdditionalScriptSrc';
         sfdc_script.type = 'text/javascript';
         document.head.appendChild(sfdc_script);   
-    }
+    }*/
     //FY21-0702 DEFECT 8897670 [END]
     if (typeof NodeList.prototype.forEach === "function") return false;
     NodeList.prototype.forEach = Array.prototype.forEach;
@@ -897,7 +897,7 @@ function pushValsToSnapinInit(snapInObject) {
                 /* //FY210803: HES Story changes
                 if ("isEmcProduct" in snapInObject && snapInObject.isEmcProduct && "cpid" in snapInObject) {//FY21-0502: DEFECT 8455167 value not mapping to CPID for EMC [START]
                     embedded_svc.settings.extraPrechatFormDetails[i].value = snapInObject.cpid;
-                } else */                                                                                      //FY21-0502: DEFECT 8455167 value not mapping to CPID for EMC [END]
+                } else */                                                                                //FY21-0502: DEFECT 8455167 value not mapping to CPID for EMC [END]
                     embedded_svc.settings.extraPrechatFormDetails[i].value = snapInObject.serviceTag;
                 break;
             case "Case_Number__c": //FY21-0502:[Sprinklr Chat Bot] Sending Lightning Case Number from sprinklr to SFDC chat via eSupport
@@ -1545,10 +1545,11 @@ var closestByTagName = function (el, closedElement) {
 }
 function snapInClickListners() {
     window.addEventListener("click", function (event) {
+    try{//FY21-0702 DEFECT 9007902: Adding additional checks
         if (document.querySelector(".embeddedServiceSidebar") || document.querySelector(".embeddedServiceHelpButton")) {
             var clickedElement = event.target || event.srcElement;
             //FY21-0702: Prop value Fix [Start]
-            if(clickedElement.tagName.toLowerCase() === 'embeddedservice-chat-header'){
+            if(clickedElement && clickedElement.tagName.toLowerCase() === 'embeddedservice-chat-header' && (closestByTagName(event.toElement, 'svg') || closestByTagName(event.toElement, 'button'))){//FY21-0702 DEFECT 9007902: Adding additional checks
                 if(closestByTagName(event.toElement, 'svg').dataset.key === 'minimize_window' || closestByTagName(event.toElement, 'button').className === 'minimizeButton')
                     callDellmetricsTrack("890.220.007", "SNAPIN: Minimize");
                 else if(closestByTagName(event.toElement, 'svg').dataset.key === 'close'  || closestByTagName(event.toElement, 'button').className === 'closeButton'){
@@ -1556,7 +1557,7 @@ function snapInClickListners() {
                     if (!document.querySelector(".dockableContainer .activeFeature .stateBody .dialogState .dialogTextContainer"))//Fix for on click of (x) button from End Chat confirmation Page: FYI we have created a SFDC case 23872982 
                         snapinChatInitiatedState(false);
                 }  
-            }else if(clickedElement.tagName.toLowerCase() === 'embeddedservice-chat-input-footer-menu'){
+            }else if(clickedElement && clickedElement.tagName.toLowerCase() === 'embeddedservice-chat-input-footer-menu' && (closestByTagName(event.toElement, 'svg') || closestByTagName(event.toElement, 'button'))){//FY21-0702 DEFECT 9007902: Adding additional checks
                 if(closestByTagName(event.toElement, 'svg').dataset.key === 'rows' || closestByTagName(event.toElement, 'button').className === 'slds-button slds-button_icon slds-button_icon-container-more slds-button_icon-large')
                     callDellmetricsTrack("890.220.015", "SNAPIN: Hamburger Menu");
                 else{
@@ -1620,6 +1621,9 @@ function snapInClickListners() {
                 callDellmetricsTrack("890.220.009", "ClickedOn " + closestByTagName(clickedElement, 'a').text); 
             }*///FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn [END]
         }
+    }catch(e){
+        this.console.log("Error in function", e);
+    }
     });
 }
 
@@ -1772,7 +1776,7 @@ function pageObserverForProp20(eleSelector, preChatlableObject) {
                             snapInhelpBtnDisabled.style.display = "none";
                             removeLoaderIn10();
                         } else if (snapInhelpBtnEnabled && window.getComputedStyle(snapInhelpBtnEnabled).display === 'flex' && snapInCurrentPage != "snapInhelpBtnEnabled") {
-                            if (snapInCurrentPage === "snapInhelpBtnDisabled")
+                            if (snapInCurrentPage === "snapInhelpBtnDisabled" && document.getElementById("cusCAREPreChatSnapinDom")) //FY21-0702 Unit Testing Additional check
                                 document.getElementById("cusPreChatSnapinDom").style.display = "block";
                             snapInCurrentPage = "snapInhelpBtnEnabled";
                             //togglePrechatAndSnapin(snapInCurrentPage);
@@ -1963,7 +1967,7 @@ function eleExist(eleSelector, callbackFunc) {
 function isTechOrCare(chatBotObject) {
     //if (chatBotObject.applicationContext === "ChatBot-CareBot") {
         if (chatBotObject.applicationContext === "ChatBot-CareBot" || chatBotObject.applicationContext === "ChatBot-CareEnglish") {//FY21-0803 US Care bot
-        return "CARE";
+            return "CARE";
     } else
         return "Tech";
 }//0202 changes end
@@ -2367,15 +2371,16 @@ function OmniChatBotTrackerListner() {
         //callDellmetricsTrackForBot("880.130.852");
 
         window.addEventListener("click", function (event) {
+        try{//FY21-0702 DEFECT 9007902: Adding additional checks
             if (document.querySelector(".embeddedServiceSidebar") || document.querySelector(".embeddedServiceHelpButton")) {
                 var clickedElement = event.target || event.srcElement;
                 //FY21-0702: Prop value Fix [Start]
-                if(clickedElement.tagName.toLowerCase() === 'embeddedservice-chat-header'){
+                if(clickedElement && clickedElement.tagName.toLowerCase() === 'embeddedservice-chat-header' && (closestByTagName(event.toElement, 'svg') || closestByTagName(event.toElement, 'button'))){//FY21-0702 DEFECT 9007902: Adding additional checks
                     if(closestByTagName(event.toElement, 'svg').dataset.key === 'minimize_window' || closestByTagName(event.toElement, 'button').className === 'minimizeButton')
                         callDellmetricsTrackForBot("880.130.854");
                     else if(closestByTagName(event.toElement, 'svg').dataset.key === 'close'  || closestByTagName(event.toElement, 'button').className === 'closeButton')
                         callDellmetricsTrackForBot("880.130.855");
-                }else if(clickedElement.tagName.toLowerCase() === 'embeddedservice-chat-input-footer-menu'){
+                }else if(clickedElement && clickedElement.tagName.toLowerCase() === 'embeddedservice-chat-input-footer-menu' && (closestByTagName(event.toElement, 'svg') || closestByTagName(event.toElement, 'button'))){//FY21-0702 DEFECT 9007902: Adding additional checks
                     if(closestByTagName(event.toElement, 'svg').dataset.key !== 'rows' && closestByTagName(event.toElement, 'button').className !== 'slds-button slds-button_icon slds-button_icon-container-more slds-button_icon-large'){
                         var snapInfooterMenuElm= closestByTagName(event.toElement, 'a');
                         if(snapInfooterMenuElm != undefined && snapInfooterMenuElm != null && snapInfooterMenuElm.innerText)
@@ -2383,7 +2388,7 @@ function OmniChatBotTrackerListner() {
                     }
                 }else 
                 //FY21-0702: Prop value Fix [END]
-                if (closestByTagName(clickedElement, 'button') != null) {
+                if (clickedElement && closestByTagName(clickedElement, 'button') != null) {//FY21-0702 DEFECT 9007902: Adding additional checks
                     switch (closestByTagName(clickedElement, 'button').className) {
                         /*case "startButton uiButton--default uiButton embeddedServiceSidebarButton":
                             callDellmetricsTrackForBot("880.130.853");
@@ -2415,6 +2420,9 @@ function OmniChatBotTrackerListner() {
                     }
                 }
             }
+        } catch(e){
+                this.console.log("function error", e)
+        }
         });
 
     } catch (e) {
