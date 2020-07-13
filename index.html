@@ -87,14 +87,27 @@
                             <label style="margin-right: 10px; margin-bottom: 20px;" for="Organization">Organization : </label>
                                 <span id="orginazationName">
                                     <label><input id = "dellOrg" type="radio" name="optradio" checked>&nbsp&nbspDell legacy</label>
-                                    <label><input id = "emcOrg" type="radio" name="optradio" style="margin-left: 20px;">&nbsp&nbspEMC legacy</label>
+                                    <label><input id = "emcOrg" type="radio" name="optradio" style="margin-left: 20px;" value = 'emcOrg'>&nbsp&nbspEMC legacy</label>
                                     <label><input id = "routSprinklrBot" type="radio" name="optradio" style="margin-left: 20px;">&nbsp&nbspSprinklr Bot Routing</label>
                                 </span>
-                            <div><label for="serviceTag">Service Tag / CPID (for EMC legacy)</label></div>
-                            
+                            <div>
+                            <label for="serviceTag"><span class='NonEMC'>Service Tag</span><span class='EMC' style='display:none;'>CPID (for EMC legacy)</span></label>
+                            </div>
                             <input type="text" class="form-control"  id="serviceTag" aria-describedby="serviceTag" placeholder="Enter Service Tag" value="DSEASSET">
-                            <p>Based on asset warranty contact channel will be displayed</p>
+                            <div class='EMC' style='display:none;'>
+                                <label for="epdmId">EPDM-Id(for EMC legacy)</label>
+                            </div>
+                            <input style='display:none;' type="text" class="form-control EMC"  id="epdmId" aria-describedby="serviceTag" placeholder="Enter EMPD Id" value="1234">                        
+                            <div class='EMC' style='display:none;'>
+                                <label for="emcSiteId">Site-Id(for EMC legacy)</label>
+                            </div>
+                            <input style='display:none;' type="text" class="form-control EMC"  id="emcSiteId" aria-describedby="serviceTag" placeholder="Enter Site Id" value="12345">
+                            <div class='EMC' style='display:none;'>
+                                <label for="emcProductName">ProductName(for EMC legacy)</label>
+                            </div>
+                            <input style='display:none;' type="text" class="form-control EMC"  id="emcProductName" aria-describedby="serviceTag" placeholder="Enter Product name" value="2.3">
                         </div>
+
                         <!-- Old service tag="6MW0204" 
                             <div class="form-group">
                             <label for="exampleFormControlTextarea1">Description</label>
@@ -901,6 +914,18 @@
     <script src="orderSupportChatV2.js"></script>
        
     <script>
+
+            $('input:radio[name="optradio"]').change(
+                function(){
+                    if ($(this).is(':checked') && $(this).val() == 'emcOrg') {
+                        $(".EMC").show();
+                        $(".NonEMC").hide();
+                    }else{
+                        $(".EMC").hide();
+                        $(".NonEMC").show();
+                    }
+                });
+            //EMC check[END]
         //hide elements on load of page
         var dropdownIssue = document.querySelectorAll('#issueDropdown > .dropdown-item');
         for (i = 0; i < dropdownIssue.length; i++) {
@@ -1128,15 +1153,16 @@
                     snapInObject.phoneNo="1234567",
                     snapInObject.chatSeverity = "S2";
                     if(document.getElementById('serviceTag').value){
-                        snapInObject.serviceTag = "2K8V821",
-                        snapInObject.cpid = "2K8V821";
+                        snapInObject.serviceTag = document.getElementById('serviceTag').value,
+                        snapInObject.cpid = document.getElementById('serviceTag').value;
                     }else{
-                        snapInObject.serviceTag = '',
-                        snapInObject.cpid = '';
+                        snapInObject.serviceTag = null,
+                        snapInObject.cpid = null;
                     }
                     snapInObject.isEmcProduct = true,
-                    snapInObject.siteId = '12345',
-                    snapInObject.epdmId='1234',
+                    snapInObject.siteId = document.getElementById('emcSiteId').value,
+                    snapInObject.epdmId= document.getElementById('epdmId').value,
+                    snapInObject.productName = document.getElementById('emcProductName').value,//"2.3",
                     snapInObject.emcProductId = "ABC1235";
                 }
                 snapInObject.domainName = "localhost";//"bishav.github.io";//
