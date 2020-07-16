@@ -90,9 +90,6 @@
                     </div>
                     <div class="chat-with-us">
                         <h5>Chat with us</h5>
-                        <div class="checkbox">
-                            <label><input id='VA_Coustomer' type="checkbox" value="" style="margin-right: 5px;margin-top: 10px;">Verified Customer</label>
-                          </div>
                         <button type="button" id="chatBotButton" class="btn btn-primary" onclick="initChatBot()">Start Chat With Bot</button>
                         <span id="selectLanguage" style="float: right;">
                             <span>Select Enveironment</span>
@@ -304,7 +301,6 @@
            chatBotObject.issue_Description= issueVal,
            chatBotObject.language= botLang,
            chatBotObject.buid= '',
-           chatBotObject.VA_Flag = document.getElementById('VA_Coustomer').checked,
            chatBotObject.Agent_QueueName = "5731P000000TSSX";//"5730b00000097Kk";//"5730b00000097Kk";//"5730b000000Gnxf";
           console.log("testing", chatBotObject);
            if (issueVal === "ChatBot-CareBot" || issueVal === "ChatBot-CareEnglish"){
@@ -380,6 +376,11 @@
          function HideLoader(){
             console.log('HideLoader');
          }
+         
+function IsVerifiedCareChat(careChatObj){
+    var r = confirm("Is the Customer is Varified, please click on OK");
+    return r;
+}
         
     </script>     
 </body>

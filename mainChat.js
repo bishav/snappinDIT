@@ -2517,10 +2517,49 @@ function startSnapinChatBot(chatBotObject) {
         callDellmetricsTrackForBot("880.130.853");
         loadingSnapinBotQueue();
         chatBotObject = addCustBotFormDetailsTo(chatBotObject);
+        checkForCareCustomerVarification(chatBotObject); //FY21-0803 VA Flag Code chagnes for CARE BOT
         saveGlobalSnapinBotObjToSession(chatBotObject);
         eleExistWithVariable('.embeddedServiceSidebar .startButton', ChatBotStarted, chatBotObject);
     }
 }
+//FY21-0803 VA Flag Code chagnes for CARE BOT [START]
+function checkForCareCustomerVarification(chatBotObject){
+    var  isVarifiedVal;
+    try{
+        if (chatBotObject.applicationContext === "ChatBot-CareBot" || chatBotObject.applicationContext === "ChatBot-CareEnglish") {
+            var careChatObj = {
+                "Buid": chatBotObject.buid,
+                "OrderNumber": chatBotObject.c_CARE_Chat_Order_Number,       
+                "FirstName": chatBotObject.c_firstName,
+                "LastName": chatBotObject.c_lastName,
+                "EmailAddress": chatBotObject.c_email,
+                "PhoneNumber": chatBotObject.c_phoneNo
+            };   
+        isVarifiedVal = IsVerifiedCareChat(careChatObj);
+        }
+    }catch(e){
+        return isVarifiedVal = false;
+        console.log("Error on checkForCareCustomerVarification",e);
+    }
+        pushVarifiedCustomerFlagToBot(isVarifiedVal);
+}
+function pushVarifiedCustomerFlagToBot(isVarifiedVal) {
+    try{
+        var extraPrechatFormVals = embedded_svc.settings.extraPrechatFormDetails, i = 0;
+        if(extraPrechatFormVals){
+            extraPrechatFormVals.forEach(function (extraPrechatFormVal) {
+                var fieldAPI = extraPrechatFormVal.transcriptFields[0];
+                if(fieldAPI === 'VA_Flag__c'){
+                    embedded_svc.settings.extraPrechatFormDetails[i].value = isVarifiedVal;
+                }
+                i++;
+            });
+        }
+    }catch(e){
+        console.log("Error on pushVarifiedCustomerFlagToBot",e);
+    }
+}
+//FY21-0803 VA Flag Code chagnes for CARE BOT [END]
 function loadingSnapinBotQueue() {
     document.getElementById("cusBotPreChat-sidebarLoadingIndicator").style.display = 'flex';
     document.getElementById("cusBotPreChat-hideWhileLoading").style.display = 'none';
