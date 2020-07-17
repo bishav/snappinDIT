@@ -113,7 +113,7 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 					caseSeverityTxt: convertToSeverity(partnerPortalDetails.caseSeverity),
 					loginIdNoSpace: loginIdNoSpace(partnerPortalDetails.loginId),
 					validFirstName: firstNameValidator(partnerPortalDetails),
-					role: "GLOBAL TAG TEAM",//FY21:0502 STORY 7994527: Add Role value
+					role: getRoleValue(partnerPortalDetails),//"GLOBAL TAG TEAM",//FY21:0502 STORY 7994527: Add Role value //FY21-0803 Add GCC to SharePoint
 					serviceForceURL: "https://service.force.com"
 		}
             var initESW = function (gslbBaseURL) {
@@ -233,11 +233,11 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 						"transcriptFields": ["PP_Logs_Collected__c"]
 					},{
 						"label":  "Reason",
-						"value": expandChatReason(isRequiredForGTT(partnerPortalDetails.productGroup,partnerPortalDetails,"chatReason")) ,//GTT only //New Field 
+						"value": expandChatReason(notRequiredForMixedIP(partnerPortalDetails.productGroup,partnerPortalDetails,"chatReason")) ,//GTT only //New Field //FY21-0803 Add GCC to SharePoint
 						"transcriptFields": ["Reason__c"]
 					},{//FY21:0502 STORY 7994527: Add Role value[START]
 						"label": "Support Team",
-						"value": isRequiredForGTT(partnerPortalDetails.productGroup,sfdcSnapinDetails,"role"),
+						"value": notRequiredForMixedIP(partnerPortalDetails.productGroup,sfdcSnapinDetails,"role"),//FY21-0803 Add GCC to SharePoint
 						"transcriptFields": ["Role__c"]
 					},//FY21:0502 STORY 7994527: Add Role value[END]
 					{
@@ -524,13 +524,22 @@ function getProductGroup(productGroup){
 		return "GTT";
 	else if(productGroup === "Mixed IP")
 		return "Mixed IP";
-	else if(productGroup === "ALGCC" || productGroup === "APJGCC" || productGroup === "EMEAGCC" )
+	else if(productGroup === "ALGCC" || productGroup === "APJGCC" || productGroup === "EMEAGCC" ) //FY21-0803 Add GCC to SharePoint
 		return "GCC";
  }
  //Check Product Group before pushing the values [END]
 
+ //FY21-0803 Add GCC to SharePoint [START]
+function getRoleValue(partnerPortalDetails){
+	if (getProductGroup(partnerPortalDetails.productGroup) === "GTT" || getProductGroup(partnerPortalDetails.productGroup) === "Mixed IP"){
+		return "GLOBAL TAG TEAM";
+	}else if (getProductGroup(partnerPortalDetails.productGroup) === "GCC"){
+		return "GLOBAL COMMAND CENTER";
+	}
+}
+ //FY21-0803 Add GCC to SharePoint [END]
+
 function isRequiredForGTT(productGroup,object,key){
-	console.log(key,object[key]);
 	if (getProductGroup(productGroup) === "GTT"&& object[key])
 		return object[key];
 	else
@@ -538,12 +547,20 @@ function isRequiredForGTT(productGroup,object,key){
 }
 
 function isRequiredForMixedIP(productGroup,object,key){
-	console.log(key,object[key]);
 	if (productGroup === "Mixed IP" && object[key])
 		return object[key];
 	else
 		return "";
 }
+
+//FY21-0803 Add GCC to SharePoint [START]
+function notRequiredForMixedIP(productGroup,object,key){
+	if (productGroup === "Mixed IP")
+		return "";
+	else
+		return object[key];
+}
+//FY21-0803 Add GCC to SharePoint [END]
 
 function expandChatReason(chatReason){
 	let returnVal;
