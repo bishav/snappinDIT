@@ -501,6 +501,54 @@ function routingConfig(partnerPortalDetails){
 			case "UCPN":
 			  buttonID = "5731P000000TSVv";//GCC_US_CA_Client_PS_NBD
 			  break;
+			case "UCEN":
+				buttonID = "5731P000000TSVw";//GCC_US_CA_Enterprise_NBD
+			break;
+			case "UCCES":
+				buttonID = "5731P000000TSVx";//GCC_US_CA_Enterprise_SBD
+			break;
+			case "LEN":
+				buttonID = "5731P000000TSVs";//GCC_LA_Enterprise_NBD
+			break;
+            case "LES":
+				buttonID = "5731P000000TSVt";//GCC_LA_Enterprise_SBD
+			break;
+			case "LCBN":
+				buttonID = "5731P000000TSVq";//GCC_LA_Client_Basic_NBD
+			break;
+			case "LCPSN":
+				buttonID = "5731P000000TSVr";//GCC_LA_Client_PS_NBD
+			break;
+			case "APNPSN":
+				buttonID = "5731P000000TSVi";//GCC_AP_Non_PS_SBD_NBD
+			break;
+			case "APCPSSN":
+				buttonID = "5731P000000TSVg";//GCC_AP_Client_PS_SBD_NBD
+			break;
+			case "APEPSN":
+				buttonID = "5731P000000TSVh";//GCC_AP_Enterprise_PS_SBD_NBD
+			break;
+			case "CNNPSN":
+				buttonID = "5731P000000TSVl";//GCC_CN_Non_PS_SBD_NBD
+			break;
+			case "CNCPSN":
+				buttonID = "5731P000000TSVj";//GCC_CN_Client_PS_SBD_NBD
+			break;
+			case "CNEPSN":
+				buttonID = "5731P000000TSVk";//GCC_CN_Enterprise_PS_SBD_NBD
+			break;
+			case "JPCPSN":
+				buttonID = "5731P000000TSVn";//GCC_JP_Client_PS_SBD_NBD
+			break;
+			case "JPEPSN":
+				buttonID = "5731P000000TSVo";//GCC_JP_Enterprise_PS_SBD_NBD
+			break;
+			case "JPNPSN":
+				buttonID = "5731P000000TSVp";//GCC_JP_Non_PS_SBD_NBD
+			break;
+			case "ESN":
+				buttonID = "5731P000000TSVm";//GCC_EMEA_SBD_NBD
+			break;
 			default:
 			  break;
 			  }
