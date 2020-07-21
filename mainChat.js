@@ -923,7 +923,8 @@ function pushValsToSnapinInit(snapInObject) {
 //FY20-1102 Avilability and Business Hr Chack [START]
 function checkSnapinQueueStatus(snapInObject) {
     var returnValue;
-    function httpGetAgentAvailability(theUrl) {
+    //FY21-0803 Story #8842192 check for HES/EMC products[START]
+    function httpGetBusinessHrAgentAvailability(theUrl) {
         try {
             var xmlHttp = new XMLHttpRequest();
             xmlHttp.onreadystatechange = function () {
@@ -934,14 +935,40 @@ function checkSnapinQueueStatus(snapInObject) {
             xmlHttp.setRequestHeader('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest');//FY21-0702 eSupport call Changes
             xmlHttp.setRequestHeader("Content-Type", "application/json; charset=utf-8"); //FY21-0702 eSupport call Changes
             xmlHttp.send(null);
+            return returnValue;
         } catch (e) {
             console.log("Error in: " + e);
         }
     }
-    if (snapInObject.checkQueueStatusInBizHoursUrl && snapInObject.hoursOfOperation && snapInObject.timeZone && (snapInObject.checkQueueStatusInBizHoursUrl != "" || snapInObject.checkQueueStatusInBizHoursUrl != null || snapInObject.checkQueueStatusInBizHoursUrl != undifined) && (snapInObject.hoursOfOperation != "" || snapInObject.hoursOfOperation != null || snapInObject.hoursOfOperation != undifined) && (snapInObject.timeZone != "" || snapInObject.timeZone != null || snapInObject.timeZone != undifined)) {
-        httpGetAgentAvailability(snapInObject.checkQueueStatusInBizHoursUrl + "?chatHours=" + escape(snapInObject.hoursOfOperation) + "&timeZone=" + escape(snapInObject.timeZone) + "&buttonId=" + snapInObject.buttonId);
-        return returnValue;
-    } else
+    function httpGetAgentAvailability(theUrl) {
+        try {
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.onreadystatechange = function () {
+                if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+					returnValue = xmlHttp.responseText;
+            }
+            xmlHttp.open("GET", theUrl, false); // true for asynchronous 
+            xmlHttp.setRequestHeader('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest');//FY21-0702 eSupport call Changes
+            xmlHttp.setRequestHeader("Content-Type", "application/text; charset=utf-8"); //FY21-0702 eSupport call Changes
+            xmlHttp.send(null);
+			return returnValue;
+        } catch (e) {
+            console.log("Error in: " + e);
+        }
+    }
+    if (snapInObject.checkQueueStatusInBizHoursUrl && snapInObject.hoursOfOperation && snapInObject.timeZone && (snapInObject.checkQueueStatusInBizHoursUrl != "" || snapInObject.checkQueueStatusInBizHoursUrl != null || snapInObject.checkQueueStatusInBizHoursUrl != undifined) && (snapInObject.hoursOfOperation != "" || snapInObject.hoursOfOperation != null || snapInObject.hoursOfOperation != undifined) && (snapInObject.timeZone != "" || snapInObject.timeZone != null || snapInObject.timeZone != undifined)) { 
+        return httpGetBusinessHrAgentAvailability(snapInObject.checkQueueStatusInBizHoursUrl + "?chatHours=" + escape(snapInObject.hoursOfOperation) + "&timeZone=" + escape(snapInObject.timeZone) + "&buttonId=" + snapInObject.buttonId);
+    }
+    else if("checkBtnAvailabilityUrl" in snapInObject && snapInObject.checkBtnAvailabilityUrl && snapInObject.checkBtnAvailabilityUrl != ""){
+        var btnAvailabilityResVal = httpGetAgentAvailability(snapInObject.checkBtnAvailabilityUrl+snapInObject.buttonId);
+        if (btnAvailabilityResVal){
+            return 1;
+        }else{
+            return 4;
+        }
+    }
+    //FY21-0803 Story #8842192 check for HES/EMC products[END]
+    else
         return 1;
 }
 //FY20-1102 Avilability and Business Hr Chack [END]
@@ -2068,6 +2095,7 @@ function initiateChatBot(chatBotObject) {
             { "label": "Service Tag",/* "value": chatBotObject.Service_Tag,*/ "transcriptFields": ["Service_Tag__c"], "displayToAgent": true },
             { "label": "CARE_Chat_Order_Number", "transcriptFields": ["CARE_Chat_Order_Number__c"], "displayToAgent": true }, // Change for BOT phone March 19 2020
             { "label": "Order Number", "value": appendBuidForCareBot(chatBotObject), "transcriptFields": ["Order_Number__c"] },//FY21-0602: Story #8151253 add BUID to order number
+            { "label": "Subject", "value": selectIssueTypeForCareBot(chatBotObject), "transcriptFields": ["Issue__c"] },//FY21-0803: Defect #8151253 add BUID to order number
             //{ "label": translatedLabels.primPhone, /*"value": '00 61 2 9876', */"transcriptFields": ["ContactNumber__c"], "displayToAgent": true },
             phoenNumberValues,//FY21-0403 [Defect] prop 20 value change
             VA_FlagValues, //FY21-0803 US Care bot
@@ -2275,6 +2303,17 @@ function appendBuidForCareBot(chatBotObject) {
     return orderNumber;
 }
 //FY21-0602: Story #8151253 add BUID to order number [START]
+//FY21-0803: Defect #9058298 add Status if not avilable in bot [START]
+function selectIssueTypeForCareBot(chatBotObject) {
+    var issueType = null;
+    if (chatBotObject.applicationContext === "ChatBot-CareBot") {
+        issueType = 'Status do pedido';
+    } else if (chatBotObject.applicationContext === "ChatBot-CareEnglish") {
+        issueType = 'Order Status';
+    }
+    return issueType;
+}
+//FY21-0803: Defect #9058298 add Status if not avilable in bot [END]
 
 function ResgisterChatBotHandler() {
     embedded_svc.addEventHandler("onAgentMessage", function (data) {
