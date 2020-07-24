@@ -226,27 +226,27 @@ function initOrderSnapin(orderSnapinObject, orderSnapinLabelObj){
             embedded_svc.settings.extraPrechatInfo = [{
                 "entityFieldMaps": [{
                     "doCreate": false,
-                    "doFind": true,
+                    "doFind": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                     "fieldName": "LastName",
-                    "isExactMatch": true,
+                    "isExactMatch": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                     "label": translatedLabels.lastName
                 }, {
                     "doCreate": false,
-                    "doFind": true,
+                    "doFind": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                     "fieldName": "FirstName",
-                    "isExactMatch": true,
+                    "isExactMatch": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                     "label": translatedLabels.firstName
                 }, {
                     "doCreate": false,
-                    "doFind": true,
+                    "doFind": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                     "fieldName": "Email",
-                    "isExactMatch": true,
+                    "isExactMatch": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                     "label": translatedLabels.emailAdd
                 }, {
                     "doCreate": false,
-                    "doFind": true,
+                    "doFind": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                     "fieldName": "Primary_Phone__c",
-                    "isExactMatch": true,
+                    "isExactMatch": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                     "label": translatedLabels.primPhone
                 }
                 ],
@@ -255,11 +255,11 @@ function initOrderSnapin(orderSnapinObject, orderSnapinLabelObj){
             }, {
                 "entityFieldMaps": [{
                     "doCreate": false,
-                    "doFind": true,
+                    "doFind": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                     //"fieldName": "OrderNumber__c",
                     //"fieldName": lookupOnName,
                     "fieldName": "External_ID__c",
-                    "isExactMatch": true,
+                    "isExactMatch": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                     "label": "Order Number"
                 }
                 ],
@@ -268,17 +268,17 @@ function initOrderSnapin(orderSnapinObject, orderSnapinLabelObj){
             }, {
                 "entityFieldMaps": [{
                     "doCreate": false,
-                    "doFind": true,
+                    "doFind": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                     "fieldName": "Issue_Description__c",
-                    "isExactMatch": true,
+                    "isExactMatch": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                     "label": translatedLabels.issueDesc
                 }
                 //FY21-0502 Defect #8096827 [START]
                 ,{
                     "doCreate": false,
-                    "doFind": true,
+                    "doFind": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                     "fieldName": "CARE_Chat_Order_Number__c",
-                    "isExactMatch": true,
+                    "isExactMatch": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                     "label": "CARE Chat Order Number"
                 }//FY21-0502 Defect #8096827 [END]
                 ],
@@ -314,27 +314,27 @@ function initOrderSnapin(orderSnapinObject, orderSnapinLabelObj){
             embedded_svc.settings.extraPrechatInfo = [{
                 "entityFieldMaps": [{
                     "doCreate": false,
-                    "doFind": true,
+                    "doFind": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                     "fieldName": "LastName",
-                    "isExactMatch": true,
+                    "isExactMatch": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                     "label": translatedLabels.lastName
                 }, {
                     "doCreate": false,
-                    "doFind": true,
+                    "doFind": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                     "fieldName": "FirstName",
-                    "isExactMatch": true,
+                    "isExactMatch": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                     "label": translatedLabels.firstName
                 }, {
                     "doCreate": false,
-                    "doFind": true,
+                    "doFind": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                     "fieldName": "Email",
-                    "isExactMatch": true,
+                    "isExactMatch": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                     "label": translatedLabels.emailAdd
                 }, {
                     "doCreate": false,
-                    "doFind": true,
+                    "doFind": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                     "fieldName": "Primary_Phone__c",
-                    "isExactMatch": true,
+                    "isExactMatch": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                     "label": translatedLabels.primPhone
                 }
                 ],
@@ -344,15 +344,15 @@ function initOrderSnapin(orderSnapinObject, orderSnapinLabelObj){
             {
                 "entityFieldMaps": [{
                     "doCreate": false,
-                    "doFind": true,
+                    "doFind": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                     "fieldName": "Issue_Description__c",
-                    "isExactMatch": true,
+                    "isExactMatch": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                     "label": translatedLabels.issueDesc
                 },{
                     "doCreate": false,
-                    "doFind": true,
+                    "doFind": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                     "fieldName": "CARE_Chat_Order_Number__c",
-                    "isExactMatch": true,
+                    "isExactMatch": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                     "label": "CARE Chat Order Number"
                 }
                 ],

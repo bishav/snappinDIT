@@ -923,7 +923,7 @@ function pushValsToSnapinInit(snapInObject) {
 //FY20-1102 Avilability and Business Hr Chack [START]
 function checkSnapinQueueStatus(snapInObject) {
     var returnValue;
-    //FY21-0803 Story #8842192 check for HES/EMC products[START]
+    //FY21-0803: Story #8842192 check for HES/EMC products[START]
     function httpGetBusinessHrAgentAvailability(theUrl) {
         try {
             var xmlHttp = new XMLHttpRequest();
@@ -967,7 +967,7 @@ function checkSnapinQueueStatus(snapInObject) {
             return 4;
         }
     }
-    //FY21-0803 Story #8842192 check for HES/EMC products[END]
+    //FY21-0803: Story #8842192 check for HES/EMC products[END]
     else
         return 1;
 }
@@ -1068,27 +1068,27 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
     embedded_svc.settings.extraPrechatInfo = [{
         "entityFieldMaps": [{
             "doCreate": false,
-            "doFind": true,
+            "doFind": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
             "fieldName": "LastName",
-            "isExactMatch": true,
+            "isExactMatch": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
             "label": translatedLabels.lastName
         }, {
             "doCreate": false,
-            "doFind": true,
+            "doFind": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
             "fieldName": "FirstName",
-            "isExactMatch": true,
+            "isExactMatch": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
             "label": translatedLabels.firstName
         }, {
             "doCreate": false,
-            "doFind": true,
+            "doFind": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
             "fieldName": "Email",
-            "isExactMatch": true,
+            "isExactMatch": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
             "label": translatedLabels.emailAdd
         }, {
             "doCreate": false,
-            "doFind": true,
+            "doFind": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
             "fieldName": "Primary_Phone__c",
-            "isExactMatch": true,
+            "isExactMatch": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
             "label": translatedLabels.primPhone
         }
         ],
@@ -1097,9 +1097,9 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
     }, {
         "entityFieldMaps": [{
             "doCreate": false,
-            "doFind": true,
+            "doFind": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
             "fieldName": assetFieldName,//STORY 7193324: FY201101
-            "isExactMatch": true,
+            "isExactMatch": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
             "label": "Service Tag"
         }
         ],
@@ -1108,9 +1108,9 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
     }, {
         "entityFieldMaps": [{
             "doCreate": false,
-            "doFind": true,
+            "doFind": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
             "fieldName": "Issue_Description__c",
-            "isExactMatch": true,
+            "isExactMatch": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
             "label": translatedLabels.issueDesc
         }
         ],
@@ -2041,8 +2041,14 @@ function initiateChatBot(chatBotObject) {
     var initESW = function (gslbBaseURL) {
         //FIX for CSS related issue in Chat bot[START]
         if (!document.getElementById('chatBotStyle')) {
-            //FY21-0602: Unit testing fix for Glitch issue.
-            let css = '.embeddedServiceLiveAgentStateChatHeader .message,.embeddedServiceLiveAgentStateChatHeaderOption .optionName,.embeddedServiceSidebarFormField .uiInput .uiLabel-left{font-size:.75em!important}.embeddedServiceLiveAgentStateChatPlaintextMessageDefaultUI.plaintextContent,.embeddedServiceSidebarDialogState #dialogTextBody,.embeddedServiceSidebarFormField .slds-style-inputtext,.embeddedServiceSidebarFormField .slds-style-select,.embeddedServiceSidebarHeader .shortHeader,.embeddedServiceSidebarMinimizedDefaultUI .minimizedText{font-size:.875em!important}.embeddedServiceSidebar .headerItem,.embeddedServiceSidebarButton{font-size:1em!important}.embeddedServiceLiveAgentStateChatInputFooter .footerMenuWrapper .footer-menu .slds-button__icon{width:1.5em!important;height:1.5em!important}.embeddedServiceLiveAgentStateChatInputFooter .footerMenuWrapper .footer-menu .slds-button_icon-container-more{line-height:1.875em!important}.embeddedServiceLiveAgentStateChatInputFooter .footerMenuWrapper .footer-menu .slds-dropdown-trigger{padding:.5em .5em!important}.embeddedServiceLiveAgentStateChatInputFooter .footerMenuWrapper .footer-menu .data-metrics={btnname:chgprod,appcode:880.130.862}';
+            //FY21-0602: Unit testing fix for Glitch issue. //FY21-0803: Defect #9075724 [START]
+            var css = null
+            if(isTechOrCare(chatBotObject) === 'CARE'){
+                css = '.embeddedServiceLiveAgentStateChatHeader .message,.embeddedServiceLiveAgentStateChatHeaderOption .optionName,.embeddedServiceSidebarFormField .uiInput .uiLabel-left{font-size:.75em!important}.embeddedServiceLiveAgentStateChatPlaintextMessageDefaultUI.plaintextContent,.embeddedServiceSidebarDialogState #dialogTextBody,.embeddedServiceSidebarFormField .slds-style-inputtext,.embeddedServiceSidebarFormField .slds-style-select,.embeddedServiceSidebarHeader .shortHeader,.embeddedServiceSidebarMinimizedDefaultUI .minimizedText{font-size:.875em!important}.embeddedServiceSidebar .headerItem,.embeddedServiceSidebarButton{font-size:1em!important}.embeddedServiceLiveAgentStateChatInputFooter .footerMenuWrapper .footer-menu .slds-button__icon{width:1.5em!important;height:1.5em!important}.embeddedServiceLiveAgentStateChatInputFooter .footerMenuWrapper .footer-menu .slds-button_icon-container-more{line-height:1.875em!important}.embeddedServiceLiveAgentStateChatInputFooter .footerMenuWrapper .footer-menu .slds-dropdown-trigger{padding:.5em .5em!important}.embeddedServiceLiveAgentStateChatInputFooter .footerMenuWrapper .footer-menu .data-metrics={btnname:chgprod,appcode:880.130.862} .embeddedServiceLiveAgentStateChatInputFooter .footerMenuWrapper .footer-menu-items .slds-dropdown__item:nth-child(2){display: none;}';
+            }else{
+                css = '.embeddedServiceLiveAgentStateChatHeader .message,.embeddedServiceLiveAgentStateChatHeaderOption .optionName,.embeddedServiceSidebarFormField .uiInput .uiLabel-left{font-size:.75em!important}.embeddedServiceLiveAgentStateChatPlaintextMessageDefaultUI.plaintextContent,.embeddedServiceSidebarDialogState #dialogTextBody,.embeddedServiceSidebarFormField .slds-style-inputtext,.embeddedServiceSidebarFormField .slds-style-select,.embeddedServiceSidebarHeader .shortHeader,.embeddedServiceSidebarMinimizedDefaultUI .minimizedText{font-size:.875em!important}.embeddedServiceSidebar .headerItem,.embeddedServiceSidebarButton{font-size:1em!important}.embeddedServiceLiveAgentStateChatInputFooter .footerMenuWrapper .footer-menu .slds-button__icon{width:1.5em!important;height:1.5em!important}.embeddedServiceLiveAgentStateChatInputFooter .footerMenuWrapper .footer-menu .slds-button_icon-container-more{line-height:1.875em!important}.embeddedServiceLiveAgentStateChatInputFooter .footerMenuWrapper .footer-menu .slds-dropdown-trigger{padding:.5em .5em!important}.embeddedServiceLiveAgentStateChatInputFooter .footerMenuWrapper .footer-menu .data-metrics={btnname:chgprod,appcode:880.130.862}';
+            }
+            //FY21-0803: Defect #9075724 [START]
             head = document.head || document.getElementsByTagName('head')[0],
                 style = document.createElement('style');
             style.type = 'text/css';
@@ -2057,6 +2063,7 @@ function initiateChatBot(chatBotObject) {
             HideLoader();
         }
         //FIX for CSS related issue in Chat bot[END]
+
         //snapinBotPageObserver('body');
 
         //FY21-0202 Story 7728368 [START]
@@ -2095,7 +2102,7 @@ function initiateChatBot(chatBotObject) {
             { "label": "Service Tag",/* "value": chatBotObject.Service_Tag,*/ "transcriptFields": ["Service_Tag__c"], "displayToAgent": true },
             { "label": "CARE_Chat_Order_Number", "transcriptFields": ["CARE_Chat_Order_Number__c"], "displayToAgent": true }, // Change for BOT phone March 19 2020
             { "label": "Order Number", "value": appendBuidForCareBot(chatBotObject), "transcriptFields": ["Order_Number__c"] },//FY21-0602: Story #8151253 add BUID to order number
-            { "label": "Subject", "value": selectIssueTypeForCareBot(chatBotObject), "transcriptFields": ["Issue__c"] },//FY21-0803: Defect #8151253 add BUID to order number
+            { "label": "Issue", "value": selectIssueTypeForCareBot(chatBotObject), "transcriptFields": ["Issue__c"] },//FY21-0803: Defect #9058298 add Status if not avilable in bot
             //{ "label": translatedLabels.primPhone, /*"value": '00 61 2 9876', */"transcriptFields": ["ContactNumber__c"], "displayToAgent": true },
             phoenNumberValues,//FY21-0403 [Defect] prop 20 value change
             VA_FlagValues, //FY21-0803 US Care bot
@@ -2189,21 +2196,21 @@ function initiateChatBot(chatBotObject) {
         embedded_svc.settings.extraPrechatInfo = [{
             "entityFieldMaps": [{
                 "doCreate": false,
-                "doFind": true,
+                "doFind": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                 "fieldName": "LastName",
-                "isExactMatch": true,
+                "isExactMatch": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                 "label": "Last Name"
             }, {
                 "doCreate": false,
-                "doFind": true,
+                "doFind": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                 "fieldName": "FirstName",
-                "isExactMatch": true,
+                "isExactMatch": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                 "label": "First Name"
             }, {
                 "doCreate": false,
-                "doFind": true,
+                "doFind": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                 "fieldName": "Email",
-                "isExactMatch": true,
+                "isExactMatch": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                 "label": "Email Address"
             }],
             "entityName": "Contact",
@@ -2212,9 +2219,9 @@ function initiateChatBot(chatBotObject) {
         }, {
             "entityFieldMaps": [{
                 "doCreate": false,
-                "doFind": true,
+                "doFind": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                 "fieldName": "Name",
-                "isExactMatch": true,
+                "isExactMatch": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                 "label": "Service Tag"
             }
             ],
@@ -2230,9 +2237,9 @@ function initiateChatBot(chatBotObject) {
                 }, */
                 {
                     "doCreate": false,
-                    "doFind": true,
+                    "doFind": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                     "fieldName": "AssetId",
-                    "isExactMatch": true,
+                    "isExactMatch": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                     "label": "Asset"
                 }, {
                     "entityFieldMaps": [{

@@ -94,8 +94,8 @@
                         <span id="selectLanguage" style="float: right;">
                             <span>Select Enveironment</span>
                                 <select id="envSelect"> 
-                                    <option>GE4</option>
                                     <option>FY21-0803-DEV</option>
+                                    <option>GE4</option>
                                     <option>FY21-0703-DEV</option>
                                     <option>FY21-0602-DEV</option>
                                     <option>GE2 </option>
@@ -317,6 +317,13 @@
                     chatBotObject.LiveAgentDevName = 'EmbeddedServiceLiveAgent_Parent04I2R000000PAwzUAG_1704330fc3e';
                 } else if(env === "FY21-0703-DEV"){
                     chatBotObject.buttonId = '5731P000000TScM';
+                    chatBotObject.LiveAgentDevName = 'EmbeddedServiceLiveAgent_Parent04I2h0000004CBYEA2_16fa30a6c99';
+                } else if(env === "FY21-0803-DEV"){
+                    if(issueVal === "ChatBot-CareBot")
+                        chatBotObject.buttonId = '5731P000000TScM';
+                    else
+                        chatBotObject.buttonId = '573550000008SuV';
+
                     chatBotObject.LiveAgentDevName = 'EmbeddedServiceLiveAgent_Parent04I2h0000004CBYEA2_16fa30a6c99';
                 }
                 else{
