@@ -2329,6 +2329,11 @@ getCommand = function(n) {
         case "Disable chat bot input after user enter first message":
             DisableChatBotInput();
             break;
+        //New Code
+        case 'You have selected "Pay by PayPal". Please wait while i redirect you to the correct page...':
+            //Redirect to a new page
+            window.open('https://www.paypal.com/', '_blank');
+            break;
         default:
             t.redirectURL = null;
             t.isNewWindow = !1
