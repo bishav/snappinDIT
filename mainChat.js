@@ -2104,7 +2104,6 @@ function initiateChatBot(chatBotObject) {
             { "label": "Order Number", "value": appendBuidForCareBot(chatBotObject), "transcriptFields": ["Order_Number__c"] },//FY21-0602: Story #8151253 add BUID to order number
             { "label": "Issue", "value": selectIssueTypeForCareBot(chatBotObject), "transcriptFields": ["Issue__c"] },//FY21-0803: Defect #9058298 add Status if not avilable in bot
             //{ "label": translatedLabels.primPhone, /*"value": '00 61 2 9876', */"transcriptFields": ["ContactNumber__c"], "displayToAgent": true },
-            //{ "label": translatedLabels.primPhone,"value": '1234', "transcriptFields": ["ContactNumber__c"], "displayToAgent": true },//BNR FY21-1003 Testing
             phoenNumberValues,//FY21-0403 [Defect] prop 20 value change
             VA_FlagValues, //FY21-0803 US Care bot
             { "label": translatedLabels.firstName, /*"value": chatBotObject.FirstName, */"transcriptFields": ["FirstName__c"], "displayToAgent": true },
@@ -2429,14 +2428,14 @@ function OmniChatBotTrackerListner() {
                     //FY21-0702: Prop value Fix [Start]
                     if (clickedElement && clickedElement.tagName.toLowerCase() === 'embeddedservice-chat-header' && (closestByTagName(event.toElement, 'svg') || closestByTagName(event.toElement, 'button'))) {//FY21-0702 DEFECT 9007902: Adding additional checks
                         if (closestByTagName(event.toElement, 'svg').dataset.key === 'minimize_window' || closestByTagName(event.toElement, 'button').className === 'minimizeButton')
-                            callDellmetricsTrackForBot("880.130.854");
+                            callDellmetricsTrackForBot("880.130.854","Minimize");//Story 8233457: Prop Values Change for Einstein Bot
                         else if (closestByTagName(event.toElement, 'svg').dataset.key === 'close' || closestByTagName(event.toElement, 'button').className === 'closeButton')
-                            callDellmetricsTrackForBot("880.130.855");
+                            callDellmetricsTrackForBot("880.130.855","Close");//Story 8233457: Prop Values Change for Einstein Bot
                     } else if (clickedElement && clickedElement.tagName.toLowerCase() === 'embeddedservice-chat-input-footer-menu' && (closestByTagName(event.toElement, 'svg') || closestByTagName(event.toElement, 'button'))) {//FY21-0702 DEFECT 9007902: Adding additional checks
                         if (closestByTagName(event.toElement, 'svg').dataset.key !== 'rows' && closestByTagName(event.toElement, 'button').className !== 'slds-button slds-button_icon slds-button_icon-container-more slds-button_icon-large') {
                             var snapInfooterMenuElm = closestByTagName(event.toElement, 'a');
                             if (snapInfooterMenuElm != undefined && snapInfooterMenuElm != null && snapInfooterMenuElm.innerText)
-                                callDellmetricsTrackForBot("880.130.859");
+                                callDellmetricsTrackForBot("880.130.859","Save Transcript");//Story 8233457: Prop Values Change for Einstein Bot
                         }
                     } else
                         //FY21-0702: Prop value Fix [END]
@@ -2446,25 +2445,25 @@ function OmniChatBotTrackerListner() {
                                     callDellmetricsTrackForBot("880.130.853");
                                     break;*/
                                 case "waitingCancelChat uiButton--inverse uiButton embeddedServiceSidebarButton":
-                                    callDellmetricsTrackForBot("880.130.856");
+                                    callDellmetricsTrackForBot("880.130.856","Cancel Chat Request");//Story 8233457: Prop Values Change for Einstein Bot
                                     chasitorTextMaintainState();
                                     isBinded = false;
                                     bindHandler();
 
                                     break;
                                 case "closeButton headerItem":
-                                    callDellmetricsTrackForBot("880.130.855");
+                                    callDellmetricsTrackForBot("880.130.855","Close");//Story 8233457: Prop Values Change for Einstein Bot
                                     break;
                                 case "minimizeButton headerItem":
-                                    callDellmetricsTrackForBot("880.130.854");
+                                    callDellmetricsTrackForBot("880.130.854","Minimize");//Story 8233457: Prop Values Change for Einstein Bot
                                     break;
                                 case "dialogButton dialog-button-0 uiButton embeddedServiceSidebarButton":
                                     if ((event.target.innerText === "Leave" || event.target.innerText === "Sair") && (event.target.parentNode.parentNode.parentNode.firstElementChild.textContent === "Leave?" || event.target.parentNode.parentNode.parentNode.firstElementChild.textContent === "Sair?"))//FY21-0403 [Defect] prop 20 value change
-                                        callDellmetricsTrackForBot("880.130.857");
+                                        callDellmetricsTrackForBot("880.130.857","Leave Chat");//Story 8233457: Prop Values Change for Einstein Bot
                                     break;
                                 case "dialogButton dialog-button-1 uiButton--inverse uiButton embeddedServiceSidebarButton":
                                     if ((event.target.innerText === "Continue to Wait" || event.target.innerText === "Continuar esperando") && (event.target.parentNode.parentNode.parentNode.firstElementChild.textContent === "Leave?" || event.target.parentNode.parentNode.parentNode.firstElementChild.textContent === "Sair?"))//FY21-0403 [Defect] prop 20 value change
-                                        callDellmetricsTrackForBot("880.130.858");
+                                        callDellmetricsTrackForBot("880.130.858","Continue to Wait");//Story 8233457: Prop Values Change for Einstein Bot
                                     chasitorTextMaintainState();
                                     isBinded = false;
                                     bindHandler();
@@ -2488,7 +2487,7 @@ function callDellmetricsTrackForBot(propValue, message) {
     if (typeof (dellmetricsTrack) == "function") {
         if (dellmetricsTrack) {
             if (message)
-                dellmetricsTrack(propValue, "chatsessionid:" + message);
+                dellmetricsTrack(propValue, message);//Story 8233457: Prop Values Change for Einstein Bot
             else
                 dellmetricsTrack(propValue);
         }
@@ -2499,14 +2498,14 @@ function callDellmetricsTrackForBot(propValue, message) {
 //Call this function on click of start chat
 function openBotPrechatform(chatBotObject) {
     if (!document.getElementById("cusBotPreChatSnapinDom")) {
-        callDellmetricsTrackForBot("880.130.852");
+        callDellmetricsTrackForBot("880.130.852","Chat Window Load"); //Story 8233457: Prop Values Change for Einstein Bot
         createBotCustPreChat(chatBotObject);
     } else {
         //If the form is already avilable[START] 
         let serviceSidebar = document.querySelector(".modalContainer.embeddedServiceSidebar"),
             minimizedDefaultUI = document.querySelector(".embeddedServiceSidebar .embeddedServiceSidebarMinimizedDefaultUI");
         if (serviceSidebar && serviceSidebar.style.display == "none") { //if prechat form is open: Open custom prechat form
-            callDellmetricsTrackForBot("880.130.852");
+            callDellmetricsTrackForBot("880.130.852","Chat Window Load"); //Story 8233457: Prop Values Change for Einstein Bot
             document.getElementById("cusBotPreChat-helpButtonEnabled").click();
         } else if (minimizedDefaultUI)//If chat has already started try to maximize the chat window
             minimizedDefaultUI.click();
@@ -2561,7 +2560,7 @@ function createFixedLabels(chatBotObject) {
 function startSnapinChatBot(chatBotObject) {
     if (chatBotFieldsValidated(chatBotObject)) {
         //loadingSnapinQueue
-        callDellmetricsTrackForBot("880.130.853");
+        callDellmetricsTrackForBot("880.130.853","Start Chat in Popup"); //Story 8233457: Prop Values Change for Einstein Bot
         loadingSnapinBotQueue();
         chatBotObject = addCustBotFormDetailsTo(chatBotObject);
         checkForCareCustomerVarification(chatBotObject); //FY21-0803 VA Flag Code chagnes for CARE BOT
@@ -2667,7 +2666,7 @@ function changeBotPrechatValues(snapInObject) {
     state.set("v.prechatFields", prechatFields);
 }
 function custMinimizeBtnClickedInBot() {
-    callDellmetricsTrackForBot("880.130.854");
+    callDellmetricsTrackForBot("880.130.854","Minimize");//Story 8233457: Prop Values Change for Einstein Bot
     minimizeCustBotPrechat();
 }
 function minimizeCustBotPrechat() {
@@ -2675,7 +2674,7 @@ function minimizeCustBotPrechat() {
     document.getElementById("cusBotPreChatSnapinDom").style.display = 'none';
 }
 function custCloseBtnClickedInBot() {
-    callDellmetricsTrackForBot("880.130.855");
+    callDellmetricsTrackForBot("880.130.855","Close");//Story 8233457: Prop Values Change for Einstein Bot
     closeCustBotPrechat();
 }
 function closeCustBotPrechat() {
