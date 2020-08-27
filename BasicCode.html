@@ -145,16 +145,13 @@
 		embedded_svc.liveAgentAPI.clearSession();
 	}
 	function startChatforButton(){
-		embedded_svc.settings.eswConfigDevName = "Snap_Ins_Chat_Deployment";
+		embedded_svc.liveAgentAPI.startChat({
+		extraPrechatInfo: [],
+		extraPrechatFormDetails: []
+		});
+		/*embedded_svc.settings.eswConfigDevName = "Snap_Ins_Chat_Deployment";
 		embedded_svc.settings.eswLiveAgentDevName = "EmbeddedServiceLiveAgent_Parent04I0b000000blJJEAY_16520d15b68";
-		embedded_svc.settings.buttonId = '5730b000000CbhT';
-		/*embedded_svc.liveAgentAPI.startChat({
-			directToAgentRouting: {
-			buttonId: buttonId,
-			// userId: “”,
-			fallback: true
-		}
-		});*/
+		embedded_svc.settings.buttonId = '5730b000000CbhT';*/
 	}
 </script>
 </body>
