@@ -106,6 +106,10 @@
                                 <label for="emcProductName">ProductName(for EMC legacy)</label>
                             </div>
                             <input style='display:none;' type="text" class="form-control EMC"  id="emcProductName" aria-describedby="serviceTag" placeholder="Enter Product name" value="2.3">
+                            <div class='EMC' style='display:none;'>
+                                <label for="emcAltEmail">Alternate Email(for EMC legacy)</label>
+                            </div>
+                            <input style='display:none;' type="text" class="form-control EMC"  id="emcAltEmail" aria-describedby="serviceTag" placeholder="Alternate email can be empty">
                         </div>
 
                         <!-- Old service tag="6MW0204" 
@@ -1212,6 +1216,7 @@
                     snapInObject.siteId = document.getElementById('emcSiteId').value,
                     snapInObject.epdmId= document.getElementById('epdmId').value,
                     snapInObject.productName = document.getElementById('emcProductName').value,//"2.3",
+                    snapInObject.altEmail = document.getElementById('emcAltEmail').value,
                     snapInObject.emcProductId = "ABC1235";
                 }
                 snapInObject.domainName = "localhost";//"bishav.github.io";//
