@@ -87,8 +87,8 @@
                         <div class="form-group">
                             <label style="margin-right: 10px; margin-bottom: 20px;" for="Organization">Organization : </label>
                                 <span id="orginazationName">
-                                    <label><input id = "dellOrg" type="radio" name="optradio">&nbsp&nbspDell legacy</label>
-                                    <label><input id = "emcOrg" type="radio" name="optradio" style="margin-left: 20px;" value = 'emcOrg' checked>&nbsp&nbspEMC legacy</label>
+                                    <label><input id = "dellOrg" type="radio" name="optradio" checked>&nbsp&nbspDell legacy</label>
+                                    <label><input id = "emcOrg" type="radio" name="optradio" style="margin-left: 20px;" value = 'emcOrg'>&nbsp&nbspEMC legacy</label>
                                     <label><input id = "routSprinklrBot" type="radio" name="optradio" style="margin-left: 20px;">&nbsp&nbspSprinklr Bot Routing</label>
                                 </span>
                             <div>
@@ -963,8 +963,8 @@
    <script src="mainChat.js"></script>
        
     <script>
-        $(".EMC").show();
-        $(".NonEMC").hide();
+       /* $(".EMC").show();
+        $(".NonEMC").hide();*/
         $('input:radio[name="optradio"]').change(
                 function(){
                     if ($(this).is(':checked') && $(this).val() == 'emcOrg') {
