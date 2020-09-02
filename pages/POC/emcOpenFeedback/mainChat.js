@@ -2068,6 +2068,7 @@ function hesAdminAltEmailInterationDesign(snapInObject){
 
 //FY21-1003 POC:emcOpenFeedback [START]
 function clickOnSurvey(endSnapInHasPrimBtn){
+    console.log("Button: "+ endSnapInHasPrimBtn.innerText);
     if(endSnapInHasPrimBtn.innerText && endSnapInHasPrimBtn.innerText === "Take the Survey"){
         endSnapInHasPrimBtn.click();
     }else{
