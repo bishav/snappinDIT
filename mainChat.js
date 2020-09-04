@@ -453,7 +453,17 @@ function custPreChatKeypressFieldValidation(preChatlableObject) {
 			} else if (document.getElementById("ErrMsg_cusPreChat-emptyAltEmail"))
 				removeDomElementbyId("ErrMsg_cusPreChat-emptyAltEmail");
 		});
-	}
+    }
+    if(document.getElementById("cusPreChat-BrowserVer")){
+        document.getElementById("cusPreChat-BrowserVer").onkeypress = function (e) {
+			if (document.getElementById("ErrMsg_cusPreChat-BrowserVer"))
+				removeDomElementbyId("ErrMsg_cusPreChat-BrowserVer");
+        }
+        document.getElementById("cusPreChat-BrowserVer").addEventListener("paste", function (e) {
+			if (document.getElementById("ErrMsg_cusPreChat-BrowserVer"))
+				removeDomElementbyId("ErrMsg_cusPreChat-BrowserVer");
+		});
+    }
 	//FY21-1003 Story #9078562: HES Admin Chat Prechat form changes [END]
     document.getElementById("cusPreChat-IssueDescription").onkeypress = function (e) {
         var a = [];
