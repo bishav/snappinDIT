@@ -97,7 +97,7 @@
                             <div class='EMC' style='display:none;'>
                                 <label for="epdmId">EPDM-Id(for EMC legacy)</label>
                             </div>
-                            <input style='display:none;' type="text" class="form-control EMC"  id="epdmId" aria-describedby="serviceTag" placeholder="Enter EMPD Id" value="1234">                        
+                            <input style='display:none;' type="text" class="form-control EMC"  id="epdmId" aria-describedby="serviceTag" placeholder="Enter EMPD Id">                        
                             <div class='EMC' style='display:none;'>
                                 <label for="emcSiteId">Site-Id(for EMC legacy)</label>
                             </div>
@@ -107,9 +107,15 @@
                             </div>
                             <input style='display:none;' type="text" class="form-control EMC"  id="emcProductName" aria-describedby="serviceTag" placeholder="Enter Product name" value="2.3">
                             <div class='EMC' style='display:none;'>
-                                <label for="emcAltEmail">Alternate Email(for EMC legacy)</label>
+                                <label for="Site Info">Site Info(for EMC Admin CHat)</label>
                             </div>
-                            <input style='display:none;' type="text" class="form-control EMC"  id="emcAltEmail" aria-describedby="serviceTag" placeholder="Alternate email can be empty">
+                            <input style='display:none;' type="text" class="form-control EMC"  id="emcSiteInfo" aria-describedby="serviceTag" placeholder="Site Info" value="Site Info goes here.">
+                            
+                            <div class='EMC' style='display:none;'>
+                                <label for="emcAltEmail">Alternate Email(for EMC Admin CHat)</label>
+                            </div>
+                            <input style='display:none;' type="text" class="form-control EMC"  id="emcAltEmail" aria-describedby="serviceTag" placeholder="Prechat UI changes based on email ID">
+                            
                         </div>
 
                         <!-- Old service tag="6MW0204" 
@@ -1137,7 +1143,7 @@
                     firstName:"Bishav",
                     lastName: "Rajbhandari",
                     email:"bnr@dell.com",
-                    phoneNo:"1234567",
+                    //phoneNo:"1234567",
                     issueDescription:"Test of Description",
                     productCode:"Latitude",
                     serviceTag: serviceTag,
@@ -1205,7 +1211,7 @@
                     snapInObject.firstName="Bishav",
                     snapInObject.lastName= "Rajbhandari",
                     snapInObject.email="bnr@dell.com",
-                    snapInObject.phoneNo="1234567",
+                    //snapInObject.phoneNo="1234567",
                     snapInObject.chatSeverity = "S2";
                     if(document.getElementById('serviceTag').value){
                         snapInObject.serviceTag = document.getElementById('serviceTag').value,
@@ -1219,6 +1225,7 @@
                     snapInObject.epdmId= document.getElementById('epdmId').value,
                     snapInObject.productName = document.getElementById('emcProductName').value,//"2.3",
                     snapInObject.altEmail = document.getElementById('emcAltEmail').value,
+                    snapInObject.siteInfo = document.getElementById('emcSiteInfo').value,
                     snapInObject.emcProductId = "ABC1235";
                 }
                 snapInObject.domainName = "localhost";//"bishav.github.io";//
