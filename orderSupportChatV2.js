@@ -488,8 +488,14 @@ function startCAREChat(orderSnapinObject, orderSnapinLabelObj){
         loadingSnapinCareQueue();
         orderSnapinObject = addCustCareFormDetailsTo(orderSnapinObject);
         saveGlobalSnapinCareObjToSession(orderSnapinObject);
-        eleExistCareWithVariable('.embeddedServiceSidebar .startButton', CareChatStarted, orderSnapinObject);
-        removecustCareFormValues();// FY20-1101 DEFECT 7204725
+        //FY21-1003 Story #9060750: GBS Care - Chat - Pre-chat Form Agent Availability Check [START]        
+        if (checkSnapinCareQueueStatus(orderSnapinObject) == 1) {
+            eleExistCareWithVariable('.embeddedServiceSidebar .startButton', CareChatStarted, orderSnapinObject);
+            removecustCareFormValues();// FY20-1101 DEFECT 7204725
+        } else {
+            careAgentUnavailableMsg();
+        }
+        //FY21-1003 Story #9060750: GBS Care - Chat - Pre-chat Form Agent Availability Check [END]
     }
 }
 function loadingSnapinCareQueue() {
@@ -503,20 +509,7 @@ function loadingSnapinCareQueue() {
 }
 function removeCareLoaderIn10(){
     setTimeout(function () {
-		let cusPreChatSnapinDom = document.getElementById("cusCAREPreChat-sidebarLoadingIndicator");
-        if (cusPreChatSnapinDom && window.getComputedStyle(cusPreChatSnapinDom).display != 'none') {
-            document.getElementById("cusCAREPreChat-alertMsgContainer").style.display = "flex";
-            document.getElementById("cusCAREPreChat-sidebarLoadingIndicator").style.display = 'none';
-            document.getElementById("cusCAREPreChat-hideWhileLoading").style.display = 'none';
-            //document.getElementById("cusCAREPreChatSnapinDom").style.display = 'none';
-            document.getElementById("cusCAREPreChat-CloseChat").addEventListener("click", function () {
-                document.getElementById("cusCAREPreChat-embeddedServiceHelpButton").style.display = 'none';
-                document.getElementById("cusCAREPreChat-alertMsgContainer").style.display = 'none';
-                document.getElementById("cusCAREPreChat-alertMsgContainer").style.display = 'none';
-                document.getElementById("cusCAREPreChat-hideWhileLoading").style.display = 'block';
-                document.getElementById("cusCAREPreChatSnapinDom").style.display = 'none';
-            });
-        }
+        careAgentUnavailableMsg();//FY21-1003 Story #9060750: GBS Care - Chat - Pre-chat Form Agent Availability Check
     }, 30000);
 }
 function snapinCareQueueLoaded() {
@@ -1273,3 +1266,48 @@ function checkIfIssueDescIsOptionalInCare(orderSnapinObject, orderPreChatlableOb
     }
 }
 //STORY 6779542: Contact Us: Snapin prechat Form -Problem Description [END]
+
+//FY21-1003 Story #9060750: GBS Care - Chat - Pre-chat Form Agent Availability Check [START]
+function careAgentUnavailableMsg(){
+    let cusPreChatSnapinDom = document.getElementById("cusCAREPreChat-sidebarLoadingIndicator");
+    if (cusPreChatSnapinDom && window.getComputedStyle(cusPreChatSnapinDom).display != 'none') {
+        document.getElementById("cusCAREPreChat-alertMsgContainer").style.display = "flex";
+        document.getElementById("cusCAREPreChat-sidebarLoadingIndicator").style.display = 'none';
+        document.getElementById("cusCAREPreChat-hideWhileLoading").style.display = 'none';
+        document.getElementById("cusCAREPreChat-CloseChat").addEventListener("click", function () {
+            document.getElementById("cusCAREPreChat-embeddedServiceHelpButton").style.display = 'none';
+            document.getElementById("cusCAREPreChat-alertMsgContainer").style.display = 'none';
+            document.getElementById("cusCAREPreChat-alertMsgContainer").style.display = 'none';
+            document.getElementById("cusCAREPreChat-hideWhileLoading").style.display = 'block';
+            document.getElementById("cusCAREPreChatSnapinDom").style.display = 'none';
+        });
+    }
+}
+function checkSnapinCareQueueStatus(orderSnapinObject) {
+    if("checkBtnAvailabilityUrl" in orderSnapinObject && orderSnapinObject.checkBtnAvailabilityUrl && orderSnapinObject.checkBtnAvailabilityUrl != ""){
+        var btnAvailabilityResVal = httpGetCareAgentAvailability(orderSnapinObject.checkBtnAvailabilityUrl+orderSnapinObject.buttonId);
+        if (btnAvailabilityResVal)
+            return 1;
+        else
+            return 4;
+    }else
+        return 1;
+}
+
+function httpGetCareAgentAvailability(theUrl) {
+    try {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function () {
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+                returnValue = xmlHttp.responseText;
+        }
+        xmlHttp.open("GET", theUrl, false);
+        xmlHttp.setRequestHeader('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest');
+        xmlHttp.setRequestHeader("Content-Type", "application/text; charset=utf-8");
+        xmlHttp.send(null);
+        return returnValue;
+    } catch (e) {
+        console.log("Error in: " + e);
+    }
+}
+//FY21-1003 Story #9060750: GBS Care - Chat - Pre-chat Form Agent Availability Check [END]

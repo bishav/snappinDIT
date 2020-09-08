@@ -9,8 +9,11 @@
     <link rel="stylesheet" type="text/css" media="screen" href="../../main.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script src="main.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>
+    <script src="https://getbootstrap.com/docs/4.0/dist/js/bootstrap.min.js"></script>
+    <script src="../../mainChat.js"></script>
+    <script src="../../orderSupportChatV2.js"></script>
     <style type='text/css'>
             .embeddedServiceHelpButton .helpButton .uiButton { background-color: #005290; font-family: "Salesforce Sans", sans-serif; }
             .embeddedServiceHelpButton .helpButton .uiButton:focus { outline: 1px solid #005290; }
@@ -308,10 +311,7 @@
             }, {
                 "label": translatedLabels.emailAdd,
                 "transcriptFields": ["Email__c"]
-            }, /*{
-                "label": "Case Title",
-                "transcriptFields": ["Issue__c"]
-            },*/ 
+            },
             {
                 "label": "Chat Source",
                 "value": 'CARE',
@@ -769,7 +769,6 @@ function isSnapinInitiated(){
     else
         return false;
 }
-
 function snapinCAREChatInitiatedState(booleanValue){
     snapInCareObject = sendGlobalSnapinCareObjToJson();
     snapInCareObject.snapinCareChatInitiated = booleanValue;
@@ -967,7 +966,6 @@ function snapinCAREPageObserver(eleSelector) {
         });
     } catch (e) { console.log('Error in Observer - ' + e) }
 }
-
 function eleExistCareWithVariable(eleSelector, callbackFunc, value) {
     var findingEle = setInterval(function () {
         if (document.querySelector(eleSelector)) {
