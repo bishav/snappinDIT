@@ -134,7 +134,7 @@ function appendCustPreChatSnapinDom(snapInObject, preChatlableObject) {
         //FY21-1003 Story #9078562: HES Admin Chat Prechat form changes [START]
         let domEle
         if(isHesAdminChat(snapInObject)){
-            domEle = createHesAdminChat(snapInObject, preChatlableObject);
+            domEle = createHesAdminChat(preChatlableObject);
         } else
             domEle = '<div id="cusPreChatSnapinDom" class="cusPreChat-modalContainer"> <div class="cusPreChat-dockableContainer"> <div class="cusPreChat-embeddedServiceSidebarHeader"> <div class="cusPreChat-shortHeader"> <div class="cusPreChat-shortHeaderContent"> <button id="cusPreChat-minimize-btn" class="cusPreChat-minimizeButton cusPreChat-headerItem"> <span class="cusPreChat-assistiveText">Minimize chat</span> <span class="cusPreChat-minimize cusPreChat-x-small cusPreChat-embeddedServiceIcon"> <svg focusable="false" aria-hidden="true" data-key="contract_alt" viewBox="0 0 100 100"> <path d="M56.923 45.962h29.615c1.924 0 2.5-2.116.962-3.654l-9.423-9.616 17.308-17.5c.96-.96.96-2.692 0-3.654L88.27 4.423c-.962-.77-2.5-.77-3.655.192L67.308 21.923 57.5 12.5c-1.538-1.538-3.654-.962-3.654.962v29.615c0 1.346 1.73 2.885 3.077 2.885zm-13.846 7.884H13.462c-1.924 0-2.5 2.116-.962 3.654l9.423 9.615-17.308 17.5c-.96.962-.96 2.693 0 3.654l7.116 7.115c.962.96 2.5.96 3.655 0l17.5-17.5 9.807 9.423c1.346 1.73 3.462 1.154 3.462-.77V57.115c0-1.346-1.73-3.27-3.077-3.27z"> </path> </svg> </span> </button> <h2 class="cusPreChat-headerText"> <div class="cusPreChat-headerTextContent"> <span id="cusPreChat-headerTextLabel">' + preChatlableObject.chatHeader + '</span> <span id="cusPreChat-headerSubtext"> </span></div></h2> <button id="cusPreChat-close-btn" class="cusPreChat-closeButton cusPreChat-headerItem"> <span class="cusPreChat-assistiveText">Close chat</span> <span class="cusPreChat-x-small cusPreChat-embeddedServiceIcon"> <svg focusable="false" aria-hidden="true" data-key="close" viewBox="0 0 100 100"> <path d="M65.577 53.73l27.5-27.71c1.27-1.27 1.27-3.174 0-4.445l-4.23-4.44c-1.272-1.27-3.175-1.27-4.445 0L56.694 44.847c-.847.845-2.115.845-2.96 0L26.018 16.922c-1.27-1.27-3.174-1.27-4.445 0l-4.44 4.442c-1.27 1.27-1.27 3.174 0 4.444l27.71 27.71c.846.846.846 2.116 0 2.962L16.923 84.403c-1.27 1.27-1.27 3.174 0 4.444l4.442 4.442c1.27 1.268 3.174 1.268 4.444 0l27.71-27.713c.846-.847 2.116-.847 2.962 0L84.19 93.29c1.27 1.268 3.174 1.268 4.445 0l4.44-4.445c1.27-1.268 1.27-3.17 0-4.44l-27.5-27.712c-.847-.847-.847-2.115 0-2.96z"> </path> </svg> </span> </button> </div></div></div><div class="cusPreChat-sidebarBody"> <div id="cusPreChat-sidebarLoadingIndicator" class="cusPreChat-sidebarLoadingIndicator" style="display: none;"> <div class="cusPreChat-loadingBallContainer cusPreChat-animated cusPreChat-embeddedServiceLoadingBalls"> <span class="cusPreChat-loadingBall cusPreChat-first"> </span> <span class="cusPreChat-loadingBall cusPreChat-second"> </span> <span class="cusPreChat-loadingBall cusPreChat-third"> </span></div></div><div id="cusPreChat-alertMsgContainer" class="cusPreChat-sidebarLoadingIndicator" style="display: none;"><div style="margin: 2.5em 1.75em;">' + preChatlableObject.chatUnavailableMessage + '</div><div><button id="cusPreChat-CloseChat" class="cusPreChat-embeddedServiceSidebarButton" type="button"><span class="cusPreChat-label cusPreChat-bBody">Close Chat</span></button></div></div><div id="cusPreChat-hideWhileLoading" class="cusPreChat-activeFeature cusPreChat-hideWhileLoading"> <div class="cusPreChat-featureBody cusPreChat-embeddedServiceSidebarFeature"> <div class="cusPreChat-stateBody cusPreChat-embeddedServiceSidebarState"> <div class="cusPreChat-prechatUI cusPreChat-embeddedServiceLiveAgentStatePrechatDefaultUI"> <div class="cusPreChat-formContent cusPreChat-embeddedServiceSidebarForm"> <ul class="cusPreChat-fieldList"> <div id="readonlyPreChatContainer" class="cusPreChat-readonlyContainer" style="margin: 0 1.5em 6px 1.5em; text-align: left;position: relative;font-size: .75em;color: #444444;"> <div style="font-size: 1.2em;">Precision M4500</div><div> <b>' + preChatlableObject.serviceTag + ':</b> 123432</div><div> <b>' + preChatlableObject.issueType + ':</b> Keyboard not working</div></div><li class="cusPreChat-inputSplitName cusPreChat-embeddedServiceSidebarFormField"> <span class="cusPreChat-split-field-container"> <div class="cusPreChat-uiInput cusPreChat-uiInputText cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel"> <span class="">' + preChatlableObject.firstName + '</span></label> <input id="cusPreChat-FirstName" class="cusPreChat-FirstName form-control cusPreChat-input" maxlength="121" type="text" aria-describedby="" placeholder="" required="" aria-required="true"></div></span> </li><li class="cusPreChat-inputSplitName cusPreChat-embeddedServiceSidebarFormField"> <span class="cusPreChat-split-field-container"> <div class="cusPreChat-uiInput cusPreChat-uiInputText cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="LastName"> <span class="">' + preChatlableObject.lastName + '</span> </label> <input id="cusPreChat-LastName" class="cusPreChat-LastName form-control cusPreChat-input" maxlength="121" type="text" aria-describedby="" placeholder="" required="" aria-required="true"></div></span> </li><li class="cusPreChat-inputEmail cusPreChat-embeddedServiceSidebarFormField"> <div class="cusPreChat-uiInput cusPreChat-uiInputEmail cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="Email"> <span>' + preChatlableObject.emailAddress + '</span></label> <input id="cusPreChat-Email" class="cusPreChat-Email form-control cusPreChat-input" maxlength="80" type="email" aria-describedby="" placeholder="" required="" aria-required="true"></div></li><li class="cusPreChat-inputPhone cusPreChat-embeddedServiceSidebarFormField"> <div class="cusPreChat-uiInput cusPreChat-uiInputPhone cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="Primary_Phone__c"> <span>' + preChatlableObject.phoneNumber + '</span> </label> <input id="cusPreChat-Phone" class="cusPreChat-Primary_Phone__c form-control cusPreChat-input" maxlength="40" type="tel" aria-describedby="" placeholder="" required="" aria-required="true"></div></li><li class="cusPreChat-inputText cusPreChat-embeddedServiceSidebarFormField"> <div class="cusPreChat-uiInput cusPreChat-uiInputText cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label id="Issue_Description_Cust_Label" class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="Issue_Description__c"> <span>' + preChatlableObject.issueDescription + '</span> </label> <textarea id="cusPreChat-IssueDescription" class="cusPreChat-Issue_Description__c form-control cusPreChat-input coveo-query" maxlength="' + preChatlableObject.issueDescriptionLength + '" type="text" aria-describedby="" placeholder="" required="" data-coveo-id="txtIssueDetails"></textarea><div id="snappinCharCounter" style="text-align:right;position:relative;font-size:.75em;line-height: 1.5;margin-right: .75em;margin-left: .5em;margin-top: 8px; float: right; color:#767676">0 / ' + preChatlableObject.issueDescriptionLength + ' ' + preChatlableObject.characters + '</div></div></li></ul>  <div id="PrechatCoveo" style="display:none;"></div> <div style="font-size: 12px;color:#767676;text-align: left;margin: 2.5em 1.75em; font-style: italic;color:#444444;">' + preChatlableObject.customerPrivacyDesc + '</div></div><div class="cusPreChat-buttonWrapper cusPreChat-embeddedServiceSidebarForm"> <button id="cusPreChat-startChat" class="cusPreChat-startButton cusPreChat-uiButton--default cusPreChat-uiButton cusPreChat-embeddedServiceSidebarButton" type="button"> <span class="cusPreChat-label cusPreChat-bBody">' + preChatlableObject.startChat + '</span> </button></div></div></div></div></div></div></div></div><div id="cusPreChat-embeddedServiceHelpButton" class="cusPreChat-embeddedServiceHelpButton" style="display: none;"> <div class="cusPreChat-helpButton" style="width: 168px;"> <button id="cusPreChat-helpButtonEnabled" class="cusPreChat-uiButton cusPreChat-helpButtonEnabled" href="javascript:void(0)" > <span class="cusPreChat-embeddedServiceIcon" aria-hidden="true" style="display: inline-block; z-index: 1; float: left"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="chat" width="100%" height="100%" style="height: 18px; width: 18px;"> <path d="M12 1.8C5.9 1.8 1 6.4 1 12c0 1.7.5 3.4 1.3 4.8.1.3.2.6.1.8l-1.4 4c-.2.3.2.6.6.6l3.9-1.6c.3-.1.5 0 .8.1 1.7.9 3.7 1.5 5.8 1.5 6 0 11-4.5 11-10.2C23 6.4 18.1 1.8 12 1.8zm-5.5 12c-1.1 0-1.9-.8-1.9-1.8s.8-1.8 1.9-1.8 1.8.8 1.8 1.8-.8 1.8-1.8 1.8zm5.5 0c-1 0-1.8-.8-1.8-1.8s.8-1.8 1.8-1.8 1.8.8 1.8 1.8-.8 1.8-1.8 1.8zm5.5 0c-1 0-1.8-.8-1.8-1.8s.8-1.8 1.8-1.8 1.9.8 1.9 1.8-.8 1.8-1.9 1.8z"></path> </svg> </span> <div class="cusPreChat-helpButtonLabel" id="cusPreChat-helpButtonSpan" aria-live="polite" aria-atomic="true"> <span class="cusPreChat-assistiveText">Live chat:</span> <span class="cusPreChat-message">' + preChatlableObject.chatHeader + '</span></div></button> </div></div>';
         //FY21-1003 Story #9078562: HES Admin Chat Prechat form changes [END]
@@ -195,7 +195,8 @@ function prechatSettingForEmc() {
         makeIdReadOnlyIfHasVal("cusPreChat-FirstName");
         makeIdReadOnlyIfHasVal("cusPreChat-LastName");
         makeIdReadOnlyIfHasVal("cusPreChat-Email");
-        makeIdReadOnlyIfHasVal("cusPreChat-Phone");
+		if(!isHesAdminChat(snapInObject)) //FY21-1003 Story #9078562: HES Admin Chat Prechat form changes [START]
+			makeIdReadOnlyIfHasVal("cusPreChat-Phone");
     }
 }
 function makeIdReadOnlyIfHasVal(id) {
@@ -215,6 +216,10 @@ function checkIfIssueDescIsOptional(snapInObject, preChatlableObject) {
         removeDomElementbyId("issueDescIsOptional");
         let optionalLabel = document.createElement('span');
         optionalLabel.id = 'issueDescIsOptional';
+		//FY21-1003 Story #9078562: HES Admin Chat Prechat form changes [START]
+        if(isHesAdminChat(snapInObject))
+            optionalLabel.style = 'color: #767676;';
+		//FY21-1003 Story #9078562: HES Admin Chat Prechat form changes [END]
         optionalLabel.innerText = preChatlableObject.optional;
         let Issue_Description_Cust_Label = document.getElementById("Issue_Description_Cust_Label");
         Issue_Description_Cust_Label.appendChild(optionalLabel);
@@ -421,6 +426,7 @@ function custPreChatKeypressFieldValidation(preChatlableObject) {
         else if (document.getElementById("ErrMsg_cusPreChat-LastName"))
             removeDomElementbyId("ErrMsg_cusPreChat-LastName");
     }
+	
     document.getElementById("cusPreChat-Email").onkeypress = function (e) {
         var a = [];
         var k = e.which || e.keyCode;
@@ -429,6 +435,36 @@ function custPreChatKeypressFieldValidation(preChatlableObject) {
         else if (document.getElementById("ErrMsg_cusPreChat-Email"))
             removeDomElementbyId("ErrMsg_cusPreChat-Email");
     }
+	//FY21-1003 Story #9078562: HES Admin Chat Prechat form changes [START]
+	if(document.getElementById("cusPreChat-emptyAltEmail")){
+		document.getElementById("cusPreChat-emptyAltEmail").onkeypress = function (e) {
+			var a = [];
+			var k = e.which || e.keyCode;
+			if (!((k > 63 && k < 91) || (k > 96 && k < 123) || (k > 47 && k < 58) || (k == 45) || (k == 46) || (k == 95) || k == 8 || k == 9))
+				e.preventDefault();
+			else if (document.getElementById("ErrMsg_cusPreChat-emptyAltEmail"))
+				removeDomElementbyId("ErrMsg_cusPreChat-emptyAltEmail");
+		}
+		document.getElementById("cusPreChat-emptyAltEmail").addEventListener("paste", function (e) {
+			var format = /[!#$%^&*()+\=\[\]{};':"\\|,<>\/?]/;
+			if (format.test(pastedText(e)) == true) {
+				e.preventDefault();
+				alert(preChatlableObject.pasteInvalidTextMsg);
+			} else if (document.getElementById("ErrMsg_cusPreChat-emptyAltEmail"))
+				removeDomElementbyId("ErrMsg_cusPreChat-emptyAltEmail");
+		});
+    }
+    if(document.getElementById("cusPreChat-BrowserVer")){
+        document.getElementById("cusPreChat-BrowserVer").onkeypress = function (e) {
+			if (document.getElementById("ErrMsg_cusPreChat-BrowserVer"))
+				removeDomElementbyId("ErrMsg_cusPreChat-BrowserVer");
+        }
+        document.getElementById("cusPreChat-BrowserVer").addEventListener("paste", function (e) {
+			if (document.getElementById("ErrMsg_cusPreChat-BrowserVer"))
+				removeDomElementbyId("ErrMsg_cusPreChat-BrowserVer");
+		});
+    }
+	//FY21-1003 Story #9078562: HES Admin Chat Prechat form changes [END]
     document.getElementById("cusPreChat-IssueDescription").onkeypress = function (e) {
         var a = [];
         var k = e.which || e.keyCode;
@@ -516,7 +552,6 @@ function custPreFormValidation(preChatlableObject) {
         emailDOM = document.getElementById("cusPreChat-Email"),
         phoneDOM = document.getElementById("cusPreChat-Phone"),
         IssueDescDOM = document.getElementById("cusPreChat-IssueDescription");
-
     if (document.getElementById("ErrMsg_cusPreChat-Email")) {
         let element = document.getElementById("ErrMsg_cusPreChat-Email");
         element.parentNode.removeChild(element);
@@ -525,7 +560,22 @@ function custPreFormValidation(preChatlableObject) {
         acceptForm = cusPreChatEleIsEmpty(emailDOM, preChatlableObject.emailRequiredValidation);
     else
         acceptForm = cusPreChatInvalidEmail(emailDOM, preChatlableObject);
+	
+	//FY21-1003 Story #9078562: HES Admin Chat Prechat form changes [START]
+	var altEmailDOM = document.getElementById("cusPreChat-emptyAltEmail");
+    if(altEmailDOM){
+		if (document.getElementById("ErrMsg_cusPreChat-emptyAltEmail")) {
+			let element = document.getElementById("ErrMsg_cusPreChat-emptyAltEmail");
+			element.parentNode.removeChild(element);
+		}
+		if (altEmailDOM.value)
+			acceptForm = cusPreChatInvalidEmail(altEmailDOM, preChatlableObject);
+	}
 
+	if(document.getElementById("cusPreChat-BrowserVer") && !document.getElementById("cusPreChat-BrowserVer").value && "browserVerValidation" in preChatlableObject && preChatlableObject.browserVerValidation)
+        acceptForm = cusPreChatEleIsEmpty(document.getElementById("cusPreChat-BrowserVer"), preChatlableObject.browserVerValidation);
+	//FY21-1003 Story #9078562: HES Admin Chat Prechat form changes [END]
+	
     if (document.getElementById("ErrMsg_cusPreChat-FirstName")) {
         var format = /[0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/; //FY20-1102 DEFECT 7534877
         if (checkErrMsgValidation(firstNameDOM, "FirstName", format, true)) //FY20-1102 DEFECT 7534877
@@ -660,6 +710,16 @@ function addCustFormDetailsTo(snapInObject) {
     snapInObject.c_email = document.getElementById("cusPreChat-Email").value;
     snapInObject.c_phoneNo = document.getElementById("cusPreChat-Phone").value;
     snapInObject.c_issueDescription = document.getElementById('cusPreChat-IssueDescription').value;
+	//FY21-1003 Story #9078562: HES Admin Chat Prechat form changes [START]
+	if(isHesAdminChat(snapInObject)){
+		if(document.getElementById('cusPreChat-emptyAltEmail').value)
+			snapInObject.c_altEmail = document.getElementById('cusPreChat-emptyAltEmail').value;
+		else
+			snapInObject.c_altEmail = document.getElementById('cusPreChat-prefillAltEmail').value;
+		snapInObject.c_browserVer = document.getElementById('cusPreChat-BrowserVer').value;
+		snapInObject.c_url = document.getElementById('cusPreChat-URL').value;
+	}
+	//FY21-1003 Story #9078562: HES Admin Chat Prechat form changes [END]
     return snapInObject;
 }
 function removecustFormValues() {
@@ -927,6 +987,17 @@ function pushValsToSnapinInit(snapInObject) {
                 else
                     embedded_svc.settings.extraPrechatFormDetails[i].value = false;
                 break;
+			//FY21-1003 Story #9078562: HES Admin Chat Prechat form changes [START]
+			case "Secondary_Email_Address__c":
+                embedded_svc.settings.extraPrechatFormDetails[i].value = isHesAdminChat(snapInObject) ? snapInObject.c_altEmail : '';
+                break;
+			case "Web_Browser__c":
+                embedded_svc.settings.extraPrechatFormDetails[i].value = isHesAdminChat(snapInObject) ? snapInObject.c_browserVer : '';
+                break;
+			case "URL__c":
+                embedded_svc.settings.extraPrechatFormDetails[i].value = isHesAdminChat(snapInObject) ? snapInObject.c_url : '';
+                break;
+			//FY21-1003 Story #9078562: HES Admin Chat Prechat form changes [END]
             default:
                 break;
         }
@@ -1029,6 +1100,11 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
             { "label": "CPID", "value": snapInObject.cpid, "transcriptFields": ["CPID__c"] },
             { "label": "EPDM Id", "value": snapInObject.epdmId, "transcriptFields": ["EPDM_Id__c"] },
             { "label": "Product", "value": snapInObject.productName, "transcriptFields": ["Product_Name__c"] },
+			//FY21-1003 Story #9078562: HES Admin Chat Prechat form changes [START]
+			{ "label": "Secondary Email Address", "value": "", "transcriptFields": ["Secondary_Email_Address__c"] },
+			{ "label": "Web Browser", "value": "", "transcriptFields": ["Web_Browser__c"] },
+			{ "label": "URL", "value": "", "transcriptFields": ["URL__c"] },
+			//FY21-1003 Story #9078562: HES Admin Chat Prechat form changes [END]
             { "label": "Site Id", "value": snapInObject.siteId, "transcriptFields": ["Site_Id__c"] }
         ];
     } //STORY 7193324: FY201101[END] //FY210803: HES Generic chat changes [END] 
@@ -1740,7 +1816,6 @@ function pageObserverForProp20(eleSelector, preChatlableObject) {
         snapInConfirmationDialoug = document.querySelector(".dockableContainer .activeFeature .stateBody .dialogState .dialogTextContainer");
         snapInhelpBtnDisabled = document.querySelector(".embeddedServiceHelpButton .helpButton .helpButtonDisabled");
         snapInhelpBtnEnabled = document.querySelector(".embeddedServiceHelpButton .helpButton .helpButtonEnabled");
-        endSnapInHasPrimBtn = document.querySelector('.dockableContainer .endChatContainer .endChatButton.postChatButton'); //FY21-1003 POC:emcOpenFeedback
         if (snapInPrechatForm)
             snapInCurrentPage = "snapInPrechatForm";
         else if (snapInWaiting)
@@ -1756,11 +1831,7 @@ function pageObserverForProp20(eleSelector, preChatlableObject) {
             snapInCurrentPage = "snapInhelpBtnDisabled";
         } else if (snapInhelpBtnEnabled)
             snapInhelpBtnEnabled = "snapInhelpBtnEnabled";
-        //FY21-1003 POC:emcOpenFeedback [START]
-        else if (snapInhelpBtnEnabled)
-            endSnapInHasPrimBtn = "endSnapInHasPrimBtn";
-        //FY21-1003 POC:emcOpenFeedback [END]
-        else 
+        else
             snapInCurrentPage = null;
         var MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
         var attributeChangeCallback = function (mutations) {
@@ -1774,7 +1845,6 @@ function pageObserverForProp20(eleSelector, preChatlableObject) {
                     snapInhelpBtnDisabled = document.querySelector(".embeddedServiceHelpButton .helpButton .helpButtonDisabled");
                     snapInhelpBtnEnabled = document.querySelector(".embeddedServiceHelpButton .helpButton .helpButtonEnabled");
                     snapInEmbeddedServiceHelpBtn = document.querySelector(".embeddedServiceHelpButton");
-                    endSnapInHasPrimBtn = document.querySelector('.dockableContainer .endChatContainer .endChatButton.postChatButton'); //FY21-1003 POC:emcOpenFeedback
                     if (snapInPrechatForm && snapInCurrentPage != "snapInPrechatForm") {
                         snapInCurrentPage = "snapInPrechatForm";
                         //DEFECT 6915122[START]
@@ -1795,7 +1865,7 @@ function pageObserverForProp20(eleSelector, preChatlableObject) {
                         hideResumeSnapinLoader();
                         snapinChatInitiatedState(true);
                         addChatPrivacyInfo(preChatlableObject);//FY20-0202 - preChatlableObject pulled from top
-
+                        chatWindowResize();//FY21-STORY #9152336 - [POC] Snap-In Window Size
                     } else if (snapInChatEnded && snapInCurrentPage != "snapInChatEnded") {//Fix for defect 7030965
                         snapInCurrentPage = "snapInChatEnded";
                         snapinQueueLoaded();
@@ -1829,15 +1899,8 @@ function pageObserverForProp20(eleSelector, preChatlableObject) {
                             snapInCurrentPage = "snapInhelpBtnEnabled";
                             //togglePrechatAndSnapin(snapInCurrentPage);
                             snapInhelpBtnEnabled.style.display = "none";
-                        } //FY21-1003 POC:emcOpenFeedback [START]
-                        else if (endSnapInHasPrimBtn){
-                            snapInCurrentPage = "endSnapInHasPrimBtn";
-                            console.log("Inner Text : "+endSnapInHasPrimBtn.innerText);
-                            clickOnSurvey(endSnapInHasPrimBtn);
-                        }
-                        //FY21-1003 POC:emcOpenFeedback [END]
-                        else {
-                            console.log("Snap-In: No Action"); //FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn
+                        } else {
+                            console.log("Snap-In: Not Loaded"); //FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn
                         }
                     }
                 }
@@ -2025,14 +2088,36 @@ function isHesAdminChat(snapInObject){
         return false; 
 }
 
-function createHesAdminChat(snapInObject, preChatlableObject){
-    console.log("createHesAdminChat");
-    let prechatformDesign = '<div id="cusPreChatSnapinDom" class="cusPreChat-modalContainer"> <div class="cusPreChat-dockableContainer"> <div class="cusPreChat-embeddedServiceSidebarHeader"> <div class="cusPreChat-shortHeader"> <div class="cusPreChat-shortHeaderContent"> <button id="cusPreChat-minimize-btn" class="cusPreChat-minimizeButton cusPreChat-headerItem"> <span class="cusPreChat-assistiveText">Minimize chat</span> <span class="cusPreChat-minimize cusPreChat-x-small cusPreChat-embeddedServiceIcon"> <svg focusable="false" aria-hidden="true" data-key="contract_alt" viewBox="0 0 100 100"> <path d="M56.923 45.962h29.615c1.924 0 2.5-2.116.962-3.654l-9.423-9.616 17.308-17.5c.96-.96.96-2.692 0-3.654L88.27 4.423c-.962-.77-2.5-.77-3.655.192L67.308 21.923 57.5 12.5c-1.538-1.538-3.654-.962-3.654.962v29.615c0 1.346 1.73 2.885 3.077 2.885zm-13.846 7.884H13.462c-1.924 0-2.5 2.116-.962 3.654l9.423 9.615-17.308 17.5c-.96.962-.96 2.693 0 3.654l7.116 7.115c.962.96 2.5.96 3.655 0l17.5-17.5 9.807 9.423c1.346 1.73 3.462 1.154 3.462-.77V57.115c0-1.346-1.73-3.27-3.077-3.27z"> </path> </svg> </span> </button> <h2 class="cusPreChat-headerText"> <div class="cusPreChat-headerTextContent"> <span id="cusPreChat-headerTextLabel">' + preChatlableObject.chatHeader + '</span> <span id="cusPreChat-headerSubtext"> </span></div></h2> <button id="cusPreChat-close-btn" class="cusPreChat-closeButton cusPreChat-headerItem"> <span class="cusPreChat-assistiveText">Close chat</span> <span class="cusPreChat-x-small cusPreChat-embeddedServiceIcon"> <svg focusable="false" aria-hidden="true" data-key="close" viewBox="0 0 100 100"> <path d="M65.577 53.73l27.5-27.71c1.27-1.27 1.27-3.174 0-4.445l-4.23-4.44c-1.272-1.27-3.175-1.27-4.445 0L56.694 44.847c-.847.845-2.115.845-2.96 0L26.018 16.922c-1.27-1.27-3.174-1.27-4.445 0l-4.44 4.442c-1.27 1.27-1.27 3.174 0 4.444l27.71 27.71c.846.846.846 2.116 0 2.962L16.923 84.403c-1.27 1.27-1.27 3.174 0 4.444l4.442 4.442c1.27 1.268 3.174 1.268 4.444 0l27.71-27.713c.846-.847 2.116-.847 2.962 0L84.19 93.29c1.27 1.268 3.174 1.268 4.445 0l4.44-4.445c1.27-1.268 1.27-3.17 0-4.44l-27.5-27.712c-.847-.847-.847-2.115 0-2.96z"> </path> </svg> </span> </button> </div></div></div><div class="cusPreChat-sidebarBody"> <div id="cusPreChat-sidebarLoadingIndicator" class="cusPreChat-sidebarLoadingIndicator" style="display: none;"> <div class="cusPreChat-loadingBallContainer cusPreChat-animated cusPreChat-embeddedServiceLoadingBalls"> <span class="cusPreChat-loadingBall cusPreChat-first"> </span> <span class="cusPreChat-loadingBall cusPreChat-second"> </span> <span class="cusPreChat-loadingBall cusPreChat-third"> </span></div></div><div id="cusPreChat-alertMsgContainer" class="cusPreChat-sidebarLoadingIndicator" style="display: none;"> <div style="margin: 2.5em 1.75em;">' + preChatlableObject.chatUnavailableMessage + '</div><div><button id="cusPreChat-CloseChat" class="cusPreChat-embeddedServiceSidebarButton" type="button"><span class="cusPreChat-label cusPreChat-bBody">Close Chat</span></button></div></div><div id="cusPreChat-hideWhileLoading" class="cusPreChat-activeFeature cusPreChat-hideWhileLoading"> <div class="cusPreChat-featureBody cusPreChat-embeddedServiceSidebarFeature"> <div class="cusPreChat-stateBody cusPreChat-embeddedServiceSidebarState"> <div class="cusPreChat-prechatUI cusPreChat-embeddedServiceLiveAgentStatePrechatDefaultUI"> <div class="cusPreChat-formContent cusPreChat-embeddedServiceSidebarForm"> <ul class="cusPreChat-fieldList" style="margin: 0;"> <div id="readonlyPreChatContainer" class="cusPreChat-readonlyContainer" style="text-align: left;position: relative;font-size: .75em;color: #444444;background: white;padding: 10px 12px;"> <div style="font-size: 18px;">Site Info Place Holder</div><div style="font-size: 14px;font-family: inherit;"><b>' + preChatlableObject.issueType + ':</b> <span class="coveo-query" data-coveo-id="IssueDesc" id="preChatIssueDesc" style="font-size: 14px;font-family: inherit;">Slow Performance</span></div></div><div style="margin-right: 12px;"> <li class="cusPreChat-inputPhone cusPreChat-embeddedServiceSidebarFormField" style="margin: 16px 0px 0px 16px;color: #000;font-size: 14px;"> <div style="font-size: 14px;color:#767676;text-align: left;color: #000;font-family: inherit;">Any changes made to your information are for this Service Reqeust only. To make updates to your account, visit the <br><a target="_blank" href="//www.dell.com/learn/policies-privacy" class="">Account Settings and Prefrences</a></div></li><li class="cusPreChat-inputSplitName cusPreChat-embeddedServiceSidebarFormField"> <span class="cusPreChat-split-field-container"> <div class="cusPreChat-uiInput cusPreChat-uiInputText cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" style="font-size: 16px;color: #000 !important;font-family: inherit;margin-bottom: 0px;margin-top: 16px;"> <span class="">' + preChatlableObject.firstName + '</span></label> <input id="cusPreChat-FirstName" class="cusPreChat-FirstName form-control cusPreChat-input" maxlength="121" type="text" aria-describedby="" placeholder="" required="" aria-required="true" readonly="" style="border: none;background: none;padding: 0px;height: 23px;color: #666;box-shadow: none;"></div></span> </li><li class="cusPreChat-inputSplitName cusPreChat-embeddedServiceSidebarFormField"> <span class="cusPreChat-split-field-container"> <div class="cusPreChat-uiInput cusPreChat-uiInputText cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="LastName" style=" font-size: 16px; color: #000 !important; font-family: inherit; margin-bottom: 0px; margin-top: 16px; "> <span class="">' + preChatlableObject.lastName + '</span> </label> <input id="cusPreChat-LastName" class="cusPreChat-LastName form-control cusPreChat-input" maxlength="121" type="text" aria-describedby="" placeholder="" required="" aria-required="true" readonly="" style=" border: none; background: none; padding: 0px; height: 23px; color: #666; box-shadow: none; "></div></span> </li><li class="cusPreChat-inputEmail cusPreChat-embeddedServiceSidebarFormField"> <div class="cusPreChat-uiInput cusPreChat-uiInputEmail cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="Email" style=" font-size: 16px; color: #000 !important; font-family: inherit; margin-bottom: 0px; margin-top: 16px; "> <span>' + preChatlableObject.emailAddress + '</span></label> <input id="cusPreChat-Email" class="cusPreChat-Email form-control cusPreChat-input" maxlength="80" type="email" aria-describedby="" placeholder="" required="" aria-required="true" readonly="" style=" border: none; background: none; padding: 0px; height: 23px; color: #666; box-shadow: none; "></div></li><li class="cusPreChat-showAltEmailField cusPreChat-embeddedServiceSidebarFormField"> <div class="cusPreChat-uiInput cusPreChat-uiInputshowAltEmailField cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label id="cusPreChat-showAltEmailFieldBtn" class="cusPreChat-FormBtns cusPreChat-form-element__label cusPreChat-uiLabel" style=" font-weight: 500 !important; font-size: 14px; font-family: inherit; font-style: normal; margin-top: 21px; color: #006BBD; cursor: pointer; margin-bottom: 0px; "> <div style=" float: left; margin: 0px 8px 0px 0px; "> <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" class="cusPreChat-FormBtnchild"> <path d="M15.4508 7.35001C15.0508 4.05001 12.3508 1.35001 8.95076 0.850006C8.65076 0.850006 8.25076 0.75 7.95076 0.75C3.45076 0.75 -0.049236 4.65 0.550764 9.25C0.950764 12.55 3.65076 15.25 7.05076 15.75C7.35076 15.75 7.75076 15.85 8.05076 15.85C12.4508 15.85 16.0508 11.95 15.4508 7.35001ZM12.8508 12.65C11.6508 14.05 9.85076 14.85 7.95076 14.85C7.65076 14.85 7.35076 14.85 7.05076 14.75C4.15076 14.35 1.85076 12.05 1.45076 9.15C1.25076 7.25 1.75076 5.45 3.05076 4.05C4.25076 2.65 6.05076 1.85001 7.95076 1.85001C8.25076 1.85001 8.55076 1.85 8.85076 1.95C11.7508 2.35 14.0508 4.65 14.4508 7.55C14.7508 9.35 14.1508 11.15 12.8508 12.65Z"></path> <path d="M8.55076 4.05H7.45076V7.75H3.85076V8.85001H7.45076V12.55H8.55076V8.85001H12.2508V7.75H8.55076V4.05Z"></path> </svg> </div><div style=" float: left; margin-top: 1px; "><span class="cusPreChat-FormBtnchild">Alternate Email</span><span style=" margin-left: 5px; color: #767676; ">(Optional)</span></div></label> </div></li><li class="cusPreChat-emptyAltEmail cusPreChat-embeddedServiceSidebarFormField"> <div class="cusPreChat-uiInput cusPreChat-uiEmptyAltEmail cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" style=" font-weight: 500 !important; font-size: 14px; font-family: inherit; color: #111 !important; font-style: normal; margin-top: 16px; "> <span>Alternate Email</span> </label> <input id="cusPreChat-emptyAltEmail" class=" form-control cusPreChat-input" maxlength="80" type="email" aria-describedby="" placeholder="" required="" aria-required="true" style=" float: left; border-radius: 3px; background: #FFFFFF; /* Graphite #7070 */ border: 1px solid #707070; /* font-size: 16px; */ /* height: 40px; */ width: calc(100% - 25px); "> <div id="cusPreChat-hideAltEmailFieldBtn" style=" float: right; margin-top: 7px; cursor: pointer; " class="cusPreChat-FormBtns"> <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"> <path d="M12.5 7.30005H3.5V8.30005H12.5V7.30005Z"></path> <path d="M8 0.300049C3.9 0.300049 0.5 3.70005 0.5 7.80005C0.5 11.9 3.9 15.3 8 15.3C12.1 15.3 15.5 11.9 15.5 7.80005C15.5 3.70005 12.1 0.300049 8 0.300049ZM8 14.3C4.4 14.3 1.5 11.4 1.5 7.80005C1.5 4.20005 4.4 1.30005 8 1.30005C11.6 1.30005 14.5 4.20005 14.5 7.80005C14.5 11.3 11.6 14.3 8 14.3Z"></path> </svg> </div><span></span> </div></li><li class="cusPreChat-prefillAltEmail cusPreChat-embeddedServiceSidebarFormField"> <div class="cusPreChat-uiInput cusPreChat-uiprefillAltEmail cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" style=" font-weight: 500 !important; font-size: 14px; font-family: inherit; color: #111 !important; font-style: normal; margin-top: 16px; "> <span>Alternate Email</span> </label> <input id="cusPreChat-prefillAltEmail" class="form-control cusPreChat-input" maxlength="80" type="email" aria-describedby="" placeholder="" required="" aria-required="true" style=" /* margin-bottom: 0; */ border-radius: 3px; background: #FFFFFF; /* Graphite #7070 */ border: 1px solid #707070; /* font-size: 16px; */ /* height: 40px; */ "><span></span></div></li><li class="cusPreChat-inputPhone cusPreChat-embeddedServiceSidebarFormField"> <div class="cusPreChat-uiInput cusPreChat-uiInputPhone cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="Primary_Phone__c" style=" font-weight: 500 !important; font-size: 14px; font-family: inherit; color: #111 !important; font-style: normal; margin-top: 16px; "> <span>' + preChatlableObject.phoneNumber + '</span> </label> <input id="cusPreChat-Phone" class="cusPreChat-Primary_Phone__c form-control cusPreChat-input" maxlength="40" type="tel" aria-describedby="" placeholder="" required="" aria-required="true" style=" border-radius: 3px; background: #FFFFFF; border: 1px solid #707070; "></div></li><li class="cusPreChat-inputBrowser cusPreChat-embeddedServiceSidebarFormField"> <div class="cusPreChat-uiInput cusPreChat-uiInputBrowser cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" style=" font-weight: 500 !important; font-size: 14px; font-family: inherit; color: #111 !important; font-style: normal; margin-top: 16px; "> <span>Browser version having the issue*</span> </label> <input id="cusPreChat-Browser" class="form-control cusPreChat-input" maxlength="40" type="text" aria-describedby="" placeholder="" required="" aria-required="true" style=" margin-bottom: 0; border-radius: 3px; background: #FFFFFF; border: 1px solid #707070; "> <div id="cusPrechatBrowserEx" style="font-family: inherit;text-align:right;position:relative;font-size: 14px;line-height: 1.5;margin-right: .75em;margin-left: .5em;margin-top: 3px;float: right;color:#767676;">Example: Firefox X.X</div></div></li><li class="cusPreChat-inputURL cusPreChat-embeddedServiceSidebarFormField"> <div class="cusPreChat-uiInput cusPreChat-uiInputURL cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" style=" font-weight: 500 !important; font-size: 14px; font-family: inherit; color: #111 !important; font-style: normal; margin-top: 16px; "> <span>URL you are trying to reach</span><span style=" margin-left: 5px; color: #767676; ">(Optional)</span> </label> <input id="cusPreChat-URL" class="cusPreChat-Primary_Phone__c form-control cusPreChat-input" maxlength="40" type="tel" aria-describedby="" placeholder="" required="" aria-required="true" style=" /* margin-bottom: 0; */ border-radius: 3px; background: #FFFFFF; border: 1px solid #707070; "></div></li><li class="cusPreChat-inputText cusPreChat-embeddedServiceSidebarFormField"> <div class="cusPreChat-uiInput cusPreChat-uiInputText cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label id="Issue_Description_Cust_Label" class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="Issue_Description__c" style=" font-weight: 500 !important; font-size: 14px; font-family: inherit; color: #111 !important; font-style: normal; margin-top: 16px; "> <span>' + preChatlableObject.issueDescription + '</span> <span id="issueDescIsOptional" style=" /* margin-left: 0px; */ color: #767676; ">(Optional)</span></label> <textarea id="cusPreChat-IssueDescription" class="cusPreChat-Issue_Description__c form-control cusPreChat-input coveo-query" maxlength="35000" type="text" aria-describedby="" placeholder="" required="" data-coveo-id="txtIssueDetails" style=" border-radius: 3px; background: #FFFFFF; border: 1px solid #707070; "></textarea> <div id="snappinCharCounter" style="text-align:right;position:relative;font-size:.75em;line-height: 1.5;margin-right: .75em;margin-left: .5em;margin-bottom: 8px;float: right;color:#767676;">0 / ' + preChatlableObject.issueDescriptionLength + ' ' + preChatlableObject.characters + '</div></div></li></div></ul> <div id="PrechatCoveo" style="display:none;"></div><div style="font-size: 12px;font-style: normal !important;color:#767676;text-align: left;margin: 40px 1.75em 25px 1.75em;font-style: italic;color:#444444;text-decoration: none;font-family: inherit;">' + preChatlableObject.startChat + '</div></div><div class="cusPreChat-buttonWrapper cusPreChat-embeddedServiceSidebarForm" style=" padding: 12px 24px 12px 24px; background-color: #fff; "> <button id="cusPreChat-startChat" class="cusPreChat-startButton cusPreChat-uiButton--default cusPreChat-uiButton cusPreChat-embeddedServiceSidebarButton" type="button" style=" border-radius: 4px !important; "> <span class="cusPreChat-label cusPreChat-bBody">Start Chat</span> </button></div></div></div></div></div></div><div id="cusPreChat-embeddedServiceHelpButton" class="cusPreChat-embeddedServiceHelpButton" style="display: none;"> <div class="cusPreChat-helpButton" style="width: 168px;"> <button id="cusPreChat-helpButtonEnabled" class="cusPreChat-uiButton cusPreChat-helpButtonEnabled" href="javascript:void(0)" > <span class="cusPreChat-embeddedServiceIcon" aria-hidden="true" style="z-index: 1; float: left"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="chat" width="100%" height="100%" style="height: 18px; width: 18px;"> <path d="M12 1.8C5.9 1.8 1 6.4 1 12c0 1.7.5 3.4 1.3 4.8.1.3.2.6.1.8l-1.4 4c-.2.3.2.6.6.6l3.9-1.6c.3-.1.5 0 .8.1 1.7.9 3.7 1.5 5.8 1.5 6 0 11-4.5 11-10.2C23 6.4 18.1 1.8 12 1.8zm-5.5 12c-1.1 0-1.9-.8-1.9-1.8s.8-1.8 1.9-1.8 1.8.8 1.8 1.8-.8 1.8-1.8 1.8zm5.5 0c-1 0-1.8-.8-1.8-1.8s.8-1.8 1.8-1.8 1.8.8 1.8 1.8-.8 1.8-1.8 1.8zm5.5 0c-1 0-1.8-.8-1.8-1.8s.8-1.8 1.8-1.8 1.9.8 1.9 1.8-.8 1.8-1.9 1.8z"></path> </svg> </span> <div class="cusPreChat-helpButtonLabel" id="cusPreChat-helpButtonSpan" aria-live="polite" aria-atomic="true"> <span class="cusPreChat-assistiveText">Live chat:</span> <span class="cusPreChat-message">' + preChatlableObject.chatHeader + '</span></div></button> </div></div>';
+function createHesAdminChat(preChatlableObject){
+	
+    if("hesCustomNotice" in preChatlableObject && preChatlableObject.hesCustomNotice)
+        hesCustomNoticeDom = '<li id ="cusPreChat-inputHesCustomNotice" class="cusPreChat-inputHesCustomNotice cusPreChat-embeddedServiceSidebarFormField" style="margin: 16px 0px 0px 16px;color: #000;font-size: 14px;"><div style="font-size: 14px;color:#767676;text-align: left;color: #000;font-family: inherit;">' +preChatlableObject.hesCustomNotice+ '</div></li>';
+    else
+		hesCustomNoticeDom = '';
+	
+	if(!("altEmail" in preChatlableObject) || !preChatlableObject.altEmail)
+		preChatlableObject.altEmail ="Alternate Email";
+	
+	if(!("browserVer" in preChatlableObject) || !preChatlableObject.browserVer)
+		preChatlableObject.browserVer ="Browser version having the issue";
+		
+	if(!("browserVerEx" in preChatlableObject) || !preChatlableObject.browserVerEx)
+		preChatlableObject.browserVerEx ="Example: Firefox X.X";
+
+	if(!("urlTriedToReach" in preChatlableObject) || !preChatlableObject.urlTriedToReach)
+		preChatlableObject.urlTriedToReach ="URL you are trying to reach";
+	
+    var prechatformDesign = '<div id="cusPreChatSnapinDom" class="cusPreChat-modalContainer"><div class="cusPreChat-dockableContainer"><div class="cusPreChat-embeddedServiceSidebarHeader"> <div class="cusPreChat-shortHeader"> <div class="cusPreChat-shortHeaderContent"> <button id="cusPreChat-minimize-btn" class="cusPreChat-minimizeButton cusPreChat-headerItem"> <span class="cusPreChat-assistiveText">Minimize chat</span> <span class="cusPreChat-minimize cusPreChat-x-small cusPreChat-embeddedServiceIcon"> <svg focusable="false" aria-hidden="true" data-key="contract_alt" viewBox="0 0 100 100"> <path d="M56.923 45.962h29.615c1.924 0 2.5-2.116.962-3.654l-9.423-9.616 17.308-17.5c.96-.96.96-2.692 0-3.654L88.27 4.423c-.962-.77-2.5-.77-3.655.192L67.308 21.923 57.5 12.5c-1.538-1.538-3.654-.962-3.654.962v29.615c0 1.346 1.73 2.885 3.077 2.885zm-13.846 7.884H13.462c-1.924 0-2.5 2.116-.962 3.654l9.423 9.615-17.308 17.5c-.96.962-.96 2.693 0 3.654l7.116 7.115c.962.96 2.5.96 3.655 0l17.5-17.5 9.807 9.423c1.346 1.73 3.462 1.154 3.462-.77V57.115c0-1.346-1.73-3.27-3.077-3.27z"> </path> </svg> </span> </button> <h2 class="cusPreChat-headerText"> <div class="cusPreChat-headerTextContent"> <span id="cusPreChat-headerTextLabel">' + preChatlableObject.chatHeader + '</span> <span id="cusPreChat-headerSubtext"> </span></div></h2> <button id="cusPreChat-close-btn" class="cusPreChat-closeButton cusPreChat-headerItem"> <span class="cusPreChat-assistiveText">Close chat</span> <span class="cusPreChat-x-small cusPreChat-embeddedServiceIcon"> <svg focusable="false" aria-hidden="true" data-key="close" viewBox="0 0 100 100"> <path d="M65.577 53.73l27.5-27.71c1.27-1.27 1.27-3.174 0-4.445l-4.23-4.44c-1.272-1.27-3.175-1.27-4.445 0L56.694 44.847c-.847.845-2.115.845-2.96 0L26.018 16.922c-1.27-1.27-3.174-1.27-4.445 0l-4.44 4.442c-1.27 1.27-1.27 3.174 0 4.444l27.71 27.71c.846.846.846 2.116 0 2.962L16.923 84.403c-1.27 1.27-1.27 3.174 0 4.444l4.442 4.442c1.27 1.268 3.174 1.268 4.444 0l27.71-27.713c.846-.847 2.116-.847 2.962 0L84.19 93.29c1.27 1.268 3.174 1.268 4.445 0l4.44-4.445c1.27-1.268 1.27-3.17 0-4.44l-27.5-27.712c-.847-.847-.847-2.115 0-2.96z"> </path> </svg> </span> </button> </div></div></div><div class="cusPreChat-sidebarBody"> <div id="cusPreChat-sidebarLoadingIndicator" class="cusPreChat-sidebarLoadingIndicator" style="display: none;"> <div class="cusPreChat-loadingBallContainer cusPreChat-animated cusPreChat-embeddedServiceLoadingBalls"> <span class="cusPreChat-loadingBall cusPreChat-first"> </span> <span class="cusPreChat-loadingBall cusPreChat-second"> </span> <span class="cusPreChat-loadingBall cusPreChat-third"> </span></div></div><div id="cusPreChat-alertMsgContainer" class="cusPreChat-sidebarLoadingIndicator" style="display: none;"> <div style="margin: 2.5em 1.75em;">' + preChatlableObject.chatUnavailableMessage + '</div><div><button id="cusPreChat-CloseChat" class="cusPreChat-embeddedServiceSidebarButton" type="button"><span class="cusPreChat-label cusPreChat-bBody">Close Chat</span></button></div></div><div id="cusPreChat-hideWhileLoading" class="cusPreChat-activeFeature cusPreChat-hideWhileLoading"> <div class="cusPreChat-featureBody cusPreChat-embeddedServiceSidebarFeature"> <div class="cusPreChat-stateBody cusPreChat-embeddedServiceSidebarState"> <div class="cusPreChat-prechatUI cusPreChat-embeddedServiceLiveAgentStatePrechatDefaultUI"> <div class="cusPreChat-formContent cusPreChat-embeddedServiceSidebarForm"> <ul class="cusPreChat-fieldList" style="margin: 0;"> <div id="readonlyPreChatContainer" class="cusPreChat-readonlyContainer" style="text-align: left;position: relative;font-size: .75em;color: #444444;background: white;padding: 10px 12px;"> <div style="font-size: 18px;">Site Info Place Holder</div><div style="font-size: 14px;font-family: inherit;"><b>' + preChatlableObject.issueType + ':</b> <span class="coveo-query" data-coveo-id="IssueDesc" id="preChatIssueDesc" style="font-size: 14px;font-family: inherit;">Slow Performance</span></div></div><div style="margin-right: 12px;">' + hesCustomNoticeDom + ' <li class="cusPreChat-inputSplitName cusPreChat-embeddedServiceSidebarFormField"> <span class="cusPreChat-split-field-container"> <div class="cusPreChat-uiInput cusPreChat-uiInputText cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" style="font-size: 16px;color: #000 !important;font-family: inherit;margin-bottom: 0px;margin-top: 16px;"> <span class="">' + preChatlableObject.firstName + '</span></label> <input id="cusPreChat-FirstName" class="cusPreChat-FirstName form-control cusPreChat-input" maxlength="121" type="text" aria-describedby="" placeholder="" required="" aria-required="true" readonly="" style="border: none;background: none;padding: 0px;height: 23px;color: #666;box-shadow: none;"></div></span> </li><li class="cusPreChat-inputSplitName cusPreChat-embeddedServiceSidebarFormField"> <span class="cusPreChat-split-field-container"> <div class="cusPreChat-uiInput cusPreChat-uiInputText cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="LastName" style=" font-size: 16px; color: #000 !important; font-family: inherit; margin-bottom: 0px; margin-top: 16px; "> <span class="">' + preChatlableObject.lastName + '</span> </label> <input id="cusPreChat-LastName" class="cusPreChat-LastName form-control cusPreChat-input" maxlength="121" type="text" aria-describedby="" placeholder="" required="" aria-required="true" readonly="" style=" border: none; background: none; padding: 0px; height: 23px; color: #666; box-shadow: none; "></div></span> </li><li class="cusPreChat-inputEmail cusPreChat-embeddedServiceSidebarFormField"> <div class="cusPreChat-uiInput cusPreChat-uiInputEmail cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="Email" style=" font-size: 16px; color: #000 !important; font-family: inherit; margin-bottom: 0px; margin-top: 16px; "> <span>' + preChatlableObject.emailAddress + '</span></label> <input id="cusPreChat-Email" class="cusPreChat-Email form-control cusPreChat-input" maxlength="80" type="email" aria-describedby="" placeholder="" required="" aria-required="true" readonly="" style=" border: none; background: none; padding: 0px; height: 23px; color: #666; box-shadow: none; "></div></li><li class="cusPreChat-showAltEmailField cusPreChat-embeddedServiceSidebarFormField"> <div class="cusPreChat-uiInput cusPreChat-uiInputshowAltEmailField cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label id="cusPreChat-showAltEmailFieldBtn" class="cusPreChat-FormBtns cusPreChat-form-element__label cusPreChat-uiLabel" style=" font-weight: 500 !important; font-size: 14px; font-family: inherit; font-style: normal; margin-top: 21px; color: #006BBD; cursor: pointer; margin-bottom: 0px; "> <div style=" float: left; margin: 0px 8px 0px 0px; "> <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" class="cusPreChat-FormBtnchild"> <path d="M15.4508 7.35001C15.0508 4.05001 12.3508 1.35001 8.95076 0.850006C8.65076 0.850006 8.25076 0.75 7.95076 0.75C3.45076 0.75 -0.049236 4.65 0.550764 9.25C0.950764 12.55 3.65076 15.25 7.05076 15.75C7.35076 15.75 7.75076 15.85 8.05076 15.85C12.4508 15.85 16.0508 11.95 15.4508 7.35001ZM12.8508 12.65C11.6508 14.05 9.85076 14.85 7.95076 14.85C7.65076 14.85 7.35076 14.85 7.05076 14.75C4.15076 14.35 1.85076 12.05 1.45076 9.15C1.25076 7.25 1.75076 5.45 3.05076 4.05C4.25076 2.65 6.05076 1.85001 7.95076 1.85001C8.25076 1.85001 8.55076 1.85 8.85076 1.95C11.7508 2.35 14.0508 4.65 14.4508 7.55C14.7508 9.35 14.1508 11.15 12.8508 12.65Z"></path> <path d="M8.55076 4.05H7.45076V7.75H3.85076V8.85001H7.45076V12.55H8.55076V8.85001H12.2508V7.75H8.55076V4.05Z"></path> </svg> </div><div style=" float: left; margin-top: 1px; "><span class="cusPreChat-FormBtnchild">' + preChatlableObject.altEmail + '</span><span style=" margin-left: 5px; color: #767676; ">' + preChatlableObject.optional + '</span></div></label> </div></li><li class="cusPreChat-emptyAltEmail cusPreChat-embeddedServiceSidebarFormField"> <div class="cusPreChat-uiInput cusPreChat-uiEmptyAltEmail cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" style=" font-weight: 500 !important; font-size: 14px; font-family: inherit; color: #111 !important; font-style: normal; margin-top: 16px; "> <span>' + preChatlableObject.altEmail + '</span> </label> <input id="cusPreChat-emptyAltEmail" class=" form-control cusPreChat-input" maxlength="80" type="email" aria-describedby="" placeholder="" required="" aria-required="true" style=" float: left; border-radius: 3px; background: #FFFFFF; /* Graphite #7070 */ border: 1px solid #707070; /* font-size: 16px; */ /* height: 40px; */ width: calc(100% - 25px); "> <div id="cusPreChat-hideAltEmailFieldBtn" style=" float: right; margin-top: 7px; cursor: pointer; " class="cusPreChat-FormBtns"> <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"> <path d="M12.5 7.30005H3.5V8.30005H12.5V7.30005Z"></path> <path d="M8 0.300049C3.9 0.300049 0.5 3.70005 0.5 7.80005C0.5 11.9 3.9 15.3 8 15.3C12.1 15.3 15.5 11.9 15.5 7.80005C15.5 3.70005 12.1 0.300049 8 0.300049ZM8 14.3C4.4 14.3 1.5 11.4 1.5 7.80005C1.5 4.20005 4.4 1.30005 8 1.30005C11.6 1.30005 14.5 4.20005 14.5 7.80005C14.5 11.3 11.6 14.3 8 14.3Z"></path> </svg> </div><span></span> </div></li><li class="cusPreChat-prefillAltEmail cusPreChat-embeddedServiceSidebarFormField"> <div class="cusPreChat-uiInput cusPreChat-uiprefillAltEmail cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" style=" font-weight: 500 !important; font-size: 14px; font-family: inherit; color: #111 !important; font-style: normal; margin-top: 16px; "> <span>' + preChatlableObject.altEmail + '</span> </label> <input id="cusPreChat-prefillAltEmail" class="form-control cusPreChat-input" maxlength="80" type="email" aria-describedby="" placeholder="" required="" aria-required="true" style="border-radius: 3px; background: #FFFFFF; border: 1px solid #707070;"><span></span></div></li><li class="cusPreChat-inputPhone cusPreChat-embeddedServiceSidebarFormField"> <div class="cusPreChat-uiInput cusPreChat-uiInputPhone cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="Primary_Phone__c" style=" font-weight: 500 !important; font-size: 14px; font-family: inherit; color: #111 !important; font-style: normal; margin-top: 16px; "> <span>' + preChatlableObject.phoneNumber + '</span> </label> <input id="cusPreChat-Phone" class="cusPreChat-Primary_Phone__c form-control cusPreChat-input" maxlength="40" type="tel" aria-describedby="" placeholder="" required="" aria-required="true" style=" border-radius: 3px; border: 1px solid #707070; "></div></li><li class="cusPreChat-inputBrowser cusPreChat-embeddedServiceSidebarFormField"> <div class="cusPreChat-uiInput cusPreChat-uiInputBrowser cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" style=" font-weight: 500 !important; font-size: 14px; font-family: inherit; color: #111 !important; font-style: normal; margin-top: 16px; "> <span>'+preChatlableObject.browserVer+'</span> </label> <input id="cusPreChat-BrowserVer" class="form-control cusPreChat-input" maxlength="50" type="text" aria-describedby="" placeholder="" required="" aria-required="true" style=" margin-bottom: 0; border-radius: 3px; background: #FFFFFF; border: 1px solid #707070; "> <div id="cusPrechatBrowserEx" style="font-family: inherit;text-align:right;position:relative;font-size: 14px;line-height: 1.5;margin-right: .75em;margin-left: .5em;margin-top: 3px;float: right;color:#767676;">'+preChatlableObject.browserVerEx+'</div></div></li><li class="cusPreChat-inputURL cusPreChat-embeddedServiceSidebarFormField"> <div class="cusPreChat-uiInput cusPreChat-uiInputURL cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" style=" font-weight: 500 !important; font-size: 14px; font-family: inherit; color: #111 !important; font-style: normal; margin-top: 16px; "> <span>' + preChatlableObject.urlTriedToReach + '</span><span style=" margin-left: 5px; color: #767676; ">' + preChatlableObject.optional + '</span> </label> <input id="cusPreChat-URL" class="cusPreChat-URLtryingfor form-control cusPreChat-input" maxlength="255" type="text" aria-describedby="" placeholder="" required="" aria-required="true" style=" border-radius: 3px; background: #FFFFFF; border: 1px solid #707070; "></div></li><li class="cusPreChat-inputText cusPreChat-embeddedServiceSidebarFormField"> <div class="cusPreChat-uiInput cusPreChat-uiInputText cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label id="Issue_Description_Cust_Label" class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="Issue_Description__c" style=" font-weight: 500 !important; font-size: 14px; font-family: inherit; color: #111 !important; font-style: normal; margin-top: 16px; "> <span>' + preChatlableObject.issueDescription + '</span> <span id="issueDescIsOptional" style="color: #767676;">' + preChatlableObject.optional + '</span></label> <textarea id="cusPreChat-IssueDescription" class="cusPreChat-Issue_Description__c form-control cusPreChat-input coveo-query" maxlength="35000" type="text" aria-describedby="" placeholder="" required="" data-coveo-id="txtIssueDetails" style=" border-radius: 3px; background: #FFFFFF; border: 1px solid #707070; "></textarea> <div id="snappinCharCounter" style="text-align:right;position:relative;font-size:.75em;line-height: 1.5;margin-right: .75em;margin-left: .5em;margin-bottom: 8px;float: right;color:#767676;">0 / ' + preChatlableObject.issueDescriptionLength + ' ' + preChatlableObject.characters + '</div></div></li></div></ul> <div id="PrechatCoveo" style="display:none;"></div><div style="font-size: 12px;font-style: normal !important;color:#767676;text-align: left;margin: 40px 1.75em 25px 1.75em;font-style: italic;color:#444444;text-decoration: none;font-family: inherit;">'+preChatlableObject.customerPrivacyDesc+'</div></div><div class="cusPreChat-buttonWrapper cusPreChat-embeddedServiceSidebarForm" style=" padding: 12px 24px 12px 24px; background-color: #fff; "> <button id="cusPreChat-startChat" class="cusPreChat-startButton cusPreChat-uiButton--default cusPreChat-uiButton cusPreChat-embeddedServiceSidebarButton" type="button" style=" border-radius: 4px !important; "> <span class="cusPreChat-label cusPreChat-bBody">' + preChatlableObject.startChat + '</span> </button></div></div></div></div></div></div><div id="cusPreChat-embeddedServiceHelpButton" class="cusPreChat-embeddedServiceHelpButton" style="display: none;"> <div class="cusPreChat-helpButton" style="width: 168px;"> <button id="cusPreChat-helpButtonEnabled" class="cusPreChat-uiButton cusPreChat-helpButtonEnabled" href="javascript:void(0)" > <span class="cusPreChat-embeddedServiceIcon" aria-hidden="true" style="z-index: 1; float: left"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="chat" width="100%" height="100%" style="height: 18px; width: 18px;"> <path d="M12 1.8C5.9 1.8 1 6.4 1 12c0 1.7.5 3.4 1.3 4.8.1.3.2.6.1.8l-1.4 4c-.2.3.2.6.6.6l3.9-1.6c.3-.1.5 0 .8.1 1.7.9 3.7 1.5 5.8 1.5 6 0 11-4.5 11-10.2C23 6.4 18.1 1.8 12 1.8zm-5.5 12c-1.1 0-1.9-.8-1.9-1.8s.8-1.8 1.9-1.8 1.8.8 1.8 1.8-.8 1.8-1.8 1.8zm5.5 0c-1 0-1.8-.8-1.8-1.8s.8-1.8 1.8-1.8 1.8.8 1.8 1.8-.8 1.8-1.8 1.8zm5.5 0c-1 0-1.8-.8-1.8-1.8s.8-1.8 1.8-1.8 1.9.8 1.9 1.8-.8 1.8-1.9 1.8z"></path> </svg> </span> <div class="cusPreChat-helpButtonLabel" id="cusPreChat-helpButtonSpan" aria-live="polite" aria-atomic="true"> <span class="cusPreChat-assistiveText">Live chat:</span> <span class="cusPreChat-message">' + preChatlableObject.chatHeader + '</span></div></button> </div></div>';
     return prechatformDesign;
 }
 
 function createHesAdminChatTopField(snapInObject, preChatlableObject){
-    return '<div id="readonlyPreChatContainer" class="cusPreChat-readonlyContainer" style="text-align: left;position: relative;font-size: .75em;color: #444444;background: white;padding: 10px 12px;"><div style="font-size: 18px;">'+snapInObject.productName+'</div><div style="font-size: 14px;font-family: inherit;"><b>' + preChatlableObject.issueType + ':</b> <span class="coveo-query" data-coveo-id="IssueDesc" id="preChatIssueDesc" style="font-size: 14px;font-family: inherit;">Slow Performance</span></div></div>';
+	var siteInfoDom = '';
+	if("siteInfo" in snapInObject && snapInObject.siteInfo)
+		siteInfoDom = '<div style="font-size: 18px;">'+snapInObject.siteInfo+'</div>';
+	
+	var hesAdminChatTopFieldDom = '<div id="readonlyPreChatContainer" class="cusPreChat-readonlyContainer" style="text-align: left;position: relative;font-size: .75em;color: #444444;background: white;padding: 10px 12px;">'+siteInfoDom+'<div style="font-size: 14px;font-family: inherit;"><b>' + preChatlableObject.issueType + ':</b> <span id="preChatIssueType_static" style="font-size: 14px;font-family: inherit;">Slow Performance</span></div></div>';
+    return hesAdminChatTopFieldDom;
 }
 
 function hesAdminAltEmailInterationDesign(snapInObject){
@@ -2056,7 +2141,9 @@ function hesAdminAltEmailInterationDesign(snapInObject){
             document.getElementById("cusPreChat-hideAltEmailFieldBtn").addEventListener("click", function () { 
                 document.querySelector(".cusPreChat-showAltEmailField").style.display = "block";
                 document.querySelector(".cusPreChat-emptyAltEmail").style.display = "none"; 
-                document.getElementById("cusPreChat-emptyAltEmail").value = null;           
+                document.getElementById("cusPreChat-emptyAltEmail").value = null; 
+				if (document.getElementById("ErrMsg_cusPreChat-emptyAltEmail"))
+					removeDomElementbyId("ErrMsg_cusPreChat-emptyAltEmail");
             });
         }
     }catch(e){
@@ -2066,16 +2153,102 @@ function hesAdminAltEmailInterationDesign(snapInObject){
 
 //FY21-1003 Story #9078562: HES Admin Chat Prechat form changes [END]
 
-//FY21-1003 POC:emcOpenFeedback [START]
-function clickOnSurvey(endSnapInHasPrimBtn){
-    console.log("Button: "+ endSnapInHasPrimBtn.innerText);
-    if(endSnapInHasPrimBtn.innerText && endSnapInHasPrimBtn.innerText === "Take the Survey"){
-        endSnapInHasPrimBtn.click();
-    }else{
-        console.log("The button Value is : "+endSnapInHasPrimBtn.innerText);
+//FY21-STORY #9152336 - [POC] Snap-In Window Size [START]
+function chatWindowResize(){
+    var snapInChatHeader = document.querySelector("[embeddedservice-chatheader_chatheader-host]");
+    if (snapInChatHeader && !document.getElementById("chatFullWindowBtn")){
+        var chatFullWindowIconEle = '<button id="chatNormalSize" style="display:none; left:35px; position: absolute;z-index: 1000;background: none;border: none;height: 32px;width: 32px;top: 6px; fill: #fff; cursor:pointer;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52" id="pop_in"><path d="M22 31.3h19.1c.8 0 1.6-.5 1.6-1.3v-3c0-.8-.7-1.7-1.6-1.7h-7.9c-.9 0-1.4-1-.7-1.6l17-17c.6-.6.6-1.5 0-2.1l-2.1-2.1c-.6-.6-1.5-.6-2.1 0l-17 17c-.6.6-1.6.2-1.6-.7v-7.9c0-.8-.8-1.7-1.6-1.7h-2.9c-.8 0-1.5.9-1.5 1.7v19c.1.9.5 1.3 1.3 1.4z"></path><path d="M37 35.3h-4c-.6 0-1 .4-1 1v6.2c0 .8-.7 1.5-1.5 1.5h-21c-.8 0-1.5-.7-1.5-1.5v-21c0-.8.7-1.5 1.4-1.5h6.3c.6 0 1-.4 1-1v-4c0-.6-.4-1-1-1H6c-2.2 0-4 1.8-4 4v28c0 2.2 1.8 4 4 4h28c2.2 0 4-1.8 4-4v-9.7c0-.6-.4-1-1-1z"></path></svg></button><button id="chatFullWindowBtn" style="left:35px; position: absolute;z-index: 1000;background: none;border: none;height: 32px;width: 32px;top: 6px; fill: #fff; cursor:pointer;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52" id="new_window"><g><path d="M48.7 2H29.6c-.8 0-1.6.5-1.6 1.3v3c0 .8.7 1.7 1.6 1.7h7.9c.9 0 1.4 1 .7 1.6l-17 17c-.6.6-.6 1.5 0 2.1l2.1 2.1c.6.6 1.5.6 2.1 0l17-17c.6-.6 1.6-.2 1.6.7v7.9c0 .8.8 1.7 1.6 1.7h2.9c.8 0 1.5-.9 1.5-1.7v-19c0-.9-.5-1.4-1.3-1.4z"></path><path d="M36.3 25.5L32.9 29c-.6.6-.9 1.3-.9 2.1v11.4c0 .8-.7 1.5-1.5 1.5h-21c-.8 0-1.5-.7-1.5-1.5v-21c0-.8.7-1.5 1.5-1.5H21c.8 0 1.6-.3 2.1-.9l3.4-3.4c.6-.6.2-1.7-.7-1.7H6c-2.2 0-4 1.8-4 4v28c0 2.2 1.8 4 4 4h28c2.2 0 4-1.8 4-4V26.2c0-.9-1.1-1.3-1.7-.7z"></path></g></svg></button>';
+        chatFullWindowIconEle = '<button id="chatCustumSize" style="left:5px; position: absolute;z-index: 1000;background: none;border: none;height: 32px;width: 32px;top: 6px; fill: #fff; cursor:pointer;"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000" xml:space="preserve"><g><g transform="translate(0.000000,511.000000) scale(0.100000,-0.100000)"><path d="M6847.2,5006c-49.2-17.2-98.3-81.1-98.3-127.8c0-19.7,179.4-216.3,398.2-437.5l398.2-400.6l-95.9-103.2c-54.1-59-481.7-491.6-948.8-966c-469.5-471.9-860.3-882.4-867.7-909.5c-7.4-27-2.5-66.4,9.8-86c12.3-19.7,290-304.8,619.4-631.7c511.3-511.3,607.1-597.3,671-597.3c63.9-2.5,186.8,113.1,1025,963.5l951.3,966l403.1-398.2c221.2-221.2,420.3-400.6,442.4-400.6c22.1,0,63.9,22.1,91,49.2c49.2,49.2,49.2,81.1,49.2,1519c0,1231.5-4.9,1477.2-34.4,1519c-34.4,44.2-81.1,46.7-1506.7,51.6C7545.3,5018.3,6866.8,5013.4,6847.2,5006z"/><path d="M146.7,4964.2c-44.2-34.4-46.7-78.7-46.7-1538.7s2.5-1504.3,46.7-1538.7c27-19.7,66.4-34.4,86-34.4c19.7,0,213.8,177,432.6,393.3c216.3,216.3,405.6,393.3,417.9,393.3c9.8,0,444.9-422.8,963.5-939c518.6-518.6,961.1-948.8,985.6-956.2c22.1-7.4,59-9.8,78.7-2.5c19.7,4.9,309.7,282.7,646.4,617c521.1,518.6,607.1,614.5,607.1,678.4c2.5,63.9-110.6,184.4-963.5,1025l-966,951.2l400.6,403.1c218.8,221.2,398.2,420.3,398.2,442.4c0,22.1-22.1,63.9-49.2,90.9c-49.2,49.2-81.1,49.2-1519,49.2C434.3,4998.6,188.5,4993.7,146.7,4964.2z"/><path d="M2061.5-1483.1l-963.5-978.3l-403.1,400.6c-417.9,415.4-471.9,447.4-543.2,344.1c-34.4-49.2-39.3-233.5-39.3-1519c0-1226.5,4.9-1472.3,34.4-1514.1c34.4-44.3,78.7-46.7,1538.7-46.7c1460,0,1504.3,2.4,1538.7,46.7c19.7,27,34.4,66.3,34.4,86c0,19.7-179.4,216.3-398.2,435.1L2464.6-3828l149.9,167.1c81.1,91,513.7,530.9,961.1,978.3c707.9,705.4,813.6,821,813.6,884.9c0,63.9-83.6,157.3-609.6,683.3c-518.6,518.6-619.4,607.1-680.9,607.1C3034.8-504.8,2909.5-622.8,2061.5-1483.1z"/><path d="M6225.3-1116.8c-518.7-518.7-607.1-619.4-607.1-680.9c-2.5-63.9,115.5-189.3,975.8-1037.3l978.3-963.5l-398.2-403.1c-417.9-417.9-449.8-472-346.6-543.2c49.2-34.4,233.5-39.3,1519-39.3c1170,0,1474.8,7.4,1509.2,32c41.8,29.5,44.2,118,44.2,1541.2c0,1413.4-4.9,1511.7-44.2,1541.2c-24.6,17.2-61.4,32-81.1,32c-19.7,0-216.3-179.4-435-398.2l-400.7-395.7l-314.6,297.4c-172.1,162.2-612,594.8-978.3,961.1c-575.2,577.6-673.5,666.1-737.4,666.1S6751.3-590.8,6225.3-1116.8z"/></g></g></svg>'+chatFullWindowIconEle;
+        snapInChatHeader.insertAdjacentHTML("afterbegin", chatFullWindowIconEle);
+        snapInChatHeader.style.paddingLeft = 57;
+
+        chatWindowSizeAdjust();//FY21-STORY #9152336 - [POC] Snap-In Window Size
+        document.getElementById("chatFullWindowBtn").addEventListener("click", custSnapinChatFullWindowMode);
     }
 }
-//FY21-1003 POC:emcOpenFeedback [END]
+
+function custSnapinChatFullWindowMode(){
+    var snapinChatContainer = document.querySelector(".embeddedServiceSidebar .dockableContainer");
+    var originalScale = {
+        rightPosition: snapinChatContainer.style.right,
+        width: snapinChatContainer.style.width,
+        height: snapinChatContainer.style.height,
+        fullScreenMode: true
+    }
+
+    document.getElementById("chatNormalSize").addEventListener("click", function(){
+        custSnapinChatOriginalWindowMode(originalScale);
+        originalScale.fullScreenMode = false;
+        }
+    );
+
+    document.getElementById("chatNormalSize").style.display = "block";
+    document.getElementById("chatFullWindowBtn").style.display = "none";
+
+    snapinChatContainer.style.right = 0;
+    changeSnapinWindowSizeTo(window.innerWidth, window.innerHeight);
+
+    window.addEventListener("resize", function(){
+        if(originalScale.fullScreenMode)
+            custSnapinChatFullWindowMode
+        }
+    );
+}
+
+function custSnapinChatOriginalWindowMode(originalScale){
+    var snapinChatContainer = document.querySelector(".embeddedServiceSidebar .dockableContainer");
+    snapinChatContainer.style.right = originalScale.rightPosition;
+    changeSnapinWindowSizeTo(originalScale.width, originalScale.height);
+    document.getElementById("chatNormalSize").style.display = "none";
+    document.getElementById("chatFullWindowBtn").style.display = "block";
+}
+function changeSnapinWindowSizeTo(newWidth, newHeight){
+    setTimeout(function(){ 
+        var snapinChatContainer = document.querySelector(".embeddedServiceSidebar .dockableContainer");
+        if(windowHasScroll &&  newWidth > window.innerWidth)
+            snapinChatContainer.style.width = newWidth - 20;
+        else
+            snapinChatContainer.style.width = newWidth;
+        snapinChatContainer.style.maxWidth = newWidth;
+        snapinChatContainer.style.height = newHeight;
+        snapinChatContainer.style.maxHeight = newHeight;
+    }, 200);
+}
+function windowHasScroll(){
+    if ($("body").height() > $(window).height()) {
+        return true;
+    }
+}
+
+function chatWindowSizeAdjust(){
+    const BORDER_SIZE = 4;
+    const chatPannel =  document.querySelector(".embeddedServiceSidebar .dockableContainer");
+    const resizeIcon = document.getElementById("chatCustumSize");
+    let m_posX,m_posY;
+    function resize(e){
+    const dx = m_posX - e.x;
+    const dy = m_posY - e.y;
+    m_posX = e.x;
+    m_posY = e.y;
+    chatPannel.style.width = (parseInt(getComputedStyle(chatPannel, '').width) + dx) + "px";
+    chatPannel.style.height = (parseInt(getComputedStyle(chatPannel, '').height) + dy) + "px";
+    chatPannel.style.maxWidth = window.innerWidth - 20;
+    chatPannel.style.maxHeight = window.innerHeight - 20;
+    chatPannel.style.minWidth = 320;
+    chatPannel.style.minHeight = 400;
+    }
+
+    resizeIcon.addEventListener("mousedown", function(e){
+            m_posX = e.x;
+            m_posY = e.y;
+            document.addEventListener("mousemove", resize, false);
+    }, false);
+
+    document.addEventListener("mouseup", function(){
+        document.removeEventListener("mousemove", resize, false);
+    }, false);
+}
+//FY21-STORY #9152336 - [POC] Snap-In Window Size [END]
 
 /////////////////////////////ChatBot Code///////////////////////////////////
 //0202 changes start
@@ -2494,7 +2667,7 @@ function ResgisterChatBotHandler() {
 
     });
 }
-//Not requiredfor now BNR
+
 function OmniChatBotTrackerListner() {
     // clearInterval(findingEle);
     try {

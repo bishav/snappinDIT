@@ -58,7 +58,7 @@ function hideOtherDomObject(eleSelector, findingEle, otherDomEle) {
     }
 }
 function initSnapIn(snapInObject) {
-    var snapinAlreadyInitiated = document.getElementById("esw_storage_iframe");
+    let snapinAlreadyInitiated = document.getElementById("esw_storage_iframe");
     if (!snapinAlreadyInitiated) {
         if (window.embedded_svc) {
             initOriginalESW(snapInObject.serviceForceURL, snapInObject);
@@ -78,7 +78,7 @@ function triggerSnapin(snapInObject, preChatlableObject) {
     try {
         if (!(sessionStorage.getItem("isChatBotActive") != null && sessionStorage.getItem("isChatBotActive") == "true")) {//Check if chat bot is Active
             if (typeof (isSnapinInitiated) == "function" && isSnapinInitiated()) {
-                var orderSnapinObject = sendGlobalSnapinCareObjToJson();
+                let orderSnapinObject = sendGlobalSnapinCareObjToJson();
                 initiateChatCARE(orderSnapinObject);//orderRetain Chat
             } else if (snapInObject === undefined && history.length > 1 && snapinChatGlobalObjNotEmpty()) {
                 snapInObject = sendGlobalSnapinObjToJson();
@@ -112,9 +112,9 @@ function triggerSnapin(snapInObject, preChatlableObject) {
     }
 }
 function customChatNotCreated() {
-    var cusPreChatHelpBtn = document.getElementById('cusPreChat-embeddedServiceHelpButton');
-    var snapinExists = document.querySelector(".embeddedServiceSidebar .dockableContainer");
-    var chatStarted = document.querySelector(".dockableContainer .activeFeature .embeddedServiceLiveAgentStateChat .chasitorControls .chasitorText");
+    let cusPreChatHelpBtn = document.getElementById('cusPreChat-embeddedServiceHelpButton');
+    let snapinExists = document.querySelector(".embeddedServiceSidebar .dockableContainer");
+    let chatStarted = document.querySelector(".dockableContainer .activeFeature .embeddedServiceLiveAgentStateChat .chasitorControls .chasitorText");
     if (chatStarted)
         return false;
     else if (cusPreChatHelpBtn && window.getComputedStyle(cusPreChatHelpBtn).display != "none" && !snapinExists) {
@@ -132,13 +132,13 @@ function appendCustPreChatSnapinDom(snapInObject, preChatlableObject) {
         }
         //STORY 7193456: FY201101[END]
         //FY21-1003 Story #9078562: HES Admin Chat Prechat form changes [START]
-        var domEle
+        let domEle
         if(isHesAdminChat(snapInObject)){
             domEle = createHesAdminChat(preChatlableObject);
         } else
             domEle = '<div id="cusPreChatSnapinDom" class="cusPreChat-modalContainer"> <div class="cusPreChat-dockableContainer"> <div class="cusPreChat-embeddedServiceSidebarHeader"> <div class="cusPreChat-shortHeader"> <div class="cusPreChat-shortHeaderContent"> <button id="cusPreChat-minimize-btn" class="cusPreChat-minimizeButton cusPreChat-headerItem"> <span class="cusPreChat-assistiveText">Minimize chat</span> <span class="cusPreChat-minimize cusPreChat-x-small cusPreChat-embeddedServiceIcon"> <svg focusable="false" aria-hidden="true" data-key="contract_alt" viewBox="0 0 100 100"> <path d="M56.923 45.962h29.615c1.924 0 2.5-2.116.962-3.654l-9.423-9.616 17.308-17.5c.96-.96.96-2.692 0-3.654L88.27 4.423c-.962-.77-2.5-.77-3.655.192L67.308 21.923 57.5 12.5c-1.538-1.538-3.654-.962-3.654.962v29.615c0 1.346 1.73 2.885 3.077 2.885zm-13.846 7.884H13.462c-1.924 0-2.5 2.116-.962 3.654l9.423 9.615-17.308 17.5c-.96.962-.96 2.693 0 3.654l7.116 7.115c.962.96 2.5.96 3.655 0l17.5-17.5 9.807 9.423c1.346 1.73 3.462 1.154 3.462-.77V57.115c0-1.346-1.73-3.27-3.077-3.27z"> </path> </svg> </span> </button> <h2 class="cusPreChat-headerText"> <div class="cusPreChat-headerTextContent"> <span id="cusPreChat-headerTextLabel">' + preChatlableObject.chatHeader + '</span> <span id="cusPreChat-headerSubtext"> </span></div></h2> <button id="cusPreChat-close-btn" class="cusPreChat-closeButton cusPreChat-headerItem"> <span class="cusPreChat-assistiveText">Close chat</span> <span class="cusPreChat-x-small cusPreChat-embeddedServiceIcon"> <svg focusable="false" aria-hidden="true" data-key="close" viewBox="0 0 100 100"> <path d="M65.577 53.73l27.5-27.71c1.27-1.27 1.27-3.174 0-4.445l-4.23-4.44c-1.272-1.27-3.175-1.27-4.445 0L56.694 44.847c-.847.845-2.115.845-2.96 0L26.018 16.922c-1.27-1.27-3.174-1.27-4.445 0l-4.44 4.442c-1.27 1.27-1.27 3.174 0 4.444l27.71 27.71c.846.846.846 2.116 0 2.962L16.923 84.403c-1.27 1.27-1.27 3.174 0 4.444l4.442 4.442c1.27 1.268 3.174 1.268 4.444 0l27.71-27.713c.846-.847 2.116-.847 2.962 0L84.19 93.29c1.27 1.268 3.174 1.268 4.445 0l4.44-4.445c1.27-1.268 1.27-3.17 0-4.44l-27.5-27.712c-.847-.847-.847-2.115 0-2.96z"> </path> </svg> </span> </button> </div></div></div><div class="cusPreChat-sidebarBody"> <div id="cusPreChat-sidebarLoadingIndicator" class="cusPreChat-sidebarLoadingIndicator" style="display: none;"> <div class="cusPreChat-loadingBallContainer cusPreChat-animated cusPreChat-embeddedServiceLoadingBalls"> <span class="cusPreChat-loadingBall cusPreChat-first"> </span> <span class="cusPreChat-loadingBall cusPreChat-second"> </span> <span class="cusPreChat-loadingBall cusPreChat-third"> </span></div></div><div id="cusPreChat-alertMsgContainer" class="cusPreChat-sidebarLoadingIndicator" style="display: none;"><div style="margin: 2.5em 1.75em;">' + preChatlableObject.chatUnavailableMessage + '</div><div><button id="cusPreChat-CloseChat" class="cusPreChat-embeddedServiceSidebarButton" type="button"><span class="cusPreChat-label cusPreChat-bBody">Close Chat</span></button></div></div><div id="cusPreChat-hideWhileLoading" class="cusPreChat-activeFeature cusPreChat-hideWhileLoading"> <div class="cusPreChat-featureBody cusPreChat-embeddedServiceSidebarFeature"> <div class="cusPreChat-stateBody cusPreChat-embeddedServiceSidebarState"> <div class="cusPreChat-prechatUI cusPreChat-embeddedServiceLiveAgentStatePrechatDefaultUI"> <div class="cusPreChat-formContent cusPreChat-embeddedServiceSidebarForm"> <ul class="cusPreChat-fieldList"> <div id="readonlyPreChatContainer" class="cusPreChat-readonlyContainer" style="margin: 0 1.5em 6px 1.5em; text-align: left;position: relative;font-size: .75em;color: #444444;"> <div style="font-size: 1.2em;">Precision M4500</div><div> <b>' + preChatlableObject.serviceTag + ':</b> 123432</div><div> <b>' + preChatlableObject.issueType + ':</b> Keyboard not working</div></div><li class="cusPreChat-inputSplitName cusPreChat-embeddedServiceSidebarFormField"> <span class="cusPreChat-split-field-container"> <div class="cusPreChat-uiInput cusPreChat-uiInputText cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel"> <span class="">' + preChatlableObject.firstName + '</span></label> <input id="cusPreChat-FirstName" class="cusPreChat-FirstName form-control cusPreChat-input" maxlength="121" type="text" aria-describedby="" placeholder="" required="" aria-required="true"></div></span> </li><li class="cusPreChat-inputSplitName cusPreChat-embeddedServiceSidebarFormField"> <span class="cusPreChat-split-field-container"> <div class="cusPreChat-uiInput cusPreChat-uiInputText cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="LastName"> <span class="">' + preChatlableObject.lastName + '</span> </label> <input id="cusPreChat-LastName" class="cusPreChat-LastName form-control cusPreChat-input" maxlength="121" type="text" aria-describedby="" placeholder="" required="" aria-required="true"></div></span> </li><li class="cusPreChat-inputEmail cusPreChat-embeddedServiceSidebarFormField"> <div class="cusPreChat-uiInput cusPreChat-uiInputEmail cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="Email"> <span>' + preChatlableObject.emailAddress + '</span></label> <input id="cusPreChat-Email" class="cusPreChat-Email form-control cusPreChat-input" maxlength="80" type="email" aria-describedby="" placeholder="" required="" aria-required="true"></div></li><li class="cusPreChat-inputPhone cusPreChat-embeddedServiceSidebarFormField"> <div class="cusPreChat-uiInput cusPreChat-uiInputPhone cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="Primary_Phone__c"> <span>' + preChatlableObject.phoneNumber + '</span> </label> <input id="cusPreChat-Phone" class="cusPreChat-Primary_Phone__c form-control cusPreChat-input" maxlength="40" type="tel" aria-describedby="" placeholder="" required="" aria-required="true"></div></li><li class="cusPreChat-inputText cusPreChat-embeddedServiceSidebarFormField"> <div class="cusPreChat-uiInput cusPreChat-uiInputText cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label id="Issue_Description_Cust_Label" class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="Issue_Description__c"> <span>' + preChatlableObject.issueDescription + '</span> </label> <textarea id="cusPreChat-IssueDescription" class="cusPreChat-Issue_Description__c form-control cusPreChat-input coveo-query" maxlength="' + preChatlableObject.issueDescriptionLength + '" type="text" aria-describedby="" placeholder="" required="" data-coveo-id="txtIssueDetails"></textarea><div id="snappinCharCounter" style="text-align:right;position:relative;font-size:.75em;line-height: 1.5;margin-right: .75em;margin-left: .5em;margin-top: 8px; float: right; color:#767676">0 / ' + preChatlableObject.issueDescriptionLength + ' ' + preChatlableObject.characters + '</div></div></li></ul>  <div id="PrechatCoveo" style="display:none;"></div> <div style="font-size: 12px;color:#767676;text-align: left;margin: 2.5em 1.75em; font-style: italic;color:#444444;">' + preChatlableObject.customerPrivacyDesc + '</div></div><div class="cusPreChat-buttonWrapper cusPreChat-embeddedServiceSidebarForm"> <button id="cusPreChat-startChat" class="cusPreChat-startButton cusPreChat-uiButton--default cusPreChat-uiButton cusPreChat-embeddedServiceSidebarButton" type="button"> <span class="cusPreChat-label cusPreChat-bBody">' + preChatlableObject.startChat + '</span> </button></div></div></div></div></div></div></div></div><div id="cusPreChat-embeddedServiceHelpButton" class="cusPreChat-embeddedServiceHelpButton" style="display: none;"> <div class="cusPreChat-helpButton" style="width: 168px;"> <button id="cusPreChat-helpButtonEnabled" class="cusPreChat-uiButton cusPreChat-helpButtonEnabled" href="javascript:void(0)" > <span class="cusPreChat-embeddedServiceIcon" aria-hidden="true" style="display: inline-block; z-index: 1; float: left"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="chat" width="100%" height="100%" style="height: 18px; width: 18px;"> <path d="M12 1.8C5.9 1.8 1 6.4 1 12c0 1.7.5 3.4 1.3 4.8.1.3.2.6.1.8l-1.4 4c-.2.3.2.6.6.6l3.9-1.6c.3-.1.5 0 .8.1 1.7.9 3.7 1.5 5.8 1.5 6 0 11-4.5 11-10.2C23 6.4 18.1 1.8 12 1.8zm-5.5 12c-1.1 0-1.9-.8-1.9-1.8s.8-1.8 1.9-1.8 1.8.8 1.8 1.8-.8 1.8-1.8 1.8zm5.5 0c-1 0-1.8-.8-1.8-1.8s.8-1.8 1.8-1.8 1.8.8 1.8 1.8-.8 1.8-1.8 1.8zm5.5 0c-1 0-1.8-.8-1.8-1.8s.8-1.8 1.8-1.8 1.9.8 1.9 1.8-.8 1.8-1.9 1.8z"></path> </svg> </span> <div class="cusPreChat-helpButtonLabel" id="cusPreChat-helpButtonSpan" aria-live="polite" aria-atomic="true"> <span class="cusPreChat-assistiveText">Live chat:</span> <span class="cusPreChat-message">' + preChatlableObject.chatHeader + '</span></div></button> </div></div>';
         //FY21-1003 Story #9078562: HES Admin Chat Prechat form changes [END]
-        var body = document.body || document.getElementsByTagName('body')[0];
+        let body = document.body || document.getElementsByTagName('body')[0];
         body.insertAdjacentHTML('beforeend', domEle);
         prePopulateCustPreFormValues(snapInObject);
         checkIfIssueDescIsOptional(snapInObject, preChatlableObject);//STORY 6779542: Contact Us: Snapin prechat Form -Problem Description
@@ -170,13 +170,13 @@ function appendCustPreChatSnapinDom(snapInObject, preChatlableObject) {
             coveoInit(snapInObject, preChatlableObject);
         }
     } else {
-        var snapinExists = document.querySelector(".embeddedServiceSidebar"), custPrechatForm = document.getElementById("cusPreChatSnapinDom");
+        let snapinExists = document.querySelector(".embeddedServiceSidebar"), custPrechatForm = document.getElementById("cusPreChatSnapinDom");
         if ((!snapinExists || (snapinExists && window.getComputedStyle(snapinExists).display == 'none')) && window.getComputedStyle(custPrechatForm).display == 'none')
             maximizeCustPrechat();
         //document.getElementById("cusPreChatSnapinDom").style.display = 'block';
         //if (document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton').className != "uiButton helpButtonEnabled")
         //    agentsOfflinePostChatForm();
-        var element = document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton');
+        let element = document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton');
         if (element && !element.classList.contains("helpButtonEnabled"))
             agentsOfflinePostChatForm();
 
@@ -214,14 +214,14 @@ function makeIdReadWrite(id) {
 function checkIfIssueDescIsOptional(snapInObject, preChatlableObject) {
     if ("issueVal" in snapInObject && snapInObject.issueVal != "" && snapInObject.issueVal != null && snapInObject.issueVal != undefined && snapInObject.issueVal != 'None' && document.getElementById("Issue_Description_Cust_Label")) {
         removeDomElementbyId("issueDescIsOptional");
-        var optionalLabel = document.createElement('span');
+        let optionalLabel = document.createElement('span');
         optionalLabel.id = 'issueDescIsOptional';
 		//FY21-1003 Story #9078562: HES Admin Chat Prechat form changes [START]
         if(isHesAdminChat(snapInObject))
             optionalLabel.style = 'color: #767676;';
 		//FY21-1003 Story #9078562: HES Admin Chat Prechat form changes [END]
         optionalLabel.innerText = preChatlableObject.optional;
-        var Issue_Description_Cust_Label = document.getElementById("Issue_Description_Cust_Label");
+        let Issue_Description_Cust_Label = document.getElementById("Issue_Description_Cust_Label");
         Issue_Description_Cust_Label.appendChild(optionalLabel);
         removeDomElementbyId("ErrMsg_cusPreChat-IssueDescription");
     } else {
@@ -247,7 +247,7 @@ function httpCoveoGetAsync(theUrl, callback) {
     }
 }
 function apendToAHoverDiv(responseText) {
-    // var coveoSearchPleaseHolder = document.getElementById("PrechatCoveo");
+    // let coveoSearchPleaseHolder = document.getElementById("PrechatCoveo");
     $('#PrechatCoveo').append(responseText);
     // coveoSearchPleaseHolder.insertAdjacentHTML('beforeend', responseText);
 }
@@ -526,8 +526,8 @@ function custPreChatKeypressFieldValidation(preChatlableObject) {
 function custPreChatShowAdditionalDetailsInUi(snapInObject, preChatlableObject) {
     if (document.getElementById("readonlyPreChatContainer"))
         removeDomElement(document.getElementById("readonlyPreChatContainer"));
-    var topFields = document.querySelector(".cusPreChat-sidebarBody .cusPreChat-prechatUI  .cusPreChat-embeddedServiceSidebarForm ul.cusPreChat-fieldList");
-    var topFieldValues;
+    let topFields = document.querySelector(".cusPreChat-sidebarBody .cusPreChat-prechatUI  .cusPreChat-embeddedServiceSidebarForm ul.cusPreChat-fieldList");
+    let topFieldValues;
     checkIfIssueDescIsOptional(snapInObject, preChatlableObject);//STORY 6779542: Contact Us: Snapin prechat Form -Problem Description
     //STORY 7193456: FY201101[START]
     if ("isEmcProduct" in snapInObject && snapInObject.isEmcProduct) {
@@ -547,14 +547,14 @@ function custPreChatShowAdditionalDetailsInUi(snapInObject, preChatlableObject) 
 }
 function custPreFormValidation(preChatlableObject) {
 
-    var acceptForm,
+    let acceptForm,
         firstNameDOM = document.getElementById("cusPreChat-FirstName"),
         lastNameDOM = document.getElementById("cusPreChat-LastName"),
         emailDOM = document.getElementById("cusPreChat-Email"),
         phoneDOM = document.getElementById("cusPreChat-Phone"),
         IssueDescDOM = document.getElementById("cusPreChat-IssueDescription");
     if (document.getElementById("ErrMsg_cusPreChat-Email")) {
-        var element = document.getElementById("ErrMsg_cusPreChat-Email");
+        let element = document.getElementById("ErrMsg_cusPreChat-Email");
         element.parentNode.removeChild(element);
     }
     if (!emailDOM.value)
@@ -566,7 +566,7 @@ function custPreFormValidation(preChatlableObject) {
 	var alternateEmailDOM = document.getElementById("cusPreChat-emptyAltEmail");
     if(alternateEmailDOM){
 		if (document.getElementById("ErrMsg_cusPreChat-emptyAltEmail")) {
-			var element = document.getElementById("ErrMsg_cusPreChat-emptyAltEmail");
+			let element = document.getElementById("ErrMsg_cusPreChat-emptyAltEmail");
 			element.parentNode.removeChild(element);
 		}
 		if (alternateEmailDOM.value)
@@ -638,7 +638,7 @@ function cusPreChatInvalidEmail(domElement, preChatlableObject) {
     }
 }
 function cusPreChatvalidateEmail(email) {
-    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    let re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
 }
 function cusPreChatBlockListEmailValidation(email, blockList) {
@@ -654,8 +654,8 @@ function cusPreChatBlockListEmailValidation(email, blockList) {
 }
 function cusPreChatErrorMsgPlaceholder(domElement, message) {
     try {
-        var referenceNode = domElement.parentNode;
-        var el = document.createElement("ul");
+        let referenceNode = domElement.parentNode;
+        let el = document.createElement("ul");
         el.innerHTML = '<li class="cusPreChat-form-element__help">' + message + '</li>';
         el.id = 'ErrMsg_' + domElement.id;
         el.className = "cusPreChat-has-error cusPreChat-uiInput";
@@ -667,7 +667,7 @@ function cusPreChatErrorMsgPlaceholder(domElement, message) {
 }
 function removeDomElementbyId(id) {
     if (document.getElementById(id)) {
-        var element = document.getElementById(id);
+        let element = document.getElementById(id);
         element.parentNode.removeChild(element);
     }
 }
@@ -680,7 +680,7 @@ function minimizeCustPrechat() {
 function closeCustPrechat(preChatlableObject) {
     //minimizeCustPrechat();
     document.getElementById("cusPreChatSnapinDom").style.display = 'none';
-    var errorMsgs = document.querySelectorAll(".cusPreChat-has-error");
+    let errorMsgs = document.querySelectorAll(".cusPreChat-has-error");
     errorMsgs.forEach(function (errorMsg) {
         removeDomElement(errorMsg)
     });
@@ -690,7 +690,7 @@ function closeCustPrechat(preChatlableObject) {
     CoveoPopoverDispose();
 }
 function maximizeCustPrechat() {
-    var element = document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton');
+    let element = document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton');
     if ((element && !element.classList.contains("helpButtonEnabled")) || !element) {
         //if ((document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton') && document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton').className != "uiButton helpButtonEnabled") || (!document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton'))) {
         agentsOfflinePostChatForm();
@@ -798,14 +798,14 @@ function agentsOfflinePostChatForm() {
 }
 function removeLoaderIn10() {
     setTimeout(function () {
-        //var cusPreChatSnapinDom = document.getElementById("cusPreChatSnapinDom");
-        var cusPreChatSnapinDom = document.getElementById("cusPreChat-sidebarLoadingIndicator");
+        //let cusPreChatSnapinDom = document.getElementById("cusPreChatSnapinDom");
+        let cusPreChatSnapinDom = document.getElementById("cusPreChat-sidebarLoadingIndicator");
         if (cusPreChatSnapinDom && window.getComputedStyle(cusPreChatSnapinDom).display != 'none') {
             document.getElementById("cusPreChatSnapinDom").style.display = 'none';
             if (document.querySelector(".embeddedServiceHelpButton"))
                 document.querySelector(".embeddedServiceHelpButton").style.display = 'block';
         }
-        var element = document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton');
+        let element = document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton');
         if (element && !element.classList.contains("helpButtonEnabled"))
             //if (document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton').className != "uiButton helpButtonEnabled")
             snapinChatInitiatedState(false);
@@ -1082,7 +1082,7 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
     embedded_svc.settings.language = translatedLabels.language;
 
     //STORY 7193324: FY201101[START] //FY210803: HES Generic chat changes [START]
-    var assetFieldName = "Name";
+    let assetFieldName = "Name";
     if (snapInObject.isEmcProduct) {
         assetFieldName = "External_ID__c";
         embedded_svc.settings.extraPrechatFormDetails = [
@@ -1347,7 +1347,7 @@ function triggerResumeSnapin(snapInObject) {
     try {
         if (snapinChatGlobalObjNotEmpty()) {
             showResumeSnapinLoader();
-            var eleSelector = document.querySelector('.helpButtonEnabled #helpButtonSpan > .message');
+            let eleSelector = document.querySelector('.helpButtonEnabled #helpButtonSpan > .message');
             if (eleSelector.innerText === 'Chat Now')
                 eleSelector.click();
         } else {
@@ -1432,8 +1432,8 @@ function showResumeSnapinLoader() {
     if (!snapInObject.snapinResumeChatInitiated) {
         saveGlobalSnapinObjToSession(snapInObject);
         if (!document.getElementById('cusResumeSnapIn-loader')) {
-            var domEle = '<div id="cusResumeSnapIn-loader" class="cusPreChat-embeddedServiceHelpButton"><div class="cusPreChat-helpButton" style="width: 168px;"><div class="cusPreChat-uiButton" style="cursor: default;"><div class="cusPreChat-helpButtonLabel"><span class="cusPreChat-message">Loading</span></div></div></div></div>';
-            var body = document.body || document.getElementsByTagName('body')[0];
+            let domEle = '<div id="cusResumeSnapIn-loader" class="cusPreChat-embeddedServiceHelpButton"><div class="cusPreChat-helpButton" style="width: 168px;"><div class="cusPreChat-uiButton" style="cursor: default;"><div class="cusPreChat-helpButtonLabel"><span class="cusPreChat-message">Loading</span></div></div></div></div>';
+            let body = document.body || document.getElementsByTagName('body')[0];
             body.insertAdjacentHTML('beforeend', domEle);
         } else {
             document.getElementById('cusResumeSnapIn-loader').style.display = 'block';
@@ -1472,7 +1472,7 @@ function resumeChatClick(eleSelector, findingEle) {
 }
 function chatStarted(eleSelector, findingEle, snapInObject) {
     try {
-        var element = document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton');
+        let element = document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton');
         if (element && element.classList.contains("helpButtonEnabled"))
             //if (document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton').className === "uiButton helpButtonEnabled")
             changePrechatValues(snapInObject, clickSnapinChatBtn);
@@ -1490,8 +1490,8 @@ function chatStarted(eleSelector, findingEle, snapInObject) {
             */
         }
         function changePrechatValues(snapInObject, callback) {
-            var state = embedded_svc.sidebarInstanceMap[Object.keys(embedded_svc.sidebarInstanceMap)[0]].getActiveState();
-            var prechatFields = state.get("v.prechatFields");
+            let state = embedded_svc.sidebarInstanceMap[Object.keys(embedded_svc.sidebarInstanceMap)[0]].getActiveState();
+            let prechatFields = state.get("v.prechatFields");
             //Language Changes Not Required[START]
             prechatFields.forEach(function (prechatField) {
                 if (prechatField.name === "FirstName") {
@@ -1518,7 +1518,7 @@ function chatStarted(eleSelector, findingEle, snapInObject) {
 }
 
 function translation(lang) {
-    var language = lang.replace("_", "-");
+    let language = lang.replace("_", "-");
     language = language.toLowerCase();
     this.primPhone = "Primary Phone Number";
     this.issueDesc = "Issue Description";
@@ -1878,7 +1878,7 @@ function pageObserverForProp20(eleSelector, preChatlableObject) {
                         snapinQueueLoaded();
                         callDellmetricsTrack("890.220.016", document.querySelector(".dockableContainer .activeFeature .stateBody .dialogState .dialogTextContainer").innerText);
                         //Fix for on click of (x) button from End Chat confirmation Page: FYI we have created a SFDC case 23872982 [START] //FY21-0702: DomElement position change so the code is moved to different location
-                        /*var closeBtn = document.querySelector(".modalContainer .dockableContainer .embeddedServiceSidebarHeader .closeButton"); 
+                        /*let closeBtn = document.querySelector(".modalContainer .dockableContainer .embeddedServiceSidebarHeader .closeButton"); 
                         if (closeBtn && !snapInConfirmationDialoug)
                             closeBtn.addEventListener("click", function () {
                                     snapinChatInitiatedState(false);
@@ -2446,7 +2446,7 @@ function initiateChatBot(chatBotObject) {
         //eleExist('.helpButtonEnabled #helpButtonSpan > .message', chatBotClick);
     };
 
-    var snapinAlreadyInitiated = document.getElementById("esw_storage_iframe");
+    let snapinAlreadyInitiated = document.getElementById("esw_storage_iframe");
     if (!snapinAlreadyInitiated) {
         if (!window.embedded_svc) {
             var s = document.createElement('script');
@@ -2674,7 +2674,7 @@ function openBotPrechatform(chatBotObject) {
         createBotCustPreChat(chatBotObject);
     } else {
         //If the form is already avilable[START] 
-        var serviceSidebar = document.querySelector(".modalContainer.embeddedServiceSidebar"),
+        let serviceSidebar = document.querySelector(".modalContainer.embeddedServiceSidebar"),
             minimizedDefaultUI = document.querySelector(".embeddedServiceSidebar .embeddedServiceSidebarMinimizedDefaultUI");
         if (serviceSidebar && serviceSidebar.style.display == "none") { //if prechat form is open: Open custom prechat form
             callDellmetricsTrackForBot("880.130.852","Chat Window Load"); //Story 8233457: Prop Values Change for Einstein Bot
@@ -2687,7 +2687,7 @@ function openBotPrechatform(chatBotObject) {
     }
 }
 function createBotCustPreChat(chatBotObject) {
-    var fixedLabelsDomEle = createFixedLabels(chatBotObject);
+    let fixedLabelsDomEle = createFixedLabels(chatBotObject);
     //FY21-0202 Story 7728368 [START]
     if ("applicationContext" in chatBotObject && chatBotObject.applicationContext === "ChatBot-CareBot")
         var domEle = '<div id="cusBotPreChatSnapinDom" class="cusPreChat-modalContainer"><div class="cusPreChat-dockableContainer" style="max-height:520px;"><div class="cusPreChat-embeddedServiceSidebarHeader"><div class="cusPreChat-shortHeader"><div class="cusPreChat-shortHeaderContent"> <button id="cusBotPreChat-minimize-btn" class="cusPreChat-minimizeButton cusPreChat-headerItem"> <span class="cusPreChat-assistiveText">Minimize chat</span> <span class="cusPreChat-minimize cusPreChat-x-small cusPreChat-embeddedServiceIcon"> <svg focusable="false" aria-hidden="true" data-key="contract_alt" viewBox="0 0 100 100"> <path d="M56.923 45.962h29.615c1.924 0 2.5-2.116.962-3.654l-9.423-9.616 17.308-17.5c.96-.96.96-2.692 0-3.654L88.27 4.423c-.962-.77-2.5-.77-3.655.192L67.308 21.923 57.5 12.5c-1.538-1.538-3.654-.962-3.654.962v29.615c0 1.346 1.73 2.885 3.077 2.885zm-13.846 7.884H13.462c-1.924 0-2.5 2.116-.962 3.654l9.423 9.615-17.308 17.5c-.96.962-.96 2.693 0 3.654l7.116 7.115c.962.96 2.5.96 3.655 0l17.5-17.5 9.807 9.423c1.346 1.73 3.462 1.154 3.462-.77V57.115c0-1.346-1.73-3.27-3.077-3.27z"> </path> </svg> </span> </button><h2 class="cusPreChat-headerText"><div class="cusPreChat-headerTextContent"> <span id="cusBotPreChat-headerTextLabel">Conversar Agora</span> <span id="cusBotPreChat-headerSubtext"> </span></div></h2> <button id="cusBotPreChat-close-btn" class="cusPreChat-closeButton cusPreChat-headerItem"> <span class="cusPreChat-assistiveText">Close chat</span> <span class="cusPreChat-x-small cusPreChat-embeddedServiceIcon"> <svg focusable="false" aria-hidden="true" data-key="close" viewBox="0 0 100 100"> <path d="M65.577 53.73l27.5-27.71c1.27-1.27 1.27-3.174 0-4.445l-4.23-4.44c-1.272-1.27-3.175-1.27-4.445 0L56.694 44.847c-.847.845-2.115.845-2.96 0L26.018 16.922c-1.27-1.27-3.174-1.27-4.445 0l-4.44 4.442c-1.27 1.27-1.27 3.174 0 4.444l27.71 27.71c.846.846.846 2.116 0 2.962L16.923 84.403c-1.27 1.27-1.27 3.174 0 4.444l4.442 4.442c1.27 1.268 3.174 1.268 4.444 0l27.71-27.713c.846-.847 2.116-.847 2.962 0L84.19 93.29c1.27 1.268 3.174 1.268 4.445 0l4.44-4.445c1.27-1.268 1.27-3.17 0-4.44l-27.5-27.712c-.847-.847-.847-2.115 0-2.96z"> </path> </svg> </span> </button></div></div></div><div class="cusPreChat-sidebarBody"><div id="cusBotPreChat-sidebarLoadingIndicator" class="cusPreChat-sidebarLoadingIndicator" style="display: none;"><div class="cusPreChat-loadingBallContainer cusPreChat-animated cusPreChat-embeddedServiceLoadingBalls"> <span class="cusPreChat-loadingBall cusPreChat-first"> </span> <span class="cusPreChat-loadingBall cusPreChat-second"> </span> <span class="cusPreChat-loadingBall cusPreChat-third"> </span></div></div><div id="cusBotPreChat-alertMsgContainer" class="cusPreChat-sidebarLoadingIndicator" style="display: none;"><div style="margin: 2.5em 1.75em;">Sorry, no agents are currently Avilable</div><div> <button id="cusBotPreChat-CloseChat" class="cusPreChat-embeddedServiceSidebarButton" type="button"><span class="cusPreChat-label cusPreChat-bBody">Close Chat</span> </button></div></div><div id="cusBotPreChat-hideWhileLoading" class="cusPreChat-activeFeature cusPreChat-hideWhileLoading"><div class="cusPreChat-featureBody cusPreChat-embeddedServiceSidebarFeature"><div class="cusPreChat-stateBody cusPreChat-embeddedServiceSidebarState"><div class="cusPreChat-prechatUI cusPreChat-embeddedServiceLiveAgentStatePrechatDefaultUI"><div class="cusPreChat-formContent cusPreChat-embeddedServiceSidebarForm"><ul id="cusBotPreChat-fieldList" class="cusPreChat-fieldList">' + fixedLabelsDomEle + '<li class="cusPreChat-inputSplitName cusPreChat-embeddedServiceSidebarFormField"> <span class="cusPreChat-split-field-container"><div class="cusPreChat-uiInput cusPreChat-uiInputText cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel"> <span class="">Nome</span> </label> <input id="cusBotPreChat-FirstName" class="cusPreChat-FirstName form-control cusPreChat-input" maxlength="121" type="text" aria-describedby="" placeholder="" required="" aria-required="true"></div> </span></li><li class="cusPreChat-inputSplitName cusPreChat-embeddedServiceSidebarFormField"> <span class="cusPreChat-split-field-container"><div class="cusPreChat-uiInput cusPreChat-uiInputText cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="LastName"> <span class="">Sobrenome</span> </label> <input id="cusBotPreChat-LastName" class="cusPreChat-LastName form-control cusPreChat-input" maxlength="121" type="text" aria-describedby="" placeholder="" required="" aria-required="true"></div> </span></li><li class="cusPreChat-inputEmail cusPreChat-embeddedServiceSidebarFormField"><div class="cusPreChat-uiInput cusPreChat-uiInputEmail cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel"> <span>Email</span> </label> <input id="cusBotPreChat-Email" class="cusPreChat-Email form-control cusPreChat-input" maxlength="80" type="email" aria-describedby="" placeholder="" required="" aria-required="true"></div></li><li class="cusPreChat-inputPhone cusPreChat-embeddedServiceSidebarFormField"><div class="cusPreChat-uiInput cusPreChat-uiInputPhone cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel"> <span>Número de Telefone Principal</span> </label> <input id="cusBotPreChat-Phone" class="cusPreChat-Primary_Phone__c form-control cusPreChat-input" maxlength="40" type="tel" aria-describedby="" placeholder="" required="" aria-required="true"></div></li></ul><div style="font-size: 12px;color:#767676;text-align: left;margin: 1em 1.75em; font-style: italic;color:#444444;" bis_skin_checked="1"><b>Sua privacidade é importante para nós.</b> Usaremos apenas suas informações para processar sua solicitação. Não o compartilharemos com ninguém. Para saber mais sobre como usamos e protegemos seus dados, consulte o&nbsp;<a target="_blank" href="//www.dell.com/learn/policies-privacy">Declaração de Privacidade da Dell.</a> </div></div><div class="cusPreChat-buttonWrapper cusPreChat-embeddedServiceSidebarForm"> <button id="cusBotPreChat-startChat" class="cusPreChat-startButton cusPreChat-uiButton--default cusPreChat-uiButton cusPreChat-embeddedServiceSidebarButton" type="button"> <span class="cusPreChat-label cusPreChat-bBody">Iniciar bate-papo</span> </button></div></div></div></div></div></div></div></div><div id="cusBotPreChat-embeddedServiceHelpButton" class="cusPreChat-embeddedServiceHelpButton" style="display: none;"><div class="cusPreChat-helpButton" style="width: 168px;"> <button id="cusBotPreChat-helpButtonEnabled" class="cusPreChat-uiButton cusPreChat-helpButtonEnabled" href="javascript:void(0)"> <span class="cusPreChat-embeddedServiceIcon" aria-hidden="true" style="display: inline-block; z-index: 1; float: left"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="chat" width="100%" height="100%" style="height: 18px; width: 18px;"> <path d="M12 1.8C5.9 1.8 1 6.4 1 12c0 1.7.5 3.4 1.3 4.8.1.3.2.6.1.8l-1.4 4c-.2.3.2.6.6.6l3.9-1.6c.3-.1.5 0 .8.1 1.7.9 3.7 1.5 5.8 1.5 6 0 11-4.5 11-10.2C23 6.4 18.1 1.8 12 1.8zm-5.5 12c-1.1 0-1.9-.8-1.9-1.8s.8-1.8 1.9-1.8 1.8.8 1.8 1.8-.8 1.8-1.8 1.8zm5.5 0c-1 0-1.8-.8-1.8-1.8s.8-1.8 1.8-1.8 1.8.8 1.8 1.8-.8 1.8-1.8 1.8zm5.5 0c-1 0-1.8-.8-1.8-1.8s.8-1.8 1.8-1.8 1.9.8 1.9 1.8-.8 1.8-1.9 1.8z"></path> </svg> </span><div class="cusPreChat-helpButtonLabel" id="cusBotPreChat-helpButtonSpan" aria-live="polite" aria-atomic="true"> <span class="cusPreChat-assistiveText">Live chat:</span> <span class="cusPreChat-message">Conversar Agora</span></div> </button></div></div>';
@@ -2707,7 +2707,7 @@ function createBotCustPreChat(chatBotObject) {
     document.getElementById("cusBotPreChat-startChat").addEventListener("click", function () { startSnapinChatBot(chatBotObject) });
 }
 function createFixedLabels(chatBotObject) {
-    var product_ModelDomEle = '', issue_DescriptionDomEle = '';
+    let product_ModelDomEle = '', issue_DescriptionDomEle = '';
     if ("applicationContext" in chatBotObject && chatBotObject.applicationContext !== "ChatBot-CareBot" && chatBotObject.applicationContext !== "ChatBot-CareEnglish")//FY21-0202 Story 7728368 [START] //FY21-0803 US Care bot
     {
         if ("product_Model" in chatBotObject && !(chatBotObject.product_Model === "" || chatBotObject.product_Model === null || chatBotObject.product_Model === undefined)) {
@@ -2793,7 +2793,7 @@ function snapinBotQueueLoaded() {
             document.getElementById("cusBotPreChat-close-btn").style.display = 'block';
             closeCustBotPrechat();
         }
-        var serviceSidebar = document.querySelector(".modalContainer.embeddedServiceSidebar");
+        let serviceSidebar = document.querySelector(".modalContainer.embeddedServiceSidebar");
         if (serviceSidebar) {
             serviceSidebar.style.display = "block";
         }
@@ -2811,8 +2811,8 @@ function ChatBotStarted(eleSelector, findingEle, chatBotObject) {
     }
 }
 function changeBotPrechatValues(snapInObject) {
-    var state = embedded_svc.sidebarInstanceMap[Object.keys(embedded_svc.sidebarInstanceMap)[0]].getActiveState();
-    var prechatFields = state.get("v.prechatFields");
+    let state = embedded_svc.sidebarInstanceMap[Object.keys(embedded_svc.sidebarInstanceMap)[0]].getActiveState();
+    let prechatFields = state.get("v.prechatFields");
     prechatFields.forEach(function (prechatField) {
         if (prechatField.name === "FirstName") {
             prechatField.value = snapInObject.c_firstName
@@ -2883,7 +2883,7 @@ function prePopulateCustBotPreFormValues(chatBotObject) {
 /**Code to Prepopulate prechat fields[END] **/
 //BOT Validations[START]
 function chatBotFieldsValidated(chatBotObject) {
-    var acceptForm,
+    let acceptForm,
         firstNameDOM = document.getElementById("cusBotPreChat-FirstName"),
         lastNameDOM = document.getElementById("cusBotPreChat-LastName"),
         emailDOM = document.getElementById("cusBotPreChat-Email"),
@@ -2897,7 +2897,7 @@ function chatBotFieldsValidated(chatBotObject) {
     }
 
     if (document.getElementById("ErrMsg_cusBotPreChat-Email")) {
-        var element = document.getElementById("ErrMsg_cusBotPreChat-Email");
+        let element = document.getElementById("ErrMsg_cusBotPreChat-Email");
         element.parentNode.removeChild(element);
     }
     if (!emailDOM.value)
@@ -2910,7 +2910,7 @@ function chatBotFieldsValidated(chatBotObject) {
     } else if (!firstNameDOM.value)
         acceptForm = cusBotPreChatEleIsEmpty(firstNameDOM, msgRequiredField);
     else if (document.getElementById("ErrMsg_cusBotPreChat-FirstName")) {
-        var element = document.getElementById("ErrMsg_cusBotPreChat-FirstName");
+        let element = document.getElementById("ErrMsg_cusBotPreChat-FirstName");
         element.parentNode.removeChild(element);
     }
 
@@ -2919,7 +2919,7 @@ function chatBotFieldsValidated(chatBotObject) {
     } else if (!lastNameDOM.value)
         acceptForm = cusBotPreChatEleIsEmpty(lastNameDOM, msgRequiredField);
     else if (document.getElementById("ErrMsg_cusBotPreChat-LastName")) {
-        var element = document.getElementById("ErrMsg_cusBotPreChat-LastName");
+        let element = document.getElementById("ErrMsg_cusBotPreChat-LastName");
         element.parentNode.removeChild(element);
     }
     if (document.getElementById("ErrMsg_cusBotPreChat-Phone") && !phoneDOM.value) {
@@ -2927,7 +2927,7 @@ function chatBotFieldsValidated(chatBotObject) {
     } else if (!phoneDOM.value)
         acceptForm = cusBotPreChatEleIsEmpty(phoneDOM, msgRequiredField);
     else if (document.getElementById("ErrMsg_cusBotPreChat-Phone")) {
-        var element = document.getElementById("ErrMsg_cusBotPreChat-Phone");
+        let element = document.getElementById("ErrMsg_cusBotPreChat-Phone");
         element.parentNode.removeChild(element);
     }
     /*
@@ -2936,7 +2936,7 @@ function chatBotFieldsValidated(chatBotObject) {
     } else if (!serviceTagDOM.value)
         acceptForm = cusBotPreChatEleIsEmpty(serviceTagDOM, "This is a required field");
     else if (document.getElementById("ErrMsg_cusBotPreChat-ServiceTag")) {
-            var element = document.getElementById("ErrMsg_cusBotPreChat-ServiceTag");
+            let element = document.getElementById("ErrMsg_cusBotPreChat-ServiceTag");
             element.parentNode.removeChild(element);
         }
     */
@@ -2954,7 +2954,7 @@ function cusBotPreChatInvalidEmail(domElement, errMessage) {
     }
 }
 function cusBotPreChatvalidateEmail(email) {
-    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    let re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
 }
 function cusBotPreChatBlockListEmailValidation(email, blockList) {
@@ -2970,8 +2970,8 @@ function cusBotPreChatBlockListEmailValidation(email, blockList) {
 }
 function cusBotPreChatErrorMsgPlaceholder(domElement, message) {
     try {
-        var referenceNode = domElement.parentNode;
-        var el = document.createElement("ul");
+        let referenceNode = domElement.parentNode;
+        let el = document.createElement("ul");
         el.innerHTML = '<li class="cusPreChat-form-element__help">' + message + '</li>';
         el.id = 'ErrMsg_' + domElement.id;
         el.className = "cusPreChat-has-error cusPreChat-uiInput";
@@ -3092,7 +3092,7 @@ function addCustBotFormDetailsTo(snapInObject) {
 }
 function saveGlobalSnapinBotObjToSession(chatBotObject) {
     if (chatBotObject) {
-        var chatBotObjectGlobal = JSON.stringify(chatBotObject);
+        let chatBotObjectGlobal = JSON.stringify(chatBotObject);
         sessionStorage.setItem("chatBotObjectSession", chatBotObjectGlobal);
     }
 }
@@ -3101,7 +3101,7 @@ function saveGlobalSnapinBotObjToSession(chatBotObject) {
 /*****Obesrve ChatBot Page [START]*****/
 function snapinBotPageObserver(eleSelector) {
     try {
-        var snapInLoadingPrechatForm = document.querySelector(".modalContainer.loading.initialLoading");
+        let snapInLoadingPrechatForm = document.querySelector(".modalContainer.loading.initialLoading");
         snapInPrechatForm = document.querySelector(".modalContainer  .dockableContainer .sidebarBody .activeFeature .featureBody .embeddedServiceSidebarState .prechatUI");
         snapInWaiting = document.querySelector(".dockableContainer .embeddedServiceLiveAgentStateWaiting .waitingStateContainer");
         snapInChatStarted = document.querySelector(".dockableContainer .activeFeature .embeddedServiceLiveAgentStateChat .chasitorControls .chasitorText");
@@ -3184,7 +3184,7 @@ function chatBotClick(eleSelector, findingEle) {
 }
 /****CODE FOR DIRECT LOADING OF PRECHAT FORM ENDS*********/
 function onChatBotServiceTagChange() {
-    var element = document.getElementById("cusBotPreChatSnapinDom");
+    let element = document.getElementById("cusBotPreChatSnapinDom");
     if (element) {
         element.parentNode.removeChild(element);
     }
