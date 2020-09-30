@@ -1164,13 +1164,13 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
         "entityFieldMaps": [{
             "doCreate": false,
             "doFind": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
-            "fieldName": "LastName",
+            "fieldName": "Rajbhandari",
             "isExactMatch": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
             "label": translatedLabels.lastName
         }, {
             "doCreate": false,
             "doFind": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
-            "fieldName": "FirstName",
+            "fieldName": "Bishav",
             "isExactMatch": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
             "label": translatedLabels.firstName
         }, {
@@ -3240,7 +3240,7 @@ function chatStartedForSLD(eleSelector, findingEle, snapInObject) {
                 languageSelectEle.value = langselected;
             setSdlPocCookie("languageSelectedbyVisitor",langselected,30);
             document.cookie="languageSelectedbyVisitor ="+langselected;
-            
+
 			callback();
         }
     } catch (e) {
