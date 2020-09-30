@@ -5,9 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Page Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="../../../node_modules/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="../../../node_modules/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../../../main.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
@@ -48,7 +49,7 @@
                 </select>
             </span>
         <a class="navbar-brand" href="#">
-            <img src="assets/DellTech_Logo_Prm_Blue.jpg" class="d-inline-block align-top" alt="">
+            <img src="../../../assets/DellTech_Logo_Prm_Blue.jpg" class="d-inline-block align-top" alt="">
         </a>
         <button style="display: block;float: left;" class="btn btn-primary"  data-target=".bd-example-modal-lg" id="chatButton" type="button" onclick="showConfigSettings()">
             <i class="fa fa-gear"></i>
@@ -97,7 +98,7 @@
                             <div class='EMC' style='display:none;'>
                                 <label for="epdmId">EPDM-Id(for EMC legacy)</label>
                             </div>
-                            <input style='display:none;' type="text" class="form-control EMC"  id="epdmId" aria-describedby="serviceTag" placeholder="Enter EMPD Id">                        
+                            <input style='display:none;' type="text" class="form-control EMC"  id="epdmId" aria-describedby="serviceTag" placeholder="Enter EMPD Id" value="1234">                        
                             <div class='EMC' style='display:none;'>
                                 <label for="emcSiteId">Site-Id(for EMC legacy)</label>
                             </div>
@@ -105,17 +106,7 @@
                             <div class='EMC' style='display:none;'>
                                 <label for="emcProductName">ProductName(for EMC legacy)</label>
                             </div>
-                            <input style='display:none;' type="text" class="form-control EMC"  id="emcProductName" aria-describedby="serviceTag" placeholder="Enter Product name" value="2.3">
-                            <div class='EMC' style='display:none;'>
-                                <label for="Site Info">Site Name(for EMC Admin CHat)</label>
-                            </div>
-                            <input style='display:none;' type="text" class="form-control EMC"  id="emcSiteName" aria-describedby="serviceTag" placeholder="Site Info" value="Site Info goes here.">
-                            
-                            <div class='EMC' style='display:none;'>
-                                <label for="emcAltEmail">Alternate Email(for EMC Admin CHat)</label>
-                            </div>
-                            <input style='display:none;' type="text" class="form-control EMC"  id="emcAltEmail" aria-describedby="serviceTag" placeholder="Prechat UI changes based on email ID">
-                            
+                            <input style='display:none;' type="text" class="form-control EMC"  id="emcProductName" aria-describedby="serviceTag" placeholder="Enter Product name" value="2.3">   
                         </div>
 
                         <!-- Old service tag="6MW0204" 
@@ -199,21 +190,20 @@
                 <div class="input-group">
                     <select class="custom-select" onChange="changeEnv()" id="environmentSelection">
                     <option selected>Choose your preferred environment</option>
-                    <option value="GE1">GE1</option>
+                    <!--<option value="GE2">GE2</option>
                     <option value="FY21_1003_DEV">FY21_1003_DEV</option>
                     <option value="FY21_0803_DEV_bugfix">FY21_0803_DEV_bugfix</option>
                     <option value="FY21_0803_DEV">FY21_0803_DEV</option>
                     <option value="G2_0703">G2_0703</option>
                     <option value="FY21_0703_DEV_Summer_Release">FY21_0703_DEV_Summer_Release</option>
                     <option value="FY21_0602_DEV">FY21_0602_DEV</option>
-                    <option value="GE2">GE2</option>
                     <option value="S1">S1</option>
                     <option value="S2">S2</option>
                     <option value="S4">S4</option>
                     <option value="S6">S6</option>
                     <option value="D1">D1</option>
                     <option value="D2">D2</option>
-                    <option value="Perf1">Perf1</option>
+                    <option value="Perf1">Perf1</option>-->
                     <option value="Chat-POC">Chat-POC</option>
                     </select>
                     <div class="input-group-append">
@@ -221,57 +211,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="modal-body config" id="GE1" style="display:none">
-                <div class="form-group">
-                    <h5>GE1</h5>
-                </div>
-                <div class="form-group">
-                    <label for="usr">baseLiveAgentContentURL:</label>
-                    <input type="text" class="form-control" data-id="baseLiveAgentContentURL" value="https://c.la2-c1cs-ia2.salesforceliveagent.com/content">
-                </div>
-				<div class="form-group">
-                    <label for="usr">deploymentId:</label>
-                    <input type="text" class="form-control" data-id="deploymentId" value="5720b000000GneC">
-                </div>
-                <div class="form-group">
-                    <label for="usr">buttonId:</label>
-                    <input type="text" class="form-control" data-id="buttonId" value="5730b000000CbhT">
-                </div>
-				<div class="form-group">
-                    <label for="usr">baseLiveAgentURL:</label>
-                    <input type="text" class="form-control" data-id="baseLiveAgentURL" value="https://d.la2-c1cs-ia2.salesforceliveagent.com/chat">
-                </div>
-				<div class="form-group">
-                    <label for="usr">LiveAgentDevName:</label>
-                    <input type="text" class="form-control" data-id="LiveAgentDevName" value="EmbeddedServiceLiveAgent_Parent04I0b000000blJJEAY_16520d15b68">
-                </div>
-				<div class="form-group">
-                    <label for="usr">componentName:</label>
-                    <input type="text" class="form-control" data-id="componentName" value="Snap_Ins_Chat_Deployment">
-                </div>
-				<div class="form-group">
-                    <label for="usr">organizationId:</label>
-                    <input type="text" class="form-control" data-id="organizationId" value="00D7A0000004aRK">
-                </div>
-				<div class="form-group">
-                    <label for="usr">serviceForceURL:</label>
-                    <input type="text" class="form-control" data-id="serviceForceURL" value="https://service.force.com">
-                </div>
-				<div class="form-group">
-                    <label for="usr">snapInInitURL:</label>
-                    <input type="text" class="form-control" data-id="snapInInitURL" value="https://dellservices--ge1.my.salesforce.com">
-                </div>
-				<div class="form-group">
-                    <label for="usr">snapInJs:</label>
-                    <input type="text" class="form-control" data-id="snapInJs" value="https://dellservices--ge1.my.salesforce.com/embeddedservice/5.0/esw.min.js">
-                </div>
-				<div class="form-group">
-                    <label for="usr">snapInLAURL:</label>
-                    <input type="text" class="form-control" data-id="snapInLAURL" value="https://ge1-dellservices.cs44.force.com/LASnapIn">
-                </div>
-            </div>
-
             <div class="modal-body config" id="FY21_1003_DEV" style="display:none">
                 <div class="form-group">
                     <h5>FY21_1003_DEV</h5>
@@ -573,7 +512,7 @@
                 </div>
                 <div class="form-group">
                     <label for="usr">baseLiveAgentContentURL:</label>
-                    <input type="text" class="form-control" data-id="baseLiveAgentContentURL" value="https://c.la1-c1cs-ia2.salesforceliveagent.com/content">
+                    <input type="text" class="form-control" data-id="baseLiveAgentContentURL" value="https://c.la2-c1cs-ia4.salesforceliveagent.com/content">
                 </div>
 				<div class="form-group">
                     <label for="usr">deploymentId:</label>
@@ -581,11 +520,11 @@
                 </div>
                 <div class="form-group">
                     <label for="usr">buttonId:</label>
-                    <input type="text" class="form-control" data-id="buttonId" value="5730b000000CbhT">
+                    <input type="text" class="form-control" data-id="buttonId" value="5731P000000TSVh">
                 </div>
 				<div class="form-group">
                     <label for="usr">baseLiveAgentURL:</label>
-                    <input type="text" class="form-control" data-id="baseLiveAgentURL" value="https://d.la1-c1cs-ia2.salesforceliveagent.com/chat">
+                    <input type="text" class="form-control" data-id="baseLiveAgentURL" value="https://d.la2-c1cs-ia4.salesforceliveagent.com/chat">
                 </div>
 				<div class="form-group">
                     <label for="usr">LiveAgentDevName:</label>
@@ -597,7 +536,7 @@
                 </div>
 				<div class="form-group">
                     <label for="usr">organizationId:</label>
-                    <input type="text" class="form-control" data-id="organizationId" value="00D170000004F8A">
+                    <input type="text" class="form-control" data-id="organizationId" value="00D050000008jOx">
                 </div>
 				<div class="form-group">
                     <label for="usr">serviceForceURL:</label>
@@ -613,7 +552,7 @@
                 </div>
 				<div class="form-group">
                     <label for="usr">snapInLAURL:</label>
-                    <input type="text" class="form-control" data-id="snapInLAURL" value="https://ge2-dellservices.cs22.force.com/LASnapIn">
+                    <input type="text" class="form-control" data-id="snapInLAURL" value="https://ge2-dellservices.cs198.force.com/LASnapIn">
                 </div>
             </div>
               <div class="modal-body config" id="S1" style="display:none">
@@ -986,11 +925,11 @@
                 </div>
 				<div class="form-group">
                     <label for="usr">LiveAgentDevName:</label>
-                    <input type="text" class="form-control" data-id="LiveAgentDevName" value="EmbeddedServiceLiveAgent_Parent04I0b000000blJJEAY_16520d15b68">
+                    <input type="text" class="form-control" data-id="LiveAgentDevName" value="EmbeddedServiceLiveAgent_Parent04I7A000000006YUAQ_174d4a84045">
                 </div>
 				<div class="form-group">
                     <label for="usr">componentName:</label>
-                    <input type="text" class="form-control" data-id="componentName" value="Snap_Ins_Chat_Deployment">
+                    <input type="text" class="form-control" data-id="componentName" value="SnapIn_SDL">
                 </div>
 				<div class="form-group">
                     <label for="usr">organizationId:</label>
@@ -1021,12 +960,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>
     <script src="https://getbootstrap.com/docs/4.0/dist/js/bootstrap.min.js"></script>
-   <script src="mainChat.js"></script>
-    <script src="orderSupportChatV2.js"></script>
-       
-    <script>
-
-            $('input:radio[name="optradio"]').change(
+    <script src="mainChat.js"></script>
+    <script type='text/javascript'>
+       /* $(".EMC").show();
+        $(".NonEMC").hide();*/
+        $('input:radio[name="optradio"]').change(
                 function(){
                     if ($(this).is(':checked') && $(this).val() == 'emcOrg') {
                         $(".EMC").show();
@@ -1160,8 +1098,6 @@
                       emailRequiredValidation:"Email name required",
                       phoneRequiredValidation:"Phone name required",
                       issueDescriptionValidation:"Descritpion name required",
-                      browserVersionValidation: "Browser Version is required",
-                      alternateEmail: "Alternate Email",
                  //   phoneValidation:preChatModel.PhoneValidation,
                  //   severityValidation:preChatModel.SeverityValidation,
                       chatUnavailableMessage:"Sorry, no agents are available at this moment.",
@@ -1244,8 +1180,6 @@
                       emailRequiredValidation:"Email name required",
                       phoneRequiredValidation:"Phone name required",
                       issueDescriptionValidation:"Descritpion name required",
-                      browserVerValidation: "Browser Version is required",
-                      alternateEmail: "Secondary Email",
                  //   phoneValidation:preChatModel.PhoneValidation,
                  //   severityValidation:preChatModel.SeverityValidation,
                       chatUnavailableMessage:"Sorry, no agents are available at this moment.",
@@ -1265,7 +1199,7 @@
                     snapInObject.firstName="Bishav",
                     snapInObject.lastName= "Rajbhandari",
                     snapInObject.email="bnr@dell.com",
-                    //snapInObject.phoneNo="1234567",
+                    snapInObject.phoneNo="1234567",
                     snapInObject.chatSeverity = "S2";
                     if(document.getElementById('serviceTag').value){
                         snapInObject.serviceTag = document.getElementById('serviceTag').value,
@@ -1278,10 +1212,7 @@
                     snapInObject.siteId = document.getElementById('emcSiteId').value,
                     snapInObject.epdmId= document.getElementById('epdmId').value,
                     snapInObject.productName = document.getElementById('emcProductName').value,//"2.3",
-                    snapInObject.alternateEmail = document.getElementById('emcAltEmail').value,
-                    snapInObject.siteName = document.getElementById('emcSiteName').value,
                     snapInObject.emcProductId = "ABC1235";
-                    snapInObject.requestType = "HES Admin Chat";
                 }
                 snapInObject.domainName = "localhost";//"bishav.github.io";//
                 triggerSnapin(snapInObject, preChatlableObject); 

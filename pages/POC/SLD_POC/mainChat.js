@@ -61,6 +61,7 @@ function initSnapIn(snapInObject) {
     var snapinAlreadyInitiated = document.getElementById("esw_storage_iframe");
     if (!snapinAlreadyInitiated) {
         if (window.embedded_svc) {
+            embedded_svc.settings.externalScripts = ["SnapInexternalJs"]; //SLD_POC
             initOriginalESW(snapInObject.serviceForceURL, snapInObject);
 
         } else {
@@ -921,7 +922,8 @@ function connectToSnapInAgent(snapInObject) {
     if (checkSnapinQueueStatus(snapInObject) == 1) {//FY20-1102 Avilability and Business Hr Chack
         if (("snapinChatInitiated" in snapInObject && snapInObject.snapinChatInitiated) || ("snapinButtonClicked" in snapInObject && snapInObject.snapinButtonClicked))
             eleExistWithVariable('.helpButtonEnabled #helpButtonSpan > .message', chatClick);
-        eleExistWithVariable('.embeddedServiceSidebar .startButton', chatStarted, snapInObject);
+            //eleExistWithVariable('.embeddedServiceSidebar .startButton', chatStarted, snapInObject); //SLD_POC
+            eleExistWithVariable('.embeddedServiceSidebar .SDL_LCSnapInPrechat .slds-button', chatStartedForSLD, snapInObject); //SLD_POC
     } else //FY20-1102 Avilability and Business Hr Chack
         agentsOfflinePostChatForm(); //FY20-1102 Avilability and Business Hr Chack
 }
@@ -1062,6 +1064,7 @@ function checkSnapinQueueStatus(snapInObject) {
 
 function initOriginalESW(gslbBaseURL, snapInObject) {
     snapInClickListners();
+    embedded_svc.settings.externalScripts = ["SnapInexternalJs"]; //SLD_POC
     snapinChatGlobalServiceTag = snapInObject.serviceTag;
     snapinChatGlobalIssueType = snapInObject.issueVal;
     snapinChatGlobalProductName = snapInObject.productName;
@@ -1075,9 +1078,9 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
         embedded_svc.settings.fallbackRouting = snapInObject.skillIds;
     }
     //STORY 6929894[END]
-    if ("language" in snapInObject)
+    /*if ("language" in snapInObject)
         translatedLabels = translation(snapInObject.language);
-    else
+    else*/ //SLD_POC
         translatedLabels = translation("en");
     embedded_svc.settings.language = translatedLabels.language;
 
@@ -3188,3 +3191,116 @@ function onChatBotServiceTagChange() {
         element.parentNode.removeChild(element);
     }
 }
+
+
+//SLD_POC [START]
+/////////////////////////////////////////////////////////
+function chatStartedForSLD(eleSelector, findingEle, snapInObject) {
+    try {
+        var element = document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton');
+        if (element && element.classList.contains("helpButtonEnabled"))
+            changeSldPrechatValues(snapInObject, clickSnapinChatBtn);
+        else {
+            agentsOfflinePostChatForm();
+            clearInterval(findingEle);
+        }
+        function clickSnapinChatBtn() {
+            setTimeout(function(){ 
+                snapInObject = sendGlobalSnapinObjToJson();
+                document.querySelector(eleSelector).click();
+                clearInterval(findingEle);
+            }, 300);
+            
+        }
+        function changeSldPrechatValues(snapInObject, callback) {
+            var state = embedded_svc.sidebarInstanceMap[Object.keys(embedded_svc.sidebarInstanceMap)[0]].getActiveState();
+            var prechatFields = state.get("v.prechatFields");
+            //Language Changes Not Required[START]
+            prechatFields.forEach(function (prechatField) {
+                if (prechatField.name === "FirstName") {
+                    prechatField.value = snapInObject.c_firstName
+                } else if (prechatField.name === "LastName") {
+                    prechatField.value = snapInObject.c_lastName
+                } else if (prechatField.name === "Email") {
+                    prechatField.value = snapInObject.c_email
+                } else if (prechatField.name === "Primary_Phone__c") {
+                    phone = snapInObject.c_phoneNo;
+                    prechatField.value = phone.replace(/[&\/\\#!@,+$~%.'":*?<>{}^a-zA-Z]/g, ''); //DEFECT 6745488
+                } else if (prechatField.name === "Issue_Description__c") {
+                    prechatField.value = snapInObject.c_issueDescription
+                }
+            });
+
+            //Language Changes Not Required[END]
+            state.set("v.prechatFields", prechatFields);
+
+            var langselected = usersBaseChatLanguage(snapInObject.language);
+            languageSelectEle = document.querySelector(".embeddedServiceSidebar .SDL_LCSnapInPrechat .slds-select_container .slds-select");
+            if(languageSelectEle)
+                languageSelectEle.value = langselected;
+            setSdlPocCookie("languageSelectedbyVisitor",langselected,30);
+            document.cookie="languageSelectedbyVisitor ="+langselected;
+            
+			callback();
+        }
+    } catch (e) {
+        console.log("Error in:" + e);
+    }
+}
+function setSdlPocCookie(cname,cvalue,exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires=" + d.toGMTString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  }
+
+//639-1 to 639-2 conversion
+//ISO 639-2 Language Code	ISO 639-1 Language Code	English name of Language
+//https://www.loc.gov/standards/iso639-2/php/code_list.php#:~:text=Note%3A%20ISO%20639%2D2%20is,of%20languages%2D%2D%20Part%202.&text=In%20all%20other%20cases%20there,is%20the%20alpha%2D2%20code.
+function usersBaseChatLanguage(ISO639_1Code) {
+    var language = ISO639_1Code;
+    language = language.toLowerCase();
+    if (language == "de") {
+        return "ger";
+    } else if (language == "ja") {
+        return "jpn";
+    } else if (language == "ko") {
+        return "kor";
+    } else if (language == "es") {
+        return "spa";
+    } else if (language == "zh" || language == "cn" || language == "zh-cn") {
+        return "chi";
+    } else if (language == "zh-tw") {
+       return "chi";
+    } else if (language == "pt-pt") { //Language related issue FY21-0202- Defect 8062138
+        return "por";
+    } else if (language == "pt" || language == "pt-br") { //Language related issue FY21-0202- Defect 8062138
+        return "por";
+    } else if (language == "nl" || language == "nl-nl") {
+        return "dut";
+    } else if (language == "fr") {
+        return "fra";
+    } else if (language == "da") {
+        return "dan";
+    } else if (language == "fi") {
+        return "fin";
+    } else if (language == "it") {
+        return "ita";
+    } else if (language == "no") {
+        return "nor";
+    } else if (language == "ru") {
+        return "rus";
+    } else if (language == "sv") {
+        return "swe";
+    } else if (language == "th") {
+        return "tha";
+    } else if (language == "pl") {
+        return "pol";
+    } else if (language == "sk") {
+        return "slo";
+    } else {
+        return "eng";
+    }
+}
+/////////////////////////////////////////////////////////
+//SLD_POC [END]

@@ -14,7 +14,8 @@ var coveoHeader = "", isCoveoSearchEnabled = false, isPCFCall = false;
 
     if (!document.getElementById('snapinStyle')) {//FY21-0702: DEFECT 8910461 CSS fix: added new CSS
         var css = '.embeddedServiceSidebarHeader,.embeddedServiceSidebarMinimizedDefaultUI{background-color:#00447C!important;border:1px!important}.embeddedServiceSidebarFormField .uiInput .uiLabel-left{padding-top:0!important;margin-top:11px;color:#444!important;font-weight:300!important}.embeddedServiceSidebarForm.formContent{background:#f1f1f1!important}.embeddedServiceHelpButton .helpButton .uiButton{background-color:#005290!important;font-family:"Salesforce Sans",sans-serif}.embeddedServiceHelpButton .helpButton .uiButton:focus{outline:#005290 solid 1px}.embeddedServiceSidebarForm .uiButton,.embeddedServiceSidebarFormField .slds-style-inputtext{border-radius:0!important}.embeddedServiceSidebarFormField .slds-style-inputtext{border-radius:0!important;border:none!important}.embeddedServiceSidebarForm.buttonWrapper{background:linear-gradient(to bottom,rgba(247,247,247,0) 0,rgba(247,247,247,1) calc(100% - 77px),rgba(247,247,247,1) 100%)}.embeddedServiceSidebarButton.uiButton--inverse{background:#f7f7f7!important;border-radius:0!important;border:1px solid #ccc!important}.embeddedServiceSidebarButton.uiButton--inverse:not(:disabled):focus{box-shadow:0 0 3px 0 #ddd!important}.embeddedServiceSidebarDialogState .dialogButton{border-radius:0!important}.embeddedServiceSidebarDialogState .dialogButton:not(:disabled):focus{text-decoration:none!important}.embeddedServiceSidebarFormField .slds-style-inputtext,.embeddedServiceSidebarFormField .slds-style-select{color:#444!important}.embeddedServiceSidebarForm .fieldList{margin:12px 12px 0 0!important}.embeddedServiceLiveAgentStateChatHeaderOption .optionName{color:#fff!important;text-decoration:none!important}.embeddedServiceSidebarHeader .headerText{margin-bottom:0!important}.embeddedServiceSidebarMinimizedDefaultUI .minimizedImage{display:none!important}.embeddedServiceLiveAgentStateChatHeader.reconnecting.alert{background-color:#cb2b19!important;padding-top:46px!important}.embeddedServiceSidebarForm.buttonWrapper{background-color:#f1f1f1!important}.cusPreChat-modalContainer,.cusPreChat-shortHeader{font-weight:400;-webkit-font-smoothing:subpixel-antialiased}.cusPreChat-embeddedServiceHelpButton .cusPreChat-helpButton .cusPreChat-uiButton:focus,.cusPreChat-headerItem:focus,.cusPreChat-headerItem:hover{outline:0}.cusPreChat-modalContainer{box-sizing:border-box;line-height:1.5;color:#212529;display:block;position:fixed;z-index:5001;font-family:"Salesforce Sans",sans-serif;top:0;font-size:16px;pointer-events:all;backface-visibility:hidden;text-align:left}.cusPreChat-modalContainer li,.cusPreChat-modalContainer ul{display:block;list-style:none}.cusPreChat-dockableContainer{width:320px;max-height:720px;border-radius:8px 8px 0 0;position:fixed;left:auto;bottom:0;right:20px;margin:0;height:90%;box-shadow:2px 2px 20px rgba(0,0,0,.2);z-index:15;text-align:center;overflow:hidden;max-width:40em;pointer-events:all}.cusPreChat-embeddedServiceSidebarHeader{position:absolute;top:0;width:100%;border-radius:8px 8px 0 0;background-color:#00447C;border:1px;text-align:center;pointer-events:all}.cusPreChat-shortHeader{color:#fff;border-radius:8px 8px 0 0;line-height:3;text-align:center;font-size:.875em;height:44px;clear:both;overflow:hidden;z-index:3;position:relative;transform:translate3d(0,0,0)}.cusPreChat-shortHeaderContent{position:relative;display:flex;height:100%}.cusPreChat-headerItem{color:#fff;font-size:1em;background:0 0;border:none}.cusPreChat-headerItem:focus:before,.cusPreChat-headerItem:hover:before{content:" ";position:absolute;background-color:#fff;opacity:.2;border-radius:4px;box-sizing:border-box;pointer-events:none;top:20%}.cusPreChat-closeButton,.cusPreChat-minimizeButton{transition:color .7s ease;padding:14px;line-height:0}.cusPreChat-minimizeButton:focus:before,.cusPreChat-minimizeButton:hover:before{left:6px;width:30px;height:60%}.cusPreChat-closeButton:focus:before,.cusPreChat-closeButton:hover:before{right:6px;width:30px;height:60%}.cusPreChat-assistiveText{position:absolute;height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px)}.cusPreChat-embeddedServiceIcon{display:flex}.cusPreChat-embeddedServiceIcon svg{display:inline-block;box-sizing:border-box;width:1em;height:1em;fill:#fff}.cusPreChat-headerText{display:flex;justify-content:center;align-items:center;flex-grow:1;align-self:stretch;width:calc(100% - 96px);color:#fff;text-decoration:none;line-height:normal;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:400;font-size:1em}.cusPreChat-sidebarBody{position:absolute;width:100%;height:100%;top:44px;z-index:0;background-color:#f1f1f1;transform:translate3d(0,0,0);-webkit-overflow-scrolling:touch}.cusPreChat-sidebarLoadingIndicator{position:relative;height:100%;background-color:#fff}.cusPreChat-activeFeature{width:100%;height: 100%}.cusPreChat-embeddedServiceLiveAgentStatePrechatDefaultUI{overflow:hidden;height:100%;position:absolute}.cusPreChat-formContent{width:320px;height:calc(100% - 98px);overflow-y:auto;position:relative;background-color:#f1f1f1;margin-bottom:81px;border-radius:0 0 8px 8px}.cusPreChat-fieldList{margin:5px 12px 0 0;padding:0}.cusPreChat-embeddedServiceSidebarFormField{display:block;margin-block-end:0;margin-inline-start:0;margin-inline-end:0;padding-inline-start:40px;list-style:none;padding:0;box-sizing:border-box;margin-left:12px}.cusPreChat-embeddedServiceSidebarFormField.cusPreChat-inputSplitName{width:calc(50% - 12px);display:inline-block;vertical-align:top;margin-left:9px}.cusPreChat-split-field-container{margin-bottom:6px}.cusPreChat-uiInput{text-align:left}.cusPreChat-uiInput .cusPreChat-uiLabel-left{padding:0!important;color:#444!important;font-weight:300!important;position:relative;font-size:.75em;line-height:1.5;margin:11px .75em 2px 1px}.cusPreChat-uiInput .cusPreChat-required{position:absolute;color:#c23934;left:-6px;top:0}.cusPreChat-slds-style-inputtext{display:inline-block;line-height:30px;box-sizing:border-box;box-shadow:none;background-color:#fff;width:100%;height:44px !important;padding:0 12px !important;font-size:.875em;border:none !important;}.cusPreChat-slds-style-inputtext:focus{outline:0;box-shadow:0 0 2px 0 #007db8}.cusPreChat-buttonWrapper{text-align:center;padding:0px 24px 24px;margin:0;width:320px;position:fixed;box-sizing:border-box;bottom:44px; box-shadow: 0px -10px 5px rgba(241, 241, 241,0.7); background: #f1f1f1}.cusPreChat-embeddedServiceSidebarButton{background:#007db8;font-family:"Roboto Regular",sans-serif;border-radius:0!important;position:relative;border:none;text-shadow:none;box-shadow:none;transition:background .4s ease;color:#fff;font-size:1em;font-weight:400;width:100%;margin:0;height:44px;cursor:pointer}.cusPreChat-embeddedServiceSidebarButton:not(:disabled):focus,.cusPreChat-embeddedServiceSidebarButton:not(:disabled):hover{background:#004b6e}.cusPreChat-has-error{margin:0 0 0px;padding:0}.cusPreChat-has-error .cusPreChat-form-element__help{font-size:.75em;color:#c23934}.cusPreChat-embeddedServiceHelpButton{display:block;position:fixed;top:0;left:0;background:0 0;box-shadow:none;overflow:visible;z-index:1000;font-family:sans-serif}.cusPreChat-embeddedServiceHelpButton .cusPreChat-helpButton{position:fixed;bottom:12px;right:12px;height:46px;-webkit-font-smoothing:subpixel-antialiased}.cusPreChat-embeddedServiceHelpButton .cusPreChat-helpButton .cusPreChat-uiButton{box-sizing:border-box;margin:0;padding:0 12px;height:46px;box-shadow:0 0 12px 0 rgba(0,0,0,.5);border-radius:23px;line-height:1;background:#007db8;font-size:.875em;color:#fff;font-weight:400;text-shadow:none;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:justify;-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;font-family:"Roboto Regular",sans-serif;width:168px;cursor:pointer;position:relative;border:0}.cusPreChat-embeddedServiceHelpButton .cusPreChat-helpButton .cusPreChat-helpButtonEnabled:focus::before,.cusPreChat-embeddedServiceHelpButton .cusPreChat-helpButton .cusPreChat-helpButtonEnabled:hover::before{content:" ";position:absolute;top:0;left:0;width:100%;height:100%;border-radius:23px;background-color:#000;opacity:.2;pointer-events:none}.cusPreChat-embeddedServiceHelpButton .cusPreChat-helpButton .cusPreChat-uiButton .cusPreChat-label{color:#fff}.cusPreChat-embeddedServiceHelpButton .cusPreChat-uiButton .cusPreChat-helpButtonLabel{position:relative;z-index:1;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-pack:center;webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-flex:1;-webkit-flex-grow:1;-ms-flex-positive:1;flex-grow:1;-webkit-align-self:stretch;-ms-flex-item-align:stretch;align-self:stretch;max-width:100%;line-height:normal;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}@media only screen and (min-width:48em){.cusPreChat-embeddedServiceHelpButton{background-color:transparent}.cusPreChat-embeddedServiceHelpButton .cusPreChat-helpButton{position:fixed;bottom:0}.cusPreChat-embeddedServiceHelpButton .cusPreChat-helpButton .cusPreChat-uiButton,.cusPreChat-embeddedServiceHelpButton .cusPreChat-helpButton .cusPreChat-uiButton:focus::before,.cusPreChat-embeddedServiceHelpButton .cusPreChat-helpButton .cusPreChat-uiButton:hover::before{border-radius:8px 8px 0 0}}.cusPreChat-sidebarLoadingIndicator{align-self:stretch;max-height:100%;flex-grow:1;display:flex;flex-direction:column;justify-content:center;text-align:center;padding:0 24px}.cusPreChat-loadingBallContainer{display:inline-block}.cusPreChat-loadingBallContainer.cusPreChat-animated .cusPreChat-loadingBall{animation:cusPreChat-ballanimate 2.25s infinite ease-in-out;display:inline-block;width:1em;height:1em;border-radius:2em;font-size:8px;text-align:center;background:#0074bd;margin:3px}.cusPreChat-embeddedServiceLoadingBalls.cusPreChat-animated .cusPreChat-second{animation-name:cusPreChat-ballanimate-2}.cusPreChat-embeddedServiceLoadingBalls.cusPreChat-animated .cusPreChat-third{animation-name:cusPreChat-ballanimate-3}@keyframes cusPreChat-ballanimate{0%,32%{transform:scale(1)}16%{transform:scale(1.5)}}@keyframes cusPreChat-ballanimate-2{32%,64%{transform:scale(1)}48%{transform:scale(1.5)}}@keyframes cusPreChat-ballanimate-3{64%,96%{transform:scale(1)}80%{transform:scale(1.5)}}@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {.cusPreChat-buttonWrapper{bottom: 3px;}}body.embeddedServicePreventScrolling {overflow: auto !important;position: inherit !important;}.dockableContainer .endChatContainer .endChatButton.postChatButton{background:#007db8!important;border:none!important}.dockableContainer .endChatContainer .endChatButton.postChatButton span{color:#fff!important}.dockableContainer .endChatContainer .endChatButton.postChatButton:focus,.dockableContainer .endChatContainer .endChatButton.postChatButton:hover{background:#004b6e!important;text-decoration:none}.dockableContainer .endChatContainer .endChatButton.closeChatButton{color:#007db8;background:#f7f7f7!important;border-radius:0!important;border:1px solid #ccc!important}.dockableContainer .endChatContainer .endChatButton.closeChatButton span{color:#007db8}.dockableContainer .endChatContainer .endChatButton.closeChatButton span:hover{color:#007db8;text-decoration:underline} h2[embeddedService-chatHeader_chatHeader]{color: #fff !important;}',
-            head = document.head || document.getElementsByTagName('head')[0],
+            css = css + ' .embeddedServiceSidebar.layout-docked .dockableContainer, .embeddedServiceSidebar.layout-float .dockableContainer{display: flex !important;}'; //FY21-1002 DEFECT #9467644 Winter '21 CSS issue.
+			head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
         style.type = 'text/css';
         style.id = 'snapinStyle';
@@ -923,7 +924,8 @@ function pushValsToSnapinInit(snapInObject) {
 //FY20-1102 Avilability and Business Hr Chack [START]
 function checkSnapinQueueStatus(snapInObject) {
     var returnValue;
-    function httpGetAgentAvailability(theUrl) {
+    //FY21-0803: Story #8842192 check for HES/EMC products[START]
+    function httpGetBusinessHrAgentAvailability(theUrl) {
         try {
             var xmlHttp = new XMLHttpRequest();
             xmlHttp.onreadystatechange = function () {
@@ -934,14 +936,40 @@ function checkSnapinQueueStatus(snapInObject) {
             xmlHttp.setRequestHeader('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest');//FY21-0702 eSupport call Changes
             xmlHttp.setRequestHeader("Content-Type", "application/json; charset=utf-8"); //FY21-0702 eSupport call Changes
             xmlHttp.send(null);
+            return returnValue;
         } catch (e) {
             console.log("Error in: " + e);
         }
     }
-    if (snapInObject.checkQueueStatusInBizHoursUrl && snapInObject.hoursOfOperation && snapInObject.timeZone && (snapInObject.checkQueueStatusInBizHoursUrl != "" || snapInObject.checkQueueStatusInBizHoursUrl != null || snapInObject.checkQueueStatusInBizHoursUrl != undifined) && (snapInObject.hoursOfOperation != "" || snapInObject.hoursOfOperation != null || snapInObject.hoursOfOperation != undifined) && (snapInObject.timeZone != "" || snapInObject.timeZone != null || snapInObject.timeZone != undifined)) {
-        httpGetAgentAvailability(snapInObject.checkQueueStatusInBizHoursUrl + "?chatHours=" + escape(snapInObject.hoursOfOperation) + "&timeZone=" + escape(snapInObject.timeZone) + "&buttonId=" + snapInObject.buttonId);
-        return returnValue;
-    } else
+    function httpGetAgentAvailability(theUrl) {
+        try {
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.onreadystatechange = function () {
+                if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+					returnValue = xmlHttp.responseText;
+            }
+            xmlHttp.open("GET", theUrl, false); // true for asynchronous 
+            xmlHttp.setRequestHeader('HTTP_X_REQUESTED_WITH', 'XMLHttpRequest');//FY21-0702 eSupport call Changes
+            xmlHttp.setRequestHeader("Content-Type", "application/text; charset=utf-8"); //FY21-0702 eSupport call Changes
+            xmlHttp.send(null);
+			return returnValue;
+        } catch (e) {
+            console.log("Error in: " + e);
+        }
+    }
+    if (snapInObject.checkQueueStatusInBizHoursUrl && snapInObject.hoursOfOperation && snapInObject.timeZone && (snapInObject.checkQueueStatusInBizHoursUrl != "" || snapInObject.checkQueueStatusInBizHoursUrl != null || snapInObject.checkQueueStatusInBizHoursUrl != undifined) && (snapInObject.hoursOfOperation != "" || snapInObject.hoursOfOperation != null || snapInObject.hoursOfOperation != undifined) && (snapInObject.timeZone != "" || snapInObject.timeZone != null || snapInObject.timeZone != undifined)) { 
+        return httpGetBusinessHrAgentAvailability(snapInObject.checkQueueStatusInBizHoursUrl + "?chatHours=" + escape(snapInObject.hoursOfOperation) + "&timeZone=" + escape(snapInObject.timeZone) + "&buttonId=" + snapInObject.buttonId);
+    }
+    else if("checkBtnAvailabilityUrl" in snapInObject && snapInObject.checkBtnAvailabilityUrl && snapInObject.checkBtnAvailabilityUrl != ""){
+        var btnAvailabilityResVal = httpGetAgentAvailability(snapInObject.checkBtnAvailabilityUrl+snapInObject.buttonId);
+        if (btnAvailabilityResVal){
+            return 1;
+        }else{
+            return 4;
+        }
+    }
+    //FY21-0803: Story #8842192 check for HES/EMC products[END]
+    else
         return 1;
 }
 //FY20-1102 Avilability and Business Hr Chack [END]
@@ -1038,41 +1066,41 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
             "transcriptFields": ["Description__c"]
         }
         ];
-    embedded_svc.settings.extraPrechatInfo = [{
-        "entityFieldMaps": [{
-            "doCreate": false,
-            "doFind": true,
-            "fieldName": "LastName",
-            "isExactMatch": true,
-            "label": translatedLabels.lastName
-        }, {
-            "doCreate": false,
-            "doFind": true,
-            "fieldName": "FirstName",
-            "isExactMatch": true,
-            "label": translatedLabels.firstName
-        }, {
-            "doCreate": false,
-            "doFind": true,
-            "fieldName": "Email",
-            "isExactMatch": true,
-            "label": translatedLabels.emailAdd
-        }, {
-            "doCreate": false,
-            "doFind": true,
-            "fieldName": "Primary_Phone__c",
-            "isExactMatch": true,
-            "label": translatedLabels.primPhone
-        }
+        embedded_svc.settings.extraPrechatInfo = [{
+            "entityFieldMaps": [{
+                "doCreate": false,
+                "doFind": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
+                "fieldName": "LastName",
+                "isExactMatch": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
+                "label": translatedLabels.lastName
+            }, {
+                "doCreate": false,
+                "doFind": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
+                "fieldName": "FirstName",
+                "isExactMatch": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
+                "label": translatedLabels.firstName
+            }, {
+                "doCreate": false,
+                "doFind": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
+                "fieldName": "Email",
+                "isExactMatch": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
+                "label": translatedLabels.emailAdd
+            }, {
+                "doCreate": false,
+                "doFind": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
+                "fieldName": "Primary_Phone__c",
+                "isExactMatch": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
+                "label": translatedLabels.primPhone
+            }
         ],
         "entityName": "Contact",
         "saveToTranscript": ""
     }, {
         "entityFieldMaps": [{
             "doCreate": false,
-            "doFind": true,
+            "doFind": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
             "fieldName": assetFieldName,//STORY 7193324: FY201101
-            "isExactMatch": true,
+            "isExactMatch": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
             "label": "Service Tag"
         }
         ],
@@ -1081,9 +1109,9 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
     }, {
         "entityFieldMaps": [{
             "doCreate": false,
-            "doFind": true,
+            "doFind": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
             "fieldName": "Issue_Description__c",
-            "isExactMatch": true,
+            "isExactMatch": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
             "label": translatedLabels.issueDesc
         }
         ],
@@ -2014,8 +2042,14 @@ function initiateChatBot(chatBotObject) {
     var initESW = function (gslbBaseURL) {
         //FIX for CSS related issue in Chat bot[START]
         if (!document.getElementById('chatBotStyle')) {
-            //FY21-0602: Unit testing fix for Glitch issue.
-            let css = '.embeddedServiceLiveAgentStateChatHeader .message,.embeddedServiceLiveAgentStateChatHeaderOption .optionName,.embeddedServiceSidebarFormField .uiInput .uiLabel-left{font-size:.75em!important}.embeddedServiceLiveAgentStateChatPlaintextMessageDefaultUI.plaintextContent,.embeddedServiceSidebarDialogState #dialogTextBody,.embeddedServiceSidebarFormField .slds-style-inputtext,.embeddedServiceSidebarFormField .slds-style-select,.embeddedServiceSidebarHeader .shortHeader,.embeddedServiceSidebarMinimizedDefaultUI .minimizedText{font-size:.875em!important}.embeddedServiceSidebar .headerItem,.embeddedServiceSidebarButton{font-size:1em!important}.embeddedServiceLiveAgentStateChatInputFooter .footerMenuWrapper .footer-menu .slds-button__icon{width:1.5em!important;height:1.5em!important}.embeddedServiceLiveAgentStateChatInputFooter .footerMenuWrapper .footer-menu .slds-button_icon-container-more{line-height:1.875em!important}.embeddedServiceLiveAgentStateChatInputFooter .footerMenuWrapper .footer-menu .slds-dropdown-trigger{padding:.5em .5em!important}.embeddedServiceLiveAgentStateChatInputFooter .footerMenuWrapper .footer-menu .data-metrics={btnname:chgprod,appcode:880.130.862}';
+            //FY21-0602: Unit testing fix for Glitch issue. //FY21-0803: Defect #9075724 [START]
+            var css = null
+            if(isTechOrCare(chatBotObject) === 'CARE'){
+                css = '.embeddedServiceLiveAgentStateChatHeader .message,.embeddedServiceLiveAgentStateChatHeaderOption .optionName,.embeddedServiceSidebarFormField .uiInput .uiLabel-left{font-size:.75em!important}.embeddedServiceLiveAgentStateChatPlaintextMessageDefaultUI.plaintextContent,.embeddedServiceSidebarDialogState #dialogTextBody,.embeddedServiceSidebarFormField .slds-style-inputtext,.embeddedServiceSidebarFormField .slds-style-select,.embeddedServiceSidebarHeader .shortHeader,.embeddedServiceSidebarMinimizedDefaultUI .minimizedText{font-size:.875em!important}.embeddedServiceSidebar .headerItem,.embeddedServiceSidebarButton{font-size:1em!important}.embeddedServiceLiveAgentStateChatInputFooter .footerMenuWrapper .footer-menu .slds-button__icon{width:1.5em!important;height:1.5em!important}.embeddedServiceLiveAgentStateChatInputFooter .footerMenuWrapper .footer-menu .slds-button_icon-container-more{line-height:1.875em!important}.embeddedServiceLiveAgentStateChatInputFooter .footerMenuWrapper .footer-menu .slds-dropdown-trigger{padding:.5em .5em!important}.embeddedServiceLiveAgentStateChatInputFooter .footerMenuWrapper .footer-menu .data-metrics={btnname:chgprod,appcode:880.130.862}';
+            }else{
+                css = '.embeddedServiceLiveAgentStateChatHeader .message,.embeddedServiceLiveAgentStateChatHeaderOption .optionName,.embeddedServiceSidebarFormField .uiInput .uiLabel-left{font-size:.75em!important}.embeddedServiceLiveAgentStateChatPlaintextMessageDefaultUI.plaintextContent,.embeddedServiceSidebarDialogState #dialogTextBody,.embeddedServiceSidebarFormField .slds-style-inputtext,.embeddedServiceSidebarFormField .slds-style-select,.embeddedServiceSidebarHeader .shortHeader,.embeddedServiceSidebarMinimizedDefaultUI .minimizedText{font-size:.875em!important}.embeddedServiceSidebar .headerItem,.embeddedServiceSidebarButton{font-size:1em!important}.embeddedServiceLiveAgentStateChatInputFooter .footerMenuWrapper .footer-menu .slds-button__icon{width:1.5em!important;height:1.5em!important}.embeddedServiceLiveAgentStateChatInputFooter .footerMenuWrapper .footer-menu .slds-button_icon-container-more{line-height:1.875em!important}.embeddedServiceLiveAgentStateChatInputFooter .footerMenuWrapper .footer-menu .slds-dropdown-trigger{padding:.5em .5em!important}.embeddedServiceLiveAgentStateChatInputFooter .footerMenuWrapper .footer-menu .data-metrics={btnname:chgprod,appcode:880.130.862}';
+            }
+            //FY21-0803: Defect #9075724 [START]
             head = document.head || document.getElementsByTagName('head')[0],
                 style = document.createElement('style');
             style.type = 'text/css';
@@ -2068,6 +2102,7 @@ function initiateChatBot(chatBotObject) {
             { "label": "Service Tag",/* "value": chatBotObject.Service_Tag,*/ "transcriptFields": ["Service_Tag__c"], "displayToAgent": true },
             { "label": "CARE_Chat_Order_Number", "transcriptFields": ["CARE_Chat_Order_Number__c"], "displayToAgent": true }, // Change for BOT phone March 19 2020
             { "label": "Order Number", "value": appendBuidForCareBot(chatBotObject), "transcriptFields": ["Order_Number__c"] },//FY21-0602: Story #8151253 add BUID to order number
+            { "label": "Issue", "value": selectIssueTypeForCareBot(chatBotObject), "transcriptFields": ["Issue__c"] },//FY21-0803: Defect #9058298 add Status if not avilable in bot
             //{ "label": translatedLabels.primPhone, /*"value": '00 61 2 9876', */"transcriptFields": ["ContactNumber__c"], "displayToAgent": true },
             phoenNumberValues,//FY21-0403 [Defect] prop 20 value change
             VA_FlagValues, //FY21-0803 US Care bot
@@ -2161,21 +2196,21 @@ function initiateChatBot(chatBotObject) {
         embedded_svc.settings.extraPrechatInfo = [{
             "entityFieldMaps": [{
                 "doCreate": false,
-                "doFind": true,
+                "doFind": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                 "fieldName": "LastName",
-                "isExactMatch": true,
+                "isExactMatch": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                 "label": "Last Name"
             }, {
                 "doCreate": false,
-                "doFind": true,
+                "doFind": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                 "fieldName": "FirstName",
-                "isExactMatch": true,
+                "isExactMatch": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                 "label": "First Name"
             }, {
                 "doCreate": false,
-                "doFind": true,
+                "doFind": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                 "fieldName": "Email",
-                "isExactMatch": true,
+                "isExactMatch": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                 "label": "Email Address"
             }],
             "entityName": "Contact",
@@ -2184,9 +2219,9 @@ function initiateChatBot(chatBotObject) {
         }, {
             "entityFieldMaps": [{
                 "doCreate": false,
-                "doFind": true,
+                "doFind": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                 "fieldName": "Name",
-                "isExactMatch": true,
+                "isExactMatch": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                 "label": "Service Tag"
             }
             ],
@@ -2202,9 +2237,9 @@ function initiateChatBot(chatBotObject) {
                 }, */
                 {
                     "doCreate": false,
-                    "doFind": true,
+                    "doFind": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                     "fieldName": "AssetId",
-                    "isExactMatch": true,
+                    "isExactMatch": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                     "label": "Asset"
                 }, {
                     "entityFieldMaps": [{
@@ -2275,6 +2310,17 @@ function appendBuidForCareBot(chatBotObject) {
     return orderNumber;
 }
 //FY21-0602: Story #8151253 add BUID to order number [START]
+//FY21-0803: Defect #9058298 add Status if not avilable in bot [START]
+function selectIssueTypeForCareBot(chatBotObject) {
+    var issueType = null;
+    if (chatBotObject.applicationContext === "ChatBot-CareBot") {
+        issueType = 'Status do pedido';
+    } else if (chatBotObject.applicationContext === "ChatBot-CareEnglish") {
+        issueType = 'Order Status';
+    }
+    return issueType;
+}
+//FY21-0803: Defect #9058298 add Status if not avilable in bot [END]
 
 function ResgisterChatBotHandler() {
     embedded_svc.addEventHandler("onAgentMessage", function (data) {
@@ -2360,7 +2406,7 @@ function ResgisterChatBotHandler() {
 
     });
 }
-//Not requiredfor now BNR
+
 function OmniChatBotTrackerListner() {
     // clearInterval(findingEle);
     try {
@@ -2382,14 +2428,14 @@ function OmniChatBotTrackerListner() {
                     //FY21-0702: Prop value Fix [Start]
                     if (clickedElement && clickedElement.tagName.toLowerCase() === 'embeddedservice-chat-header' && (closestByTagName(event.toElement, 'svg') || closestByTagName(event.toElement, 'button'))) {//FY21-0702 DEFECT 9007902: Adding additional checks
                         if (closestByTagName(event.toElement, 'svg').dataset.key === 'minimize_window' || closestByTagName(event.toElement, 'button').className === 'minimizeButton')
-                            callDellmetricsTrackForBot("880.130.854");
+                            callDellmetricsTrackForBot("880.130.854","Minimize");//Story 8233457: Prop Values Change for Einstein Bot
                         else if (closestByTagName(event.toElement, 'svg').dataset.key === 'close' || closestByTagName(event.toElement, 'button').className === 'closeButton')
-                            callDellmetricsTrackForBot("880.130.855");
+                            callDellmetricsTrackForBot("880.130.855","Close");//Story 8233457: Prop Values Change for Einstein Bot
                     } else if (clickedElement && clickedElement.tagName.toLowerCase() === 'embeddedservice-chat-input-footer-menu' && (closestByTagName(event.toElement, 'svg') || closestByTagName(event.toElement, 'button'))) {//FY21-0702 DEFECT 9007902: Adding additional checks
                         if (closestByTagName(event.toElement, 'svg').dataset.key !== 'rows' && closestByTagName(event.toElement, 'button').className !== 'slds-button slds-button_icon slds-button_icon-container-more slds-button_icon-large') {
                             var snapInfooterMenuElm = closestByTagName(event.toElement, 'a');
                             if (snapInfooterMenuElm != undefined && snapInfooterMenuElm != null && snapInfooterMenuElm.innerText)
-                                callDellmetricsTrackForBot("880.130.859");
+                                callDellmetricsTrackForBot("880.130.859","Save Transcript");//Story 8233457: Prop Values Change for Einstein Bot
                         }
                     } else
                         //FY21-0702: Prop value Fix [END]
@@ -2399,25 +2445,25 @@ function OmniChatBotTrackerListner() {
                                     callDellmetricsTrackForBot("880.130.853");
                                     break;*/
                                 case "waitingCancelChat uiButton--inverse uiButton embeddedServiceSidebarButton":
-                                    callDellmetricsTrackForBot("880.130.856");
+                                    callDellmetricsTrackForBot("880.130.856","Cancel Chat Request");//Story 8233457: Prop Values Change for Einstein Bot
                                     chasitorTextMaintainState();
                                     isBinded = false;
                                     bindHandler();
 
                                     break;
                                 case "closeButton headerItem":
-                                    callDellmetricsTrackForBot("880.130.855");
+                                    callDellmetricsTrackForBot("880.130.855","Close");//Story 8233457: Prop Values Change for Einstein Bot
                                     break;
                                 case "minimizeButton headerItem":
-                                    callDellmetricsTrackForBot("880.130.854");
+                                    callDellmetricsTrackForBot("880.130.854","Minimize");//Story 8233457: Prop Values Change for Einstein Bot
                                     break;
                                 case "dialogButton dialog-button-0 uiButton embeddedServiceSidebarButton":
                                     if ((event.target.innerText === "Leave" || event.target.innerText === "Sair") && (event.target.parentNode.parentNode.parentNode.firstElementChild.textContent === "Leave?" || event.target.parentNode.parentNode.parentNode.firstElementChild.textContent === "Sair?"))//FY21-0403 [Defect] prop 20 value change
-                                        callDellmetricsTrackForBot("880.130.857");
+                                        callDellmetricsTrackForBot("880.130.857","Leave Chat");//Story 8233457: Prop Values Change for Einstein Bot
                                     break;
                                 case "dialogButton dialog-button-1 uiButton--inverse uiButton embeddedServiceSidebarButton":
                                     if ((event.target.innerText === "Continue to Wait" || event.target.innerText === "Continuar esperando") && (event.target.parentNode.parentNode.parentNode.firstElementChild.textContent === "Leave?" || event.target.parentNode.parentNode.parentNode.firstElementChild.textContent === "Sair?"))//FY21-0403 [Defect] prop 20 value change
-                                        callDellmetricsTrackForBot("880.130.858");
+                                        callDellmetricsTrackForBot("880.130.858","Continue to Wait");//Story 8233457: Prop Values Change for Einstein Bot
                                     chasitorTextMaintainState();
                                     isBinded = false;
                                     bindHandler();
@@ -2452,14 +2498,14 @@ function callDellmetricsTrackForBot(propValue, message) {
 //Call this function on click of start chat
 function openBotPrechatform(chatBotObject) {
     if (!document.getElementById("cusBotPreChatSnapinDom")) {
-        callDellmetricsTrackForBot("880.130.852");
+        callDellmetricsTrackForBot("880.130.852","Chat Window Load"); //Story 8233457: Prop Values Change for Einstein Bot
         createBotCustPreChat(chatBotObject);
     } else {
         //If the form is already avilable[START] 
         let serviceSidebar = document.querySelector(".modalContainer.embeddedServiceSidebar"),
             minimizedDefaultUI = document.querySelector(".embeddedServiceSidebar .embeddedServiceSidebarMinimizedDefaultUI");
         if (serviceSidebar && serviceSidebar.style.display == "none") { //if prechat form is open: Open custom prechat form
-            callDellmetricsTrackForBot("880.130.852");
+            callDellmetricsTrackForBot("880.130.852","Chat Window Load"); //Story 8233457: Prop Values Change for Einstein Bot
             document.getElementById("cusBotPreChat-helpButtonEnabled").click();
         } else if (minimizedDefaultUI)//If chat has already started try to maximize the chat window
             minimizedDefaultUI.click();
@@ -2514,13 +2560,52 @@ function createFixedLabels(chatBotObject) {
 function startSnapinChatBot(chatBotObject) {
     if (chatBotFieldsValidated(chatBotObject)) {
         //loadingSnapinQueue
-        callDellmetricsTrackForBot("880.130.853");
+        callDellmetricsTrackForBot("880.130.853","Start Chat in Popup"); //Story 8233457: Prop Values Change for Einstein Bot
         loadingSnapinBotQueue();
         chatBotObject = addCustBotFormDetailsTo(chatBotObject);
+        checkForCareCustomerVarification(chatBotObject); //FY21-0803 VA Flag Code chagnes for CARE BOT
         saveGlobalSnapinBotObjToSession(chatBotObject);
         eleExistWithVariable('.embeddedServiceSidebar .startButton', ChatBotStarted, chatBotObject);
     }
 }
+//FY21-0803 VA Flag Code chagnes for CARE BOT [START]
+function checkForCareCustomerVarification(chatBotObject){
+    var  isVarifiedVal;
+    try{
+        if (chatBotObject.applicationContext === "ChatBot-CareBot" || chatBotObject.applicationContext === "ChatBot-CareEnglish") {
+            var careChatObj = {
+                "Buid": chatBotObject.buid,
+                "OrderNumber": chatBotObject.c_CARE_Chat_Order_Number,       
+                "FirstName": chatBotObject.c_firstName,
+                "LastName": chatBotObject.c_lastName,
+                "EmailAddress": chatBotObject.c_email,
+                "PhoneNumber": chatBotObject.c_phoneNo
+            };   
+        isVarifiedVal = IsVerifiedCareChat(careChatObj);
+        }
+    }catch(e){
+        return isVarifiedVal = false;
+        console.log("Error on checkForCareCustomerVarification",e);
+    }
+        pushVarifiedCustomerFlagToBot(isVarifiedVal);
+}
+function pushVarifiedCustomerFlagToBot(isVarifiedVal) {
+    try{
+        var extraPrechatFormVals = embedded_svc.settings.extraPrechatFormDetails, i = 0;
+        if(extraPrechatFormVals){
+            extraPrechatFormVals.forEach(function (extraPrechatFormVal) {
+                var fieldAPI = extraPrechatFormVal.transcriptFields[0];
+                if(fieldAPI === 'VA_Flag__c'){
+                    embedded_svc.settings.extraPrechatFormDetails[i].value = isVarifiedVal;
+                }
+                i++;
+            });
+        }
+    }catch(e){
+        console.log("Error on pushVarifiedCustomerFlagToBot",e);
+    }
+}
+//FY21-0803 VA Flag Code chagnes for CARE BOT [END]
 function loadingSnapinBotQueue() {
     document.getElementById("cusBotPreChat-sidebarLoadingIndicator").style.display = 'flex';
     document.getElementById("cusBotPreChat-hideWhileLoading").style.display = 'none';
@@ -2581,7 +2666,7 @@ function changeBotPrechatValues(snapInObject) {
     state.set("v.prechatFields", prechatFields);
 }
 function custMinimizeBtnClickedInBot() {
-    callDellmetricsTrackForBot("880.130.854");
+    callDellmetricsTrackForBot("880.130.854","Minimize");//Story 8233457: Prop Values Change for Einstein Bot
     minimizeCustBotPrechat();
 }
 function minimizeCustBotPrechat() {
@@ -2589,7 +2674,7 @@ function minimizeCustBotPrechat() {
     document.getElementById("cusBotPreChatSnapinDom").style.display = 'none';
 }
 function custCloseBtnClickedInBot() {
-    callDellmetricsTrackForBot("880.130.855");
+    callDellmetricsTrackForBot("880.130.855","Close");//Story 8233457: Prop Values Change for Einstein Bot
     closeCustBotPrechat();
 }
 function closeCustBotPrechat() {

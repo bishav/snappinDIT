@@ -9,8 +9,10 @@ $(document).ready(function() {
         var chatIESupport = ajaxGetMessage("/message/getMessage",'label.chat.ie.support');
         addErrorMessage(chatIESupport);
     }
-
-    $('#regionInput').change(function() {
+    /**
+     * For Special character Validation
+     */
+ $('#regionInput').change(function() {
         $('#regionQueues').addClass('loading');
         $('#regionQueues').empty();
         var region = $('#regionInput').val();
@@ -71,7 +73,7 @@ $(document).ready(function() {
 
     if (!document.getElementById('snapinStyle')) {
         var css = '.invisibleWhileLoading .content, .embeddedServiceLiveAgentStateChatHeader .content{background: #222 !important;}.embeddedServiceLiveAgentStateChatItem.chatMessage{margin-top: 0px !important; min-height: 0px !important;} .embeddedServiceSidebarMinimizedDefaultUI .content {background: #222 !important;}', //FY21-0702 Summer patch Design Change
-            css = css + ' .embeddedServiceSidebar.layout-docked .dockableContainer, .embeddedServiceSidebar.layout-float .dockableContainer{display: flex !important;}'; //FY21-1002 DEFECT #9467644 Winter '21 CSS issue.
+            css = css + ' .embeddedServiceSidebar.layout-docked .dockableContainer, .embeddedServiceSidebar.layout-float .dockableContainer{display: flex !important;}'; //FY21-1002 DEFECT #9467644 Winter '21 CSS issue. 
             head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
         style.type = 'text/css';
@@ -86,15 +88,32 @@ $(document).ready(function() {
     }
 })();
 
-function startPartnerPortalChat(){
+function startPartnerPortalChat() {
     $('.chatForm form').validate()
-    if($('.chatForm form').valid()) {
-        $('#chatPleaseWait').show();
+    if ($('.chatForm form').valid()) {
+        var regex = /^[A-Za-z0-9 ]+$/
 
+        //Validate TextBox value against the Regex.
+        var val = document.getElementById("chatTypeValue").value
+        var isValid = regex.test(val);
+        if (!isValid || val.contains(" ")) {
+
+            document.getElementById('errors').innerHTML = "The value field only allows alphanumeric characters. Please review";
+            return false
+        } else if (val.length < 5) {
+
+            document.getElementById('errors').innerHTML = "Please enter atleast 5 characters";
+            return false;
+        } else {
+            document.getElementById('errors').innerHTML = "";
+
+        }
+
+        $('#chatPleaseWait').show();
         var partnerPortalDetails = {
             language: "en",
             regionInput: $('#regionInput').val(),
-            regionQueues: $('#regionQueues').val(), 
+            regionQueues: $('#regionQueues').val(),
             vendorType: $('#vendorType').val(),
             chatType: $('#chatType').val(),
             chatTypeValue: $('#chatTypeValue').val(),
@@ -104,12 +123,12 @@ function startPartnerPortalChat(){
             serviceTag: getMainSearchValue($('#chatType').val(), "Service Tag", $('#chatTypeValue').val()),
             srNumber: getMainSearchValue($('#chatType').val(), "SR Number", $('#chatTypeValue').val()),
             chatProviderName: $('#chatProviderName').val(),
-			productName: findProductFromQueueName($('#regionQueues').siblings(".form-control")[0]),//FY21-0502: Story #8076479: Find if the product name from Queue name.
+            productName: findProductFromQueueName($('#regionQueues').siblings(".form-control")[0]),//FY21-0502: Story #8076479: Find if the product name from Queue name.
             role: getRoleValue($('#regionQueues').siblings(".form-control")[0]),//FY21:0502 STORY 7994527: Add Role value
             chatUserName: $('#chatUserName').val()
         };
 
-        var sfdcSnapinDetails = { 
+        var sfdcSnapinDetails = {
             buttonId: partnerPortalDetails.regionQueues,
             baseLiveAgentContentURL: $('#baseLAContentURL').val(),
             deploymentId: $('#deploymentId').val(),
@@ -123,9 +142,11 @@ function startPartnerPortalChat(){
             snapInLAURL: $('#snapInLAURL').val(),
             recordType: $('#recordType').val()
         };
+
         addStyleSheetInDPPChat();
         triggerPartnerPortalSnapinDPP(partnerPortalDetails, sfdcSnapinDetails);
     }
+
 }
 
 function addStyleSheetInDPPChat(){
@@ -374,3 +395,4 @@ function getRoleValue(queueNameEle){
         return "";
 }
 //FY21:0502 STORY 7994527: Add Role value [END]
+
