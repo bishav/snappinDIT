@@ -923,7 +923,8 @@ function connectToSnapInAgent(snapInObject) {
         if (("snapinChatInitiated" in snapInObject && snapInObject.snapinChatInitiated) || ("snapinButtonClicked" in snapInObject && snapInObject.snapinButtonClicked))
             eleExistWithVariable('.helpButtonEnabled #helpButtonSpan > .message', chatClick);
             //eleExistWithVariable('.embeddedServiceSidebar .startButton', chatStarted, snapInObject); //SLD_POC
-            eleExistWithVariable('.embeddedServiceSidebar .SDL_LCSnapInPrechat .slds-button', chatStartedForSLD, snapInObject); //SLD_POC
+            eleExistWithVariable('.embeddedServiceSidebar .startButton', chatStartedForSLD, snapInObject); //SLD_POC
+            //eleExistWithVariable('.embeddedServiceSidebar .SDL_LCSnapInPrechat .slds-button', chatStartedForSLD, snapInObject); //SLD_POC
     } else //FY20-1102 Avilability and Business Hr Chack
         agentsOfflinePostChatForm(); //FY20-1102 Avilability and Business Hr Chack
 }
@@ -1078,9 +1079,9 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
         embedded_svc.settings.fallbackRouting = snapInObject.skillIds;
     }
     //STORY 6929894[END]
-    /*if ("language" in snapInObject)
+    if ("language" in snapInObject)
         translatedLabels = translation(snapInObject.language);
-    else*/ //SLD_POC
+    else
         translatedLabels = translation("en");
     embedded_svc.settings.language = translatedLabels.language;
 
@@ -1164,13 +1165,13 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
         "entityFieldMaps": [{
             "doCreate": false,
             "doFind": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
-            "fieldName": "Rajbhandari",
+            "fieldName": "LastName",
             "isExactMatch": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
             "label": translatedLabels.lastName
         }, {
             "doCreate": false,
             "doFind": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
-            "fieldName": "Bishav",
+            "fieldName": "FirstName",
             "isExactMatch": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
             "label": translatedLabels.firstName
         }, {
@@ -3235,9 +3236,9 @@ function chatStartedForSLD(eleSelector, findingEle, snapInObject) {
             state.set("v.prechatFields", prechatFields);
 
             var langselected = usersBaseChatLanguage(snapInObject.language);
-            languageSelectEle = document.querySelector(".embeddedServiceSidebar .SDL_LCSnapInPrechat .slds-select_container .slds-select");
-            if(languageSelectEle)
-                languageSelectEle.value = langselected;
+            //languageSelectEle = document.querySelector(".embeddedServiceSidebar .SDL_LCSnapInPrechat .slds-select_container .slds-select");
+            //if(languageSelectEle)
+               // languageSelectEle.value = langselected;
             setSdlPocCookie("languageSelectedbyVisitor",langselected,30);
             document.cookie="languageSelectedbyVisitor ="+langselected;
 
