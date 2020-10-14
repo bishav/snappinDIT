@@ -73,7 +73,6 @@ $(document).ready(function() {
 
     if (!document.getElementById('snapinStyle')) {
         var css = '.invisibleWhileLoading .content, .embeddedServiceLiveAgentStateChatHeader .content{background: #222 !important;}.embeddedServiceLiveAgentStateChatItem.chatMessage{margin-top: 0px !important; min-height: 0px !important;} .embeddedServiceSidebarMinimizedDefaultUI .content {background: #222 !important;}', //FY21-0702 Summer patch Design Change
-            css = css + ' .embeddedServiceSidebar.layout-docked .dockableContainer, .embeddedServiceSidebar.layout-float .dockableContainer{display: flex !important;}'; //FY21-1002 DEFECT #9467644 Winter '21 CSS issue. 
             head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
         style.type = 'text/css';
@@ -152,7 +151,6 @@ function startPartnerPortalChat() {
 function addStyleSheetInDPPChat(){
     if (!document.getElementById('snapinStyle')) {
         var css = '.invisibleWhileLoading .content, .embeddedServiceLiveAgentStateChatHeader .content{background: #222 !important;}.embeddedServiceLiveAgentStateChatItem.chatMessage{margin-top: 0px !important; min-height: 0px !important;} .embeddedServiceSidebarMinimizedDefaultUI .content {background: #222 !important;}', //FY21-0702 Summer patch Design Change
-            css = css + ' .embeddedServiceSidebar.layout-docked .dockableContainer, .embeddedServiceSidebar.layout-float .dockableContainer{display: flex !important;}'; //FY21-1002 DEFECT #9467644 Winter '21 CSS issue.
             head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
         style.type = 'text/css';
