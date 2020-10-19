@@ -94,6 +94,7 @@
                         <span id="selectLanguage" style="float: right;">
                             <span>Select Enveironment</span>
                                 <select id="envSelect"> 
+                                    <option>FY21-1101-DEV</option>
                                     <option>FY21-1003-DEV</option>
                                     <option>FY21-0803-DEV</option>
                                     <option>GE4</option>
@@ -181,7 +182,122 @@
             var env = $("#envSelect").val();
             var chatBotObject;
 
-            if(env === "DEV3")
+           
+        if (env === "FY21-1101-DEV")
+          chatBotObject = {
+                            chatBotInitURL:  'https://dellservices--1101kcc.my.salesforce.com',
+                            chatBotLAURL:  'https://1101kcc-dellservices.cs169.force.com/LASnapIn',
+                            organizationId: '00D6w0000008jjJ',
+                            componentName: 'Care_Dellchatbot',
+                            baseLiveAgentContentURL: 'https://c.la2-c1cs-ia4.salesforceliveagent.com/content',
+                            deploymentId: '5720b000000GneC',
+                            baseLiveAgentURL: 'https://d.la2-c1cs-ia4.salesforceliveagent.com/chat',
+                            LiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I2h0000004CBYEA2_16fa30a6c99',
+                            serviceForceURL: "https://service.force.com",
+                            snapInJs: 'https://dellservices--1101kcc.my.salesforce.com/embeddedservice/5.0/esw.min.js'
+            } 
+        else if(env === "DEV3")
+            chatBotObject = {
+               chatBotInitURL: 'https://dellservices--dev3.my.salesforce.com',
+               chatBotLAURL: 'https://dev3-dellservices.cs2.force.com/LASnapIn',
+               organizationId: '00DR00000020Cae',
+               baseLiveAgentContentURL: 'https://c.la1-c1cs-ia2.salesforceliveagent.com/content',
+               deploymentId: '5720b000000GneC',
+               baseLiveAgentURL: 'https://d.la1-c1cs-ia2.salesforceliveagent.com/chat',
+               serviceForceURL: "https://service.force.com",
+               snapInJs: 'https://dellservices--dev3.my.salesforce.com/embeddedservice/5.0/esw.min.js'
+            }
+            else if (env === "DEV1") 
+            chatBotObject = { 
+                    chatBotInitURL:  'https://dellservices--dev1.my.salesforce.com',
+                    chatBotLAURL:  'https://dev1-dellservices.cs4.force.com/LASnapIn',
+                    organizationId: '00DP0000003pGDL',
+                    baseLiveAgentContentURL: 'https://c.la1-c1cs-ia2.salesforceliveagent.com/content',
+                    deploymentId: '5720b000000GneC',
+                    baseLiveAgentURL: 'https://d.la1-c1cs-ia2.salesforceliveagent.com/chat',  
+                    serviceForceURL: "https://service.force.com",
+                    snapInJs: 'https://dellservices--dev1.my.salesforce.com/embeddedservice/5.0/esw.min.js'
+               }
+            else if(env === "SIT2")
+            chatBotObject = {
+                chatBotInitURL: 'https://dellservices--SIT2.my.salesforce.com',
+                chatBotLAURL: 'https://sit2-dellservices.cs36.force.com/LASnapIn',
+                organizationId: '00D2h0000008aOa',
+                baseLiveAgentContentURL: 'https://c.la3-c1cs-ph2.salesforceliveagent.com/content',
+                deploymentId: '5720b000000GneC',
+                baseLiveAgentURL: 'https://d.la3-c1cs-ph2.salesforceliveagent.com/chat',
+                serviceForceURL: "https://service.force.com",
+                snapInJs: 'https://dellservices--SIT2.my.salesforce.com/embeddedservice/5.0/esw.min.js'
+           }  
+           else if(env === "FY21-0602-DEV")
+            chatBotObject = {
+                chatBotInitURL: 'https://dellservices--0602ccks.my.salesforce.com',
+                chatBotLAURL: 'https://0602ccks-dellservices.cs22.force.com/LASnapIn',
+                organizationId: '00D17000000DmNu',
+                baseLiveAgentContentURL: 'https://c.la1-c1cs-ia2.salesforceliveagent.com/content',
+                deploymentId: '5720b000000GneC',
+                baseLiveAgentURL: 'https://d.la1-c1cs-ia2.salesforceliveagent.com/chat',
+                serviceForceURL: "https://service.force.com",
+                snapInJs: 'https://dellservices--0602ccks.my.salesforce.com/embeddedservice/5.0/esw.min.js'     
+           } 
+           else if(env === "FY21-0803-DEV")
+           chatBotObject = {
+               chatBotInitURL: 'https://dellservices--0803ccks.my.salesforce.com',
+               chatBotLAURL: 'https://0803ccks-dellservices.cs41.force.com/LASnapIn',
+               organizationId: '00D550000001KdZ',
+               baseLiveAgentContentURL: 'https://c.la1-c1cs-ia2.salesforceliveagent.com/content',
+               deploymentId: '5720b000000GneC',
+               baseLiveAgentURL: 'https://d.la1-c1cs-ia2.salesforceliveagent.com/chat',
+               serviceForceURL: "https://service.force.com",
+               snapInJs: 'https://dellservices--0803ccks.my.salesforce.com/embeddedservice/5.0/esw.min.js'     
+          }
+          else if(env === "FY21-0703-DEV")
+          chatBotObject = {
+            chatBotInitURL: 'https://dellservices--ge2o7o3.my.salesforce.com',
+            chatBotLAURL: 'https://ge2o7o3-dellservices.cs59.force.com/LASnapIn',
+            organizationId: '00D2C000000D19k',
+            baseLiveAgentContentURL: 'https://c.la1-c1cs-ia4.salesforceliveagent.com/content',
+            deploymentId: '5720b000000GneC',
+            baseLiveAgentURL: 'https://d.la1-c1cs-ia4.salesforceliveagent.com/chat',
+            serviceForceURL: "https://service.force.com",
+            snapInJs: 'https://dellservices--ge2o7o3.my.salesforce.com/embeddedservice/5.0/esw.min.js',
+         }
+           else if(env === "GE2")
+           chatBotObject = {
+               chatBotInitURL: 'https://dellservices--ge2.my.salesforce.com',
+               chatBotLAURL: 'https://0602ccks-dellservices.cs22.force.com/LASnapIn',
+               organizationId: '00D170000004F8A',
+               baseLiveAgentContentURL: 'https://c.la1-c1cs-ia2.salesforceliveagent.com/content',
+               deploymentId: '5720b000000GneC',
+               baseLiveAgentURL: 'https://d.la1-c1cs-ia2.salesforceliveagent.com/chat',
+               serviceForceURL: "https://service.force.com",
+               snapInJs: 'https://dellservices--ge2.my.salesforce.com/embeddedservice/5.0/esw.min.js'     
+          }
+          else if (env === "GE4")
+          chatBotObject = {
+                chatBotInitURL:  'https://dellservices--ge4.my.salesforce.com',
+                chatBotLAURL:  'https://ge4-dellservices.cs125.force.com/LASnapIn',
+                organizationId: '00D3K0000000PJb',
+                componentName: 'Care_Dellchatbot',
+                baseLiveAgentContentURL: 'https://c.la1-c1cs-ia4.salesforceliveagent.com/content',
+                deploymentId: '5720b000000GneC',
+                baseLiveAgentURL: 'https://d.la1-c1cs-ia4.salesforceliveagent.com/chat',
+                LiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I2h0000004CBYEA2_16fa30a6c99',
+                serviceForceURL: "https://service.force.com",
+                snapInJs: 'https://dellservices--ge4.my.salesforce.com/embeddedservice/5.0/esw.min.js'
+            } 
+            else if (env === "FY21-1003-DEV")
+            chatBotObject = {
+              chatBotInitURL: 'https://dellservices--1003cck.my.salesforce.com',
+                  chatBotLAURL: 'https://1003cck-dellservices.cs14.force.com/LASnapIn',
+                  organizationId: '00Dc0000003lgXB',
+                  baseLiveAgentContentURL: 'https://c.la1-c1cs-ord.salesforceliveagent.com/content',
+                  deploymentId: '5720b000000GneC',
+                  baseLiveAgentURL: 'https://d.la1-c1cs-ord.salesforceliveagent.com/chat',
+                  serviceForceURL: "https://service.force.com",
+                  snapInJs: 'https://dellservices--1003cck.my.salesforce.com/embeddedservice/5.0/esw.min.js'   
+                }
+            else if(env === "DEV3")
             chatBotObject = {
                chatBotInitURL: 'https://dellservices--dev3.my.salesforce.com',
                chatBotLAURL: 'https://dev3-dellservices.cs2.force.com/LASnapIn',
@@ -317,12 +433,12 @@
            chatBotObject.buid= '',
            chatBotObject.BotFutureUse_2 = 'https://www.dell.com/support/orders/br/pt/brdhs1/dpid/details?v=pZSnv67J7DAGiKKi2XnDGGcddPhK0bRpgHp8q5Y0bxG7wOb19124xI0BItMUSP7Z9jVGVNKCwWSNt5nPsuS%2FMEg4vklkl8lor3GhAxJtVi8%3D',
            chatBotObject.Agent_QueueName = "5731P000000TSSX";//"5730b00000097Kk";//"5730b00000097Kk";//"5730b000000Gnxf";
-          console.log("testing", chatBotObject);
+           chatBotObject.buttonId = '5731P000000TScM';
+           console.log("testing", chatBotObject);
            if (issueVal === "ChatBot-CareBot" || issueVal === "ChatBot-CareEnglish"){
                 chatBotObject.CARE_Chat_Order_Number = mainInputVal;
                 //chatBotObject.buid= '3696',
                 chatBotObject.componentName = 'Care_Dellchatbot';
-               
                 if (env === "GE4" && issueVal === "ChatBot-CareEnglish"){
                     chatBotObject.buttonId = '5732h0000008P6H';
                     chatBotObject.LiveAgentDevName = 'EmbeddedServiceLiveAgent_Parent04I2h0000004CBYEA2_16fa30a6c99';
@@ -336,7 +452,7 @@
                 } else if(env === "FY21-0703-DEV"){
                     chatBotObject.buttonId = '5731P000000TScM';
                     chatBotObject.LiveAgentDevName = 'EmbeddedServiceLiveAgent_Parent04I2h0000004CBYEA2_16fa30a6c99';
-                } else if(env === "FY21-0803-DEV"){
+                } else if(env === "FY21-0803-DEV" || env === "FY21-1101-DEV"){
                     if(issueVal === "ChatBot-CareBot")
                         chatBotObject.buttonId = '5731P000000TScM';
                     else
