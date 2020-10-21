@@ -84,16 +84,19 @@
                 <div class="col-lg-8">
                     <form>
                         <div class="form-group">
-                            <label style="margin-right: 10px; margin-bottom: 20px;" for="Organization">Organization : </label>
+                            <label style="margin-right: 10px; margin-bottom: 20px;" for="Organization">Project : </label>
                                 <span id="orginazationName">
+                                    <label><input id = "dellWPR" type="radio" name="optradio" value = "dellWPR">&nbsp&nbspWarranty Parts Return</label>
                                     <label><input id = "dellOrg" type="radio" name="optradio" checked>&nbsp&nbspDell legacy</label>
                                     <label><input id = "emcOrg" type="radio" name="optradio" style="margin-left: 20px;" value = 'emcOrg'>&nbsp&nbspEMC legacy</label>
                                     <label><input id = "routSprinklrBot" type="radio" name="optradio" style="margin-left: 20px;">&nbsp&nbspSprinklr Bot Routing</label>
                                 </span>
-                            <div>
-                            <label for="serviceTag"><span class='NonEMC'>Service Tag</span><span class='EMC' style='display:none;'>CPID (for EMC legacy)</span></label>
+                            <dev class="dellTech">
+                                <div>
+                                    <label for="serviceTag"><span class='NonEMC'>Service Tag</span><span class='EMC' style='display:none;'>CPID (for EMC legacy)</span></label>
+                                </div>
+                                <input type="text" class="form-control"  id="serviceTag" aria-describedby="serviceTag" placeholder="Enter Service Tag" value="DSEASSET">
                             </div>
-                            <input type="text" class="form-control"  id="serviceTag" aria-describedby="serviceTag" placeholder="Enter Service Tag" value="DSEASSET">
                             <div class='EMC' style='display:none;'>
                                 <label for="epdmId">EPDM-Id(for EMC legacy)</label>
                             </div>
@@ -118,12 +121,9 @@
                             
                         </div>
 
-                        <!-- Old service tag="6MW0204" 
-                            <div class="form-group">
-                            <label for="exampleFormControlTextarea1">Description</label>
-                            <textarea class="form-control" id="description-textarea" rows="5"></textarea>
-                        </div> -->
-                        <div class="dropdown hide">
+                        <div class="col-lg-2"></div>
+                        <div class="col-lg-2"></div>
+                        <div class="dropdown hide dropdown col-lg-8">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Select Issue Type
                             </button>
@@ -199,6 +199,8 @@
                 <div class="input-group">
                     <select class="custom-select" onChange="changeEnv()" id="environmentSelection">
                     <option selected>Choose your preferred environment</option>
+                    FY21_1201_ccks
+                    <option value="FY21_1201_ccks">FY21_1201_ccks</option>
                     <option value="FY21_1101_KCC">FY21_1101_KCC</option>
                     <option value="GE1">GE1</option>
                     <option value="FY21_1003_DEV">FY21_1003_DEV</option>
@@ -222,7 +224,55 @@
                     </div>
                 </div>
             </div>
-
+            <div class="modal-body config" id="FY21_1201_ccks" style="display:none">
+                <div class="form-group">
+                    <h5>FY21_1201_ccks</h5>
+                </div>
+                <div class="form-group">
+                    <label for="usr">baseLiveAgentContentURL:</label>
+                    <input type="text" class="form-control" data-id="baseLiveAgentContentURL" value="https://c.la2-c1cs-ia4.salesforceliveagent.com/content">
+                </div>
+				<div class="form-group">
+                    <label for="usr">deploymentId:</label>
+                    <input type="text" class="form-control" data-id="deploymentId" value="5720b000000GneC">
+                </div>
+                <div class="form-group">
+                    <label for="usr">buttonId:</label>
+                    <input type="text" class="form-control" data-id="buttonId" value="5730b000000CbhT">
+                </div>
+				<div class="form-group">
+                    <label for="usr">baseLiveAgentURL:</label>
+                    <input type="text" class="form-control" data-id="baseLiveAgentURL" value="https://d.la2-c1cs-ia4.salesforceliveagent.com/chat">
+                </div>
+				<div class="form-group">
+                    <label for="usr">LiveAgentDevName:</label>
+                    <input type="text" class="form-control" data-id="LiveAgentDevName" value="EmbeddedServiceLiveAgent_Parent04I0b000000blJJEAY_16520d15b68">
+                </div>
+				<div class="form-group">
+                    <label for="usr">componentName:</label>
+                    <input type="text" class="form-control" data-id="componentName" value="Snap_Ins_Chat_Deployment">
+                </div>
+				<div class="form-group">
+                    <label for="usr">organizationId:</label>
+                    <input type="text" class="form-control" data-id="organizationId" value="00D020000008mec">
+                </div>
+				<div class="form-group">
+                    <label for="usr">serviceForceURL:</label>
+                    <input type="text" class="form-control" data-id="serviceForceURL" value="https://service.force.com">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInInitURL:</label>
+                    <input type="text" class="form-control" data-id="snapInInitURL" value="https://dellservices--1201ccks.my.salesforce.com">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInJs:</label>
+                    <input type="text" class="form-control" data-id="snapInJs" value="https://dellservices--1201ccks.my.salesforce.com/embeddedservice/5.0/esw.min.js">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInLAURL:</label>
+                    <input type="text" class="form-control" data-id="snapInLAURL" value="https://1201ccks-dellservices.cs169.force.com/LASnapIn">
+                </div>
+            </div>
             <div class="modal-body config" id="FY21_1101_KCC" style="display:none">
                 <div class="form-group">
                     <h5>FY21_1101_KCC</h5>
@@ -1079,6 +1129,11 @@
 
             $('input:radio[name="optradio"]').change(
                 function(){
+                    if($(this).is(':checked') && $(this).val() == 'dellWPR'){
+                        $(".dellTech").hide();
+                    }else{
+                        $(".dellTech").show(); 
+                    }
                     if ($(this).is(':checked') && $(this).val() == 'emcOrg') {
                         $(".EMC").show();
                         $(".NonEMC").hide();
@@ -1086,6 +1141,7 @@
                         $(".EMC").hide();
                         $(".NonEMC").show();
                     }
+                    
                 });
             //EMC check[END]
         //hide elements on load of page
@@ -1244,10 +1300,10 @@
                     language: language.options[language.selectedIndex].value,
 
                     //Hard coded prechat values 
-                    firstName:"Rajbh0000000000012342@andari",
-                    lastName: "Rajbh000000000012342@andari",
-                    email:"bnwqerwetr1234253435465ewrtytuy@dell.com",
-                    phoneNo:"1234567",
+                    firstName:"Bishav",
+                    lastName: "Rajb",
+                    email:"bnr@dell.com",
+                    phoneNo:"123425",
                     issueDescription:"Test of Description",
                     productCode:"Latitude",
                     serviceTag: serviceTag,
@@ -1333,6 +1389,13 @@
                     snapInObject.siteName = document.getElementById('emcSiteName').value,
                     snapInObject.emcProductId = "ABC1235";
                     snapInObject.requestType = "HES Admin Chat";
+                } else if(document.getElementById('dellWPR').checked){
+                    snapInObject.phoneNo = "123425",
+                    snapInObject.issueType = "Warranty Returns",
+                    snapInObject.requestType = "warrantyReturn",
+                    snapInObject.issueVal = "",
+                    snapInObject.productName = "",
+                    snapInObject.serviceTag = "";
                 }
                 snapInObject.domainName = "localhost";//"bishav.github.io";//
                 triggerSnapin(snapInObject, preChatlableObject); 
