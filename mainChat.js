@@ -1078,9 +1078,15 @@ function checkSnapinQueueStatus(snapInObject) {
             console.log("Error in: " + e);
         }
     }
+    
     if (snapInObject.checkQueueStatusInBizHoursUrl && snapInObject.hoursOfOperation && snapInObject.timeZone && (snapInObject.checkQueueStatusInBizHoursUrl != "" || snapInObject.checkQueueStatusInBizHoursUrl != null || snapInObject.checkQueueStatusInBizHoursUrl != undifined) && (snapInObject.hoursOfOperation != "" || snapInObject.hoursOfOperation != null || snapInObject.hoursOfOperation != undifined) && (snapInObject.timeZone != "" || snapInObject.timeZone != null || snapInObject.timeZone != undifined)) { 
         return httpGetBusinessHrAgentAvailability(snapInObject.checkQueueStatusInBizHoursUrl + "?chatHours=" + escape(snapInObject.hoursOfOperation) + "&timeZone=" + escape(snapInObject.timeZone) + "&buttonId=" + snapInObject.buttonId);
     }
+    //FY21-1201: Story #9475073: HES_Second Check for Business Hours and Agent Availability [START]
+    else if(snapInObject.checkQueueStatusInBizHoursUrl && (snapInObject.checkQueueStatusInBizHoursUrl != "" || snapInObject.checkQueueStatusInBizHoursUrl != null || snapInObject.checkQueueStatusInBizHoursUrl != undifined)) { 
+        return httpGetBusinessHrAgentAvailability(snapInObject.checkQueueStatusInBizHoursUrl + "?buttonId=" + snapInObject.buttonId);
+    }
+    //FY21-1201: Story #9475073: HES_Second Check for Business Hours and Agent Availability [END]
     else if("checkBtnAvailabilityUrl" in snapInObject && snapInObject.checkBtnAvailabilityUrl && snapInObject.checkBtnAvailabilityUrl != ""){
         var btnAvailabilityResVal = httpGetAgentAvailability(snapInObject.checkBtnAvailabilityUrl+snapInObject.buttonId);
         if (btnAvailabilityResVal){
@@ -1363,7 +1369,7 @@ function getTechSupportSubject(snapInObject) {
     //FY21-0202 Story Defectfix for Defect # 7977210 [END]
 }
 function getTechSupportChatSource(snapInObject) {
-    if (("serviceTag" in snapInObject && snapInObject.serviceTag))
+    if (("serviceTag" in snapInObject && snapInObject.serviceTag) || isWarrantyPartsReturnChat(snapInObject))//FY21-1201 Story #9315449: Warranty Parts Return : Pre-Chat Form
         return "Tech";
     else
         return "Product";
@@ -2235,14 +2241,14 @@ function checkIfPrimPhoneNumIsOptional(snapInObject, preChatlableObject) { //Che
 }
 
 function cusPreChatInvalidDispatchNum(domElement, preChatlableObject) { //Check if Dispatch Number is Invalid
-    if (!cusPreChatValidateAlphanumeric(domElement.value) || !cusPreChatTextCharLimit(15,8,domElement.value)) {
+    if (!cusPreChatValidateNumeric(domElement.value) || !cusPreChatTextCharLimit(15,8,domElement.value)) {
         cusPreChatErrorMsgPlaceholder(domElement, preChatlableObject.dispatchNumberValidation);
         return false;
 	}
 }
 
-function cusPreChatValidateAlphanumeric(val){ //Alphanumeric values only check
-	var letterNumber = /^[0-9a-zA-Z]+$/;
+function cusPreChatValidateNumeric(val){ //Numeric values only check
+	var letterNumber = /^[0-9]+$/;
 	 if(val.match(letterNumber)) 
 		return true;
 	else
