@@ -85,35 +85,18 @@
                 <div class="col-lg-8">
                     <form>
                         <div class="form-group">
-                            <label style="margin-right: 10px; margin-bottom: 20px;" for="Organization">Organization : </label>
-                                <span id="orginazationName">
-                                    <label><input id = "dellOrg" type="radio" name="optradio" checked>&nbsp&nbspDell legacy</label>
-                                    <label><input id = "emcOrg" type="radio" name="optradio" style="margin-left: 20px;" value = 'emcOrg'>&nbsp&nbspEMC legacy</label>
-                                    <label><input id = "routSprinklrBot" type="radio" name="optradio" style="margin-left: 20px;">&nbsp&nbspSprinklr Bot Routing</label>
-                                </span>
+                            <label style="margin-right: 10px; margin-bottom: 20px;" for="Organization">SDL Queue : </label>
+                            <span id="translationEnabled">
+                                <label><input id="dellOrg" type="radio" name="optradio" checked="" value="enableSDL">&nbsp;&nbsp;Enabled</label>
+                                <label><input id="emcOrg" type="radio" name="optradio" style="margin-left: 20px;" value="disabledSDL">&nbsp;&nbsp;Disabled</label>
+                            </span>
                             <div>
                             <label for="serviceTag"><span class='NonEMC'>Service Tag</span><span class='EMC' style='display:none;'>CPID (for EMC legacy)</span></label>
                             </div>
                             <input type="text" class="form-control"  id="serviceTag" aria-describedby="serviceTag" placeholder="Enter Service Tag" value="6MW0204">
-                            <div class='EMC' style='display:none;'>
-                                <label for="epdmId">EPDM-Id(for EMC legacy)</label>
-                            </div>
-                            <input style='display:none;' type="text" class="form-control EMC"  id="epdmId" aria-describedby="serviceTag" placeholder="Enter EMPD Id" value="1234">                        
-                            <div class='EMC' style='display:none;'>
-                                <label for="emcSiteId">Site-Id(for EMC legacy)</label>
-                            </div>
-                            <input style='display:none;' type="text" class="form-control EMC"  id="emcSiteId" aria-describedby="serviceTag" placeholder="Enter Site Id" value="12345">
-                            <div class='EMC' style='display:none;'>
-                                <label for="emcProductName">ProductName(for EMC legacy)</label>
-                            </div>
-                            <input style='display:none;' type="text" class="form-control EMC"  id="emcProductName" aria-describedby="serviceTag" placeholder="Enter Product name" value="2.3">   
                         </div>
 
-                        <!-- Old service tag="6MW0204" 
-                            <div class="form-group">
-                            <label for="exampleFormControlTextarea1">Description</label>
-                            <textarea class="form-control" id="description-textarea" rows="5"></textarea>
-                        </div> -->
+                        
                         <div class="dropdown hide">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Select Issue Type
@@ -143,12 +126,6 @@
                         <h5>Chat with us</h5>
                         <p>Start a chat session with one of our technical support experts.</p>
                         <button type="button" id="chatButton" class="btn btn-primary" onclick="initChat()" style="display: block;float: left;margin-right: 20px;">Start Snap-In</button>
-                        <!--<button type="button" id="liveChatButton" class="btn btn-primary" onclick="initLiveChat()" style="display: block;float: left;margin-right: 20px;">Start LiveChat</button>
-                        <button type="button" id="chatBotButton" class="btn btn-primary" onclick="initChatBot()" style="display: block;float: left;margin-right: 20px;">Chat With Bot</button>
-                        <div class="live-agent-button">
-                                <a id="liveagent_button_online_5730b000000CbhT" href="javascript://Chat" class="enabledButton btn btn-primary btn-lg btn-block"  style="display: none;" onclick="liveagent.startChat('5730b000000CbhT')">Start Chat</a>
-                                <div id="liveagent_button_offline_5730b000000CbhT" href="javascript://Chat" class="" style="display: none;" >Agent not Avilable</div> 
-                        </div>-->
                     </div>
                 </div>
             </div>
@@ -190,21 +167,8 @@
                 <div class="input-group">
                     <select class="custom-select" onChange="changeEnv()" id="environmentSelection">
                     <option selected>Choose your preferred environment</option>
-                    <!--<option value="GE2">GE2</option>
-                    <option value="FY21_1003_DEV">FY21_1003_DEV</option>
-                    <option value="FY21_0803_DEV_bugfix">FY21_0803_DEV_bugfix</option>
-                    <option value="FY21_0803_DEV">FY21_0803_DEV</option>
-                    <option value="G2_0703">G2_0703</option>
-                    <option value="FY21_0703_DEV_Summer_Release">FY21_0703_DEV_Summer_Release</option>
-                    <option value="FY21_0602_DEV">FY21_0602_DEV</option>
-                    <option value="S1">S1</option>
-                    <option value="S2">S2</option>
-                    <option value="S4">S4</option>
-                    <option value="S6">S6</option>
-                    <option value="D1">D1</option>
-                    <option value="D2">D2</option>
-                    <option value="Perf1">Perf1</option>-->
                     <option value="Chat-POC">Chat-POC</option>
+                    <option value="1101kkc">1101kkc</option>
                     </select>
                     <div class="input-group-append">
                     <button style="background-color: #007bff; color:#fff" class="btn btn-outline-primary" type="button" onclick="updateEnvCookie()">Update Now</button>
@@ -953,6 +917,56 @@
                 </div>
             </div>
 
+            <div class="modal-body config" id="1101kcc" style="display:none">
+                <div class="form-group">
+                    <h5>Chat-1101kcc Environment Settings</h5>
+                </div>
+                <div class="form-group">
+                    <label for="usr">baseLiveAgentContentURL:</label>
+                    <input type="text" class="form-control" data-id="baseLiveAgentContentURL" value="https://c.la2-c1cs-ia4.salesforceliveagent.com/content">
+                </div>
+				<div class="form-group">
+                    <label for="usr">deploymentId:</label>
+                    <input type="text" class="form-control" data-id="deploymentId" value="5720b000000GneC">
+                </div>
+                <div class="form-group">
+                    <label for="usr">buttonId:</label>
+                    <input type="text" class="form-control" data-id="buttonId" value="5730b000000CbhT">
+                </div>
+				<div class="form-group">
+                    <label for="usr">baseLiveAgentURL:</label>
+                    <input type="text" class="form-control" data-id="baseLiveAgentURL" value="https://d.la2-c1cs-ia4.salesforceliveagent.com/chat">
+                </div>
+				<div class="form-group">
+                    <label for="usr">LiveAgentDevName:</label>
+                    <input type="text" class="form-control" data-id="LiveAgentDevName" value="EmbeddedServiceLiveAgent_Parent04I6w000000KyjGEAS_17572deb862">
+                </div>
+				<div class="form-group">
+                    <label for="usr">componentName:</label>
+                    <input type="text" class="form-control" data-id="componentName" value="Snap_Ins_Chat_Deployment">
+                </div>
+				<div class="form-group">
+                    <label for="usr">organizationId:</label>
+                    <input type="text" class="form-control" data-id="organizationId" value="00D6w0000008jjJ">
+                </div>
+				<div class="form-group">
+                    <label for="usr">serviceForceURL:</label>
+                    <input type="text" class="form-control" data-id="serviceForceURL" value="https://service.force.com">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInInitURL:</label>
+                    <input type="text" class="form-control" data-id="snapInInitURL" value="https://dellservices--1101kcc.my.salesforce.com">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInJs:</label>
+                    <input type="text" class="form-control" data-id="snapInJs" value="https://dellservices--1101kcc.my.salesforce.com/embeddedservice/5.0/esw.min.js">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInLAURL:</label>
+                    <input type="text" class="form-control" data-id="snapInLAURL" value="https://1101kcc-dellservices.cs169.force.com/LASnapIn">
+                </div>
+            </div>
+
           </div>
         </div>
       </div>
@@ -964,14 +978,13 @@
     <script type='text/javascript'>
        /* $(".EMC").show();
         $(".NonEMC").hide();*/
+        var SDL_enabled = true;
         $('input:radio[name="optradio"]').change(
                 function(){
-                    if ($(this).is(':checked') && $(this).val() == 'emcOrg') {
-                        $(".EMC").show();
-                        $(".NonEMC").hide();
+                    if ($(this).is(':checked') && $(this).val() == 'disabledSDL') {
+                        SDL_enabled = false;
                     }else{
-                        $(".EMC").hide();
-                        $(".NonEMC").show();
+                        SDL_enabled = true;
                     }
                 });
             //EMC check[END]
@@ -1142,6 +1155,8 @@
                     productName: "Precision M4500",
                     customernumber: "2701",
                     
+                    //POC value
+                    SDL_enabled: SDL_enabled,
                     //Collect details from here
                     
                     baseLiveAgentContentURL: getOrgCookie('baseLiveAgentContentURL'),
@@ -1385,9 +1400,9 @@
 
         //eSupportCode
         function canSupportSprinklr(sprinklrChatBotVal){
-            if(document.getElementById('routSprinklrBot').checked){
-                return true;
-            }
+            //if(document.getElementById('routSprinklrBot').checked){
+            //    return true;
+            //}
             return false; 
         }
 

@@ -61,7 +61,8 @@ function initSnapIn(snapInObject) {
     var snapinAlreadyInitiated = document.getElementById("esw_storage_iframe");
     if (!snapinAlreadyInitiated) {
         if (window.embedded_svc) {
-            embedded_svc.settings.externalScripts = ["SnapInexternalJs"]; //SLD_POC
+            if(snapInObject.SDL_enabled)//SDL_POC
+                embedded_svc.settings.externalScripts = ["SnapInexternalJs"]; //SDL_POC
             initOriginalESW(snapInObject.serviceForceURL, snapInObject);
 
         } else {
@@ -922,9 +923,12 @@ function connectToSnapInAgent(snapInObject) {
     if (checkSnapinQueueStatus(snapInObject) == 1) {//FY20-1102 Avilability and Business Hr Chack
         if (("snapinChatInitiated" in snapInObject && snapInObject.snapinChatInitiated) || ("snapinButtonClicked" in snapInObject && snapInObject.snapinButtonClicked))
             eleExistWithVariable('.helpButtonEnabled #helpButtonSpan > .message', chatClick);
-            //eleExistWithVariable('.embeddedServiceSidebar .startButton', chatStarted, snapInObject); //SLD_POC
-            eleExistWithVariable('.embeddedServiceSidebar .startButton', chatStartedForSLD, snapInObject); //SLD_POC
-            //eleExistWithVariable('.embeddedServiceSidebar .SDL_LCSnapInPrechat .slds-button', chatStartedForSLD, snapInObject); //SLD_POC
+            //SDL_POC [START]
+            if(snapInObject.SDL_enabled)
+                eleExistWithVariable('.embeddedServiceSidebar .startButton', chatStartedForSLD, snapInObject);
+            else
+                eleExistWithVariable('.embeddedServiceSidebar .startButton', chatStarted, snapInObject);
+            //SDL_POC [END]
     } else //FY20-1102 Avilability and Business Hr Chack
         agentsOfflinePostChatForm(); //FY20-1102 Avilability and Business Hr Chack
 }
@@ -1065,7 +1069,9 @@ function checkSnapinQueueStatus(snapInObject) {
 
 function initOriginalESW(gslbBaseURL, snapInObject) {
     snapInClickListners();
-    embedded_svc.settings.externalScripts = ["SnapInexternalJs"]; //SLD_POC
+    
+    if(snapInObject.SDL_enabled)//SDL_POC
+        embedded_svc.settings.externalScripts = ["SnapInexternalJs"];//SDL_POC
     snapinChatGlobalServiceTag = snapInObject.serviceTag;
     snapinChatGlobalIssueType = snapInObject.issueVal;
     snapinChatGlobalProductName = snapInObject.productName;
@@ -3194,7 +3200,7 @@ function onChatBotServiceTagChange() {
 }
 
 
-//SLD_POC [START]
+//SDL_POC [START]
 /////////////////////////////////////////////////////////
 function chatStartedForSLD(eleSelector, findingEle, snapInObject) {
     try {
@@ -3304,4 +3310,4 @@ function usersBaseChatLanguage(ISO639_1Code) {
     }
 }
 /////////////////////////////////////////////////////////
-//SLD_POC [END]
+//SDL_POC [END]
