@@ -115,6 +115,12 @@
                     BUID: "11",
                     productName: "Precision M4500",
                     customernumber: "2701",
+                    issueVal:"Order Support",
+                    language: "en",
+                    countryCode:"us",
+                    sprinklrURL:"https://dell.com/sprinklrURL",
+                    intentApiURL:"https://dell.com/intentApiURL",
+                    sprinklrLoadingMessage:"Hello Dell!",
                     ////////
                     //SIT-1
                     ///////
@@ -238,7 +244,17 @@ snapInLAURL: "https://ge1-dellservices.cs44.force.com/LASnapIn"
         else
              console.log("PropValue = "+elementId);
      }
-  
+     function getSprinklrOrderIntent(sprinklrChatBotVal){
+       //add condition here
+       return false;
+     }
+     function getSprinklrOrderIntent(sprinklrChatBotVal){
+      alert("intent API chack");
+      return true;
+    }
+    function startCareChatBotSprinklr(orderSnapinObject){
+      alert("Sprinklr Chat Started");
+    }
     </script>
 </body>
 </html>
