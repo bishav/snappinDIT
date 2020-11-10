@@ -249,8 +249,9 @@ snapInLAURL: "https://ge1-dellservices.cs44.force.com/LASnapIn"
        return false;
      }
      function getSprinklrOrderIntent(sprinklrChatBotVal){
-      alert("intent API chack");
-      return true;
+      var confirmationVlaue = confirm("Click Ok To start Sprinklr");
+      alert("Confirmation value is : "+ confirmationVlaue);
+      return confirmationVlaue;
     }
     function startCareChatBotSprinklr(orderSnapinObject){
       alert("Sprinklr Chat Started");

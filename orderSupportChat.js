@@ -1237,11 +1237,12 @@ try {
                     snapInCurrentPage = "snapInConfirmationDialoug";
                     //Fix for on click of (x) button from End Chat confirmation Page: FYI we have created a SFDC case 23872982 [START] 
                     var closeBtn = document.querySelector(".modalContainer .dockableContainer .embeddedServiceSidebarHeader .closeButton.headerItem");
-                    closeBtn.addEventListener("click", function () {
-                        if(!snapInConfirmationDialoug){
-                            sessionStorage.removeItem("snapInCareObjectSession");
-                        }    
-                    });
+                    if(closeBtn)//FY21-0102: Unit testing bug fix
+                        closeBtn.addEventListener("click", function () {
+                            if(!snapInConfirmationDialoug){
+                                sessionStorage.removeItem("snapInCareObjectSession");
+                            }    
+                        });
                     //Fix for on click of (x) button from End Chat confirmation Page: FYI we have created a SFDC case 23872982 [END] 
                 } else if (snapInEmbeddedServiceHelpBtn && window.getComputedStyle(snapInEmbeddedServiceHelpBtn).display === 'block') {
 
