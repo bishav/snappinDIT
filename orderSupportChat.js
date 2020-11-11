@@ -16,10 +16,13 @@ function triggerOrderSnapin(orderSnapinObject, orderSnapinLabelObj){
     var snapinExists = document.querySelector(".embeddedServiceSidebar"), custCarePrechatForm = document.getElementById("cusCAREPreChatSnapinDom");
     if ((!snapinExists || (snapinExists && window.getComputedStyle(snapinExists).display == 'none')) && !custCarePrechatForm){
    // if(!document.getElementById("cusCAREPreChatSnapinDom")){
-        orderSnapinObject = create_snapinCareChatUuid(orderSnapinObject); //FY21-0102 Story #XYZ: Start Speinklar Chat [START] //UUID creation
+        orderSnapinObject = create_snapinCareChatUuid(orderSnapinObject); //FY21-0102 Story #9747941: Start Speinklar Chat [START] //UUID creation
         createCusCAREpreChatSnapinDom(orderSnapinObject, orderSnapinLabelObj);
         prePopulateCustCarePreFormValues(orderSnapinObject);
-        checkIfIssueDescIsOptionalInCare(orderSnapinObject, orderSnapinLabelObj);//STORY 6779542: Contact Us: Snapin prechat Form -Problem Description
+        //FY21-0102 Story #9747941: Start Speinklar Chat [START]
+        //checkIfIssueDescIsOptionalInCare(orderSnapinObject, orderSnapinLabelObj);//STORY 6779542: Contact Us: Snapin prechat Form -Problem Description
+        removeDomElementbyId("issueDescIsOptionalInCare");
+        //FY21-0102 Story #9747941: Start Speinklar Chat [END]
         custCarePreFormShowIssueDetailsCharRemainingOnKeyUp(orderSnapinLabelObj);
         custCarePreChatKeypressFieldValidation(orderSnapinLabelObj);
         document.getElementById("cusCAREPreChat-minimize-btn").addEventListener("click", minimizeCustCAREPrechat);
@@ -268,7 +271,17 @@ function initOrderSnapin(orderSnapinObject, orderSnapinLabelObj){
                     "label": "Subject",
                     "value": issueVal,
                     "transcriptFields": ["Issue__c"]
+                }//FY21-0102 Story #9747941: Start Speinklar Chat [START] 
+                ,  { 
+                    "label": "Sprinklr Chatbot Routed", 
+                    "value": false, 
+                    "transcriptFields": ["Sprinklr_Chatbot_Routed__c"] 
+                }, { 
+                    "label": "Case Number", 
+                    "value": "", 
+                    "transcriptFields": ["Case_Number__c"] 
                 }
+                //FY21-0102 Story #9747941: Start Speinklar Chat [END] 
             ];
 
             embedded_svc.settings.extraPrechatInfo = [{
@@ -543,14 +556,14 @@ function startCAREChat(orderSnapinObject, orderSnapinLabelObj){
         saveGlobalSnapinCareObjToSession(orderSnapinObject);
         //FY21-1003 Story #9060750: GBS Care - Chat - Pre-chat Form Agent Availability Check [START]         
         if (checkSnapinCareQueueStatus(orderSnapinObject) == 1) {
-            //FY21-0102 Story #XYZ: Start Speinklar Chat [START] 
+            //FY21-0102 Story #9747941: Start Speinklar Chat [START] 
             if(checkSprinklrCAREChatBot(orderSnapinObject)){
                 startCareChatBotSprinklr(orderSnapinObject);// Function belongs to eSupport
             }else{
                 eleExistCareWithVariable('.embeddedServiceSidebar .startButton', CareChatStarted, orderSnapinObject);
                 removecustCareFormValues();// FY20-1101 DEFECT 7204725
             }
-            //FY21-0102 Story #XYZ: Start Speinklar Chat [END] 
+            //FY21-0102 Story #9747941: Start Speinklar Chat [END] 
         } else {
             careAgentUnavailableMsg();
         }
@@ -975,7 +988,7 @@ function onCareIssueChange(issueType,buttonId){
 }
 
 
-//FY21-0102 Story #XYZ: Start Speinklar Chat [START] 
+//FY21-0102 Story #9747941: Start Speinklar Chat [START] 
 function checkSprinklrCAREChatBot(orderSnapinObject) {
     try {
 		console.log("checkSprinklrCAREChatBot Object Values:", orderSnapinObject); //check in console if the values are coming correctly
@@ -1022,7 +1035,49 @@ function create_snapinCareChatUuid(orderSnapinObject) {
     saveGlobalSnapinCareObjToSession(orderSnapinObject);
     return orderSnapinObject;
 }
-//FY21-0102 Story #XYZ: Start Speinklar Chat [END]
+
+function triggerCareSnapinPostSprinkler(sprinklrChatBotObject) {
+    snapInCareObject = sendGlobalSnapinCareObjToJson();
+    snapInCareObject.caseNumber = sprinklrChatBotObject;
+    snapInCareObject.sprinklrChatbotRouted = true;
+    saveGlobalSnapinCareObjToSession(snapInCareObject);
+    connectToSnapInCareAgent(snapInCareObject);
+}
+
+function connectToSnapInCareAgent(snapInCareObject) {//BNR: Unit testing getting a error on snapInCareObject not defined
+    pushValsToSnapinInitCare(snapInCareObject);
+    if (checkSnapinCareQueueStatus(snapInCareObject) == 1) {
+		eleExistCareWithVariable('.embeddedServiceSidebar .startButton', CareChatStarted, orderSnapinObject);
+        removecustCareFormValues();
+    } else
+        careAgentUnavailableMsg();
+}
+
+function pushValsToSnapinInitCare(snapInCareObject) {
+    console.log("Final Value sent back to Lightning",snapInCareObject);
+    var extraPrechatFormVals = embedded_svc.settings.extraPrechatFormDetails, i = 0;
+    extraPrechatFormVals.forEach(function (extraPrechatFormVal) {
+        var fieldAPI = extraPrechatFormVal.transcriptFields[0];
+        switch (fieldAPI) {
+            case "Sprinklr_Chatbot_Routed__c":
+                 if (snapInCareObject.sprinklrChatbotRouted)
+                    embedded_svc.settings.extraPrechatFormDetails[i].value = snapInCareObject.sprinklrChatbotRouted;
+                else
+                    embedded_svc.settings.extraPrechatFormDetails[i].value = false;
+                break;
+			case "Case_Number__c": 
+                if (snapInCareObject.caseNumber)
+                    embedded_svc.settings.extraPrechatFormDetails[i].value = snapInCareObject.caseNumber;
+                else
+                    embedded_svc.settings.extraPrechatFormDetails[i].value = "";
+                break;
+            default:
+                break;
+        }
+        i++;
+    });
+}
+//FY21-0102 Story #9747941: Start Speinklar Chat [END]
 
 ///////////////
 //Reusable code

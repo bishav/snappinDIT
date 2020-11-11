@@ -410,6 +410,7 @@ function custPreFormShowIssueDetailsCharRemaining(preChatlableObject) {
 }
 function custPreChatKeypressFieldValidation(preChatlableObject) {
  //FY21-1201 Story #9602589: Warranty Parts Return :Prechat Form Validations - Error State for Dispatch Number [START]   
+ if(document.getElementById("cusPreChat-DispatchNum"))   
     document.getElementById("cusPreChat-DispatchNum").onkeypress = function (e) {
         var a = [];
         var k = e.which || e.keyCode;

@@ -255,6 +255,11 @@ snapInLAURL: "https://ge1-dellservices.cs44.force.com/LASnapIn"
     }
     function startCareChatBotSprinklr(orderSnapinObject){
       alert("Sprinklr Chat Started");
+      var confirmationVlaue = confirm("Click ok to transfer to an agent");
+      if (confirmationVlaue){
+        lightningCaseNumber = "123456";
+        triggerCareSnapinPostSprinkler(lightningCaseNumber);
+      }
     }
     </script>
 </body>
