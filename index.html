@@ -90,6 +90,7 @@
                                     <label><input id = "dellOrg" type="radio" name="optradio" checked>&nbsp&nbspDell legacy</label>
                                     <label><input id = "emcOrg" type="radio" name="optradio" style="margin-left: 20px;" value = 'emcOrg'>&nbsp&nbspEMC legacy</label>
                                     <label><input id = "routSprinklrBot" type="radio" name="optradio" style="margin-left: 20px;">&nbsp&nbspSprinklr Bot Routing</label>
+                                    <label><input id = "routSprinklrBotRefresh" type="radio" name="optradio" style="margin-left: 20px;">&nbsp&nbspSprinklr Bot Refresh</label>
                                 </span>
                             <dev class="dellTech">
                                 <div>
@@ -1449,8 +1450,20 @@
                     snapInObject.issueVal = "",
                     snapInObject.productName = "",
                     snapInObject.serviceTag = "";
-                }
+                } 
+                
+                
                 snapInObject.domainName = "localhost";//"bishav.github.io";//
+                if(document.getElementById('routSprinklrBotRefresh').checked){
+                    snapInObject.First_Name = "Bishav",
+                    snapInObject.Last_Name = "Rajb",
+                    snapInObject.Email = "bnr@dell.com",
+                    snapInObject.Phone = "123425",
+                    snapInObject.Service_Tag = document.getElementById('serviceTag').value,
+                    snapInObject.userAuthToken = '123456789012345678',
+                    snapInObject.contextId = 'contextId12345',
+                    snapInObject.requestId = 'requestId12345';
+                }
                 triggerSnapin(snapInObject, preChatlableObject); 
         }
         
@@ -1621,7 +1634,7 @@
 
         //eSupportCode
         function canSupportSprinklr(sprinklrChatBotVal){
-            if(document.getElementById('routSprinklrBot').checked){
+            if(document.getElementById('routSprinklrBot').checked || document.getElementById('routSprinklrBotRefresh').checked){
                 return true;
             }
             return false; 

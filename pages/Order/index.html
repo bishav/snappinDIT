@@ -74,6 +74,26 @@
             </div>
         </div>
     </div>
+
+    <div id="sprinklrBotEle" style="display:none; background: #00447C;color: #fff;width: 320px;max-height: 720px;border-radius: 8px 8px 0 0;position: fixed;left: 0px;bottom: 0;right: 20px;margin: 0;height: 90%;box-shadow: 2px 2px 20px rgba(0,0,0,.2);z-index: 15;text-align: center;overflow: hidden;max-width: 40em;pointer-events: all;">
+      <dev>
+         <h5 style="padding: 10px;background: #000;">SprinklrBot</h5>
+         <button id="closeSprinklrChat" onclick="endSprinklrChatBotSuccessfully()" class="" style="position: absolute;right: 7px;top: 8px;margin: 0px;padding: 7px;background: #333;border: none;cursor: pointer;border-radius: 6px;">
+            <span class="cusPreChat-assistiveText">Close chat</span> 
+            <span class="cusPreChat-x-small cusPreChat-embeddedServiceIcon">
+               <svg viewBox="0 0 100 100" data-key="close" aria-hidden="true" focusable="false">
+                  <path d="M65.577 53.73l27.5-27.71c1.27-1.27 1.27-3.174 0-4.445l-4.23-4.44c-1.272-1.27-3.175-1.27-4.445 0L56.694 44.847c-.847.845-2.115.845-2.96 0L26.018 16.922c-1.27-1.27-3.174-1.27-4.445 0l-4.44 4.442c-1.27 1.27-1.27 3.174 0 4.444l27.71 27.71c.846.846.846 2.116 0 2.962L16.923 84.403c-1.27 1.27-1.27 3.174 0 4.444l4.442 4.442c1.27 1.268 3.174 1.268 4.444 0l27.71-27.713c.846-.847 2.116-.847 2.962 0L84.19 93.29c1.27 1.268 3.174 1.268 4.445 0l4.44-4.445c1.27-1.268 1.27-3.17 0-4.44l-27.5-27.712c-.847-.847-.847-2.115 0-2.96z"> </path>
+               </svg>
+            </span>
+         </button>
+      </dev>
+      <div class="form-group" style="margin: 28px;height: 152px;">
+         <div><label for="serviceTag" style="font-size: 13px;">Enter Case Number created by Sprinklr Bot</label></div>
+         <input type="text" class="form-control" id="caseNumberInputField" aria-describedby="caseNumberInputField" placeholder="Required if you click on Transfer" value="">
+         <button type="button" id="transfertoAgentViaSprinklr" class="btn btn-primary" onclick="transfertoAgentViaSprinklr()" style="display: block;float: left;margin-top: 20px;width: 100%;">Transfer To Agent</button>
+         <button type="button" id="RestartSystemFromSprinklr" class="btn" onclick="rebootBySprinklr()" style="display: block;float: left;margin-top: 20px;width: 100%;">Reboot</button>
+      </div>
+   </div>
    
       <style type='text/css'>
         .embeddedServiceHelpButton .helpButton .uiButton {
@@ -183,7 +203,7 @@ serviceForceURL: "https://service.force.com",
 snapInInitURL: "https://dellservices--ge2o7o3.my.salesforce.com",
 snapInJs: "https://dellservices--ge2o7o3.my.salesforce.com/embeddedservice/5.0/esw.min.js",
 snapInLAURL: "https://ge2o7o3-dellservices.cs59.force.com/LASnapIn"                   
- */
+
 
  //G1 Code base
 LiveAgentDevName: "EmbeddedServiceLiveAgent_Parent04I0j0000008OKkEAM_16b2c5b6ad5",
@@ -200,7 +220,25 @@ serviceForceURL: "https://service.force.com",
 snapInInitURL: "https://dellservices--ge1.my.salesforce.com",
 snapInJs: "https://dellservices--ge1.my.salesforce.com/embeddedservice/5.0/esw.min.js",
 snapInLAURL: "https://ge1-dellservices.cs44.force.com/LASnapIn"                   
- 
+  */
+
+
+ //Dev0203 Code base
+ LiveAgentDevName: "EmbeddedServiceLiveAgent_Parent04I1P0000008OJDUA2_16c8a8a3e09",
+ baseLiveAgentContentURL: "https://c.la2-c1cs-ord.salesforceliveagent.com/content",
+ baseLiveAgentURL: "https://d.la2-c1cs-ord.salesforceliveagent.com/chat",
+ buttonId: "5731P000000TSSX",
+ componentName: "CARE_Snap_In",
+ customerNumber: "520000181596",
+ deploymentId: "5720b000000GneC",
+ issueType: "Order Return",
+ BUID: BUID,
+ orderNumber: orderNumber,
+ organizationId: "00D0t000000HQj8",
+ serviceForceURL: "https://service.force.com",
+ snapInInitURL: "https://dellservices--0203cck.my.salesforce.com",
+ snapInJs: "https://dellservices--0203cck.my.salesforce.com/embeddedservice/5.0/esw.min.js",
+ snapInLAURL: "https://0203cck-dellservices.cs77.force.com/LASnapIn" 
 
         };
         var orderSnapinLabelObj = {      
@@ -254,13 +292,17 @@ snapInLAURL: "https://ge1-dellservices.cs44.force.com/LASnapIn"
       return confirmationVlaue;
     }
     function startCareChatBotSprinklr(orderSnapinObject){
-      alert("Sprinklr Chat Started");
-      var confirmationVlaue = confirm("Click ok to transfer to an agent");
-      if (confirmationVlaue){
-        lightningCaseNumber = "123456";
-        triggerCareSnapinPostSprinkler(lightningCaseNumber);
-      }
+      document.getElementById('sprinklrBotEle').style.display = "block";
     }
+    function transfertoAgentViaSprinklr(){
+      var lightningCaseNumber = document.getElementById('caseNumberInputField').value;
+      document.getElementById('sprinklrBotEle').style.display = "none";
+      triggerCareSnapinPostSprinkler(lightningCaseNumber);
+  }
+  function endSprinklrChatBotSuccessfully(){
+    document.getElementById('sprinklrBotEle').style.display = "none";
+    sprinklrCareChatEnded();
+}
     </script>
 </body>
 </html>

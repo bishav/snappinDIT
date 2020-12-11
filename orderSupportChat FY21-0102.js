@@ -1,28 +1,14 @@
-/******************************************************************************
-*******************************************************************************
-The following Java script file is ment only for Lightning Agent CARE Chat.
-File Name: orderSupportChat
-Maintained by: Bishav N R
-Hosted by: eSupport Order Support Team
-*******************************************************************************
-******************************************************************************/
 
-//[Function Description: Used to initiate CARE Agent Snapin Chat. The function also insures multiple chats cannot be initiated at the same time. It insures chat is retained when customer navigates to a different page.]
-//[Initialization: It is initiated by eSupport team when some one clicks on Start chat from eSupportCare page which is not related to Bot.]
-//[Arguments: {orderSnapinObject: Contains all the appsetting values related to the environment, which build link between eSupport and Lightning environmnet; It also contains any aditional values sent by eSupport like Customer Details, Order Details, Customer page language,etc.}]
-//[Arguments: {orderSnapinLabelObj: Prechat should support multiple languages. Hence, orderSnapinLabelObj contains all the lavel values that is sent via dell.com CMS team. Example: Prechat form Labels, Prechat form Error messages}]
-//[Return: Null]
 function triggerOrderSnapin(orderSnapinObject, orderSnapinLabelObj){
     var snapinExists = document.querySelector(".embeddedServiceSidebar"), custCarePrechatForm = document.getElementById("cusCAREPreChatSnapinDom");
     if ((!snapinExists || (snapinExists && window.getComputedStyle(snapinExists).display == 'none')) && !custCarePrechatForm){
    // if(!document.getElementById("cusCAREPreChatSnapinDom")){
-        orderSnapinObject = create_snapinCareChatUuid(orderSnapinObject); //FY22-0203 Story #9747941: Start Speinklar Chat [START] //UUID creation
         createCusCAREpreChatSnapinDom(orderSnapinObject, orderSnapinLabelObj);
         prePopulateCustCarePreFormValues(orderSnapinObject);
-        //FY21-0102 STORY 9679921: Make "Problem Description" mandatory [START]
+		//FY21-0102 STORY 9679921: Make "Problem Description" mandatory [START]
         //checkIfIssueDescIsOptionalInCare(orderSnapinObject, orderSnapinLabelObj);//STORY 6779542: Contact Us: Snapin prechat Form -Problem Description
         removeDomElementbyId("issueDescIsOptionalInCare");
-        //FY21-0102 STORY 9679921: Make "Problem Description" mandatory [END]
+        //FY21-0102 STORY 9679921: Make "Problem Description" mandatory [END]        
         custCarePreFormShowIssueDetailsCharRemainingOnKeyUp(orderSnapinLabelObj);
         custCarePreChatKeypressFieldValidation(orderSnapinLabelObj);
         document.getElementById("cusCAREPreChat-minimize-btn").addEventListener("click", minimizeCustCAREPrechat);
@@ -64,11 +50,6 @@ function triggerOrderSnapin(orderSnapinObject, orderSnapinLabelObj){
     
 }
 
-//[Function Description: Used for building custom prechat form, the custom prechat form helps on 1. lightning chat performance improvement, 2. Customize user prechat form user experience as per business requirement.]
-//[Initialization: Form triggerOrderSnapin function.]
-//[Arguments: {orderSnapinObject: It  contains any aditional values sent by eSupport like Customer Details, Order Details, Customer page language, which helps to prefill the values in prechat form.}]
-//[Arguments: {orderSnapinLabelObj: Prechat should support multiple languages. Hence, orderSnapinLabelObj contains all the lavel values that is sent via dell.com CMS team. Example: Prechat form Labels, Prechat form Error messages}]
-//[Return: null]
 function createCusCAREpreChatSnapinDom(orderSnapinObject, orderSnapinLabelObj){
     //Add order number[START]
         //Add order number and other checks[START]
@@ -148,20 +129,12 @@ function createCusCAREpreChatSnapinDom(orderSnapinObject, orderSnapinLabelObj){
     body.insertAdjacentHTML('beforeend', domEle);
 }
 
-//[Function Description: Minimizes prechat form when customer clicks on minimize button.]
-//[Initialization: Form triggerOrderSnapin function. After the prechat from has been rendered in UI]
-//[Arguments: null]
-//[Return: null]
 function minimizeCustCAREPrechat(){
     assignCarePropVal("890.130.143","890.130.154");// FY20-1101 STORY 7089672
     document.getElementById("cusCAREPreChat-embeddedServiceHelpButton").style.display = 'block';
     document.getElementById("cusCAREPreChatSnapinDom").style.display = 'none';
 }
 
-//[Function Description: Close/Hide Prechat form  when customer clicks on close button.]
-//[Initialization: Form triggerOrderSnapin function. After the prechat from has been rendered in UI]
-//[Arguments: {orderSnapinLabelObj: Prechat should support multiple languages. Hence, orderSnapinLabelObj contains all the lavel values that is sent via dell.com CMS team. Example: Prechat form Labels, Prechat form Error messages}]
-//[Return: null]
 function closeCustCAREPrechat(orderSnapinLabelObj){
     document.getElementById("cusCAREPreChat-embeddedServiceHelpButton").style.display = 'none';
     document.getElementById("cusCAREPreChatSnapinDom").style.display = 'none';
@@ -174,12 +147,6 @@ function closeCustCAREPrechat(orderSnapinLabelObj){
     custCarePreFormShowIssueDetailsCharRemaining(orderSnapinLabelObj);
 
 }
-
-//[Function Description: Remove prechat form values when prechat form is closed or chat is ended.]
-//[Initialization: {From closeCustCAREPrechat function}]
-//[Initialization: {Form startCAREChat function: If the chat initiate between an agent and customer succfully}]
-//[Arguments: null]
-//[Return: null]
 function removecustCareFormValues() {
     inputFields = document.querySelectorAll(".cusPreChat-input");
     inputFields.forEach(function (inputField) {
@@ -187,21 +154,11 @@ function removecustCareFormValues() {
             inputField.value = "";
     });
 }
-
-//[Function Description: Maximize Prechat form when customer clicks on minimized button or clicks on Start chat button for second time on eSupport end.]
-//[Initialization: Form triggerOrderSnapin function: After the prechat from has been rendered in UI]
-//[Arguments: null]
-//[Return: null]
 function maximizeCustCAREPrechat(){
     document.getElementById("cusCAREPreChat-embeddedServiceHelpButton").style.display = 'none';
     document.getElementById("cusCAREPreChatSnapinDom").style.display = 'block';
 }
 
-//[Function Description: Checks if the Agent Chat CARE is initiates or not. If it is initiated, it opens existing chat. Else start's a new lightning chat connection]
-//[Initialization: Form triggerOrderSnapin function: This is triggred at the end in the backgroung to check if there is any existing Lignting Chat connection]
-//[Arguments: {orderSnapinObject: Contains all the appsetting values related to the environment, which build link between eSupport and Lightning environmnet; It also contains any aditional values sent by eSupport like Customer Details, Order Details, Customer page language,etc.}]
-//[Arguments: {orderSnapinLabelObj: Prechat should support multiple languages. Hence, orderSnapinLabelObj contains all the lavel values that is sent via dell.com CMS team. Example: Prechat form Labels, Prechat form Error messages}]
-//[Return: Null]
 function initiateChatCARE(orderSnapinObject, orderSnapinLabelObj){
     var snapinAlreadyInitiated = document.getElementById("esw_storage_iframe");
     if (!snapinAlreadyInitiated){
@@ -209,11 +166,6 @@ function initiateChatCARE(orderSnapinObject, orderSnapinLabelObj){
     }
 }
 
-//[Function Description: Stabilish connection between eSupport and SFDC lightning chat]
-//[Initialization: Form initiateChatCARE function: This established connection between correct environments in lightning and eSupport. Send Additional information back to lightning throught snapIn connection]
-//[Arguments: {orderSnapinObject: Contains all the appsetting values related to the environment, which build link between eSupport and Lightning environmnet; It also contains any aditional values sent by eSupport like Customer Details, Order Details, Customer page language,etc.}]
-//[Arguments: {orderSnapinLabelObj: Prechat should support multiple languages. Hence, orderSnapinLabelObj contains all the lavel values that is sent via dell.com CMS team. Example: Prechat form Labels, Prechat form Error messages}]
-//[Return: Null]
 function initOrderSnapin(orderSnapinObject, orderSnapinLabelObj){
     snapinCAREPageObserver("body", orderSnapinLabelObj);
     snapInCareClickListners();// FY20-1101 STORY 7089672
@@ -271,17 +223,7 @@ function initOrderSnapin(orderSnapinObject, orderSnapinLabelObj){
                     "label": "Subject",
                     "value": issueVal,
                     "transcriptFields": ["Issue__c"]
-                }//FY22-0203 Story #9747941: Start Speinklar Chat [START] 
-                ,  { 
-                    "label": "Sprinklr Chatbot Routed", 
-                    "value": false, 
-                    "transcriptFields": ["Sprinklr_Chatbot_Routed__c"] 
-                }, { 
-                    "label": "Case Number", 
-                    "value": "", 
-                    "transcriptFields": ["Case_Number__c"] 
                 }
-                //FY22-0203 Story #9747941: Start Speinklar Chat [END] 
             ];
 
             embedded_svc.settings.extraPrechatInfo = [{
@@ -543,38 +485,22 @@ embedded_svc.settings.directToButtonRouting = function() {
     }
 }
 
-//[Function Description: Start chat between agetn any customer after prechat form is successfully filled]
-//[Initialization: Form triggerOrderSnapin function: When a custome clicks on Start chant button form Prechat form.]
-//[Arguments: {orderSnapinObject: Contains all the appsetting values related to the environment, which build link between eSupport and Lightning environmnet; It also contains any aditional values sent by eSupport like Customer Details, Order Details, Customer page language,etc.}]
-//[Arguments: {orderSnapinLabelObj: Prechat should support multiple languages. Hence, orderSnapinLabelObj contains all the lavel values that is sent via dell.com CMS team. Example: Prechat form Labels, Prechat form Error messages}]
-//[Return: Null]
 function startCAREChat(orderSnapinObject, orderSnapinLabelObj){
     if(custCarePreFormValidation(orderSnapinLabelObj)){
         assignCarePropVal("890.130.148","890.130.159");// FY20-1101 STORY 7089672
         loadingSnapinCareQueue();
         orderSnapinObject = addCustCareFormDetailsTo(orderSnapinObject);
         saveGlobalSnapinCareObjToSession(orderSnapinObject);
-        //FY21-1003 Story #9060750: GBS Care - Chat - Pre-chat Form Agent Availability Check [START]         
+        //FY21-1003 Story #9060750: GBS Care - Chat - Pre-chat Form Agent Availability Check [START]        
         if (checkSnapinCareQueueStatus(orderSnapinObject) == 1) {
-            //FY22-0203 Story #9747941: Start Speinklar Chat [START] 
-            if("isVirtualAgentEnabled" in orderSnapinObject && orderSnapinObject.isVirtualAgentEnabled && checkSprinklrCAREChatBot(orderSnapinObject)){
-                startCareChatBotSprinklr(orderSnapinObject);// Function belongs to eSupport
-            }else{
-                eleExistCareWithVariable('.embeddedServiceSidebar .startButton', CareChatStarted, orderSnapinObject);
-                removecustCareFormValues();// FY20-1101 DEFECT 7204725
-            }
-            //FY22-0203 Story #9747941: Start Speinklar Chat [END] 
+            eleExistCareWithVariable('.embeddedServiceSidebar .startButton', CareChatStarted, orderSnapinObject);
+            removecustCareFormValues();// FY20-1101 DEFECT 7204725
         } else {
             careAgentUnavailableMsg();
         }
         //FY21-1003 Story #9060750: GBS Care - Chat - Pre-chat Form Agent Availability Check [END]
     }
 }
-
-//[Function Description: Show loading before customer is connected on Lightning Chat Queue in case there is some buffer time]
-//[Initialization: Form startCAREChat function: run as soon as all the prechat form validation is successfully completed]
-//[Arguments: Null]
-//[Return: Null]
 function loadingSnapinCareQueue() {
     if(document.getElementById("cusCAREPreChatSnapinDom")){
         document.getElementById("cusCAREPreChat-sidebarLoadingIndicator").style.display = 'flex';
@@ -584,21 +510,11 @@ function loadingSnapinCareQueue() {
         removeCareLoaderIn10();
     }
 }
-
-//[Function Description: If connecting to a queue takes more than 30 seconds consider agents are offline.]
-//[Initialization: Form loadingSnapinCareQueue function: Wait for 30 seconds on loading page.]
-//[Arguments: Null]
-//[Return: Null]
 function removeCareLoaderIn10(){
     setTimeout(function () {
         careAgentUnavailableMsg();//FY21-1003 Story #9060750: GBS Care - Chat - Pre-chat Form Agent Availability Check
     }, 30000);
 }
-
-//[Function Description: Remove/Hide loading icon when required.]
-//[Initialization: Form snapinCAREPageObserver function: Remove/Hide loader when observer chases a chat is on queue.]
-//[Arguments: Null]
-//[Return: Null]
 function snapinCareQueueLoaded() {
     //DEFECT #7163760 [START]
     if(document.querySelector(".embeddedServiceSidebar") && document.getElementById("cusCAREPreChatSnapinDom")){
@@ -617,14 +533,7 @@ function snapinCareQueueLoaded() {
     serviceSidebar = document.querySelector(".modalContainer.embeddedServiceSidebar");
     serviceSidebar.style.display = "block";
     //Close prechat form [end]
-}
-
-//[Function Description: Check if the Chat is established between customer and agent]
-//[Initialization: Form startCAREChat function: Keepchecking if chat has been stablished.]
-//[Arguments: {eleSelector: If the eleSelector DOM element exists}]
-//[Arguments: {findingEle: Stop checking vor the DOM element by clearing interval for findingEle}]
-//[Arguments: {orderSnapinObject: Contains all the appsetting values related to the environment, which build link between eSupport and Lightning environmnet; It also contains any aditional values sent by eSupport like Customer Details, Order Details, Customer page language,etc.}]
-//[Return: Null]
+} 
 function CareChatStarted(eleSelector, findingEle, orderSnapinObject) {
     try {
         changeCarePrechatValues(orderSnapinObject);
@@ -634,11 +543,6 @@ function CareChatStarted(eleSelector, findingEle, orderSnapinObject) {
         console.log("Error in:" + e);
     }
 }
-
-//[Function Description: Changes shapInObject values in session based on what was typed by customer in the prechat form.]
-//[Initialization: Form CareChatStarted function: Send correct information to Agent once connection is established.]
-//[Arguments: {orderSnapinObject:It also contains any aditional values sent by eSupport/customer like Customer Details, Order Details, Customer page language,etc.}]
-//[Return: Null]
 function changeCarePrechatValues(snapInObject) {
     var state = embedded_svc.sidebarInstanceMap[Object.keys(embedded_svc.sidebarInstanceMap)[0]].getActiveState();
     var prechatFields = state.get("v.prechatFields");
@@ -662,11 +566,6 @@ function changeCarePrechatValues(snapInObject) {
     });
     state.set("v.prechatFields", prechatFields);
 }
-
-//[Function Description: Save new customer details in session for future use, example: if there is any navigation change or Page refresh]
-//[Initialization: Form startCAREChat function: To save correct information on sesson storage.]
-//[Arguments: {orderSnapinObject:It also contains any aditional values sent by eSupport/customer like Customer Details, Order Details, Customer page language,etc.}]
-//[Return: snapInObject: With new details shared by Customers on the Custom prechat form]
 function addCustCareFormDetailsTo(snapInObject) {
     snapInObject.c_firstName = document.getElementById("cusCAREPreChat-FirstName").value;
     snapInObject.c_lastName = document.getElementById("cusCAREPreChat-LastName").value;
@@ -681,11 +580,6 @@ function addCustCareFormDetailsTo(snapInObject) {
     }
     return snapInObject;
 }
-
-//[Function Description: Show details on Custom Prechat form input field if sent by eSupport or saved from previous chat]
-//[Initialization: Form triggerOrderSnapin function: To show the details in UI based on saved values in sesson storage]
-//[Arguments: {orderSnapinObject:It also contains any aditional values sent by eSupport/customer like Customer Details, Order Details, Customer page language,etc.}]
-//[Return: Null]
 function prePopulateCustCarePreFormValues(snapInObject) {
     if ("firstName" in snapInObject)
         document.getElementById("cusCAREPreChat-FirstName").value = snapInObject.firstName;
@@ -698,45 +592,21 @@ function prePopulateCustCarePreFormValues(snapInObject) {
     if ("issueDescription" in snapInObject)
         document.getElementById("cusCAREPreChat-IssueDescription").value = snapInObject.issueDescription;
 }
-
 //Prechat  Validation [START]
-
-//[Function Description: Check if any required field is empty in prechat form]
-//[Initialization: Form custCarePreFormValidation function: TO check if each mandatory input values are empty]
-//[Arguments: {domElement:Element that needs to be checked}]
-//[Arguments: {requiredValue:Message to be displayed to the customer}]
-//[Return: false: cannot start chat unless required values are filled]
 function cusCarePreChatEleIsEmpty(domElement, requiredValue) {
     cusCarePreChatErrorMsgPlaceholder(domElement, requiredValue);
     return false;
 }
-
-//[Function Description: Check if email is valid and is not blacklisted]
-//[Initialization: Form custCarePreFormValidation function: To check if chat can be started with the provided email ID]
-//[Arguments: {domElement:Element that needs to be checked}]
-//[Arguments: {orderSnapinLabelObj: Prechat should support multiple languages. Hence, orderSnapinLabelObj contains all the lavel values that is sent via dell.com CMS team. Example: Prechat form Labels, Prechat form Error messages}]
-//[Return: false: cannot start chat without valid email address]
 function cusCarePreChatInvalidEmail(domElement, orderSnapinLabelObj) {
     if (!cusCarePreChatvalidateEmail(domElement.value) || cusCarePreChatBlockListEmailValidation(domElement.value, orderSnapinLabelObj.blocklistEmails)) {
         cusCarePreChatErrorMsgPlaceholder(domElement, orderSnapinLabelObj.emailValidation);
         return false;
     }
 }
-
-//[Function Description: Check if email is valid]
-//[Initialization: Form cusCarePreChatInvalidEmail function: Validity of the email]
-//[Arguments: {email:Input email}]
-//[Return: true or false: depending on the validity of the email]
 function cusCarePreChatvalidateEmail(email) {
     var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
 }
-
-//[Function Description: Check if email with blacklist]
-//[Initialization: Form cusCarePreChatInvalidEmail function: is blacklisted or not]
-//[Arguments: {email:Input email}]
-//[Arguments: {blockList:list of emails that are black listed}]
-//[Return: true or false: depending on the validity of the blacklisted email]
 function cusCarePreChatBlockListEmailValidation(email, blockList) {
     var blockListArray = blockList.split('|');
     var email = email.toUpperCase();
@@ -748,12 +618,6 @@ function cusCarePreChatBlockListEmailValidation(email, blockList) {
     }
     return false;
 }
-
-//[Function Description: Show error message in Prechat form UI]
-//[Initialization: Message displayed in from many places. Example: cusCarePreChatInvalidEmail, cusCarePreChatInvalidEmail]
-//[Arguments: {domElement:Element that needs to be checked}]
-//[Arguments: {message: error message that is to be displayed}]
-//[Return: Null]
 function cusCarePreChatErrorMsgPlaceholder(domElement, message) {
     try {
         var referenceNode = domElement.parentNode;
@@ -766,11 +630,6 @@ function cusCarePreChatErrorMsgPlaceholder(domElement, message) {
         console.log(e);
     }
 }
-
-//[Function Description: Validate all the fields before adding customer to the queue]
-//[Initialization: Form startCAREChat function: if we are good to connect to chat queue]
-//[Arguments: {orderSnapinLabelObj: Prechat should support multiple languages. Hence, orderSnapinLabelObj contains all the lavel values that is sent via dell.com CMS team. Example: Prechat form Labels, Prechat form Error messages}]
-//[Return: true or false: If we are good the connect to agetn queue or not]
 function custCarePreFormValidation(orderSnapinLabelObj) {
     var acceptForm,
         firstNameDOM = document.getElementById("cusCAREPreChat-FirstName"),
@@ -824,11 +683,6 @@ function custCarePreFormValidation(orderSnapinLabelObj) {
     if (acceptForm === undefined) acceptForm = true;
     return acceptForm;
 }
-
-//[Function Description: Any value intered in chat is valid or not fo the spacific field]
-//[Initialization: Form startCAREChat function: If the key should be entered or not]
-//[Arguments: {orderSnapinLabelObj: Prechat should support multiple languages. Hence, orderSnapinLabelObj contains all the lavel values that is sent via dell.com CMS team. Example: Prechat form Labels, Prechat form Error messages}]
-//[Return: null]
 function custCarePreChatKeypressFieldValidation(orderSnapinLabelObj) {
     document.getElementById("cusCAREPreChat-Phone").onkeypress = function (e) {
         var a = [];
@@ -943,11 +797,6 @@ function custCarePreChatKeypressFieldValidation(orderSnapinLabelObj) {
     }
 
 }
-
-//[Function Description: Check is customer typed anything on Issue Description field in Prechat form.]
-//[Initialization: Form triggerOrderSnapin function: to show total charector count and charector remaining]
-//[Arguments: {orderSnapinLabelObj: Prechat should support multiple languages. Hence, orderSnapinLabelObj contains all the lavel values that is sent via dell.com CMS team. Example: Prechat form Labels, Prechat form Error messages}]
-//[Return: null]
 function custCarePreFormShowIssueDetailsCharRemainingOnKeyUp(preChatlableObject) {
     try {
         document.getElementById("cusCAREPreChat-IssueDescription").onkeyup = function () {
@@ -957,11 +806,6 @@ function custCarePreFormShowIssueDetailsCharRemainingOnKeyUp(preChatlableObject)
         console.log("Error in:" + e);
     }
 }
-
-//[Function Description: Charector count to be reduces or increased when customer types the Issue Description field in Prechat form.]
-//[Initialization: Form custCarePreFormShowIssueDetailsCharRemainingOnKeyUp function: to show total charector count and charector remaining]
-//[Arguments: {orderSnapinLabelObj: Prechat should support multiple languages. Hence, orderSnapinLabelObj contains all the lavel values that is sent via dell.com CMS team. Example: Prechat form Labels, Prechat form Error messages}]
-//[Return: null]
 function custCarePreFormShowIssueDetailsCharRemaining(preChatlableObject) {
     maxCharLength = preChatlableObject.issueDescriptionLength, innerTextColor = "#767676", currentCharLength = document.getElementById("cusCAREPreChat-IssueDescription").value.length;
     document.getElementById("snappinCharCounter").innerText = currentCharLength + " / " + maxCharLength + " " + preChatlableObject.characters;
@@ -974,119 +818,12 @@ function custCarePreFormShowIssueDetailsCharRemaining(preChatlableObject) {
 }
 
 //Prechat  Validation [END]
-
-//[Function Description: Update issue type in prechat form, if the issue type value is changed in eSupport page.]
-//[Initialization: It is initiated by eSupport team when some one changes issue type]
-//[Arguments: {issueType: New Issue type}]
-//[Arguments: {buttonId: New button id to determin the queue}]
-//[Return: Null]
 function onCareIssueChange(issueType,buttonId){
     if(document.getElementById("cusCAREPreChatSnapinDom") && document.getElementById("careIssueTypeLabVal")){
 		document.getElementById("careIssueTypeLabVal").innerText = issueType;
 		document.getElementById("careIssueTypeDom").setAttribute("assignedCareBtn", buttonId);
     }
 }
-
-
-//FY22-0203 Story #9747941: Start Speinklar Chat [START] 
-function checkSprinklrCAREChatBot(orderSnapinObject) {
-    
-    try {
-        console.log("checkSprinklrCAREChatBot Object Values:", orderSnapinObject); //check in console if the values are coming correctly
-        if (orderSnapinObject.orderNumber) {//Connect with eSupport what values needs to be sent
-            var sprinklrChatBotVal = {
-                "engine": "dell-orderintent",//Sprinklr defined engine Name
-                "payloadTags": {
-                    "lng": language,
-                    "orderNumber": orderSnapinObject.orderNumber,
-                    "issueType": orderSnapinObject.issueType, //This nedds to be passed by eSupport
-                    "buid": orderSnapinObject.BUID,
-                    "countryCode": (orderSnapinObject.countryCode != null && orderSnapinObject.countryCode !=undefined) ? orderSnapinObject.countryCode: null //Need to confirm with Smita. If required eSupport needs to pass it
-                },
-                "requestId": orderSnapinObject.uuid,
-                "text": orderSnapinObject.c_issueDescription, //Need to be Mandatior as per story [To Do]
-                "user_firstName": orderSnapinObject.c_firstName,
-                "user_lastName": orderSnapinObject.c_lastName,
-                "user_email": orderSnapinObject.c_email,
-                "user_phoneNo": orderSnapinObject.c_phoneNo,
-                "sprinklrURL": (orderSnapinObject.sprinklrOrderURL != null && orderSnapinObject.sprinklrOrderURL != undefined) ? orderSnapinObject.sprinklrOrderURL : null,//check with eSupport
-                "intentApiURL": (orderSnapinObject.orderIntentApiURL != null && orderSnapinObject.orderIntentApiURL != undefined) ? orderSnapinObject.orderIntentApiURL : null,//check with eSupport
-                "sprinklrLoadingMessage": (orderSnapinObject.sprinklrLoadingMessage != null && orderSnapinObject.sprinklrLoadingMessage != undefined) ? orderSnapinObject.sprinklrLoadingMessage : null//check with eSupport
-            };
-            var res = getSprinklrOrderIntent(sprinklrChatBotVal); //the function belongs to eSupport 
-            return res;//If true open sprinklr chatBOt, If false open Snap-in
-        } else {
-            console.log("Sprinklr required Value is missing in orderSnapinObject. Pleae check the below object value", orderSnapinObject);
-            return false;//open Snap-in
-        }
-
-    } catch (e) {
-        console.log("checkSprinklrChatBot-Error:", e);
-        return false;//open Snap-in
-    }
-}
-function create_snapinCareChatUuid(orderSnapinObject) {
-    var dt = new Date().getTime();
-    var uuid = 'xxxxxxxx-xxxx-5xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-        var r = (dt + Math.random() * 18) % 18 | 0;
-        dt = Math.floor(dt / 18);
-        return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(18);
-    });
-    orderSnapinObject.uuid = uuid;
-    saveGlobalSnapinCareObjToSession(orderSnapinObject);
-    return orderSnapinObject;
-}
-function triggerCareSnapinPostSprinkler(caseNumber) {
-    snapInCareObject = sendGlobalSnapinCareObjToJson();
-    snapInCareObject.caseNumber = caseNumber;
-    snapInCareObject.sprinklrChatbotRouted = true;
-    saveGlobalSnapinCareObjToSession(snapInCareObject);
-    connectToSnapInCareAgent(snapInCareObject);
-}
-function connectToSnapInCareAgent(snapInCareObject) {
-    pushValsToSnapinInitCare(snapInCareObject);
-    if (checkSnapinCareQueueStatus(snapInCareObject) == 1) {
-		eleExistCareWithVariable('.embeddedServiceSidebar .startButton', CareChatStarted, snapInCareObject);
-        removecustCareFormValues();
-    } else
-        careAgentUnavailableMsg();
-}
-function pushValsToSnapinInitCare(snapInCareObject) {
-    console.log("Final Value sent back to Lightning",snapInCareObject);
-    var extraPrechatFormVals = embedded_svc.settings.extraPrechatFormDetails, i = 0;
-    extraPrechatFormVals.forEach(function (extraPrechatFormVal) {
-        var fieldAPI = extraPrechatFormVal.transcriptFields[0];
-        switch (fieldAPI) {
-            case "Sprinklr_Chatbot_Routed__c":
-                 if (snapInCareObject.sprinklrChatbotRouted)
-                    embedded_svc.settings.extraPrechatFormDetails[i].value = snapInCareObject.sprinklrChatbotRouted;
-                else
-                    embedded_svc.settings.extraPrechatFormDetails[i].value = false;
-                break;
-			case "Case_Number__c": 
-                if (snapInCareObject.caseNumber)
-                    embedded_svc.settings.extraPrechatFormDetails[i].value = snapInCareObject.caseNumber;
-                else
-                    embedded_svc.settings.extraPrechatFormDetails[i].value = "";
-                break;
-            default:
-                break;
-        }
-        i++;
-    });
-}
-function sprinklrCareChatEnded() {
-    snapinCAREChatInitiatedState(false);
-    var originalPrechatDOM = document.querySelector(".modalContainer  .dockableContainer .sidebarBody .activeFeature .featureBody .embeddedServiceSidebarState .prechatUI");
-    var closeOriginalPrechatDOM = document.querySelector(".modalContainer  .dockableContainer .closeButton.headerItem");
-    if (originalPrechatDOM && closeOriginalPrechatDOM)
-        closeOriginalPrechatDOM.click();
-    console.log("Sprinklr Care Chat ended Successfully");
-    console.log(sendGlobalSnapinCareObjToJson());
-    document.getElementById("cusCAREPreChatSnapinDom").remove();//FY22-0203 Unit test removing Prechat form and additional details along with it.
-}
-//FY22-0203 Story #9747941: Start Speinklar Chat [END]
-
 ///////////////
 //Reusable code
 //////////////
@@ -1110,20 +847,17 @@ snapInCareObject = sendGlobalSnapinCareObjToJson();
         saveGlobalSnapinCareObjToSession(snapInCareObject);
     }
 }
-
 function sendGlobalSnapinCareObjToJson() {
 snapInCareObjectGlobal = sessionStorage.getItem("snapInCareObjectSession");
 snapInCareObject = JSON.parse(snapInCareObjectGlobal);
 return snapInCareObject;
 }
-
 function saveGlobalSnapinCareObjToSession(snapInCareObject) {
 if (snapInCareObject) {
     snapInCareObjectGlobal = JSON.stringify(snapInCareObject);
     sessionStorage.setItem("snapInCareObjectSession", snapInCareObjectGlobal);
 }
 }
-
 function translationCare(lang) {
     var language = lang.replace("_", "-");
     language = language.toLowerCase();
@@ -1221,14 +955,12 @@ if (language == "de") {
 console.log("Language = " + this.language);
 return this;
 }
-
 function removeDomElementbyId(id) {
 if (document.getElementById(id)) {
     var element = document.getElementById(id);
     element.parentNode.removeChild(element);
 }
 }
-
 function snapinCAREPageObserver(eleSelector, orderSnapinLabelObj) {
 try {
     snapInLoadingPrechatForm = document.querySelector(".modalContainer.loading.initialLoading");
@@ -1300,12 +1032,11 @@ try {
                     snapInCurrentPage = "snapInConfirmationDialoug";
                     //Fix for on click of (x) button from End Chat confirmation Page: FYI we have created a SFDC case 23872982 [START] 
                     var closeBtn = document.querySelector(".modalContainer .dockableContainer .embeddedServiceSidebarHeader .closeButton.headerItem");
-                    if(closeBtn)//FY22-0203: Unit testing bug fix
-                        closeBtn.addEventListener("click", function () {
-                            if(!snapInConfirmationDialoug){
-                                sessionStorage.removeItem("snapInCareObjectSession");
-                            }    
-                        });
+                    closeBtn.addEventListener("click", function () {
+                        if(!snapInConfirmationDialoug){
+                            sessionStorage.removeItem("snapInCareObjectSession");
+                        }    
+                    });
                     //Fix for on click of (x) button from End Chat confirmation Page: FYI we have created a SFDC case 23872982 [END] 
                 } else if (snapInEmbeddedServiceHelpBtn && window.getComputedStyle(snapInEmbeddedServiceHelpBtn).display === 'block') {
 
@@ -1348,7 +1079,6 @@ function chatCareClick(eleSelector, findingEle) {
         console.log("Error in:" + e);
     }
 }
-
 function eleExistCare(eleSelector, callbackFunc) {
     var findingEle = setInterval(function () {
         if (document.querySelector(eleSelector)) {
@@ -1363,7 +1093,6 @@ function eleExistCare(eleSelector, callbackFunc) {
 //FY21-0702-Defect 902225:Unable to initiate a chat using IE[END]
 
 //FY21-0202 [START]
-
 function addChatPrivacyInfoCARE(preChatlableObject){
     setTimeout(function(){
         var snapinChatPopUpMsgDom = document.getElementById("snapinChatPopUpMsg");
@@ -1392,8 +1121,6 @@ function addChatPrivacyInfoCARE(preChatlableObject){
     }, 50);
 }
 //FY21-0202 [END]
-
-
 function eleExistCareWithVariable(eleSelector, callbackFunc, value) {
 var findingEle = setInterval(function () {
     if (document.querySelector(eleSelector)) {
@@ -1405,7 +1132,6 @@ var findingEle = setInterval(function () {
     }
 }, 1000);
 }
-
 (function () {
 var initESW;
 window.addEventListener("dragover", function (e) {
@@ -1527,9 +1253,7 @@ function snapInCareClickListners() {
     });
 }
 // FY20-1101 STORY 7089672 [END]
-
 //STORY 6779542: Contact Us: Snapin prechat Form -Problem Description [START]
-
 function checkIfIssueDescIsOptionalInCare(orderSnapinObject, orderPreChatlableObject){
     if("issueType" in orderSnapinObject && orderSnapinObject.issueType != "" && orderSnapinObject.issueType != null && orderSnapinObject.issueType != undefined && orderSnapinObject.issueType !='None' && document.getElementById("CareIssue_Description_Cust_Label")){
         removeDomElementbyId("issueDescIsOptionalInCare");
@@ -1546,7 +1270,6 @@ function checkIfIssueDescIsOptionalInCare(orderSnapinObject, orderPreChatlableOb
 //STORY 6779542: Contact Us: Snapin prechat Form -Problem Description [END]
 
 //FY21-1003 Story #9060750: GBS Care - Chat - Pre-chat Form Agent Availability Check [START]
-
 function careAgentUnavailableMsg(){
     var cusPreChatSnapinDom = document.getElementById("cusCAREPreChat-sidebarLoadingIndicator");
     if (cusPreChatSnapinDom && window.getComputedStyle(cusPreChatSnapinDom).display != 'none') {
@@ -1559,13 +1282,9 @@ function careAgentUnavailableMsg(){
             document.getElementById("cusCAREPreChat-alertMsgContainer").style.display = 'none';
             document.getElementById("cusCAREPreChat-hideWhileLoading").style.display = 'block';
             document.getElementById("cusCAREPreChatSnapinDom").style.display = 'none';
-            document.getElementById("cusCAREPreChat-minimize-btn").style.display = 'block';//FY22-0203 Story #9747941: Start Speinklar Chat Unit test
-            document.getElementById("cusCAREPreChat-close-btn").style.display = 'block';//FY22-0203 Story #9747941: Start Speinklar Chat Unit test
-
         });
     }
 }
-
 function checkSnapinCareQueueStatus(orderSnapinObject) {
     if (orderSnapinObject.checkQueueStatusInBizHoursUrl && orderSnapinObject.hoursOfOperation && orderSnapinObject.timeZone && (orderSnapinObject.checkQueueStatusInBizHoursUrl != "" || orderSnapinObject.checkQueueStatusInBizHoursUrl != null || orderSnapinObject.checkQueueStatusInBizHoursUrl != undifined) && (orderSnapinObject.hoursOfOperation != "" || orderSnapinObject.hoursOfOperation != null || orderSnapinObject.hoursOfOperation != undifined) && (orderSnapinObject.timeZone != "" || orderSnapinObject.timeZone != null || orderSnapinObject.timeZone != undifined)) { 
         return httpGetCareBusinessHrAgentAvailability(orderSnapinObject.checkQueueStatusInBizHoursUrl + "?chatHours=" + escape(orderSnapinObject.hoursOfOperation) + "&timeZone=" + escape(orderSnapinObject.timeZone) + "&buttonId=" + orderSnapinObject.buttonId);
@@ -1595,7 +1314,6 @@ function httpGetCareAgentAvailability(theUrl) {
         console.log("Error in: " + e);
     }
 }
-
 function httpGetCareBusinessHrAgentAvailability(theUrl) {
     try {
         var xmlHttp = new XMLHttpRequest();

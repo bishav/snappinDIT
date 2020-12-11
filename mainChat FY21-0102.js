@@ -80,8 +80,7 @@ function triggerSnapin(snapInObject, preChatlableObject) {
             if (typeof (isSnapinInitiated) == "function" && isSnapinInitiated()) {
                 var orderSnapinObject = sendGlobalSnapinCareObjToJson();
                 initiateChatCARE(orderSnapinObject);//orderRetain Chat
-            } 
-            else if (snapInObject === undefined && history.length > 1 && snapinChatGlobalObjNotEmpty()) {
+            } else if (snapInObject === undefined && history.length > 1 && snapinChatGlobalObjNotEmpty()) {
                 snapInObject = sendGlobalSnapinObjToJson();
                 if ("snapinChatInitiated" in snapInObject && snapInObject.snapinChatInitiated) {
                     eleExist('.helpButtonEnabled #helpButtonSpan > .message', chatClick);
@@ -89,25 +88,6 @@ function triggerSnapin(snapInObject, preChatlableObject) {
                     initSnapIn(snapInObject);
                 }
             } else if (snapInObject) {
-                //FY22-0203: Sprinklr Chatbot : Retain Chat Context [START]
-                if(isResumeSprinklr(snapInObject)){
-                    alert("working");
-                    //Save Snapinobject to prefill the details to global session
-                    snapInObject.c_firstName = snapInObject.First_Name,
-                    snapInObject.c_lastName = snapInObject.Last_Name,
-                    snapInObject.c_email = snapInObject.Email,
-                    snapInObject.c_phoneNo = snapInObject.Phone,
-                    snapInObject.c_serviceTag = snapInObject.Service_Tag;
-                    snapInObject.snapinButtonClicked = false;
-                    saveGlobalSnapinObjToSession(snapInObject);
-                    //start SnapIn chat in background and hide prechat form and start sprinklr chat directly
-                    initSnapIn(snapInObject);
-                    eleExist('.embeddedServiceHelpButton', hideDomObject);
-                    eleExistWithVariable('.modalContainer  .dockableContainer .sidebarBody .activeFeature .featureBody .embeddedServiceSidebarState .prechatUI', hideOtherDomObject, '.embeddedServiceSidebar');
-                    //Start Sprinklr Chat
-                    startSprinklr();
-                }else
-                //FY22-0203: Sprinklr Chatbot : Retain Chat Context [END]
                 if (!snapInObject.snapinButtonClicked && !snapinChatGlobalObjNotEmpty()) {//FY20-1102: DEFECT 7534816  Retain chat is not working properly
                     eleExist('.embeddedServiceHelpButton', hideDomObject);
                     //eleExist('.embeddedServiceSidebar', hideDomObject);
@@ -2329,15 +2309,6 @@ function cusPreChatTextCharLimit(maxCharLim,minCharLim,val){//Charector limit Ch
 		return false;
 }
 //FY21-1201 Story #9315449: Warranty Parts Return : Pre-Chat Form [END]
-
-//FY22-0203: Sprinklr Chatbot : Retain Chat Context [START]
-function isResumeSprinklr(snapInObject){
-	if ("userAuthToken" in snapInObject && snapInObject.userAuthToken && "contextId" in snapInObject && snapInObject.contextId)
-		return true;
-	else
-		return false;
-}
-//FY22-0203: Sprinklr Chatbot : Retain Chat Context [END]
 
 /////////////////////////////ChatBot Code///////////////////////////////////
 //0202 changes start
