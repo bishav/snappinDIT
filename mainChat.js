@@ -80,34 +80,22 @@ function triggerSnapin(snapInObject, preChatlableObject) {
             if (typeof (isSnapinInitiated) == "function" && isSnapinInitiated()) {
                 var orderSnapinObject = sendGlobalSnapinCareObjToJson();
                 initiateChatCARE(orderSnapinObject);//orderRetain Chat
-            } 
-            else if (snapInObject === undefined && history.length > 1 && snapinChatGlobalObjNotEmpty()) {
+            } //FY22-0203: Sprinklr Chatbot : Retain Chat Context [START]
+            else if(snapInObject === undefined && history.length > 1){
                 snapInObject = sendGlobalSnapinObjToJson();
-                if ("snapinChatInitiated" in snapInObject && snapInObject.snapinChatInitiated) {
+                if(isResumeSprinklr()){
+                    resumeSprinklrTechChat(snapInObject);
+                } else if (snapinChatGlobalObjNotEmpty() && "snapinChatInitiated" in snapInObject && snapInObject.snapinChatInitiated) {
                     eleExist('.helpButtonEnabled #helpButtonSpan > .message', chatClick);
                     pageObserverForProp20("body", preChatlableObject);
                     initSnapIn(snapInObject);
-                }
+                }//FY22-0203: Sprinklr Chatbot : Retain Chat Context [END]
             } else if (snapInObject) {
-                //FY22-0203: Sprinklr Chatbot : Retain Chat Context [START]
-                if(isResumeSprinklr(snapInObject)){
-                    alert("working");
-                    //Save Snapinobject to prefill the details to global session
-                    snapInObject.c_firstName = snapInObject.First_Name,
-                    snapInObject.c_lastName = snapInObject.Last_Name,
-                    snapInObject.c_email = snapInObject.Email,
-                    snapInObject.c_phoneNo = snapInObject.Phone,
-                    snapInObject.c_serviceTag = snapInObject.Service_Tag;
-                    snapInObject.snapinButtonClicked = false;
-                    saveGlobalSnapinObjToSession(snapInObject);
-                    //start SnapIn chat in background and hide prechat form and start sprinklr chat directly
-                    initSnapIn(snapInObject);
-                    eleExist('.embeddedServiceHelpButton', hideDomObject);
-                    eleExistWithVariable('.modalContainer  .dockableContainer .sidebarBody .activeFeature .featureBody .embeddedServiceSidebarState .prechatUI', hideOtherDomObject, '.embeddedServiceSidebar');
-                    //Start Sprinklr Chat
-                    startSprinklr();
+                //FY22-0203: Sprinklr Chatbot : Reboot Chat Context [END]
+                if(isRebootSprinklr(snapInObject)){
+                    resumeSprinklrTechChat(snapInObject);
                 }else
-                //FY22-0203: Sprinklr Chatbot : Retain Chat Context [END]
+                //FY22-0203: Sprinklr Chatbot : Reboot Chat Context [END]
                 if (!snapInObject.snapinButtonClicked && !snapinChatGlobalObjNotEmpty()) {//FY20-1102: DEFECT 7534816  Retain chat is not working properly
                     eleExist('.embeddedServiceHelpButton', hideDomObject);
                     //eleExist('.embeddedServiceSidebar', hideDomObject);
@@ -841,10 +829,10 @@ function sendGlobalSnapinObjToJson() {
     return snapInObject;
 }
 function loadingSnapinQueue() {
-    document.getElementById("cusPreChat-sidebarLoadingIndicator").style.display = 'flex';
-    document.getElementById("cusPreChat-hideWhileLoading").style.display = 'none';
-    document.getElementById("cusPreChat-minimize-btn").style.display = 'none';
-    document.getElementById("cusPreChat-close-btn").style.display = 'none';
+    displayEleById("cusPreChat-sidebarLoadingIndicator", "flex");
+    displayEleById("cusPreChat-hideWhileLoading", "none");
+    displayEleById("cusPreChat-minimize-btn", "none");
+    displayEleById("cusPreChat-close-btn", "none");
     //snapinChatInitiatedState(true); //Fir for defect 7030965
     removeLoaderIn10();
 }
@@ -852,13 +840,19 @@ function loadingSnapinQueue() {
 function snapinQueueLoaded() {
     if (document.querySelector(".embeddedServiceSidebar") && document.getElementById("cusPreChatSnapinDom")) {
         document.querySelector(".embeddedServiceSidebar").style.display = 'block';
-        document.getElementById("cusPreChatSnapinDom").style.display = 'none';
-        document.getElementById("cusPreChat-alertMsgContainer").style.display = 'none';
-        document.getElementById("cusPreChat-hideWhileLoading").style.display = 'block';
-        document.getElementById("cusPreChat-minimize-btn").style.display = 'block';
-        document.getElementById("cusPreChat-close-btn").style.display = 'block';
+        displayEleById("cusPreChatSnapinDom", "none");
+        displayEleById("cusPreChat-alertMsgContainer", "none");
+        displayEleById("cusPreChat-hideWhileLoading", "block");
+        displayEleById("cusPreChat-minimize-btn", "block");
+        displayEleById("cusPreChat-close-btn", "block");
     }
 }
+//FY22-0203: Unit Testing [START]
+function displayEleById(domEle, displayStyle){
+    if(document.getElementById(domEle))
+        document.getElementById(domEle).style.display = displayStyle;
+}
+//FY22-0203: Unit Testing [END]
 function agentsOfflinePostChatForm() {
     snapinChatInitiatedState(false);
     document.getElementById("cusPreChatSnapinDom").style.display = 'block';
@@ -976,11 +970,16 @@ function checkSprinklrChatBot(snapInObject) {
 //FY21-0502:[Sprinklr Chat Bot] Start either SprinklrChatBot or start Normal SnapIn Chat [END]
 
 //FY21-0502:[Sprinklr Chat Bot] If customer wants to talk to an agent after sprinklr chat bot is opened.[START]
-function triggerSnapinPostSprinkler(sprinklrChatBotObject) {
+function triggerSnapinPostSprinkler(sprinklrChatBotObject) {  
     snapInObject = sendGlobalSnapinObjToJson();
     snapInObject.caseNumber = sprinklrChatBotObject;
     snapInObject.sprinklrChatbotRouted = true;//FY21-0502:[Sprinklr Chat Bot] sprinkler chat bot reoted is true only in this scenario.
     saveGlobalSnapinObjToSession(snapInObject);//Added caseNumber to SnapInObject 
+    //FY22-0203: Sprinklr Chatbot : Retain Chat Context [START]
+    if(isResumeSprinklr()){
+        document.getElementById("cusPreChatSnapinDom").style.display = "block";
+    }
+    //FY22-0203: Sprinklr Chatbot : Retain Chat Context [END]
     connectToSnapInAgent(snapInObject);
 }
 //FY21-0502:[Sprinklr Chat Bot] If customer wants to talk to an agent after sprinklr chat bot is opened.[END]
@@ -992,6 +991,10 @@ function sprinklerChatEnded() {
     var closeOriginalPrechatDOM = document.querySelector(".modalContainer  .dockableContainer .closeButton.headerItem");
     if (originalPrechatDOM && closeOriginalPrechatDOM)
         closeOriginalPrechatDOM.click();
+    //FY22:0203 [Sprinklr Chat Bot] Unit testing changes [START]
+    if(document.getElementById("cusPreChatSnapinDom"))
+        document.getElementById("cusPreChatSnapinDom").remove();
+    //FY22:0203 [Sprinklr Chat Bot] Unit testing changes [END]
     console.log("Sprinklr Chat ended Successfully");
     console.log(sendGlobalSnapinObjToJson());
 }
@@ -1972,7 +1975,8 @@ function pageObserverForProp20(eleSelector, preChatlableObject) {
                         //callDellmetricsTrack("890.220.013", "SNAPIN: Chat Started 1"); //FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn
                         hideResumeSnapinLoader();
                         snapinChatInitiatedState(true);
-                        addChatPrivacyInfo(preChatlableObject);//FY20-0202 - preChatlableObject pulled from top
+                        if(preChatlableObject) //FY22-0203: Unit Test Changes
+                            addChatPrivacyInfo(preChatlableObject);//FY20-0202 - preChatlableObject pulled from top
 
                     } else if (snapInChatEnded && snapInCurrentPage != "snapInChatEnded") {//Fix for defect 7030965
                         snapInCurrentPage = "snapInChatEnded";
@@ -2331,11 +2335,63 @@ function cusPreChatTextCharLimit(maxCharLim,minCharLim,val){//Charector limit Ch
 //FY21-1201 Story #9315449: Warranty Parts Return : Pre-Chat Form [END]
 
 //FY22-0203: Sprinklr Chatbot : Retain Chat Context [START]
-function isResumeSprinklr(snapInObject){
-	if ("userAuthToken" in snapInObject && snapInObject.userAuthToken && "contextId" in snapInObject && snapInObject.contextId)
-		return true;
-	else
-		return false;
+function isResumeSprinklr() {
+    var sprinklrChatBotObjectString = sessionStorage.getItem("sprinklrChatBotObject");
+    var sprinklrChatBotObject = JSON.parse(sprinklrChatBotObjectString);
+    if (sprinklrChatBotObject && "userAuthToken" in sprinklrChatBotObject && sprinklrChatBotObject.userAuthToken && "sprinklrContextId" in sprinklrChatBotObject && sprinklrChatBotObject.sprinklrContextId)
+        return true;
+    else
+        return false;
+}
+function isRebootSprinklr(snapInObject) {
+    try{
+    var sprinklrChatBotObjectString = sessionStorage.getItem("sprinklrChatBotObject");
+    var sprinklrChatBotObject = JSON.parse(sprinklrChatBotObjectString);
+    if (snapInObject && "applicationContext" in snapInObject && snapInObject.applicationContext === "SprinklrTechBot-ResumeChat"){
+        var sprinklrChatBotObject = {
+            payloadTags:{
+                productName: snapInObject.productName ? snapInObject.productName: "",
+                lng: snapInObject.language ? snapInObject.language: "",
+                productCode: snapInObject.productCode ? snapInObject.productCode: "",
+                issueType: snapInObject.issueType ? snapInObject.issueType: "",
+                issueVal: snapInObject.issueVal ? snapInObject.issueVal: "",
+                serviceTag: snapInObject.serviceTag ? snapInObject.serviceTag: ""
+            },
+            requestId: snapInObject.sprinklrRequestId ? snapInObject.sprinklrRequestId: "",
+            text: snapInObject.issueDescription ? snapInObject.issueDescription: "",
+            userAgent : navigator.userAgent,
+            engine:'dellintent',
+            sprinklrURL: snapInObject.sprinklrURL ? snapInObject.sprinklrURL: "",
+            user_firstName:snapInObject.firstName ? snapInObject.firstName: "",
+            user_lastName:snapInObject.lastName ? snapInObject.lastName: "",
+            user_email:snapInObject.email ? snapInObject.email: "",
+            user_phoneNo:snapInObject.phone ? snapInObject.phone: "",
+            userAuthToken: snapInObject.sprinklrUserAuthToken ? snapInObject.sprinklrUserAuthToken: "",
+            sprinklrContextId: snapInObject.sprinklrContextId ? snapInObject.sprinklrContextId: "",
+            sprinklrLoadingMessage: snapInObject.sprinklrLoadingMessage ? snapInObject.sprinklrLoadingMessage: "",
+            applicationContext: snapInObject.applicationContext ? snapInObject.applicationContext: ""
+        };
+        sessionStorage.setItem("sprinklrChatBotObject", JSON.stringify(sprinklrChatBotObject));
+        return true;
+    }
+    else
+        return false;
+    }catch(e){
+        console.log("Error in isRebootSprinklr function: ",e);
+        return false;
+    }
+}
+
+function resumeSprinklrTechChat(snapInObject){
+    initSnapIn(snapInObject);//init Snapin
+    eleExist('.helpButtonEnabled #helpButtonSpan > .message', chatClick);//Click on Start chat
+    eleExist('.embeddedServiceHelpButton', hideDomObject);//hide original buttons
+    eleExistWithVariable('.modalContainer  .dockableContainer .sidebarBody .activeFeature .featureBody .embeddedServiceSidebarState .prechatUI', hideOtherDomObject, '.embeddedServiceSidebar');//hide original UI
+    var loaderDomElement = '<div id="cusPreChatSnapinDom" class="cusPreChat-modalContainer" style="display: none;"> <div class="cusPreChat-dockableContainer"> <div class="cusPreChat-embeddedServiceSidebarHeader"> <div class="cusPreChat-shortHeader"> <div class="cusPreChat-shortHeaderContent">  <h2 class="cusPreChat-headerText"> <div class="cusPreChat-headerTextContent"> <span id="cusPreChat-headerTextLabel">Chat Now</span> <span id="cusPreChat-headerSubtext"> </span></div></h2>  </div></div></div><div class="cusPreChat-sidebarBody"> <div id="cusPreChat-sidebarLoadingIndicator" class="cusPreChat-sidebarLoadingIndicator"> <div class="cusPreChat-loadingBallContainer cusPreChat-animated cusPreChat-embeddedServiceLoadingBalls"> <span class="cusPreChat-loadingBall cusPreChat-first"> </span> <span class="cusPreChat-loadingBall cusPreChat-second"> </span> <span class="cusPreChat-loadingBall cusPreChat-third"> </span></div></div><div id="cusPreChat-alertMsgContainer" class="cusPreChat-sidebarLoadingIndicator" style="display: none;"><div style="margin: 2.5em 1.75em;">Sorry Currently Chat is not Avilable</div><div><button id="cusPreChat-CloseChat" class="cusPreChat-embeddedServiceSidebarButton" type="button"><span class="cusPreChat-label cusPreChat-bBody">Close Chat</span></button></div></div></div></div></div>';
+    var body = document.body || document.getElementsByTagName('body')[0];
+    body.insertAdjacentHTML('beforeend', loaderDomElement);
+    pageObserverForProp20("body");
+    startSprinklr();
 }
 //FY22-0203: Sprinklr Chatbot : Retain Chat Context [END]
 

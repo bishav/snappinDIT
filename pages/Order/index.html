@@ -238,7 +238,9 @@ snapInLAURL: "https://ge1-dellservices.cs44.force.com/LASnapIn"
  serviceForceURL: "https://service.force.com",
  snapInInitURL: "https://dellservices--0203cck.my.salesforce.com",
  snapInJs: "https://dellservices--0203cck.my.salesforce.com/embeddedservice/5.0/esw.min.js",
- snapInLAURL: "https://0203cck-dellservices.cs77.force.com/LASnapIn" 
+ snapInLAURL: "https://0203cck-dellservices.cs77.force.com/LASnapIn" ,
+
+ isVirtualAgentEnabled: true //For Sprinklr Care bot
 
         };
         var orderSnapinLabelObj = {      
@@ -281,10 +283,6 @@ snapInLAURL: "https://ge1-dellservices.cs44.force.com/LASnapIn"
             console.log("PropValue = "+elementId+": "+Message);
         else
              console.log("PropValue = "+elementId);
-     }
-     function getSprinklrOrderIntent(sprinklrChatBotVal){
-       //add condition here
-       return false;
      }
      function getSprinklrOrderIntent(sprinklrChatBotVal){
       var confirmationVlaue = confirm("Click Ok To start Sprinklr");

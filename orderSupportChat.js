@@ -550,24 +550,29 @@ embedded_svc.settings.directToButtonRouting = function() {
 //[Return: Null]
 function startCAREChat(orderSnapinObject, orderSnapinLabelObj){
     if(custCarePreFormValidation(orderSnapinLabelObj)){
-        assignCarePropVal("890.130.148","890.130.159");// FY20-1101 STORY 7089672
-        loadingSnapinCareQueue();
-        orderSnapinObject = addCustCareFormDetailsTo(orderSnapinObject);
-        saveGlobalSnapinCareObjToSession(orderSnapinObject);
-        //FY21-1003 Story #9060750: GBS Care - Chat - Pre-chat Form Agent Availability Check [START]         
-        if (checkSnapinCareQueueStatus(orderSnapinObject) == 1) {
-            //FY22-0203 Story #9747941: Start Speinklar Chat [START] 
-            if("isVirtualAgentEnabled" in orderSnapinObject && orderSnapinObject.isVirtualAgentEnabled && checkSprinklrCAREChatBot(orderSnapinObject)){
-                startCareChatBotSprinklr(orderSnapinObject);// Function belongs to eSupport
-            }else{
-                eleExistCareWithVariable('.embeddedServiceSidebar .startButton', CareChatStarted, orderSnapinObject);
-                removecustCareFormValues();// FY20-1101 DEFECT 7204725
+        loadingSnapinCareQueue();//FY22: Performance Unit testing
+        //FY22-0203 : Defect Fix 9916105 [START]
+        setTimeout(function(){ 
+            assignCarePropVal("890.130.148","890.130.159");// FY20-1101 STORY 7089672
+            //loadingSnapinCareQueue();//FY22: Performance Unit testing
+            orderSnapinObject = addCustCareFormDetailsTo(orderSnapinObject);
+            saveGlobalSnapinCareObjToSession(orderSnapinObject);
+            //FY21-1003 Story #9060750: GBS Care - Chat - Pre-chat Form Agent Availability Check [START]         
+            if (checkSnapinCareQueueStatus(orderSnapinObject) == 1) {
+                //FY22-0203 Story #9747941: Start Speinklar Chat [START] 
+                if("isVirtualAgentEnabled" in orderSnapinObject && orderSnapinObject.isVirtualAgentEnabled && checkSprinklrCAREChatBot(orderSnapinObject)){
+                    startCareChatBotSprinklr(orderSnapinObject);// Function belongs to eSupport
+                }else{
+                    eleExistCareWithVariable('.embeddedServiceSidebar .startButton', CareChatStarted, orderSnapinObject);
+                    removecustCareFormValues();// FY20-1101 DEFECT 7204725
+                }
+                //FY22-0203 Story #9747941: Start Speinklar Chat [END] 
+            } else {
+                careAgentUnavailableMsg();
             }
-            //FY22-0203 Story #9747941: Start Speinklar Chat [END] 
-        } else {
-            careAgentUnavailableMsg();
-        }
-        //FY21-1003 Story #9060750: GBS Care - Chat - Pre-chat Form Agent Availability Check [END]
+            //FY21-1003 Story #9060750: GBS Care - Chat - Pre-chat Form Agent Availability Check [END]
+        }, 100);
+        //FY22-0203 : Defect Fix 9916105 [END]
     }
 }
 
@@ -1044,6 +1049,7 @@ function triggerCareSnapinPostSprinkler(caseNumber) {
     connectToSnapInCareAgent(snapInCareObject);
 }
 function connectToSnapInCareAgent(snapInCareObject) {
+    loadingSnapinCareQueue();//FY22-0203 : Sprinklr care bot Unit testing fix.
     pushValsToSnapinInitCare(snapInCareObject);
     if (checkSnapinCareQueueStatus(snapInCareObject) == 1) {
 		eleExistCareWithVariable('.embeddedServiceSidebar .startButton', CareChatStarted, snapInCareObject);
@@ -1069,6 +1075,14 @@ function pushValsToSnapinInitCare(snapInCareObject) {
                 else
                     embedded_svc.settings.extraPrechatFormDetails[i].value = "";
                 break;
+            //FY22-0203: Sprinklr Unit testing [Start]
+            case "ContactNumber__c": 
+                if (snapInCareObject.c_phoneNo)
+                    embedded_svc.settings.extraPrechatFormDetails[i].value = snapInCareObject.c_phoneNo;
+                else
+                    embedded_svc.settings.extraPrechatFormDetails[i].value = "";
+                break;
+            //FY22-0203: Sprinklr Unit testing [END]
             default:
                 break;
         }

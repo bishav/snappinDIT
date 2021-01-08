@@ -164,7 +164,7 @@
             </div>
         </div>
     </div>
-    <div id="sprinklrBotEle" style="display:none; background: #00447C;color: #fff;width: 320px;max-height: 720px;border-radius: 8px 8px 0 0;position: fixed;left: auto;bottom: 0;right: 20px;margin: 0;height: 90%;box-shadow: 2px 2px 20px rgba(0,0,0,.2);z-index: 15;text-align: center;overflow: hidden;max-width: 40em;pointer-events: all;">
+    <div id="sprinklrBotEle" style="display:none; background: #00447C;color: #fff;width: 320px;max-height: 720px;border-radius: 8px 8px 0 0;position: fixed;left: 0px;bottom: 0;right: 20px;margin: 0;height: 90%;box-shadow: 2px 2px 20px rgba(0,0,0,.2);z-index: 15;text-align: center;overflow: hidden;max-width: 40em;pointer-events: all;">
         <dev>
            <h5 style="padding: 10px;background: #000;">SprinklrBot</h5>
            <button id="closeSprinklrChat" onclick="endSprinklrChatBotSuccessfully()" class="" style="position: absolute;right: 7px;top: 8px;margin: 0px;padding: 7px;background: #333;border: none;cursor: pointer;border-radius: 6px;">
@@ -1308,6 +1308,7 @@
                     characters:"characters",
                     issueDescriptionLength:"35000",
                     SFDCLanguageConfig:"first Name|Last Name",
+                    preChatlableObject:"Chat Now",
                    // summeryErrormsg:preChatModel.SummeryErrormsg,
                   //  issueDescriptionMaxCharValidation:preChatModel.IssueDetailMaxCharValidationMsg,
                       customerPrivacyDesc:"\u003cb\u003eYour privacy is important to us.\u003c/b\u003e We will only use your information to process your request. We will not share it with anyone. To learn more about how we use and protect your data, see the \u003ca target=\u0027_blank\u0027 href=\u0027//www.dell.com/learn/policies-privacy\u0027\u003eDell Privacy Statement.\u003c/a\u003e",
@@ -1387,6 +1388,7 @@
                 var preChatlableObject = {
                     firstName:"First Name",
                     lastName:"Last Name",
+                    SfdcLastName:"Last Name",
                     emailAddress:"Email Address",
                     phoneNumber:"Primary Phone Number",
                     issueDescription:"Issue Description",
@@ -1395,22 +1397,27 @@
                     optional:"(Optional)",
                     characters:"characters",
                     issueDescriptionLength:"35000",
-
+                    SFDCLanguageConfig:"first Name|Last Name",
+                    preChatlableObject:"Chat Now",
                    // summeryErrormsg:preChatModel.SummeryErrormsg,
                   //  issueDescriptionMaxCharValidation:preChatModel.IssueDetailMaxCharValidationMsg,
-                      customerPrivacyDesc:"\u003cb\u003eBisahv Your privacy is important to us.\u003c/b\u003e We will only use your information to process your request. We will not share it with anyone. To learn more about how we use and protect your data, see the \u003ca target=\u0027_blank\u0027 href=\u0027//www.dell.com/learn/policies-privacy\u0027\u003eDell Privacy Statement.\u003c/a\u003e",
+                      customerPrivacyDesc:"\u003cb\u003eYour privacy is important to us.\u003c/b\u003e We will only use your information to process your request. We will not share it with anyone. To learn more about how we use and protect your data, see the \u003ca target=\u0027_blank\u0027 href=\u0027//www.dell.com/learn/policies-privacy\u0027\u003eDell Privacy Statement.\u003c/a\u003e",
                       emailValidation:"Invalid Email Validation",
                       firstNameValidation: "First name required",
                       lastNameValidation:"Last name required",
                       emailRequiredValidation:"Email name required",
                       phoneRequiredValidation:"Phone name required",
                       issueDescriptionValidation:"Descritpion name required",
-                      browserVerValidation: "Browser Version is required",
-                      alternateEmail: "Secondary Email",
+                      browserVersionValidation: "Browser Version is required",
+                      alternateEmail: "Alternate Email",
+                      dispatchNumberValidation: "Please enter valid Dispatch Number",
+                      dispatchNumberRequiredValidation:"Dispatch number is a mandatory field",
+                      dispatchNumber:"Dispatch #",
+                      closeChat: "Close Chat",
                  //   phoneValidation:preChatModel.PhoneValidation,
                  //   severityValidation:preChatModel.SeverityValidation,
                       chatUnavailableMessage:"Sorry, no agents are available at this moment.",
-                //    chatHeader:preChatModel.ChatHeader,
+                      chatHeader:"Chat Now",
 
                 //    serialNumber:preChatModel.LblSerialNumber,
                 //    instanceId:preChatModel.LblInstanceId,
@@ -1419,7 +1426,9 @@
                    // severityList:preChatModel.SeverityList,
                  //   severityContents:preChatModel.SeverityContents,  
                       blocklistEmails:"noreply@Dell.com|testing@dell.com|cool@dell.com|ok@dell.com",
-                      serialNumber: "Serial Number"
+                      pasteInvalidTextMsg: "You are trying to paste an invalid text.",
+                      serialNumber: "Serial Number",
+                      requiredFieldValidation:"This field is required"
                 };
               
                 if (document.getElementById('emcOrg').checked){
@@ -1455,13 +1464,17 @@
                 
                 snapInObject.domainName = "localhost";//"bishav.github.io";//
                 if(document.getElementById('routSprinklrBotRefresh').checked){
-                    snapInObject.First_Name = "Bishav",
-                    snapInObject.Last_Name = "Rajb",
-                    snapInObject.Email = "bnr@dell.com",
-                    snapInObject.Phone = "123425",
+                    snapInObject.Name = "BishavA",
+                    snapInObject.lastName = "RajbIII",
+                    snapInObject.email = "bnr12345@dell.com",
+                    snapInObject.phone = "123425",
+                    snapInObject.issueDescription = "Description 12345",
+                    snapInObject.issueType = "POWER_STARTUP",
+                    snapInObject.issueVal = "Power and Startup",
+                    snapInObject.snapinButtonClicked = false,
                     snapInObject.Service_Tag = document.getElementById('serviceTag').value,
-                    snapInObject.userAuthToken = '123456789012345678',
-                    snapInObject.contextId = 'contextId12345',
+                    snapInObject.sprinklrUserAuthToken = '123456789012345678',
+                    snapInObject.sprinklrContextId = 'contextId12345',
                     snapInObject.requestId = 'requestId12345';
                 }
                 triggerSnapin(snapInObject, preChatlableObject); 
