@@ -1,5 +1,5 @@
 ﻿var snapinChatGlobalIssueType, snapinChatGlobalServiceTag, snapinChatGlobalProductName = null, snapInCurrentPage = null, trackevent = true;
-var coveoHeader = "", isCoveoSearchEnabled = false;
+var coveoHeader = "", isCoveoSearchEnabled = false, isPCFCall = false;
 
 (function () {
     var initESW;
@@ -93,7 +93,6 @@ function triggerSnapin(snapInObject, preChatlableObject) {
             } else if (snapInObject) {
                 //FY22-0203: Sprinklr Chatbot : Reboot Chat Context [END]
                 if(isRebootSprinklr(snapInObject)){
-                    addPrefillDetailsForAgentTransfer(snapInObject); //FY22-0203: Defect 10071964
                     resumeSprinklrTechChat(snapInObject);
                 }else
                 //FY22-0203: Sprinklr Chatbot : Reboot Chat Context [END]
@@ -181,9 +180,9 @@ function appendCustPreChatSnapinDom(snapInObject, preChatlableObject) {
         });
         eleExist('.helpButtonEnabled #helpButtonSpan > .message', chatClick); //DEFECT 7030965 for Bishav comment this
 
-        /*if (typeof snapInObject.isPCFCall !== "undefined" && snapInObject.isPCFCall) {
+        if (typeof snapInObject.isPCFCall !== "undefined" && snapInObject.isPCFCall) {
             isPCFCall = snapInObject.isPCFCall;
-        }*/
+        }
 
         if (snapInObject.isCoveoSearchEnabled === true) {
             httpCoveoGetAsync(snapInObject.coveoViewUrl + "?isheaderRequired=false", apendToAHoverDiv);
@@ -326,7 +325,7 @@ function GetCoveoPopoverResult(timeout) {
 
     var textLength = $('#cusPreChat-IssueDescription').val().length;
 
-    if (isCoveoSearchEnabled === true && textLength > 1 && $('#searchcoveoview').hasClass('coveo-hidden') === false && $('#searchcoveoview').find('div.CoveoResult').length !== 0) {
+    if (isPCFCall === true && isCoveoSearchEnabled === true && textLength > 1 && $('#searchcoveoview').hasClass('coveo-hidden') === false && $('#searchcoveoview').find('div.CoveoResult').length !== 0) {
         setTimeout(function () {
             $('#cusPreChat-IssueDescription').popover(
                 {
@@ -347,7 +346,7 @@ function GetCoveoPopoverResult(timeout) {
             $('#cusPreChat-IssueDescription').popover("show");
         }, timeout);// delay is required to snyc up with result.           
     }
-    /*else if (isCoveoSearchEnabled === true && textLength > 1 && $('#search').hasClass('coveo-hidden') === false && $('#search').find('div.CoveoResult').length !== 0) {
+    else if (isCoveoSearchEnabled === true && textLength > 1 && $('#search').hasClass('coveo-hidden') === false && $('#search').find('div.CoveoResult').length !== 0) {
 
         setTimeout(function () {
             $('#cusPreChat-IssueDescription').popover(
@@ -366,7 +365,7 @@ function GetCoveoPopoverResult(timeout) {
 
             $('#cusPreChat-IssueDescription').popover("show");
         }, timeout);// delay is required to snyc up with result.           
-    }*/
+    }
     else {
         CoveoPopoverDispose();
     }
@@ -374,9 +373,9 @@ function GetCoveoPopoverResult(timeout) {
 
 function CoveoPopoverDispose() {
     if (isCoveoSearchEnabled === true) {
-        /*if (!isPCFCall)
+        if (!isPCFCall)
             $('#cusPreChat-IssueDescription').popover('destroy');
-        else*/
+        else
             $('#cusPreChat-IssueDescription').popover('dispose');
     }
 }
@@ -2354,7 +2353,7 @@ function isRebootSprinklr(snapInObject) {
     try{
     var sprinklrChatBotObjectString = sessionStorage.getItem("sprinklrChatBotObject");
     var sprinklrChatBotObject = JSON.parse(sprinklrChatBotObjectString);
-    if ((!sprinklrChatBotObject || isResumeSprinklr()) && snapInObject && "applicationContext" in snapInObject && snapInObject.applicationContext === "SprinklrTechBot-ResumeChat"){
+    if (snapInObject && "applicationContext" in snapInObject && snapInObject.applicationContext === "SprinklrTechBot-ResumeChat"){
         var sprinklrChatBotObject = {
             payloadTags:{
                 productName: snapInObject.productName ? snapInObject.productName: "",
@@ -2400,17 +2399,6 @@ function resumeSprinklrTechChat(snapInObject){
     pageObserverForProp20("body");
     startSprinklr();
 }
-//FY22-0203: Defect 10071964 [START]
-function addPrefillDetailsForAgentTransfer(snapInObject) {
-    snapInObject.c_firstName = snapInObject.firstName;
-    snapInObject.c_lastName = snapInObject.lastName;
-    snapInObject.c_email = snapInObject.email;
-    snapInObject.c_phoneNo = snapInObject.phone;
-    snapInObject.c_serviceTag = snapInObject.serviceTag;
-	snapInObject.c_issueDescription = snapInObject.issueDescription;
-	saveGlobalSnapinObjToSession(snapInObject);
-}
-//FY22-0203: Defect 10071964 [END]
 //FY22-0203: Sprinklr Chatbot : Retain Chat Context [END]
 
 /////////////////////////////ChatBot Code///////////////////////////////////
