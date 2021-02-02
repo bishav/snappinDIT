@@ -200,9 +200,7 @@
                 <div class="input-group">
                     <select class="custom-select" onChange="changeEnv()" id="environmentSelection">
                     <option selected>Choose your preferred environment</option>
-                    <option value="FY21_0102_ccks">FY21_0102_ccks</option>
-                    <option value="FY21_1201_ccks">FY21_1201_ccks</option>
-                    <option value="FY21_1101_KCC">FY21_1101_KCC</option>
+                    <option value="FY22_0302_ccks">FY22_0302_ccks</option>
                     <option value="GE1">GE1</option>
                     <option value="FY21_1003_DEV">FY21_1003_DEV</option>
                     <option value="FY21_0803_DEV_bugfix">FY21_0803_DEV_bugfix</option>
@@ -225,13 +223,13 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-body config" id="FY21_0102_ccks" style="display:none">
+            <div class="modal-body config" id="FY22_0302_ccks" style="display:none">
                 <div class="form-group">
-                    <h5>FY21_0102_ccks Environment Settings</h5>
+                    <h5>FY22_0302_ccks Environment Settings</h5>
                 </div>
                 <div class="form-group">
                     <label for="usr">baseLiveAgentContentURL:</label>
-                    <input type="text" class="form-control" data-id="baseLiveAgentContentURL" value="https://c.la1-c1cs-ord.salesforceliveagent.com/content">
+                    <input type="text" class="form-control" data-id="baseLiveAgentContentURL" value="https://c.la4-c1cs-phx.salesforceliveagent.com/content">
                 </div>
 				<div class="form-group">
                     <label for="usr">deploymentId:</label>
@@ -243,7 +241,7 @@
                 </div>
 				<div class="form-group">
                     <label for="usr">baseLiveAgentURL:</label>
-                    <input type="text" class="form-control" data-id="baseLiveAgentURL" value="https://d.la1-c1cs-ord.salesforceliveagent.com/chat">
+                    <input type="text" class="form-control" data-id="baseLiveAgentURL" value="https://d.la4-c1cs-phx.salesforceliveagent.com/chat">
                 </div>
 				<div class="form-group">
                     <label for="usr">LiveAgentDevName:</label>
@@ -255,7 +253,7 @@
                 </div>
 				<div class="form-group">
                     <label for="usr">organizationId:</label>
-                    <input type="text" class="form-control" data-id="organizationId" value="00Dc0000003liOI">
+                    <input type="text" class="form-control" data-id="organizationId" value="00D290000001UqL">
                 </div>
 				<div class="form-group">
                     <label for="usr">serviceForceURL:</label>
@@ -263,115 +261,17 @@
                 </div>
 				<div class="form-group">
                     <label for="usr">snapInInitURL:</label>
-                    <input type="text" class="form-control" data-id="snapInInitURL" value="https://dellservices--0102cck.my.salesforce.com">
+                    <input type="text" class="form-control" data-id="snapInInitURL" value="https://dellservices--0302cck.my.salesforce.com">
                 </div>
 				<div class="form-group">
                     <label for="usr">snapInJs:</label>
-                    <input type="text" class="form-control" data-id="snapInJs" value="https://dellservices--0102cck.my.salesforce.com/embeddedservice/5.0/esw.min.js">
+                    <input type="text" class="form-control" data-id="snapInJs" value="https://dellservices--0302cck.my.salesforce.com/embeddedservice/5.0/esw.min.js">
                 </div>
 				<div class="form-group">
                     <label for="usr">snapInLAURL:</label>
-                    <input type="text" class="form-control" data-id="snapInLAURL" value="https://0102cck-dellservices.cs14.force.com/LASnapIn">
+                    <input type="text" class="form-control" data-id="snapInLAURL" value="https://0302cck-dellservices.cs19.force.com/LASnapIn">
                 </div>
             </div>	
-            <div class="modal-body config" id="FY21_1201_ccks" style="display:none">
-                <div class="form-group">
-                    <h5>FY21_1201_ccks</h5>
-                </div>
-                <div class="form-group">
-                    <label for="usr">baseLiveAgentContentURL:</label>
-                    <input type="text" class="form-control" data-id="baseLiveAgentContentURL" value="https://c.la2-c1cs-ia4.salesforceliveagent.com/content">
-                </div>
-				<div class="form-group">
-                    <label for="usr">deploymentId:</label>
-                    <input type="text" class="form-control" data-id="deploymentId" value="5720b000000GneC">
-                </div>
-                <div class="form-group">
-                    <label for="usr">buttonId:</label>
-                    <input type="text" class="form-control" data-id="buttonId" value="5730b000000CbhT">
-                </div>
-				<div class="form-group">
-                    <label for="usr">baseLiveAgentURL:</label>
-                    <input type="text" class="form-control" data-id="baseLiveAgentURL" value="https://d.la2-c1cs-ia4.salesforceliveagent.com/chat">
-                </div>
-				<div class="form-group">
-                    <label for="usr">LiveAgentDevName:</label>
-                    <input type="text" class="form-control" data-id="LiveAgentDevName" value="EmbeddedServiceLiveAgent_Parent04I0b000000blJJEAY_16520d15b68">
-                </div>
-				<div class="form-group">
-                    <label for="usr">componentName:</label>
-                    <input type="text" class="form-control" data-id="componentName" value="Snap_Ins_Chat_Deployment">
-                </div>
-				<div class="form-group">
-                    <label for="usr">organizationId:</label>
-                    <input type="text" class="form-control" data-id="organizationId" value="00D020000008mec">
-                </div>
-				<div class="form-group">
-                    <label for="usr">serviceForceURL:</label>
-                    <input type="text" class="form-control" data-id="serviceForceURL" value="https://service.force.com">
-                </div>
-				<div class="form-group">
-                    <label for="usr">snapInInitURL:</label>
-                    <input type="text" class="form-control" data-id="snapInInitURL" value="https://dellservices--1201ccks.my.salesforce.com">
-                </div>
-				<div class="form-group">
-                    <label for="usr">snapInJs:</label>
-                    <input type="text" class="form-control" data-id="snapInJs" value="https://dellservices--1201ccks.my.salesforce.com/embeddedservice/5.0/esw.min.js">
-                </div>
-				<div class="form-group">
-                    <label for="usr">snapInLAURL:</label>
-                    <input type="text" class="form-control" data-id="snapInLAURL" value="https://1201ccks-dellservices.cs195.force.com/LASnapIn">
-                </div>
-            </div>
-            <div class="modal-body config" id="FY21_1101_KCC" style="display:none">
-                <div class="form-group">
-                    <h5>FY21_1101_KCC</h5>
-                </div>
-                <div class="form-group">
-                    <label for="usr">baseLiveAgentContentURL:</label>
-                    <input type="text" class="form-control" data-id="baseLiveAgentContentURL" value="https://c.la2-c1cs-ia4.salesforceliveagent.com/content">
-                </div>
-				<div class="form-group">
-                    <label for="usr">deploymentId:</label>
-                    <input type="text" class="form-control" data-id="deploymentId" value="5720b000000GneC">
-                </div>
-                <div class="form-group">
-                    <label for="usr">buttonId:</label>
-                    <input type="text" class="form-control" data-id="buttonId" value="5730b000000CbhT">
-                </div>
-				<div class="form-group">
-                    <label for="usr">baseLiveAgentURL:</label>
-                    <input type="text" class="form-control" data-id="baseLiveAgentURL" value="https://d.la2-c1cs-ia4.salesforceliveagent.com/chat">
-                </div>
-				<div class="form-group">
-                    <label for="usr">LiveAgentDevName:</label>
-                    <input type="text" class="form-control" data-id="LiveAgentDevName" value="EmbeddedServiceLiveAgent_Parent04I0b000000blJJEAY_16520d15b68">
-                </div>
-				<div class="form-group">
-                    <label for="usr">componentName:</label>
-                    <input type="text" class="form-control" data-id="componentName" value="Snap_Ins_Chat_Deployment">
-                </div>
-				<div class="form-group">
-                    <label for="usr">organizationId:</label>
-                    <input type="text" class="form-control" data-id="organizationId" value="00D6w0000008jjJ">
-                </div>
-				<div class="form-group">
-                    <label for="usr">serviceForceURL:</label>
-                    <input type="text" class="form-control" data-id="serviceForceURL" value="https://service.force.com">
-                </div>
-				<div class="form-group">
-                    <label for="usr">snapInInitURL:</label>
-                    <input type="text" class="form-control" data-id="snapInInitURL" value="https://dellservices--1101kcc.my.salesforce.com">
-                </div>
-				<div class="form-group">
-                    <label for="usr">snapInJs:</label>
-                    <input type="text" class="form-control" data-id="snapInJs" value="https://dellservices--1101kcc.my.salesforce.com/embeddedservice/5.0/esw.min.js">
-                </div>
-				<div class="form-group">
-                    <label for="usr">snapInLAURL:</label>
-                    <input type="text" class="form-control" data-id="snapInLAURL" value="https://1101kcc-dellservices.cs169.force.com/LASnapIn">
-                </div>
-            </div>
 
             <div class="modal-body config" id="GE1" style="display:none">
                 <div class="form-group">
