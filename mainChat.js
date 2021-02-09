@@ -539,6 +539,36 @@ function custPreChatKeypressFieldValidation(preChatlableObject) {
         } else if (document.getElementById("ErrMsg_cusPreChat-Phone"))
             removeDomElementbyId("ErrMsg_cusPreChat-Phone");
     });
+    //FY22-0302 STORY 10071218: Pre-Chat Form validation message should go away in Auto-Fill scenario [START]
+    document.getElementById("cusPreChat-FirstName").addEventListener("change", function () {
+        checkForSpecialCharAndText(this.value, this.id);
+    });
+    document.getElementById("cusPreChat-LastName").addEventListener("change", function () {
+        checkForSpecialCharAndText(this.value, this.id);
+    });
+    document.getElementById("cusPreChat-Email").addEventListener("change", function () {
+        var format = /[!#$%^&*()+\=\[\]{};':"\\|,<>\/?]/;
+        if(!format.test(this.value) && document.getElementById("ErrMsg_cusPreChat-Email"))
+            removeDomElementbyId("ErrMsg_cusPreChat-Email");
+    });
+    document.getElementById("cusPreChat-Phone").addEventListener("change", function () {
+        if (/^[0-9-]*$/.test(this.value) == true && document.getElementById("ErrMsg_cusPreChat-Phone"))
+            removeDomElementbyId("ErrMsg_cusPreChat-Phone");
+    });
+    if(document.getElementById("cusPreChat-emptyAltEmail")){
+		document.getElementById("cusPreChat-emptyAltEmail").addEventListener("change", function () {
+            var format = /[!#$%^&*()+\=\[\]{};':"\\|,<>\/?]/;
+            if(!format.test(this.value) && document.getElementById("ErrMsg_cusPreChat-emptyAltEmail"))
+                removeDomElementbyId("ErrMsg_cusPreChat-emptyAltEmail");
+        });
+    }
+    if(document.getElementById("cusPreChat-BrowserVer")){
+        document.getElementById("cusPreChat-BrowserVer").addEventListener("change", function () {
+            if(document.getElementById("ErrMsg_cusPreChat-BrowserVer"))
+                removeDomElementbyId("ErrMsg_cusPreChat-BrowserVer");
+        });
+    }
+    //FY22-0302 STORY 10071218: Pre-Chat Form validation message should go away in Auto-Fill scenario [END]
     function checkForSpecialCharAndText(e, ele) {
         var format = /[0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
         if (format.test(pastedText(e)) == true) {
@@ -2104,7 +2134,7 @@ function removeDomElement(DomElement) {
 }
 
 //FY22-0302: STORY 10004602: Remove Liveagent code from JS file [START]
-/*
+
 function initLiveAgent(liveAgentObject) {
     try {
         $.getScript(liveAgentObject.deploymentUrl, function () {
@@ -2184,7 +2214,7 @@ function startLiveAgentChat(buttonId) {
     callDellmetricsTrack("890.220.077");
     liveagent.startChat(buttonId);
 }
-*/
+
 //FY22-0302: STORY 10004602: Remove Liveagent code from JS file [END]
 
 function eleExist(eleSelector, callbackFunc) {
