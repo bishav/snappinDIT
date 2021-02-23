@@ -383,19 +383,19 @@ function CoveoPopoverDispose() {
 
 //Coveo Get code[END]
 function prePopulateCustPreFormValues(snapInObject) {
-    if ("firstName" in snapInObject)
+    if ("firstName" in snapInObject && snapInObject.firstName !== null) //FY22-0302: Defect 10194575 : Remove Null values
         document.getElementById("cusPreChat-FirstName").value = snapInObject.firstName;
-    if ("lastName" in snapInObject)
+    if ("lastName" in snapInObject && snapInObject.lastName !== null) //FY22-0302: Defect 10194575 : Remove Null values
         document.getElementById("cusPreChat-LastName").value = snapInObject.lastName;
-    if ("email" in snapInObject)
+    if ("email" in snapInObject && snapInObject.email !== null) //FY22-0302: Defect 10194575 : Remove Null values
         document.getElementById("cusPreChat-Email").value = snapInObject.email;
     //FY21-1003 Story #9078562: HES Admin Chat Prechat form changes [START]
     if (isHesAdminChat(snapInObject))
             hesAdminAltEmailInterationDesign(snapInObject);
     //FY21-1003 Story #9078562: HES Admin Chat Prechat form changes [START]
-    if ("phoneNo" in snapInObject)
+    if ("phoneNo" in snapInObject && snapInObject.phoneNo !== null) //FY22-0302: Defect 10194575 : Remove Null values
         document.getElementById("cusPreChat-Phone").value = snapInObject.phoneNo;
-    if ("issueDescription" in snapInObject)
+    if ("issueDescription" in snapInObject && snapInObject.issueDescription !== null) //FY22-0302: Defect 10194575 : Remove Null values 
         document.getElementById("cusPreChat-IssueDescription").value = snapInObject.issueDescription;
 }
 function custPreFormShowIssueDetailsCharRemainingOnKeyUp(preChatlableObject) {
@@ -554,6 +554,8 @@ function custPreChatKeypressFieldValidation(preChatlableObject) {
     document.getElementById("cusPreChat-Phone").addEventListener("change", function () {
         if (/^[0-9-]*$/.test(this.value) == true && document.getElementById("ErrMsg_cusPreChat-Phone"))
             removeDomElementbyId("ErrMsg_cusPreChat-Phone");
+        else if (/^[0-9-]*$/.test(this.value) == false && !document.getElementById("ErrMsg_cusPreChat-Phone"))
+            cusPreChatErrorMsgPlaceholder(this, preChatlableObject.phoneRequiredValidation);
     });
     if(document.getElementById("cusPreChat-emptyAltEmail")){
 		document.getElementById("cusPreChat-emptyAltEmail").addEventListener("change", function () {
@@ -674,6 +676,15 @@ function custPreFormValidation(preChatlableObject, snapInObject) {//FY21-1003: D
             acceptForm = false;
     } else if (!firstNameDOM.value)
         acceptForm = cusPreChatEleIsEmpty(firstNameDOM, preChatlableObject.firstNameValidation);
+    //FY22-0302 STORY 10071218: Pre-Chat Form validation message should go away in Auto-Fill scenario [START]
+    else{
+        var format = /[0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/; //FY20-1102 DEFECT 7534877
+        if (checkErrMsgValidation(firstNameDOM, "FirstName", format, true)){
+            cusPreChatErrorMsgPlaceholder(firstNameDOM, preChatlableObject.firstNameValidation);
+            acceptForm = false;
+        }       
+    }
+    //FY22-0302 STORY 10071218: Pre-Chat Form validation message should go away in Auto-Fill scenario [END]
 
     if (document.getElementById("ErrMsg_cusPreChat-LastName")) {
         var format = /[0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/; //FY20-1102 DEFECT 7534877
@@ -681,6 +692,15 @@ function custPreFormValidation(preChatlableObject, snapInObject) {//FY21-1003: D
             acceptForm = false;
     } else if (!lastNameDOM.value)
         acceptForm = cusPreChatEleIsEmpty(lastNameDOM, preChatlableObject.lastNameValidation);
+    //FY22-0302 STORY 10071218: Pre-Chat Form validation message should go away in Auto-Fill scenario [START]
+    else{
+        var format = /[0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/; //FY20-1102 DEFECT 7534877
+        if (checkErrMsgValidation(lastNameDOM, "LastName", format, true)){
+            cusPreChatErrorMsgPlaceholder(lastNameDOM, preChatlableObject.lastNameValidation);
+            acceptForm = false;
+        }       
+    }
+    //FY22-0302 STORY 10071218: Pre-Chat Form validation message should go away in Auto-Fill scenario [END]
 
     if (document.getElementById("ErrMsg_cusPreChat-Phone")) {
         var format = /^[0-9-]*$/; //FY20-1102 DEFECT 7534877
@@ -688,7 +708,15 @@ function custPreFormValidation(preChatlableObject, snapInObject) {//FY21-1003: D
             acceptForm = false;
     } else if (!phoneDOM.value /*&& !isWarrantyPartsReturnChat(snapInObject)*/) //FY21-1201 Story #9315449: Warranty Parts Return : Pre-Chat Form
         acceptForm = cusPreChatEleIsEmpty(phoneDOM, preChatlableObject.phoneRequiredValidation);
-
+    //FY22-0302 STORY 10071218: Pre-Chat Form validation message should go away in Auto-Fill scenario [START]
+    else{
+        var formatPhoneCorrect = /^[0-9-]*$/;
+        if (checkErrMsgValidation(phoneDOM, "Phone", formatPhoneCorrect, false)){
+            cusPreChatErrorMsgPlaceholder(phoneDOM, preChatlableObject.phoneRequiredValidation);
+            acceptForm = false;
+        }       
+    }
+    //FY22-0302 STORY 10071218: Pre-Chat Form validation message should go away in Auto-Fill scenario [END]
     if (document.getElementById("ErrMsg_cusPreChat-IssueDescription")) {
         acceptForm = false;
     } else if (!IssueDescDOM.value && !document.getElementById("issueDescIsOptional"))//STORY 6779542: Contact Us: Snapin prechat Form -Problem Description
@@ -713,7 +741,8 @@ function checkErrMsgValidation(fieldEle, fieldName, format, formatResult) {
     } else {
         var idValue = "ErrMsg_cusPreChat-" + fieldName;
         var element = document.getElementById(idValue);
-        element.parentNode.removeChild(element);
+        if(element) //FY22-0302 STORY 10071218: Unit testing issue fix
+            element.parentNode.removeChild(element);
         return false;
     }
 }
@@ -2134,7 +2163,7 @@ function removeDomElement(DomElement) {
 }
 
 //FY22-0302: STORY 10004602: Remove Liveagent code from JS file [START]
-
+/*
 function initLiveAgent(liveAgentObject) {
     try {
         $.getScript(liveAgentObject.deploymentUrl, function () {
@@ -2214,7 +2243,7 @@ function startLiveAgentChat(buttonId) {
     callDellmetricsTrack("890.220.077");
     liveagent.startChat(buttonId);
 }
-
+*/
 //FY22-0302: STORY 10004602: Remove Liveagent code from JS file [END]
 
 function eleExist(eleSelector, callbackFunc) {
@@ -3141,20 +3170,19 @@ function maximizeCustBotPrechat() {
 
 /**Code to Prepopulate prechat fields[START] **/
 function prePopulateCustBotPreFormValues(chatBotObject) {
-    if ("First_Name" in chatBotObject)
+    if ("First_Name" in chatBotObject && chatBotObject.First_Name !== null) //FY22-0302: Defect 10194575 : Remove Null values
         document.getElementById("cusBotPreChat-FirstName").value = chatBotObject.First_Name;
-    if ("Last_Name" in chatBotObject)
+    if ("Last_Name" in chatBotObject && chatBotObject.Last_Name !== null) //FY22-0302: Defect 10194575 : Remove Null values
         document.getElementById("cusBotPreChat-LastName").value = chatBotObject.Last_Name;
-    if ("Email" in chatBotObject)
+    if ("Email" in chatBotObject && chatBotObject.Email !== null) //FY22-0302: Defect 10194575 : Remove Null values
         document.getElementById("cusBotPreChat-Email").value = chatBotObject.Email;
-    if ("Phone" in chatBotObject)
+    if ("Phone" in chatBotObject && chatBotObject.Phone !== null) //FY22-0302: Defect 10194575 : Remove Null values
         document.getElementById("cusBotPreChat-Phone").value = chatBotObject.Phone;
-    if ("Service_Tag" in chatBotObject) {
+    if ("Service_Tag" in chatBotObject && chatBotObject.Service_Tag !== null && document.getElementById("botServiceTagLabel")) {//FY22-0302: Defect 10194575 : Remove Null values
         // document.getElementById("cusBotPreChat-ServiceTag").value = chatBotObject.Service_Tag;
-        if (document.getElementById("botServiceTagLabel"))
             document.getElementById("botServiceTagLabel").value = chatBotObject.Service_Tag;
     }
-    if ("CARE_Chat_Order_Number" in chatBotObject && document.getElementById("botCareChatOrderNumberLabel")) {
+    if ("CARE_Chat_Order_Number" in chatBotObject && chatBotObject.CARE_Chat_Order_Number !== null && document.getElementById("botCareChatOrderNumberLabel")) {//FY22-0302: Defect 10194575 : Remove Null values
         console.log("chatBotObject.CARE_Chat_Order_Number", chatBotObject.CARE_Chat_Order_Number);
         // document.getElementById("cusBotPreChat-ServiceTag").value = chatBotObject.Service_Tag;
         document.getElementById("botCareChatOrderNumberLabel").innerText = chatBotObject.CARE_Chat_Order_Number;
@@ -3193,7 +3221,16 @@ function chatBotFieldsValidated(chatBotObject) {
     else if (document.getElementById("ErrMsg_cusBotPreChat-FirstName")) {
         var element = document.getElementById("ErrMsg_cusBotPreChat-FirstName");
         element.parentNode.removeChild(element);
+    } 
+    //FY22-0302 STORY 10071218: Pre-Chat Form validation message should go away in Auto-Fill scenario [START]
+    else{
+        var format = /[0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/; //FY20-1102 DEFECT 7534877
+        if (checkBotErrMsgValidation(firstNameDOM, "FirstName", format, true)){
+            cusBotPreChatErrorMsgPlaceholder(firstNameDOM, msgRequiredField);
+            acceptForm = false;
+        }       
     }
+    //FY22-0302 STORY 10071218: Pre-Chat Form validation message should go away in Auto-Fill scenario [END]
 
     if (document.getElementById("ErrMsg_cusBotPreChat-LastName") && !lastNameDOM.value) {
         acceptForm = false;
@@ -3203,6 +3240,15 @@ function chatBotFieldsValidated(chatBotObject) {
         var element = document.getElementById("ErrMsg_cusBotPreChat-LastName");
         element.parentNode.removeChild(element);
     }
+    //FY22-0302 STORY 10071218: Pre-Chat Form validation message should go away in Auto-Fill scenario [START]
+    else{
+        var format = /[0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/; //FY20-1102 DEFECT 7534877
+        if (checkBotErrMsgValidation(lastNameDOM, "LastName", format, true)){
+            cusBotPreChatErrorMsgPlaceholder(lastNameDOM, msgRequiredField); 
+            acceptForm = false;
+        }       
+    }
+    //FY22-0302 STORY 10071218: Pre-Chat Form validation message should go away in Auto-Fill scenario [END]
     if (document.getElementById("ErrMsg_cusBotPreChat-Phone") && !phoneDOM.value) {
         acceptForm = false;
     } else if (!phoneDOM.value)
@@ -3211,6 +3257,15 @@ function chatBotFieldsValidated(chatBotObject) {
         var element = document.getElementById("ErrMsg_cusBotPreChat-Phone");
         element.parentNode.removeChild(element);
     }
+    //FY22-0302 STORY 10071218: Pre-Chat Form validation message should go away in Auto-Fill scenario [START]
+    else{
+        var formatPhoneCorrect = /^[0-9-]*$/;
+        if (checkBotErrMsgValidation(phoneDOM, "Phone", formatPhoneCorrect, false)){
+            cusBotPreChatErrorMsgPlaceholder(phoneDOM, msgRequiredField); 
+            acceptForm = false;
+        }       
+    }
+    //FY22-0302 STORY 10071218: Pre-Chat Form validation message should go away in Auto-Fill scenario [END]
     /*
     if (document.getElementById("ErrMsg_cusBotPreChat-ServiceTag") && !serviceTagDOM.value) {
         acceptForm = false;
@@ -3224,6 +3279,19 @@ function chatBotFieldsValidated(chatBotObject) {
     if (acceptForm === undefined) acceptForm = true;
     return acceptForm;
 }
+//FY22-0302 STORY 10071218: Pre-Chat Form validation message should go away in Auto-Fill scenario [START]	
+function checkBotErrMsgValidation(fieldEle, fieldName, format, formatResult) {
+    if ((fieldEle.value && format.test(fieldEle.value) == formatResult) || (!fieldEle.value)) {
+        return true;
+    } else {
+        var idValue = "ErrMsg_cusBotPreChat-" + fieldName;
+        var element = document.getElementById(idValue);
+        if(element)
+            element.parentNode.removeChild(element);
+        return false;
+    }
+}
+//FY22-0302 STORY 10071218: Pre-Chat Form validation message should go away in Auto-Fill scenario [START]
 function cusBotPreChatEleIsEmpty(domElement, errMessage) {
     cusBotPreChatErrorMsgPlaceholder(domElement, errMessage);
     return false;
@@ -3263,6 +3331,12 @@ function cusBotPreChatErrorMsgPlaceholder(domElement, message) {
 
 }
 function custBotPreChatKeypressFieldValidation() {
+    var msgRequiredField = "This is a required field",
+        msgInvalidEmail = "Invalid Email id";
+    if (typeof Application_Context !== 'undefined' && Application_Context === "ChatBot-CareBot") {
+        msgRequiredField = "Este é um campo obrigatório";
+        msgInvalidEmail = "ID de email inválido";
+    }
     document.getElementById("cusBotPreChat-Phone").onkeypress = function (e) {
         var a = [];
         var k = e.which || e.keyCode;
@@ -3356,6 +3430,27 @@ function custBotPreChatKeypressFieldValidation() {
         else
             return null;
     }
+
+    //FY22-0302 STORY 10071218: Pre-Chat Form validation message should go away in Auto-Fill scenario [START]
+    document.getElementById("cusBotPreChat-FirstName").addEventListener("change", function () {
+        checkForSpecialCharAndText(this.value, this.id);
+    });
+    document.getElementById("cusBotPreChat-LastName").addEventListener("change", function () {
+        checkForSpecialCharAndText(this.value, this.id);
+    });
+    document.getElementById("cusBotPreChat-Email").addEventListener("change", function () {
+        var format = /[!#$%^&*()+\=\[\]{};':"\\|,<>\/?]/;
+        if(!format.test(this.value) && document.getElementById("ErrMsg_cusBotPreChat-Email"))
+            removeDomElementbyId("ErrMsg_cusBotPreChat-Email");
+    });
+    document.getElementById("cusBotPreChat-Phone").addEventListener("change", function () {
+        if (/^[0-9-]*$/.test(this.value) == true && document.getElementById("ErrMsg_cusBotPreChat-Phone"))
+            removeDomElementbyId("ErrMsg_cusBotPreChat-Phone");
+        else if (/^[0-9-]*$/.test(this.value) == false && !document.getElementById("ErrMsg_cusBotPreChat-Phone")){
+            cusBotPreChatErrorMsgPlaceholder(this, msgRequiredField);
+        }
+    });
+    //FY22-0302 STORY 10071218: Pre-Chat Form validation message should go away in Auto-Fill scenario [END]
 
 }
 //BOT Validations[END]

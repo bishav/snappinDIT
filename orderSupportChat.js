@@ -692,15 +692,15 @@ function addCustCareFormDetailsTo(snapInObject) {
 //[Arguments: {orderSnapinObject:It also contains any aditional values sent by eSupport/customer like Customer Details, Order Details, Customer page language,etc.}]
 //[Return: Null]
 function prePopulateCustCarePreFormValues(snapInObject) {
-    if ("firstName" in snapInObject)
+    if ("firstName" in snapInObject && snapInObject.firstName !== null) //FY22-0302: Defect 10194575 : Remove Null values
         document.getElementById("cusCAREPreChat-FirstName").value = snapInObject.firstName;
-    if ("lastName" in snapInObject)
+    if ("lastName" in snapInObject && snapInObject.lastName !== null) //FY22-0302: Defect 10194575 : Remove Null values
         document.getElementById("cusCAREPreChat-LastName").value = snapInObject.lastName;
-    if ("emailAddress" in snapInObject)
+    if ("emailAddress" in snapInObject && snapInObject.emailAddress !== null) //FY22-0302: Defect 10194575 : Remove Null values
         document.getElementById("cusCAREPreChat-Email").value = snapInObject.emailAddress;
-    if ("phoneNumber" in snapInObject)
+    if ("phoneNumber" in snapInObject && snapInObject.phoneNumber !== null) //FY22-0302: Defect 10194575 : Remove Null values
         document.getElementById("cusCAREPreChat-Phone").value = snapInObject.phoneNumber;
-    if ("issueDescription" in snapInObject)
+    if ("issueDescription" in snapInObject && snapInObject.issueDescription !== null) //FY22-0302: Defect 10194575 : Remove Null values
         document.getElementById("cusCAREPreChat-IssueDescription").value = snapInObject.issueDescription;
 }
 
@@ -799,8 +799,22 @@ function custCarePreFormValidation(orderSnapinLabelObj) {
         acceptForm = cusCarePreChatEleIsEmpty(firstNameDOM, orderSnapinLabelObj.firstNameValidation);
     else if (document.getElementById("ErrMsg_cusCAREPreChat-FirstName")) {
         var element = document.getElementById("ErrMsg_cusCAREPreChat-FirstName");
-        element.parentNode.removeChild(element);
+        var format = /[0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/; //FY20-1102 DEFECT 10071218
+        if (checkErrMsgValidation(firstNameDOM, "FirstName", format, true)) ///FY20-1102 DEFECT 10071218
+            acceptForm = false;
+        else
+            element.parentNode.removeChild(element);
     }
+    //FY22-0302 STORY 10071218: Pre-Chat Form validation message should go away in Auto-Fill scenario [START]
+    else{
+        var format = /[0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/; //FY20-1102 DEFECT 7534877
+        if (checkErrMsgValidation(firstNameDOM, "FirstName", format, true)){
+            cusCarePreChatErrorMsgPlaceholder(firstNameDOM, orderSnapinLabelObj.firstNameValidation);
+            acceptForm = false;
+        }       
+    }
+    //FY22-0302 STORY 10071218: Pre-Chat Form validation message should go away in Auto-Fill scenario [END]
+
 
     if (document.getElementById("ErrMsg_cusCAREPreChat-LastName") && !lastNameDOM.value) {
         acceptForm = false;
@@ -808,16 +822,43 @@ function custCarePreFormValidation(orderSnapinLabelObj) {
         acceptForm = cusCarePreChatEleIsEmpty(lastNameDOM, orderSnapinLabelObj.lastNameValidation);
     else if (document.getElementById("ErrMsg_cusCAREPreChat-LastName")) {
             var element = document.getElementById("ErrMsg_cusCAREPreChat-LastName");
-            element.parentNode.removeChild(element);
+            var format = /[0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/; //FY20-1102 DEFECT 10071218
+            if (checkErrMsgValidation(firstNameDOM, "FirstName", format, true)) ///FY20-1102 DEFECT 10071218
+                acceptForm = false;
+            else
+                element.parentNode.removeChild(element);
         }
+    //FY22-0302 STORY 10071218: Pre-Chat Form validation message should go away in Auto-Fill scenario [START]
+    else{
+        var format = /[0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/; //FY20-1102 DEFECT 7534877
+        if (checkErrMsgValidation(lastNameDOM, "LastName", format, true)){
+            cusCarePreChatErrorMsgPlaceholder(lastNameDOM, orderSnapinLabelObj.lastNameValidation);
+            acceptForm = false;
+        }       
+    }
+    //FY22-0302 STORY 10071218: Pre-Chat Form validation message should go away in Auto-Fill scenario [END]
+
     if (document.getElementById("ErrMsg_cusCAREPreChat-Phone") && !phoneDOM.value) {
         acceptForm = false;
     } else if (!phoneDOM.value)
         acceptForm = cusCarePreChatEleIsEmpty(phoneDOM, orderSnapinLabelObj.phoneRequiredValidation);
     else if (document.getElementById("ErrMsg_cusCAREPreChat-Phone")) {
             var element = document.getElementById("ErrMsg_cusCAREPreChat-Phone");
-            element.parentNode.removeChild(element);
+            var format = /^[0-9-]*$/; //FY20-1102 DEFECT 10071218
+            if (checkErrMsgValidation(phoneDOM, "Phone", format, false)) //FY20-1102 DEFECT 10071218
+                acceptForm = false;
+            else
+                element.parentNode.removeChild(element);
         }
+     //FY22-0302 STORY 10071218: Pre-Chat Form validation message should go away in Auto-Fill scenario [START]
+     else{
+        var formatPhoneCorrect = /^[0-9-]*$/;
+        if (checkErrMsgValidation(phoneDOM, "Phone", formatPhoneCorrect, false)){
+            cusPreChatErrorMsgPlaceholder(phoneDOM, orderSnapinLabelObj.phoneRequiredValidation);
+            acceptForm = false;
+        }       
+    }
+    //FY22-0302 STORY 10071218: Pre-Chat Form validation message should go away in Auto-Fill scenario [END]
     if (document.getElementById("ErrMsg_cusCAREPreChat-IssueDescription") && !IssueDescDOM.value) {
         acceptForm = false;
     } else if (!IssueDescDOM.value && !document.getElementById("issueDescIsOptionalInCare"))//STORY 6779542: Contact Us: Snapin prechat Form -Problem Description
@@ -950,6 +991,8 @@ function custCarePreChatKeypressFieldValidation(orderSnapinLabelObj) {
     document.getElementById("cusCAREPreChat-Phone").addEventListener("change", function () {
         if (/^[0-9-]*$/.test(this.value) == true && document.getElementById("ErrMsg_cusCAREPreChat-Phone"))
             removeDomElementbyId("ErrMsg_cusCAREPreChat-Phone");
+        else if (/^[0-9-]*$/.test(this.value) == false && !document.getElementById("ErrMsg_cusCAREPreChat-Phone"))
+            cusCarePreChatErrorMsgPlaceholder(this, orderSnapinLabelObj.phoneRequiredValidation);
     });
     //FY22-0302 STORY 9874555: Pre-Chat Form validation message should go away in Auto-Fill scenario [END]
 
