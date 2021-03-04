@@ -1237,6 +1237,9 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
         translatedLabels = translation("en");
     embedded_svc.settings.language = translatedLabels.language;
 
+	//POC BNR
+	embedded_svc.settings.fallbackRouting = ['0057A000002bpD4QAI','5730b000000CbhT']; //An array of button IDs, user IDs, or userId_buttonId
+
     //STORY 7193324: FY201101[START] //FY210803: HES Generic chat changes [START]
     var assetFieldName = "Name";
     if (snapInObject.isEmcProduct) {
