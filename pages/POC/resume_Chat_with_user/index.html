@@ -9,11 +9,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="../../../node_modules/jquery/dist/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" media="screen" href="../../../node_modules/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="../../../main.css" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
 <body onload="checkChatConfigCookie()">
@@ -53,7 +48,7 @@
                 </select>
             </span>
         <a class="navbar-brand" href="#">
-            <img src="../../../assets/DellTech_Logo_Prm_Blue.jpg" class="d-inline-block align-top" alt="">
+            <img src="../../assets/DellTech_Logo_Prm_Blue.jpg" class="d-inline-block align-top" alt="">
         </a>
         <button style="display: block;float: left;" class="btn btn-primary"  data-target=".bd-example-modal-lg" id="chatButton" type="button" onclick="showConfigSettings()">
             <i class="fa fa-gear"></i>
@@ -91,7 +86,11 @@
                         <div class="form-group">
                             <label style="margin-right: 10px; margin-bottom: 20px;" for="Organization">Project : </label>
                                 <span id="orginazationName">
-                                    <label><input id = "dellOrg" type="radio" name="optradio" checked>&nbsp&nbspResumeChatwithAgent</label>
+                                    <label><input id = "dellWPR" type="radio" name="optradio" value = "dellWPR">&nbsp&nbspWarranty Parts Return</label>
+                                    <label><input id = "dellOrg" type="radio" name="optradio" checked>&nbsp&nbspResume chat with user</label>
+                                    <label><input id = "emcOrg" type="radio" name="optradio" style="margin-left: 20px;" value = 'emcOrg'>&nbsp&nbspEMC legacy</label>
+                                    <label><input id = "routSprinklrBot" type="radio" name="optradio" style="margin-left: 20px;">&nbsp&nbspSprinklr Bot Routing</label>
+                                    <label><input id = "routSprinklrBotRefresh" type="radio" name="optradio" style="margin-left: 20px;">&nbsp&nbspSprinklr Bot Refresh</label>
                                 </span>
                             <dev class="dellTech">
                                 <div>
