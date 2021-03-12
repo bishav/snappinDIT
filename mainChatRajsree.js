@@ -2619,7 +2619,7 @@ function initiateChatBot(chatBotObject) {
             { "label": "StepName_Manual_Bot", "value": chatBotObject.StepName_Manual_Bot, "transcriptFields": ["StepName_Manual_Bot__c"], "displayToAgent": true },
             { "label": "Agent_QueueName", "value": chatBotObject.Agent_QueueName, "transcriptFields": ["Agent_QueueName__c"], "displayToAgent": true },
             { "label": "BotFutureUse_2", "value": chatBotObject.BotFutureUse_2, "transcriptFields": ["BotFutureUse_2__c"], "displayToAgent": true },
-
+            { "label": "Issue Resolved", "value": true, "transcriptFields": ["IssueResolved__c"], "displayToAgent": true }
 
         ];
         var firstNameVal = null,
