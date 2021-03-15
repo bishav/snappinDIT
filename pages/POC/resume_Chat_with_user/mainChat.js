@@ -1238,7 +1238,7 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
     embedded_svc.settings.language = translatedLabels.language;
 
 	//POC BNR
-	embedded_svc.settings.fallbackRouting = ['0057A000002bpD4QAI','5730b000000CbhT']; //An array of button IDs, user IDs, or userId_buttonId
+	//embedded_svc.settings.fallbackRouting = ['0057A000002bpD4QAI','5730b000000CbhT']; //An array of button IDs, user IDs, or userId_buttonId
 
     //STORY 7193324: FY201101[START] //FY210803: HES Generic chat changes [START]
     var assetFieldName = "Name";
@@ -1525,6 +1525,11 @@ function triggerResumeSnapin(snapInObject) {
                 //STORY 6929894[START]
                 if ("routingModel" in snapInObject && snapInObject.routingModel && snapInObject.routingModel.toLowerCase() === "skillbased")
                     embedded_svc.settings.fallbackRouting = snapInObject.skillIds;
+
+                //POC BNR
+                if ("agentid" in snapInObject)
+                    embedded_svc.settings.fallbackRouting = [snapInObject.agentid,snapInObject.buttonId]; //An array of button IDs, user IDs, or userId_buttonId
+
                 //STORY 6929894[END]
                 if ("language" in snapInObject)
                     translatedLabels = translation(snapInObject.language);
