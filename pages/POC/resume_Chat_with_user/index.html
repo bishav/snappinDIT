@@ -105,7 +105,7 @@
                                 <div>
                                     <label for="serviceTag"><span class='NonEMC'>Service Tag</span><span class='EMC' style='display:none;'>CPID (for EMC legacy)</span></label>
                                 </div>
-                                <input type="text" class="form-control"  id="serviceTag" aria-describedby="serviceTag" placeholder="Enter Service Tag" value="DSEASSET">
+                                <input type="text" class="form-control"  id="serviceTag" aria-describedby="serviceTag" placeholder="Enter Service Tag" value="6MW0204">
                             </div>
                             <div class='EMC' style='display:none;'>
                                 <label for="epdmId">EPDM-Id(for EMC legacy)</label>
@@ -670,7 +670,7 @@
                     serviceTag: serviceTag,
                     issueVal: issueVal,
                     srNumber:'',
-                    firstName:'Bishav',
+                    firstName:'',
                     lastName:'',
                     resumeChat:false,
                     resumeChatComponentName: 'Snap_Ins_Resume_chat',
@@ -768,10 +768,10 @@
                     language: language.options[language.selectedIndex].value,
 
                     //Hard coded prechat values 
-                    firstName:"Bishav",
-                    lastName: "Rajb",
+                    firstName:"",
+                    lastName: "",
                     //email:"bnr@dell.com",
-                    phoneNo:"123425",
+                    phoneNo:"",
                     issueDescription: null,
                     productCode:"Latitude",
                     serviceTag: serviceTag,
@@ -909,8 +909,8 @@
             var language = document.getElementById("selectLanguageOption");
                 var snapInObject = {
                    language: language.options[language.selectedIndex].value,
-                    serviceTag: "test",
-                    issueVal: "test",
+                    serviceTag: "6MW0204",
+                    issueVal: "Slow Performance",
                     srNumber: "RE1",
                     BUID: "11",
                     firstName: "Nishita",
