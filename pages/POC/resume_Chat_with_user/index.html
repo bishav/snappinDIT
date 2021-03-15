@@ -587,7 +587,7 @@
           var resumeChatMsg = document.getElementById("resume-chat-msg");
           var newChat = document.getElementById("new-chat");
 
-        if ("agentid" in urlParamVal && urlParamVal.agentid){
+        if ("AgentId" in urlParamVal && urlParamVal.AgentId){
             //Show Resume Chat
             resumeChatMsg.classList.remove("hide");
             newChat.classList.add("hide");
@@ -915,7 +915,7 @@
                     BUID: "11",
                     firstName: "Nishita",
                     lastName: "De",
-                    agentid: urlParamVal.agentid,
+                    agentid: urlParamVal.AgentId,
                     resumeChat:false,
                     resumeChatComponentName: 'Snap_Ins_Resume_chat',
 
