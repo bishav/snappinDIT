@@ -1525,9 +1525,10 @@ function triggerResumeSnapin(snapInObject) {
                 //STORY 6929894[START]
                 if ("routingModel" in snapInObject && snapInObject.routingModel && snapInObject.routingModel.toLowerCase() === "skillbased")
                     embedded_svc.settings.fallbackRouting = snapInObject.skillIds;
+
                 //POC BNR
                 if ("agentid" in snapInObject)
-                    embedded_svc.settings.fallbackRouting = [snapInObject.agentid,snapInObject.buttonId]; //An array of button IDs, user IDs, or userId_buttonId
+                    embedded_svc.settings.fallbackRouting = [snapInObject.agentid,snapInObject.agentid]; //An array of button IDs, user IDs, or userId_buttonId
 
                 //STORY 6929894[END]
                 if ("language" in snapInObject)
@@ -1557,10 +1558,7 @@ function triggerResumeSnapin(snapInObject) {
                     ,{ 
                         "label": "Agent_QueueName", 
                     "value": snapInObject.agentid, "transcriptFields": ["Agent_QueueName__c"], "displayToAgent": true }
-                  //POC  
-                  ,{ 
-                    "label": "Reconnect Agent", 
-                "value": "0050b000004K2B7", "transcriptFields": ["Reconnect_Agent__c"], "displayToAgent": true }
+                    
                 ];
                 embedded_svc.settings.extraPrechatInfo = [{
                     "entityFieldMaps": [{
@@ -1579,6 +1577,7 @@ function triggerResumeSnapin(snapInObject) {
                     baseLiveAgentContentURL: snapInObject.baseLiveAgentContentURL,
                     deploymentId: snapInObject.deploymentId,
                     buttonId: snapInObject.buttonId,
+                    //buttonId: snapInObject.agentid,
                     baseLiveAgentURL: snapInObject.baseLiveAgentURL,
                     eswLiveAgentDevName: snapInObject.LiveAgentDevName,
                     isOfflineSupportEnabled: false
