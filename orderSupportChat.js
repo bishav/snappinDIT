@@ -471,19 +471,23 @@ else
 //snapinEventHandler[START]
 embedded_svc.addEventHandler("onConnectionError", function (data) {
     snapinCAREChatInitiatedState(false);
+    assignCarePropVal("890.130.154", "890.130.164", "SNAPIN: Chat Ended", "SNAPIN: Chat Ended");//FY22-0502: Story 10402939: Omniature Extension for CARE Chats counter
 });
 embedded_svc.addEventHandler("onIdleTimeoutOccurred", function (data) {
     //snapinCAREChatInitiatedState(false);
     sessionStorage.removeItem("snapInCareObjectSession");
+    assignCarePropVal("890.130.154", "890.130.164", "SNAPIN: Chat Ended", "SNAPIN: Chat Ended");//FY22-0502: Story 10402939: Omniature Extension for CARE Chats counter
 });
 embedded_svc.addEventHandler("onChatEndedByChasitor", function (data) {
     //snapinCAREChatInitiatedState(false);
     sessionStorage.removeItem("snapInCareObjectSession");
+    assignCarePropVal("890.130.154", "890.130.164", "SNAPIN: Chat Ended", "SNAPIN: Chat Ended");//FY22-0502: Story 10402939: Omniature Extension for CARE Chats counter
 });
 
 embedded_svc.addEventHandler("onChatEndedByAgent", function (data) {
     //snapinCAREChatInitiatedState(false);
     sessionStorage.removeItem("snapInCareObjectSession");
+    assignCarePropVal("890.130.154", "890.130.164", "SNAPIN: Chat Ended", "SNAPIN: Chat Ended");//FY22-0502: Story 10402939: Omniature Extension for CARE Chats counter
 });
 embedded_svc.addEventHandler("onAgentMessage", function(data) {
     snapinCAREChatInitiatedState(true);
@@ -491,6 +495,11 @@ embedded_svc.addEventHandler("onAgentMessage", function(data) {
 embedded_svc.addEventHandler("onChasitorMessage", function(data) {
     snapinCAREChatInitiatedState(true);//Fix for defect 7030965
 });
+//FY22-0502: Story 10402939: Omniature Extension for CARE Chats counter [START]
+embedded_svc.addEventHandler("onChatEstablished", function (data) {
+    assignCarePropVal("890.130.152", "890.130.163", "SNAPIN: Chat Started", "SNAPIN: Chat Started");
+});
+//FY22-0502: Story 10402939: Omniature Extension for CARE Chats counter [END]
 //embedded_svc.addEventHandler("onChatRequestSuccess", function(data) {
 //    snapinCAREChatInitiatedState(true);//Fix for defect 7030965
 //});
@@ -1108,6 +1117,7 @@ function create_snapinCareChatUuid(orderSnapinObject) {
     return orderSnapinObject;
 }
 function triggerCareSnapinPostSprinkler(caseNumber) {
+    assignCarePropVal("890.130.154","890.130.165","SNAPIN: Transferred by Sprinklr" ,"SNAPIN: Transferred by Sprinklr"); //FY22-0502: Story 10402957: Omniature extension for CARE Sprinklr BOT
     snapInCareObject = sendGlobalSnapinCareObjToJson();
     snapInCareObject.caseNumber = caseNumber;
     snapInCareObject.sprinklrChatbotRouted = true;
@@ -1367,6 +1377,7 @@ try {
                     snapInCurrentPage = "snapInWaiting";
                     assignCarePropVal("890.130.149","890.130.160");// FY20-1101 STORY 7089672
                     snapinCareQueueLoaded();
+                    eleExistCareWithVariable('.dockableContainer .embeddedServiceLiveAgentStateWaiting .waitingStateContainer .queuePositionNumber', waitCareChatCounter); //FY22-0502: Story 10402939: Omniature Extension for CARE Chats counter
                 } else if (snapInChatStarted && snapInCurrentPage != "snapInChatStarted") {
                     snapInCurrentPage = "snapInChatStarted";
                     snapinCAREChatInitiatedState(true);//Fix for defect 7030965
@@ -1378,6 +1389,12 @@ try {
                     snapinCareQueueLoaded();
                 } else if (snapInConfirmationDialoug && snapInCurrentPage != "snapInConfirmationDialoug") {
                     snapInCurrentPage = "snapInConfirmationDialoug";
+                    //FY22-0502: STORY 10402946: Remove "Start a New Chat" button from CARE prechat form [START]
+                    var dialogueMsg = document.querySelector(".dockableContainer .activeFeature .stateBody .dialogState .dialogTextContainer").innerText;
+                    if (showsCareAgentOflineMsg(dialogueMsg)) {
+                        document.querySelector(".dialog-button-0.embeddedServiceSidebarButton").style.display = 'none';
+                    }
+                    //FY22-0502: STORY 10402946: Remove "Start a New Chat" button from CARE prechat form [END]
                     //Fix for on click of (x) button from End Chat confirmation Page: FYI we have created a SFDC case 23872982 [START] 
                     var closeBtn = document.querySelector(".modalContainer .dockableContainer .embeddedServiceSidebarHeader .closeButton.headerItem");
                     if(closeBtn)//FY22-0203: Unit testing bug fix
@@ -1416,6 +1433,56 @@ try {
     });
 } catch (e) { console.log('Error in Observer - ' + e) }
 }
+
+//FY22-0502: Story 10402939: Omniature Extension for CARE Chats counter [START]
+function waitCareChatCounter(eleSelector, findingEle, counterValue) {
+    try {
+        var currentcountVal = document.querySelector(eleSelector).innerText;
+        if (counterValue != currentcountVal) {
+            assignCarePropVal("890.130.151","890.130.162","SNAPIN: Queue number " + currentcountVal,"SNAPIN: Queue number " + currentcountVal);
+            clearInterval(findingEle);
+            if (currentcountVal > 0 && currentcountVal != "" && currentcountVal != null && currentcountVal != undefined && currentcountVal != ' ') {
+                eleExistWithVariable('.dockableContainer .embeddedServiceLiveAgentStateWaiting .waitingStateContainer .queuePositionNumber', waitCareChatCounter, document.querySelector('.dockableContainer .embeddedServiceLiveAgentStateWaiting .waitingStateContainer .queuePositionNumber').innerText);
+            }
+        }
+    } catch (e) {
+        clearInterval(findingEle);
+        console.log("Error in:" + e);
+    }
+}
+//FY22-0502: Story 10402939: Omniature Extension for CARE Chats counter [END]
+
+//FY22-0502: STORY 10402946: Remove "Start a New Chat" button from CARE prechat form [START]
+function showsCareAgentOflineMsg(message){
+    if(
+        message.includes("Im Moment kann nicht gechattet werden. Versuchen Sie es später erneut.") ||
+        message.includes("ただいまチャットできません。 後でもう一度お試しください。") ||
+        message.includes("지금은 채팅을 할 수 없습니다. 나중에 다시 시도하십시오.") ||
+        message.includes("No podemos chatear en estos momentos. Inténtelo de nuevo más tarde.") ||
+        message.includes("我们现在无法聊天。 请稍后重试。") ||
+        message.includes("我們目前無法聊天。 請稍後再試一次。") ||
+        message.includes("Não podemos conversar neste momento. Tente novamente mais tarde.") ||
+        message.includes("Não podemos conversar agora. Tente novamente mais tarde.") ||
+        message.includes("We kunnen momenteel niet chatten. Probeer het later opnieuw.") ||
+        message.includes("Nous ne pouvons pas discuter pour le moment. Veuillez réessayer ultérieurement.") ||
+        message.includes("Vi kan ikke chatte lige nu. Prøv igen senere.") ||
+        message.includes("Emme voi chatata juuri nyt. Yritä myöhemmin uudelleen.") ||
+        message.includes("Non possiamo chattare al momento Riprova più tardi.") ||
+        message.includes("Vi kan ikke chatte akkurat nå. Prøv på nytt senere.") ||
+        message.includes("В настоящее время чат недоступен. Повторите попытку позже.") ||
+        message.includes("Vi kan inte chatta just nu. Försök igen senare.") ||
+        message.includes("เราไม่สามารถสนทนาได้ในตอนนี้ ลองอีกครั้งในภายหลัง") ||
+        message.includes("Nie możemy w tej chwili rozmawiać na czacie Spróbuj ponownie później.") ||
+        message.includes("Momenálne nemôžeme četovať. Skúste to znova.") ||
+        message.includes("Não podemos conversar agora. Tente novamente mais tarde.") ||
+        message.includes("We can't chat right now. Try again later.")
+    ){
+        return true;
+    } else {
+        return false;
+    }
+}
+//FY22-0502: STORY 10402946: Remove "Start a New Chat" button from CARE prechat form [END]
 
 //FY21-0702-Defect 902225:Unable to initiate a chat using IE[START]
 function chatCareClick(eleSelector, findingEle) {

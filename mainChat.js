@@ -1032,6 +1032,7 @@ function checkSprinklrChatBot(snapInObject) {
 
 //FY21-0502:[Sprinklr Chat Bot] If customer wants to talk to an agent after sprinklr chat bot is opened.[START]
 function triggerSnapinPostSprinkler(sprinklrChatBotObject) {  
+    callDellmetricsTrack("890.220.017", "SNAPIN: Transferred by Sprinklr"); //FY22-0502  Chat : Story 10402965: Omniature extension for Tech Sprinklr BOT
     snapInObject = sendGlobalSnapinObjToJson();
     snapInObject.caseNumber = sprinklrChatBotObject;
     snapInObject.sprinklrChatbotRouted = true;//FY21-0502:[Sprinklr Chat Bot] sprinkler chat bot reoted is true only in this scenario.
