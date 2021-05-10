@@ -294,7 +294,14 @@ function coveoInit(snapInObject, preChatlableObject) {
                 });
 
                 $("#cusPreChat-IssueDescription").on("keyup", function () {
-                    GetCoveoPopoverResult(snapInObject.coveoSetDelay);
+                    //0502: eSupport Unit testing Changes [Start]
+                    //GetCoveoPopoverResult(snapInObject.coveoSetDelay);
+                    return new Promise(function (resolve) {
+                        setTimeout(function () {
+                            resolve(GetCoveoPopoverResult(snapInObject.coveoSetDelay));
+                        }, 2500);
+                    });
+                    //0502: eSupport Unit testing Changes [End]
                 });
 
                 $("#cusPreChat-IssueDescription").on("click", function () {
@@ -334,7 +341,7 @@ function GetCoveoPopoverResult(timeout) {
                     container: 'body',
                     template: '<div class="popover popoverPosition" id="prechatCoveoPopover" role="tooltip">' + '<div class="arrow"></div>' + '<h3 class="popover-header"></h3>' + '<div class="popover-body"></div></div>',
                     title: function () {
-                        return "<b>" + coveoHeader + "</b><a href='#' class='close' data-dismiss='alert'>&times;</a>"
+                        return "<b>" + coveoHeader + "</b><a href='javascript:void(0);' class='close' data-dismiss='alert'>&times;</a>"
                     },
                     content: function () {
                         return $('#searchCoveo').html()
@@ -2683,19 +2690,19 @@ function initiateChatBot(chatBotObject) {
                 "doFind": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                 "fieldName": "LastName",
                 "isExactMatch": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
-                "label": "Last Name"
+                "label": translatedLabels.lastName//"Last Name" //FY22-0502: Story #10491138: Add translate pre-chat info values for Einstein Care Bot
             }, {
                 "doCreate": false,
                 "doFind": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                 "fieldName": "FirstName",
                 "isExactMatch": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
-                "label": "First Name"
+                "label": translatedLabels.firstName//"First Name" //FY22-0502: Story #10491138: Add translate pre-chat info values for Einstein Care Bot
             }, {
                 "doCreate": false,
                 "doFind": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
                 "fieldName": "Email",
                 "isExactMatch": false,//FY21-0803: STORY #8742782: Change Do find to False in all places
-                "label": "Email Address"
+                "label": translatedLabels.emailAdd//"Email Address" //FY22-0502: Story #10491138: Add translate pre-chat info values for Einstein Care Bot
             }],
             "entityName": "Contact",
             "saveToTranscript": "ContactId"
