@@ -18,79 +18,21 @@
 function triggerPartnerPortalSnapin(partnerPortalDetails) {
     try {            
 			let sfdcSnapinDetails = {
-				/*
-					//Chat 
-					baseLiveAgentContentURL: 'https://c.la2-c1cs-ord.salesforceliveagent.com/content',
-					deploymentId: '5720b000000CbfS',
-					baseLiveAgentURL: 'https://d.la2-c1cs-ord.salesforceliveagent.com/chat',
-					eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I0x0000008OPzEAM_16d81041603',             
-                    componentName: "Partner_Portal_Snap_ins",
-                    organizationId: "00D0x0000000WEw",
-                    snapInInitURL: 'https://dellservices--Chat.my.salesforce.com',
-                    snapInJs: "https://service.force.com/embeddedservice/5.0/esw.min.js",
-                    snapInLAURL: 'https://chat-dellservices.cs95.force.com/LASnapIn', 
-					
-					//DEV2
-					snapInInitURL: 'https://dellservices--DEV2.my.salesforce.com',
-					snapInLAURL: 'https://dev2-dellservices.cs45.force.com/LASnapIn',
-					organizationId: '00D8A00000057oF',
-					componentName: 'Partner_Snap_In',
-					baseLiveAgentContentURL: 'https://c.la2-c1cs-ph2.salesforceliveagent.com/content',
-					deploymentId: '5720b000000GneC',
-					baseLiveAgentURL: 'https://d.la2-c1cs-ph2.salesforceliveagent.com/chat',
-					eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I8A0000004CE8UAM_16e214e1296',
-					snapInJs: 'https://dellservices--DEV2.my.salesforce.com/embeddedservice/5.0/esw.min.js',
-					
-					
-					
-					//DEV1
-					snapInInitURL: 'https://dellservices--dev1.my.salesforce.com',
-					snapInLAURL: 'https://dev1-dellservices.cs4.force.com/LASnapIn',
-					organizationId: '00DP0000003pGDL',
-					componentName: 'Partner_Snap_In',
-					baseLiveAgentContentURL: 'https://c.la1-c1cs-ia2.salesforceliveagent.com/content',
-					deploymentId: '5720b000000GneC',
-					baseLiveAgentURL: 'https://d.la1-c1cs-ia2.salesforceliveagent.com/chat',
-					eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I2R000000PAwuUAG_1703a86ec04',
-					snapInJs: 'https://dellservices--dev1.my.salesforce.com/embeddedservice/5.0/esw.min.js',
-					recordType: "0122R000000VrtU",
-
-					//0602 Dev
-					snapInInitURL: 'https://dellservices--0602ccks.my.salesforce.com',
-					snapInLAURL: 'https://0602ccks-dellservices.cs22.force.com/LASnapIn',
-					organizationId: '00D17000000DmNu',
-					componentName: 'Partner_Snap_In',
-					baseLiveAgentContentURL: 'https://c.la1-c1cs-ia2.salesforceliveagent.com/content',
-					deploymentId: '5720b000000GneC',
-					baseLiveAgentURL: 'https://d.la1-c1cs-ia2.salesforceliveagent.com/chat',
-					eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I2R000000PAwuUAG_1703a86ec04',
-					snapInJs: 'https://dellservices--0602ccks.my.salesforce.com/embeddedservice/5.0/esw.min.js',
-					recordType: "0122R000000VrtU",
-					*/					
-					//0802 Dev
-					snapInInitURL: 'https://dellservices--0803ccks.my.salesforce.com',
-					snapInLAURL: 'https://0803ccks-dellservices.cs41.force.com/LASnapIn',
-					organizationId: '00D550000001KdZ',
-					componentName: 'Partner_Snap_In',
-					baseLiveAgentContentURL: 'https://c.la1-c1cs-ia2.salesforceliveagent.com/content',
-					deploymentId: '5720b000000GneC',
-					baseLiveAgentURL: 'https://d.la1-c1cs-ia2.salesforceliveagent.com/chat',
-					eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I2R000000PAwuUAG_1703a86ec04',
-					snapInJs: 'https://dellservices--0803ccks.my.salesforce.com/embeddedservice/5.0/esw.min.js',
-					recordType: "0122R000000VrtU",
 					/*
-					//SIT2
-					baseLiveAgentContentURL: "https://c.la3-c1cs-ph2.salesforceliveagent.com/content",
+					//GE4
+					baseLiveAgentContentURL: "https://c.la1-c1cs-ia4.salesforceliveagent.com/content",
 					deploymentId: "5720b000000GneC",
-					baseLiveAgentURL: "https://d.la3-c1cs-ph2.salesforceliveagent.com/chat",
-					eswLiveAgentDevName: "EmbeddedServiceLiveAgent_Parent04I2h0000004CBOEA2_16e7ea2ec9b",
+					baseLiveAgentURL: "https://d.la1-c1cs-ia4.salesforceliveagent.com/chat",
+					//eswLiveAgentDevName: "EmbeddedServiceLiveAgent_Parent04I2h0000004CBOEA2_16e7ea2ec9b",
+					eswLiveAgentDevName: "EmbeddedServiceLiveAgent_Parent04I2h0000004CBYEA2_16fa30a6c99",
 					componentName: "Partner_Snap_In",
-					organizationId: "00D2h0000008aOa",
-					snapInInitURL: "https://dellservices--SIT2.my.salesforce.com",
+					organizationId: "00D3K0000000PJb",
+					snapInInitURL: "https://dellservices--ge4.my.salesforce.com",
 					snapInJs: "https://service.force.com/embeddedservice/5.0/esw.min.js",
-					snapInLAURL: "https://sit2-dellservices.cs36.force.com/LASnapIn",
-					recordType: "0122h0000009xf1",
-				*/	
+					snapInLAURL: "https://ge4-dellservices.cs125.force.com/LASnapIn",
+					recordType: "0122R000000VrtU",
+					*/
+
 					//Perf 1
 					/*
 					snapInInitURL: 'https://dellservices--Perf1.my.salesforce.com',
@@ -103,6 +45,19 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
                     eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I2h0000004CBdEAM_16fd14e13a6',
 					snapInJs: 'https://dellservices--Perf1.my.salesforce.com/embeddedservice/5.0/esw.min.js',
 					*/
+					
+					//GE1
+					baseLiveAgentContentURL: "https://c.la2-c1cs-ia4.salesforceliveagent.com/content",
+					deploymentId: "5720b000000GneC",
+					baseLiveAgentURL: "https://d.la2-c1cs-ia4.salesforceliveagent.com/chat",
+					eswLiveAgentDevName: "EmbeddedServiceLiveAgent_Parent04I2h0000004CBOEA2_16e7ea2ec9b",
+					componentName: "Partner_Snap_In",
+					organizationId: "00D6w0000004Yp0",
+					snapInInitURL: "https://dellservices--ge1.my.salesforce.com",
+					snapInJs: "https://service.force.com/embeddedservice/5.0/esw.min.js",
+					snapInLAURL: "https://ge1-dellservices.cs169.force.com/LASnapIn",
+					recordType: "0122R000000VrtU",
+					
 					//fixed object values
 					buttonId: routingConfig(partnerPortalDetails),
 					issueSubject: getProductGroup(partnerPortalDetails.productGroup) +" - "+ partnerPortalDetails.productType,
@@ -113,7 +68,7 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 					caseSeverityTxt: convertToSeverity(partnerPortalDetails.caseSeverity),
 					loginIdNoSpace: loginIdNoSpace(partnerPortalDetails.loginId),
 					validFirstName: firstNameValidator(partnerPortalDetails),
-					role: "GLOBAL TAG TEAM",//FY21:0502 STORY 7994527: Add Role value
+					role: getRoleValue(partnerPortalDetails),//"GLOBAL TAG TEAM",//FY21:0502 STORY 7994527: Add Role value //FY21-0803 Add GCC to SharePoint
 					serviceForceURL: "https://service.force.com"
 		}
             var initESW = function (gslbBaseURL) {
@@ -136,7 +91,7 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 						"transcriptFields": ["Chat_Source__c"]
 					},{
 						"label": "Group / Vendor", //FY21:0502 STORY 8244329: Change Label Name
-						"value": getProductGroup(partnerPortalDetails.productGroup),//Both
+						"value": getVendorGroupValue(partnerPortalDetails.productGroup),//Both
 						"transcriptFields": ["PP_Vendor_Product_Group__c"]
 					},{
 						"label": "Type / Vendor List",//FY21:0502 STORY 8244329: Change Label Name
@@ -191,7 +146,15 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 						"label":  "Location",
 						"value": partnerPortalDetails.region,//Both
 						"transcriptFields": ["PP_Location__c"]
-					},{
+					},
+					//FY21-0803 Add GCC to SharePoint [START]
+					{
+						"label":  "Work Order From Partner",
+						"value": idBasedVal("WO",partnerPortalDetails),//Both
+						"transcriptFields": ["PP_Work_Order_From_Partner__c"]
+					},
+					//FY21-0803 Add GCC to SharePoint [END]
+					{
 						"label":  "Case Number From Partner",
 						"value": idBasedVal("SR",partnerPortalDetails),//Both
 						"transcriptFields": ["PP_Case_Number_From_Partner__c"]
@@ -225,11 +188,11 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 						"transcriptFields": ["PP_Logs_Collected__c"]
 					},{
 						"label":  "Reason",
-						"value": expandChatReason(isRequiredForGTT(partnerPortalDetails.productGroup,partnerPortalDetails,"chatReason")) ,//GTT only //New Field 
+						"value": expandChatReason(notRequiredForMixedIP(partnerPortalDetails.productGroup,partnerPortalDetails,"chatReason")) ,//GTT only //New Field //FY21-0803 Add GCC to SharePoint
 						"transcriptFields": ["Reason__c"]
 					},{//FY21:0502 STORY 7994527: Add Role value[START]
 						"label": "Support Team",
-						"value": isRequiredForGTT(partnerPortalDetails.productGroup,sfdcSnapinDetails,"role"),
+						"value": notRequiredForMixedIP(partnerPortalDetails.productGroup,sfdcSnapinDetails,"role"),//FY21-0803 Add GCC to SharePoint
 						"transcriptFields": ["Role__c"]
 					},//FY21:0502 STORY 7994527: Add Role value[END]
 					{
@@ -272,7 +235,7 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
                 /*
                     let bgLoader = document.getElementById('overlay');
                     if(bgLoader)
-                        bgLoader.style.display = "none"; 
+                        bgLoader.style.display = "none"; 
                 */
                $('.overlay-content').hide();
                 });
@@ -431,10 +394,12 @@ function routingConfig(partnerPortalDetails){
 		  case "LATAM Tag Team":
 			  if(partnerPortalDetails.language === "ES")
 				//buttonID = "573P0000000CbN1";//DEV1 "LA.DB.INTB.MIX.CH.ES.BLND.GTT"
-				buttonID = "5732h0000008Ovh";//SIT2
+				//buttonID = "5732h0000008Ovh";//Old button IDs
+				buttonID = "5732R000000XZI6";
 			  else if(partnerPortalDetails.language === "PT")
 				//buttonID = "573P0000000CbN6";//DEV1 "LA.DB.INTB.MIX.CH.PT.BLND.GTT"
-				buttonID = "5732h0000008Ovm";
+				//buttonID = "5732h0000008Ovm";//Old button IDs
+				buttonID = "5732R000000XZI7";
 
 			  else
 				//buttonID = "5738A0000008Olx";//Old //LA_DB_INTB_MIX_CH_MU_BLND_GTT
@@ -443,15 +408,18 @@ function routingConfig(partnerPortalDetails){
 		  case "APJ Tag Team":
 			  if(partnerPortalDetails.language === "CN")
 				//buttonID = "573P0000000CbNB";//DEV1 "GL.DB.INTB.MIX.CH.ZH.BLND.GTT"
-				buttonID = "5732h0000008Ovr"; //SIT2
+				//buttonID = "5732h0000008Ovr"; //Old
+				buttonID = "5732R000000XZI8";
 			  else if(partnerPortalDetails.language === "JP")
-				//buttonID = "573P0000000CbNG";//DEV1 "GL.DB.INTB.MIX.CH.JA.BLND.GTT" GL.DB.INTB.MIX.CH.JA.BLND.GTT
-				buttonID = "5732h0000008Ovw";//SIT2
+				//buttonID = "573P0000000CbNG";//DEV1 "GL.DB.INTB.MIX.CH.JA.BLND.GTT"
+				//buttonID = "5732h0000008Ovw";//old code
+				buttonID = "5732R000000XZI9";
 
 			break;
 		  case "Global Tag Team Internal":
 			//buttonID = "5732R000000XZHn";//DEV1 "GL_DB_INTB_MIX_CH_MU_BLND_L2_GTT"
-			buttonID = "5732h0000008Ork"; //SIT2
+			//buttonID = "5732h0000008Ork"; //Old
+			buttonID = "5732R000000XZHn";
 			break;
 		  case "OEM Tag Team":
 		  case "OEM":
@@ -484,6 +452,68 @@ function routingConfig(partnerPortalDetails){
 			}
 		//STORY 7248769 : FY20_Channels : Chat : Partner Portal : VCE_Create Queues on Lightning  [END]
 	}
+	//FY21-0803 Add GCC to SharePoint [START]
+	else if (getProductGroup(partnerPortalDetails.productGroup) === "GCC"){
+		switch(partnerPortalDetails.portalType) {
+			case "UCCBN":
+			  buttonID = "5731P000000TSVu";//GCC_US_CA_Client_Basic_NBD
+			  break;
+			case "UCPN":
+			  buttonID = "5731P000000TSVv";//GCC_US_CA_Client_PS_NBD
+			  break;
+			case "UCEN":
+				buttonID = "5731P000000TSVw";//GCC_US_CA_Enterprise_NBD
+			break;
+			case "UCCES":
+				buttonID = "5731P000000TSVx";//GCC_US_CA_Enterprise_SBD
+			break;
+			case "LEN":
+				buttonID = "5731P000000TSVs";//GCC_LA_Enterprise_NBD
+			break;
+            case "LES":
+				buttonID = "5731P000000TSVt";//GCC_LA_Enterprise_SBD
+			break;
+			case "LCBN":
+				buttonID = "5731P000000TSVq";//GCC_LA_Client_Basic_NBD
+			break;
+			case "LCPSN":
+				buttonID = "5731P000000TSVr";//GCC_LA_Client_PS_NBD
+			break;
+			case "APNPSN":
+				buttonID = "5731P000000TSVi";//GCC_AP_Non_PS_SBD_NBD
+			break;
+			case "APCPSSN":
+				buttonID = "5731P000000TSVg";//GCC_AP_Client_PS_SBD_NBD
+			break;
+			case "APEPSN":
+				buttonID = "5731P000000TSVh";//GCC_AP_Enterprise_PS_SBD_NBD
+			break;
+			case "CNNPSN":
+				buttonID = "5731P000000TSVl";//GCC_CN_Non_PS_SBD_NBD
+			break;
+			case "CNCPSN":
+				buttonID = "5731P000000TSVj";//GCC_CN_Client_PS_SBD_NBD
+			break;
+			case "CNEPSN":
+				buttonID = "5731P000000TSVk";//GCC_CN_Enterprise_PS_SBD_NBD
+			break;
+			case "JPCPSN":
+				buttonID = "5731P000000TSVn";//GCC_JP_Client_PS_SBD_NBD
+			break;
+			case "JPEPSN":
+				buttonID = "5731P000000TSVo";//GCC_JP_Enterprise_PS_SBD_NBD
+			break;
+			case "JPNPSN":
+				buttonID = "5731P000000TSVp";//GCC_JP_Non_PS_SBD_NBD
+			break;
+			case "ESN":
+				buttonID = "5731P000000TSVm";//GCC_EMEA_SBD_NBD
+			break;
+			default:
+			  break;
+			  }
+	}
+	//FY21-0803 Add GCC to SharePoint [END]
 	return buttonID; 
 }
 
@@ -497,16 +527,46 @@ function idBasedVal(idTypeVal,partnerPortalDetails){
 //Check identifierType and send the value [END]
 
 //Check Product Group before pushing the values [START]
+//changes for Vendor value is not populated //
+function getVendorGroupValue(productGroup){
+	if(productGroup === "GTT" || productGroup === "Tag Team")
+		return "GTT";
+	else if(productGroup === "Mixed IP")
+		return "Mixed IP";
+	else if(productGroup === "Global Command - AMER/LATAM" )
+		return "Global Command - AMER/LATAM";
+	else if(productGroup === "Global Command - APJC" )
+		return "Global Command - APJC";	
+	else if(productGroup === "Global Command - EMEA" )
+		return "Global Command - EMEA";
+ }
+
+
+//changes for Vendor value is not populated //
+
 function getProductGroup(productGroup){
 	if(productGroup === "GTT" || productGroup === "Tag Team")
 		return "GTT";
 	else if(productGroup === "Mixed IP")
 		return "Mixed IP";
+	else if(productGroup === "Global Command - AMER/LATAM" || productGroup === "Global Command - APJC" || productGroup === "Global Command - EMEA" ) //FY21-0803 Add GCC to SharePoint
+		return "GCC";
  }
  //Check Product Group before pushing the values [END]
 
+ //FY21-0803 Add GCC to SharePoint [START]
+function getRoleValue(partnerPortalDetails){
+	if (getProductGroup(partnerPortalDetails.productGroup) === "GTT"){
+		return "GLOBAL TAG TEAM";
+	}else if (getProductGroup(partnerPortalDetails.productGroup) === "GCC"){
+		return "GLOBAL COMMAND CENTER";
+	}else{
+		return "";
+	}
+}
+ //FY21-0803 Add GCC to SharePoint [END]
+
 function isRequiredForGTT(productGroup,object,key){
-	console.log(key,object[key]);
 	if (getProductGroup(productGroup) === "GTT"&& object[key])
 		return object[key];
 	else
@@ -514,16 +574,96 @@ function isRequiredForGTT(productGroup,object,key){
 }
 
 function isRequiredForMixedIP(productGroup,object,key){
-	console.log(key,object[key]);
 	if (productGroup === "Mixed IP" && object[key])
 		return object[key];
 	else
 		return "";
 }
 
+//FY21-0803 Add GCC to SharePoint [START]
+function notRequiredForMixedIP(productGroup,object,key){
+	if (productGroup === "Mixed IP")
+		return "";
+	else
+		return object[key];
+}
+//FY21-0803 Add GCC to SharePoint [END]
+
 function expandChatReason(chatReason){
 	let returnVal;
 	switch(chatReason) {
+		case "Part not local":
+			returnVal = "Part not local";
+			break;
+		case "Reschedule request":
+			returnVal = "Reschedule request";
+			break;
+		case "Providing new eta":
+			returnVal = "Providing new eta";
+			break;
+		case "Requesting a reissue of a dispatch":
+			returnVal = "Requesting a reissue of a dispatch";
+			break;
+			case "Requesting updated customer information":
+			returnVal = "Requesting updated customer information";
+			break;
+		case "Driver onsite":
+			returnVal = "Driver onsite";
+			break;
+		case "System exchange inquiries":
+			returnVal = "System exchange inquiries";
+			break;
+		case "TAM/RM escalation/PAV":
+			returnVal = "TAM/RM escalation/PAV";
+			break;
+		case "CIS/MIS Inquiry":
+			returnVal = "CIS/MIS Inquiry";
+			break;
+		case "Change of address form (COAF) of package hold and pickup and redelivery(PURD)":
+			returnVal = "Change of address form (COAF) of package hold and pickup and redelivery(PURD)";
+			break;
+		case "CIS/MIS Inquiry":
+			returnVal = "CIS/MIS Inquiry";
+			break;
+		case "Wrong part in box":
+			returnVal = "Wrong part in box";
+			break;
+		case "NBD dispatch cancellation":
+			returnVal = "NBD dispatch cancellation";
+			break;
+		case "DSP Override Request":
+			returnVal = "DSP Override Request";
+			break;
+		case "My issue is not listed":
+			returnVal = "My issue is not listed";
+			break;
+		case "Part backlog inquery - US (OOW)":
+			returnVal = "Part backlog inquery - US (OOW)";
+			break;
+		case "SBD/Carry in Service/Depot dispatch cancellation":
+			returnVal = "SBD/Carry in Service/Depot dispatch cancellation";
+			break;
+		case "SBD Upgrade Request":
+			returnVal = "SBD Upgrade Request";
+			break;
+		case "ETA/Update to Insite Tech":
+			returnVal = "ETA/Update to Insite Tech";
+			break;
+		case "Order expedite request":
+			returnVal = "Order expedite request";
+			break;
+		case "Depot status inquiry of escalation":
+			returnVal = "Depot status inquiry of escalation";
+			break;
+		case "NBD dispatch status/Escalation":
+			returnVal = "NBD dispatch status/Escalation";
+			break;
+		case "SBD DSP escalation":
+			returnVal = "SBD DSP escalation";
+			break;
+		case "Part backlog inquiry":
+			returnVal = "Part backlog inquiry";
+			break;
 		case "Ownership":
 			returnVal = "Ownership Transfer";
 			break;

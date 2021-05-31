@@ -743,7 +743,7 @@ function getChatServiceTag(label, val) {
 
 //FY20-1102 DEFECT 7534877 [START]		
 function checkErrMsgValidation(fieldEle, fieldName, format, formatResult) {
-    if ((fieldEle.value && format.test(fieldEle.value) == formatResult) || (!fieldEle.value)) {
+    if (!fieldEle.readOnly && ((fieldEle.value && format.test(fieldEle.value) == formatResult) || (!fieldEle.value))) {//FY22:0402 Defect 10378456: Don't check validation If the input field is read-only
         return true;
     } else {
         var idValue = "ErrMsg_cusPreChat-" + fieldName;
