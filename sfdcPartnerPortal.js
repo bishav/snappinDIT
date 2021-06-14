@@ -18,7 +18,7 @@
 function triggerPartnerPortalSnapin(partnerPortalDetails) {
     try {            
 			let sfdcSnapinDetails = {
-					/*
+					
 					//GE4
 					baseLiveAgentContentURL: "https://c.la1-c1cs-ia4.salesforceliveagent.com/content",
 					deploymentId: "5720b000000GneC",
@@ -31,7 +31,7 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 					snapInJs: "https://service.force.com/embeddedservice/5.0/esw.min.js",
 					snapInLAURL: "https://ge4-dellservices.cs125.force.com/LASnapIn",
 					recordType: "0122R000000VrtU",
-					*/
+					
 
 					//Perf 1
 					/*
@@ -47,6 +47,7 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 					*/
 					
 					//GE1
+					/*
 					baseLiveAgentContentURL: "https://c.la2-c1cs-ia4.salesforceliveagent.com/content",
 					deploymentId: "5720b000000GneC",
 					baseLiveAgentURL: "https://d.la2-c1cs-ia4.salesforceliveagent.com/chat",
@@ -57,7 +58,7 @@ function triggerPartnerPortalSnapin(partnerPortalDetails) {
 					snapInJs: "https://service.force.com/embeddedservice/5.0/esw.min.js",
 					snapInLAURL: "https://ge1-dellservices.cs169.force.com/LASnapIn",
 					recordType: "0122R000000VrtU",
-					
+					*/
 					//fixed object values
 					buttonId: routingConfig(partnerPortalDetails),
 					issueSubject: getProductGroup(partnerPortalDetails.productGroup) +" - "+ partnerPortalDetails.productType,
