@@ -760,6 +760,10 @@ function custCarePreFormValidation(orderSnapinLabelObj) {
     else
         acceptForm = cusCarePreChatInvalidEmail(emailDOM, orderSnapinLabelObj);
 
+
+//FY22-0702 STORY 10577407: Auto Fill Validation on Pre Chat Form [START]
+
+    /*
     if (document.getElementById("ErrMsg_cusCAREPreChat-FirstName") && !firstNameDOM.value) {
         acceptForm = false;
     } else if (!firstNameDOM.value)
@@ -782,7 +786,6 @@ function custCarePreFormValidation(orderSnapinLabelObj) {
     }
     //FY22-0302 STORY 10071218: Pre-Chat Form validation message should go away in Auto-Fill scenario [END]
 
-
     if (document.getElementById("ErrMsg_cusCAREPreChat-LastName") && !lastNameDOM.value) {
         acceptForm = false;
     } else if (!lastNameDOM.value)
@@ -804,6 +807,36 @@ function custCarePreFormValidation(orderSnapinLabelObj) {
         }       
     }
     //FY22-0302 STORY 10071218: Pre-Chat Form validation message should go away in Auto-Fill scenario [END]
+*/
+
+    if (document.getElementById("ErrMsg_cusCAREPreChat-FirstName")) {
+        var format = /[0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
+        if (checkErrMsgValidation(firstNameDOM, "FirstName", format, true))
+            acceptForm = false;
+    } else if (!firstNameDOM.value)
+        acceptForm = cusPreChatEleIsEmpty(firstNameDOM, orderSnapinLabelObj.firstNameValidation);
+    else {
+        var format = /[0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
+        if (checkErrMsgValidation(firstNameDOM, "FirstName", format, true)) {
+            cusPreChatErrorMsgPlaceholder(firstNameDOM, orderSnapinLabelObj.firstNameInValid);
+            acceptForm = false;
+        }
+    }
+
+    if (document.getElementById("ErrMsg_cusCAREPreChat-LastName")) {
+        var format = /[0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
+        if (checkErrMsgValidation(lastNameDOM, "LastName", format, true))
+            acceptForm = false;
+    } else if (!lastNameDOM.value)
+        acceptForm = cusPreChatEleIsEmpty(lastNameDOM, orderSnapinLabelObj.lastNameValidation);
+    else {
+        var format = /[0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
+        if (checkErrMsgValidation(lastNameDOM, "LastName", format, true)) {
+            cusPreChatErrorMsgPlaceholder(lastNameDOM, orderSnapinLabelObj.lastNameInValid);
+            acceptForm = false;
+        }
+    }
+//FY22-0702 STORY 10577407: Auto Fill Validation on Pre Chat Form [END]	
 
     if (document.getElementById("ErrMsg_cusCAREPreChat-Phone") && !phoneDOM.value) {
         acceptForm = false;
@@ -906,36 +939,43 @@ function custCarePreChatKeypressFieldValidation(orderSnapinLabelObj) {
         checkForSpecialCharAndText(e, "cusCAREPreChat-LastName");
     });
     document.getElementById("cusCAREPreChat-IssueDescription").addEventListener("paste", function (e) {
+        //FY22-0702 STORY 10571328: Copy Paste Validation on Pre Chat Form [START]
+        /*
         var format = /[<>]/;
         //if (pastedText(e).includes('<') || pastedText(e).includes('>')) {
         if (format.test(pastedText(e)) == true) {
             e.preventDefault();
             alert(orderSnapinLabelObj.pasteInvalidTextMsg);
-        } else if (document.getElementById("ErrMsg_cusCAREPreChat-IssueDescription"))
+        } else*/ 
+        //FY22-0702 STORY 10571328: Copy Paste Validation on Pre Chat Form [END]
+        if (document.getElementById("ErrMsg_cusCAREPreChat-IssueDescription"))
             removeDomElementbyId("ErrMsg_cusCAREPreChat-IssueDescription");
     });
     document.getElementById("cusCAREPreChat-Email").addEventListener("paste", function (e) {
         var format = /[!#$%^&*()+\=\[\]{};':"\\|,<>\/?]/;
         if (format.test(pastedText(e)) == true) {
             e.preventDefault();
-            alert(orderSnapinLabelObj.pasteInvalidTextMsg);
+            alert(orderSnapinLabelObj.emailValidation); //FY22-0702 STORY 10571328: Copy Paste Validation on Pre Chat Form
         } else if (document.getElementById("ErrMsg_cusCAREPreChat-Email"))
             removeDomElementbyId("ErrMsg_cusCAREPreChat-Email");
     });
     document.getElementById("cusCAREPreChat-Phone").addEventListener("paste", function (e) {
         if (/^[0-9-]*$/.test(pastedText(e)) == false) {
             e.preventDefault();
-            alert(orderSnapinLabelObj.pasteInvalidTextMsg);
+            alert(orderSnapinLabelObj.phoneValidation); //FY22-0702 STORY 10571328: Copy Paste Validation on Pre Chat Form
         } else if (document.getElementById("ErrMsg_cusCAREPreChat-Phone"))
             removeDomElementbyId("ErrMsg_cusCAREPreChat-Phone");
     });
     if(document.getElementById("cusCAREPreChat-OrderNum"))
     document.getElementById("cusCAREPreChat-OrderNum").addEventListener("paste", function (e) {
-        var format = /[!@#$@%^&*()_+\=\[\]{};':"\\|,.<>\/?]/;
+        //FY22-0702 STORY 10571328: Copy Paste Validation on Pre Chat Form [START]
+        /*var format = /[!@#$@%^&*()_+\=\[\]{};':"\\|,.<>\/?]/;
         if (format.test(pastedText(e)) == true) {
             e.preventDefault();
             alert(orderSnapinLabelObj.pasteInvalidTextMsg);
-        } else if (document.getElementById("ErrMsg_cusCAREPreChat-OrderNum"))
+        } else*/ 
+        //FY22-0702 STORY 10571328: Copy Paste Validation on Pre Chat Form [END]
+        if (document.getElementById("ErrMsg_cusCAREPreChat-OrderNum"))
             removeDomElementbyId("ErrMsg_cusCAREPreChat-OrderNum");
     });
     
@@ -959,7 +999,7 @@ function custCarePreChatKeypressFieldValidation(orderSnapinLabelObj) {
         if (/^[0-9-]*$/.test(this.value) == true && document.getElementById("ErrMsg_cusCAREPreChat-Phone"))
             removeDomElementbyId("ErrMsg_cusCAREPreChat-Phone");
         else if (/^[0-9-]*$/.test(this.value) == false && !document.getElementById("ErrMsg_cusCAREPreChat-Phone"))
-            cusCarePreChatErrorMsgPlaceholder(this, orderSnapinLabelObj.phoneRequiredValidation);
+            cusCarePreChatErrorMsgPlaceholder(this, orderSnapinLabelObj.phoneValidation); //FY22-0702 STORY 10577407: Auto Fill Validation on Pre Chat Form
     });
     //FY22-0302 STORY 9874555: Pre-Chat Form validation message should go away in Auto-Fill scenario [END]
 
@@ -967,7 +1007,12 @@ function custCarePreChatKeypressFieldValidation(orderSnapinLabelObj) {
         var format = /[0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
         if (format.test(pastedText(e)) == true) {
             e.preventDefault();
-            alert(orderSnapinLabelObj.pasteInvalidTextMsg);
+            //FY22-0702 STORY 10571328: Copy Paste Validation on Pre Chat Form[START]
+            if (ele === "cusCAREPreChat-FirstName")
+                alert(orderSnapinLabelObj.firstNameInValid);
+            else if (ele === "cusCAREPreChat-LastName")
+                alert(orderSnapinLabelObj.lastNameInValid);
+            //FY22-0702 STORY 10571328: Copy Paste Validation on Pre Chat Form[END]
         } else if (ele === "cusCAREPreChat-FirstName" && document.getElementById("ErrMsg_cusCAREPreChat-FirstName"))
             removeDomElementbyId("ErrMsg_cusCAREPreChat-FirstName");
         else if (ele === "cusCAREPreChat-LastName" && document.getElementById("ErrMsg_cusCAREPreChat-LastName"))

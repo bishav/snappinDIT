@@ -461,7 +461,7 @@ function custPreChatKeypressFieldValidation(preChatlableObject) {
             var format = /[!#$%^&*()+\=\[\]{};':"\\|,<>\/?]/;
             if (format.test(pastedText(e)) == true) {
                 e.preventDefault();
-                alert(preChatlableObject.pasteInvalidTextMsg);
+                alert(preChatlableObject.emailValidation); //FY22-0702 STORY 10571323: Copy Paste Validation on Pre Chat Form
             } else if (document.getElementById("ErrMsg_cusPreChat-emptyAltEmail"))
                 removeDomElementbyId("ErrMsg_cusPreChat-emptyAltEmail");
         });
@@ -494,25 +494,28 @@ function custPreChatKeypressFieldValidation(preChatlableObject) {
         checkForSpecialCharAndText(e, "cusPreChat-LastName");
     });
     document.getElementById("cusPreChat-IssueDescription").addEventListener("paste", function (e) {
-        var format = /[<>]/;
+         //FY22-0702 STORY 10571323: Copy Paste Validation on Pre Chat Form [START]
+        /*var format = /[<>]/;
         if (format.test(pastedText(e)) == true) {
             e.preventDefault();
             alert(preChatlableObject.pasteInvalidTextMsg);
-        } else if (document.getElementById("ErrMsg_cusPreChat-IssueDescription"))
+        } else*/
+        //FY22-0702 STORY 10571323: Copy Paste Validation on Pre Chat Form [END]
+         if (document.getElementById("ErrMsg_cusPreChat-IssueDescription"))
             removeDomElementbyId("ErrMsg_cusPreChat-IssueDescription");
     });
     document.getElementById("cusPreChat-Email").addEventListener("paste", function (e) {
         var format = /[!#$%^&*()+\=\[\]{};':"\\|,<>\/?]/;
         if (format.test(pastedText(e)) == true) {
             e.preventDefault();
-            alert(preChatlableObject.pasteInvalidTextMsg);
+            alert(preChatlableObject.emailValidation); //FY22-0702 STORY 10571323: Copy Paste Validation on Pre Chat Form
         } else if (document.getElementById("ErrMsg_cusPreChat-Email"))
             removeDomElementbyId("ErrMsg_cusPreChat-Email");
     });
     document.getElementById("cusPreChat-Phone").addEventListener("paste", function (e) {
         if (/^[0-9-]*$/.test(pastedText(e)) == false) {
             e.preventDefault();
-            alert(preChatlableObject.pasteInvalidTextMsg);
+            alert(preChatlableObject.phoneValidation);  //FY22-0702 STORY 10571323: Copy Paste Validation on Pre Chat Form
         } else if (document.getElementById("ErrMsg_cusPreChat-Phone"))
             removeDomElementbyId("ErrMsg_cusPreChat-Phone");
     });
@@ -532,7 +535,7 @@ function custPreChatKeypressFieldValidation(preChatlableObject) {
         if (/^[0-9-]*$/.test(this.value) == true && document.getElementById("ErrMsg_cusPreChat-Phone"))
             removeDomElementbyId("ErrMsg_cusPreChat-Phone");
         else if (/^[0-9-]*$/.test(this.value) == false && !document.getElementById("ErrMsg_cusPreChat-Phone"))
-            cusPreChatErrorMsgPlaceholder(this, preChatlableObject.phoneRequiredValidation);
+            cusPreChatErrorMsgPlaceholder(this, preChatlableObject.phoneValidation); //FY22-0702 STORY 10577402: Auto Fill Validation on Pre Chat Form
     });
     if (document.getElementById("cusPreChat-emptyAltEmail")) {
         document.getElementById("cusPreChat-emptyAltEmail").addEventListener("change", function () {
@@ -552,7 +555,12 @@ function custPreChatKeypressFieldValidation(preChatlableObject) {
         var format = /[0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
         if (format.test(pastedText(e)) == true) {
             e.preventDefault();
-            alert(preChatlableObject.pasteInvalidTextMsg);
+            //FY22-0702 STORY 10571323: Copy Paste Validation on Pre Chat Form [START]
+            if (ele === "cusPreChat-FirstName")
+                alert(preChatlableObject.firstNameInValid);
+            else if (ele === "cusPreChat-LastName")
+                alert(preChatlableObject.lastNameInValid); 
+            //FY22-0702 STORY 10571323: Copy Paste Validation on Pre Chat Form [END]
         } else if (ele === "cusPreChat-FirstName" && document.getElementById("ErrMsg_cusPreChat-FirstName"))
             removeDomElementbyId("ErrMsg_cusPreChat-FirstName");
         else if (ele === "cusPreChat-LastName" && document.getElementById("ErrMsg_cusPreChat-LastName"))
@@ -657,7 +665,7 @@ function custPreFormValidation(preChatlableObject, snapInObject) {//FY21-1003: D
     else {
         var format = /[0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/; //FY20-1102 DEFECT 7534877
         if (checkErrMsgValidation(firstNameDOM, "FirstName", format, true)) {
-            cusPreChatErrorMsgPlaceholder(firstNameDOM, preChatlableObject.firstNameValidation);
+            cusPreChatErrorMsgPlaceholder(firstNameDOM, preChatlableObject.firstNameInValid); //FY22-0702 STORY 10577402: Auto Fill Validation on Pre Chat Form
             acceptForm = false;
         }
     }
@@ -673,7 +681,7 @@ function custPreFormValidation(preChatlableObject, snapInObject) {//FY21-1003: D
     else {
         var format = /[0-9 !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/; //FY20-1102 DEFECT 7534877
         if (checkErrMsgValidation(lastNameDOM, "LastName", format, true)) {
-            cusPreChatErrorMsgPlaceholder(lastNameDOM, preChatlableObject.lastNameValidation);
+            cusPreChatErrorMsgPlaceholder(lastNameDOM, preChatlableObject.lastNameInValid); //FY22-0702 STORY 10577402: Auto Fill Validation on Pre Chat Form
             acceptForm = false;
         }
     }
@@ -3084,9 +3092,11 @@ function cusBotPreChatErrorMsgPlaceholder(domElement, message) {
 }
 function custBotPreChatKeypressFieldValidation() {
     var msgRequiredField = "This is a required field",
+        msgInvalidPhone = "Invalid Phone Number",//FY22-0702 STORY 10571323: Copy Paste Validation on Pre Chat Form
         msgInvalidEmail = "Invalid Email id";
     if (typeof Application_Context !== 'undefined' && Application_Context === "ChatBot-CareBot") {
         msgRequiredField = "Este é um campo obrigatório";
+        msgInvalidPhone = "Número de telefone inválido";//FY22-0702 STORY 10571323: Copy Paste Validation on Pre Chat Form
         msgInvalidEmail = "ID de email inválido";
     }
     document.getElementById("cusBotPreChat-Phone").onkeypress = function (e) {
@@ -3138,14 +3148,14 @@ function custBotPreChatKeypressFieldValidation() {
         var format = /[!#$%^&*()+\=\[\]{};':"\\|,<>\/?]/;
         if (format.test(pastedText(e)) == true) {
             e.preventDefault();
-            alert(orderSnapinLabelObj.pasteInvalidTextMsg);
+            alert(msgInvalidEmail); //FY22-0702 STORY 10571323: Copy Paste Validation on Pre Chat Form
         } else if (document.getElementById("ErrMsg_cusBotPreChat-Email"))
             removeDomElementbyId("ErrMsg_cusBotPreChat-Email");
     });
     document.getElementById("cusBotPreChat-Phone").addEventListener("paste", function (e) {
         if (/^[0-9-]*$/.test(pastedText(e)) == false) {
             e.preventDefault();
-            alert(orderSnapinLabelObj.pasteInvalidTextMsg);
+            alert(msgInvalidPhone);//FY22-0702 STORY 10571323: Copy Paste Validation on Pre Chat Form
         } else if (document.getElementById("ErrMsg_cusBotPreChat-Phone"))
             removeDomElementbyId("ErrMsg_cusBotPreChat-Phone");
     });
