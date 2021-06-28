@@ -1,15 +1,8 @@
-﻿﻿<!DOCTYPE html>
-<html>
+﻿﻿<html>
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="../../../node_modules/jquery/dist/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" media="screen" href="../../../node_modules/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="../../../main.css" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+
     <style type='text/css'>
         .embeddedServiceHelpButton .helpButton .uiButton {
             background-color: #005290;
@@ -19,85 +12,46 @@
             outline: 1px solid #005290;
         }
     </style>
-  <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
-</head>
-<body onload="checkChatConfigCookie()">
     
+    <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
     <script type='text/javascript'>
-           var initESW = function(gslbBaseURL) {​​​​
-       
-               embedded_svc.settings.displayHelpButton = true; //Or false
-       
-               embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'         //embedded_svc.settings.defaultMinimizedText = '...'; //(Defaults to Chat with an Expert)
-       
-               //embedded_svc.settings.disabledMinimizedText = '...'; //(Defaults to Agent Offline)         //embedded_svc.settings.loadingText = ''; //(Defaults to Loading)
-       
-               //embedded_svc.settings.storageDomain = 'yourdomain.com'; //(Sets the domain for your deployment so that visitors can navigate subdomains during a chat session)         // Settings for Chat
-       
-               //embedded_svc.settings.directToButtonRouting = function(prechatFormData) {​​​​
-       
-                   // Dynamically changes the button ID based on what the visitor enters in the pre-chat form.
-       
-                   // Returns a valid button ID.
-       
-               //}​​​​;
-       
-               //embedded_svc.settings.prepopulatedPrechatFields = {​​​​}​​​​; //Sets the auto-population of pre-chat form fields
-       
-               //embedded_svc.settings.fallbackRouting = []; //An array of button IDs, user IDs, or userId_buttonId
-       
-               //embedded_svc.settings.offlineSupportMinimizedText = '...'; //(Defaults to Contact Us)         embedded_svc.settings.enabledFeatures = ['LiveAgent'];
-       
-               embedded_svc.settings.entryFeature = 'LiveAgent';         embedded_svc.init(
-       
-                   'https://wiproltd-dev-ed.my.salesforce.com',
-       
-                   'https://snapins-sdl-developer-edition.gus.force.com',
-       
-                   gslbBaseURL,
-       
-                   '00DB0000000KNQ4',
-       
-                   'Snapin',
-       
-                   {​​​​
-       
-                       baseLiveAgentContentURL: 'https://c.gla3-phx.gus.salesforce.com/content',
-       
-                       deploymentId: '572B00000009HEV',
-       
-                       buttonId: '573B00000009J9W',
-       
-                       baseLiveAgentURL: 'https://d.gla3-phx.gus.salesforce.com/chat',
-       
-                       eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04IB0000000Cj8JMAS_1752bfe205b',
-       
-                       isOfflineSupportEnabled: false
-       
-                   }​​​​
-       
-               );
-       
-           }​​​​;     if (!window.embedded_svc) {​​​​
-       
-               var s = document.createElement('script');
-       
-               s.setAttribute('src', 'https://wiproltd-dev-ed.my.salesforce.com/embeddedservice/5.0/esw.min.js');
-       
-               s.onload = function() {​​​​
-       
-                   initESW(null);
-       
-               }​​​​;
-       
-               document.body.appendChild(s);
-       
-           }​​​​ else {​​​​
-       
-               initESW('https://service.force.com');
-       
-           }​​​​
-       
+        var initESW = function(gslbBaseURL) {
+            embedded_svc.settings.displayHelpButton = true; //Or false
+            embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
+    
+           
+            embedded_svc.settings.enabledFeatures = ['LiveAgent'];
+            embedded_svc.settings.entryFeature = 'LiveAgent';
+    
+            embedded_svc.init(
+                'https://wiproltd-dev-ed.my.salesforce.com',
+                'https://snapins-sdl-developer-edition.gus.force.com',
+                gslbBaseURL,
+                '00DB0000000KNQ4',
+                'Snapin',
+                {
+                    baseLiveAgentContentURL: 'https://c.gla3-phx.gus.salesforce.com/content',
+                    deploymentId: '572B00000009HEV',
+                    buttonId: '573B00000009J9W',
+                    baseLiveAgentURL: 'https://d.gla3-phx.gus.salesforce.com/chat',
+                    eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04IB0000000Cj8JMAS_1752bfe205b',
+                    isOfflineSupportEnabled: false
+                }
+            );
+
+
+
+        };
+    
+        if (!window.embedded_svc) {
+            var s = document.createElement('script');
+            s.setAttribute('src', 'https://wiproltd-dev-ed.my.salesforce.com/embeddedservice/5.0/esw.min.js');
+            s.onload = function() {
+                initESW(null);
+            };
+            document.body.appendChild(s);
+        } else {
+            initESW('https://service.force.com');
+        }
     </script>
 </body>
-</html>
