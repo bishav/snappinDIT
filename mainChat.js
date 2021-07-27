@@ -1205,6 +1205,8 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
     //STORY 6929894[START]
     if ("routingModel" in snapInObject && snapInObject.routingModel && snapInObject.routingModel.toLowerCase() === "skillbased") {
         embedded_svc.settings.fallbackRouting = snapInObject.skillIds;
+    }else{
+        embedded_svc.settings.fallbackRouting = [snapInObject.buttonId]; //Correct button routing unit Unit testing.
     }
     //STORY 6929894[END]
     if ("language" in snapInObject)
