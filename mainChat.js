@@ -610,6 +610,11 @@ function custPreChatShowAdditionalDetailsInUi(snapInObject, preChatlableObject) 
             document.querySelector(".cusPreChat-inputDispatchNum.cusPreChat-embeddedServiceSidebarFormField").style.display = 'block'; //Make DIspatch Number field Visible.
         } else
             //FY21-1201 Story #9315449: Warranty Parts Return : Pre-Chat Form [END]
+            //FY22-1002: Story #10995446 : SnAS chat : Show Prechat form Header [START]
+            if("chatSource" in snapInObject && snapInObject.chatSource === "SnAS"){
+                topFieldValues = '<div id="readonlyPreChatContainer" class="readonlyContainer" style="margin: 0 1.5em 6px 1.2em; text-align: left;position: relative;font-size: .75em;color: #444444;"><div style="font-size: 1.2em;">' + snapInObject.productName + '</div>' + "" + '<div><b>' + preChatlableObject.workOrder + ':</b> <span style="font-size:12px;">' + snapInObject.workOrder + '</span></div><div><b>' + preChatlableObject.siteID + ':</b> <span style="font-size:12px;">' + snapInObject.siteID + '</span></div></div>';
+            }else
+            //FY22-1002: Story #10995446 : SnAS chat : Show Prechat form Header [END]
             if (snapInObject.productName == null)
                 topFieldValues = '<div id="readonlyPreChatContainer" class="readonlyContainer" style="margin: 0 1.5em 6px 1.2em; text-align: left;position: relative;font-size: .75em;color: #444444;margin-bottom: 0px;">' + getChatServiceTag(preChatlableObject.serviceTag, snapInObject.serviceTag) + '<div><b>' + preChatlableObject.issueType + ':</b> <span id="preChatIssueDesc" style="font-size: 12px;">' + snapInObject.issueVal + '</span></div></div>';
             else
