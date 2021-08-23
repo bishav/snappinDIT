@@ -456,12 +456,12 @@ function routingConfig(partnerPortalDetails){
 	//FY21-0803 Add GCC to SharePoint [START]
 	else if (getProductGroup(partnerPortalDetails.productGroup) === "GCC"){
 		switch(partnerPortalDetails.portalType) {
-			case "UCCBN":
+			/*case "UCCBN":
 			  buttonID = "5731P000000TSVu";//GCC_US_CA_Client_Basic_NBD
 			  break;
 			case "UCPN":
 			  buttonID = "5731P000000TSVv";//GCC_US_CA_Client_PS_NBD
-			  break;
+			  break;*/
 			case "UCEN":
 				buttonID = "5731P000000TSVw";//GCC_US_CA_Enterprise_NBD
 			break;
@@ -474,7 +474,7 @@ function routingConfig(partnerPortalDetails){
             case "LES":
 				buttonID = "5731P000000TSVt";//GCC_LA_Enterprise_SBD
 			break;
-			case "LCBN":
+			/*case "LCBN":
 				buttonID = "5731P000000TSVq";//GCC_LA_Client_Basic_NBD
 			break;
 			case "LCPSN":
@@ -485,30 +485,33 @@ function routingConfig(partnerPortalDetails){
 			break;
 			case "APCPSSN":
 				buttonID = "5731P000000TSVg";//GCC_AP_Client_PS_SBD_NBD
-			break;
+			break;*/
 			case "APEPSN":
 				buttonID = "5731P000000TSVh";//GCC_AP_Enterprise_PS_SBD_NBD
 			break;
-			case "CNNPSN":
+			/*case "CNNPSN":
 				buttonID = "5731P000000TSVl";//GCC_CN_Non_PS_SBD_NBD
 			break;
 			case "CNCPSN":
 				buttonID = "5731P000000TSVj";//GCC_CN_Client_PS_SBD_NBD
-			break;
+			break;*/
 			case "CNEPSN":
 				buttonID = "5731P000000TSVk";//GCC_CN_Enterprise_PS_SBD_NBD
 			break;
-			case "JPCPSN":
+			/*case "JPCPSN":
 				buttonID = "5731P000000TSVn";//GCC_JP_Client_PS_SBD_NBD
-			break;
+			break;*/
 			case "JPEPSN":
 				buttonID = "5731P000000TSVo";//GCC_JP_Enterprise_PS_SBD_NBD
 			break;
-			case "JPNPSN":
+			/*case "JPNPSN":
 				buttonID = "5731P000000TSVp";//GCC_JP_Non_PS_SBD_NBD
-			break;
+			break;*/
 			case "ESN":
 				buttonID = "5731P000000TSVm";//GCC_EMEA_SBD_NBD
+			break;
+			case "EIN":
+				buttonID = "5733K00000000Mj";//GCC EMEA ISG NBD
 			break;
 			default:
 			  break;

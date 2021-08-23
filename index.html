@@ -84,17 +84,23 @@
                 <div class="col-lg-8">
                     <form>
                         <div class="form-group">
-                            <label style="margin-right: 10px; margin-bottom: 20px;" for="Organization">Project : </label>
+                            <label style="margin-right: 10px; margin-bottom: 20px; font-weight: 600;" for="Organization">Project : </label>
                                 <span id="orginazationName">
                                     <label><input id = "dellWPR" type="radio" name="optradio" value = "dellWPR">&nbsp&nbspWarranty Parts Return</label>
                                     <label><input id = "dellOrg" type="radio" name="optradio" checked>&nbsp&nbspDell legacy</label>
                                     <label><input id = "emcOrg" type="radio" name="optradio" style="margin-left: 20px;" value = 'emcOrg'>&nbsp&nbspEMC legacy</label>
                                     <label><input id = "routSprinklrBot" type="radio" name="optradio" style="margin-left: 20px;">&nbsp&nbspSprinklr Bot Routing</label>
                                     <label><input id = "routSprinklrBotRefresh" type="radio" name="optradio" style="margin-left: 20px;">&nbsp&nbspSprinklr Bot Refresh</label>
+                                    <label><input id = "SnAS" type="radio" name="optradio" style="margin-left: 20px;" value = 'SnAS'>&nbsp&nbspSnAS</label>
                                 </span>
+                                <hr/>
                             <dev class="dellTech">
                                 <div>
-                                    <label for="serviceTag"><span class='NonEMC'>Service Tag</span><span class='EMC' style='display:none;'>CPID (for EMC legacy)</span></label>
+                                    <label for="serviceTag">
+                                        <span class='NonEMC'>Service Tag</span>
+                                        <span class='EMC' style='display:none;'>CPID (for EMC legacy)</span>
+                                        <span class='SnAS'>DPS(Dispatch) Number / Work Order Number*</span>
+                                    </label>
                                 </div>
                                 <input type="text" class="form-control"  id="serviceTag" aria-describedby="serviceTag" placeholder="Enter Service Tag" value="DSEASSET">
                             </div>
@@ -120,6 +126,44 @@
                             </div>
                             <input style='display:none;' type="text" class="form-control EMC"  id="emcAltEmail" aria-describedby="serviceTag" placeholder="Prechat UI changes based on email ID">
                             
+                            <!--SnAS Chat Input Values [START]-->
+                            
+                            <div class='SnAS' style='display:none;'>
+                                <label for="snasSerialNo">Serial Number*</label>
+                            </div>
+                            <input style='display:none;' type="text" class="form-control SnAS"  id="snasSerialNo" aria-describedby="snasSerialNo" value="4235540021456">
+                            
+                            <div class='SnAS' style='display:none;'>
+                                <label for="snasProductName">Product Name*</label>
+                            </div>
+                            <input style='display:none;' type="text" class="form-control SnAS"  id="snasProductName" aria-describedby="snasProductNo" value="HES123A55">
+                            
+                            <div class='SnAS' style='display:none;'>
+                                <label for="snasSiteId">Site Id*</label>
+                            </div>
+                            <input style='display:none;' type="text" class="form-control SnAS"  id="snasSiteId" aria-describedby="snasSiteId" value="ST122435544TESD5877">
+                        
+                            <div class='SnAS' style='display:none;'>
+                                <label for="snasFirstName">First Name*</label>
+                            </div>
+                            <input style='display:none;' type="text" class="form-control SnAS"  id="snasFirstName" aria-describedby="snasFirstName" value="User">
+                            
+                            <div class='SnAS' style='display:none;'>
+                                <label for="snasLastName">Last Name*</label>
+                            </div>
+                            <input style='display:none;' type="text" class="form-control SnAS"  id="snasLastName" aria-describedby="snasLastName" value="Name">
+                            
+                            <div class='SnAS' style='display:none;'>
+                                <label for="snasEmail">Email Address*</label>
+                            </div>
+                            <input style='display:none;' type="text" class="form-control SnAS"  id="snasEmail" aria-describedby="snasEmail" value="userEmail@dell.com">
+                            
+                            <div class='SnAS' style='display:none;'>
+                                <label for="snasPhone">Phone Number</label>
+                            </div>
+                            <input style='display:none;' type="text" class="form-control SnAS"  id="snasPhone" aria-describedby="snasPhone">
+                            
+                            <!--SnAS Chat Input Values [END]-->
                         </div>
 
                         <div class="col-lg-2"></div>
@@ -200,7 +244,8 @@
                 <div class="input-group">
                     <select class="custom-select" onChange="changeEnv()" id="environmentSelection">
                     <option selected>Choose your preferred environment</option>
-                    <option value="FY22_0802_ccks">FY22_0802_ccks</option>
+                    <option value="FY22_1003_ccks">FY22_1003_ccks</option>
+                    <option value="FY22_0802_ccks">FY22_0803_ccks</option>
 
                     <option value="GE1">GE1</option>
                     <option value="GE2">GE2</option>
@@ -212,9 +257,60 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-body config" id="FY22_0802_ccks" style="display:none">
+
+            <div class="modal-body config" id="FY22_1003_ccks" style="display:none">
                 <div class="form-group">
-                    <h5>FY22_0802_ccks Environment Settings</h5>
+                    <h5>FY22_1003_ccks Environment Settings</h5>
+                </div>
+                <div class="form-group">
+                    <label for="usr">baseLiveAgentContentURL:</label>
+                    <input type="text" class="form-control" data-id="baseLiveAgentContentURL" value="https://c.la2-c1cs-ia4.salesforceliveagent.com/content">
+                </div>
+				<div class="form-group">
+                    <label for="usr">deploymentId:</label>
+                    <input type="text" class="form-control" data-id="deploymentId" value="5720b000000GneC">
+                </div>
+                <div class="form-group">
+                    <label for="usr">buttonId:</label>
+                    <input type="text" class="form-control" data-id="buttonId" value="5731P000000TSVq">
+                </div>
+				<div class="form-group">
+                    <label for="usr">baseLiveAgentURL:</label>
+                    <input type="text" class="form-control" data-id="baseLiveAgentURL" value="https://d.la2-c1cs-ia4.salesforceliveagent.com/chat">
+                </div>
+				<div class="form-group">
+                    <label for="usr">LiveAgentDevName:</label>
+                    <input type="text" class="form-control" data-id="LiveAgentDevName" value="EmbeddedServiceLiveAgent_Parent04I0b000000blJJEAY_16520d15b68">
+                </div>
+				<div class="form-group">
+                    <label for="usr">componentName:</label>
+                    <input type="text" class="form-control" data-id="componentName" value="Snap_Ins_Chat_Deployment">
+                </div>
+				<div class="form-group">
+                    <label for="usr">organizationId:</label>
+                    <input type="text" class="form-control" data-id="organizationId" value="00D4C0000008zH7">
+                </div>
+				<div class="form-group">
+                    <label for="usr">serviceForceURL:</label>
+                    <input type="text" class="form-control" data-id="serviceForceURL" value="https://service.force.com">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInInitURL:</label>
+                    <input type="text" class="form-control" data-id="snapInInitURL" value="https://dellservices--1003cck.my.salesforce.com">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInJs:</label>
+                    <input type="text" class="form-control" data-id="snapInJs" value="https://dellservices--1003cck.my.salesforce.com/embeddedservice/5.0/esw.min.js">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInLAURL:</label>
+                    <input type="text" class="form-control" data-id="snapInLAURL" value="https://1003cck-dellservices.cs61.force.com/LASnapIn">
+                </div>
+            </div>	
+
+            <div class="modal-body config" id="FY22_0803_ccks" style="display:none">
+                <div class="form-group">
+                    <h5>FY22_0803_ccks Environment Settings</h5>
                 </div>
                 <div class="form-group">
                     <label for="usr">baseLiveAgentContentURL:</label>
@@ -479,12 +575,30 @@
                     }else{
                         $(".dellTech").show(); 
                     }
+
                     if ($(this).is(':checked') && $(this).val() == 'emcOrg') {
                         $(".EMC").show();
                         $(".NonEMC").hide();
-                    }else{
+                        $(".SnAS").hide();
+                    }else if ($(this).is(':checked') && $(this).val() == 'SnAS') {
+                        $(".SnAS").show();
+                        $(".EMC").hide();
+                        $(".NonEMC").hide();
+
+                        //Additional Values to be hidden
+                        $(".dropdown").hide();
+                        $(".non-live-agent").hide();
+                        $(".live-agent-heading").show();
+                        $(".call-us").show();
+                        $(".chat-with-us").show();
+                        $("#contact-row").show();
+                        
+                    }else {
                         $(".EMC").hide();
                         $(".NonEMC").show();
+                        $(".SnAS").hide();
+
+                        $(".dropdown").show();
                     }
                     
                 });
@@ -587,9 +701,47 @@
 
         //open and initiate prechat form on click of tech chat
         function initChat() {
-                var snapInObject = {
-                    snapinButtonClicked:true
-                };
+                var snapInObject
+                if (document.getElementById('SnAS').checked){
+                    snapInObject = {
+                        //Collect details from here
+                        baseLiveAgentContentURL: getOrgCookie('baseLiveAgentContentURL'),
+                        deploymentId: getOrgCookie('deploymentId'),
+                        baseLiveAgentURL: getOrgCookie('baseLiveAgentURL'),
+                        LiveAgentDevName: getOrgCookie('LiveAgentDevName'),                
+                        componentName: getOrgCookie('componentName'),
+                        organizationId: getOrgCookie('organizationId'),
+                        serviceForceURL: getOrgCookie('serviceForceURL'),
+                        snapInInitURL: getOrgCookie('snapInInitURL'),
+                        snapInJs: getOrgCookie('snapInJs'),
+                        snapInLAURL: getOrgCookie('snapInLAURL'),
+                       
+                        buttonId: getOrgCookie('buttonId'),
+                        
+                        //Hardcoded values.
+                        chatSource: "SnAS",
+
+                        //loggedin user/customer data
+                        language: 'en',
+                        firstName: document.querySelector('#snasFirstName').value,
+                        lastName: document.querySelector('#snasLastName').value,
+                        email:document.querySelector('#snasEmail').value,  
+                                    
+                        //Service related data
+                        workOrder: document.querySelector('#serviceTag').value, //Dispatch Number and Workorder number is same.
+                        productName: document.querySelector('#snasProductName').value,
+                        siteID : document.querySelector('#snasSiteId').value,
+                        serialNumber :  document.querySelector('#snasSerialNo').value
+                        //dispatchNumber: "1435465"
+
+
+                    };
+                }else{
+                    snapInObject = {
+                        snapinButtonClicked:true
+                    };
+                }
+                
                 var preChatlableObject = {
                     firstName:"First Name",
                     lastName:"Last Name",
@@ -638,7 +790,31 @@
                       //New Values [Story: 10577402]
                       lastNameInValid: "Please enter a valid Last Name",
                       firstNameInValid: "Please enter a valid First Name",
-                      phoneValidation: "Please enter a valid Phone Number."
+                      phoneValidation: "Please enter a valid Phone Number.",
+                      
+                      //New Values for SnAS
+                        workOrder: "Work Order Number",
+                        issueType:"Issue",
+                        siteID : "Site ID ",
+                        productName: "Product Name",
+                        dispatchNumber: "Dispatch Number",
+                        firstName:"First Name",
+                        lastName:"Last Name",
+                        emailAddress:"Email Address",
+                        phoneNumber:"Primary Phone Number",
+                        issueDescription:"Issue Description",
+                        startChat:"Start Chat",
+                        optional:"(Optional)",
+                        characters:"characters",
+                        issueDescriptionLength:"250",
+                        preChatlableObject:"Chat Now",
+                        customerPrivacyDesc:"\u003cb\u003eYour privacy is important to us.\u003c/b\u003e We will only use your information to process your request. We will not share it with anyone. To learn more about how we use and protect your data, see the \u003ca target=\u0027_blank\u0027 href=\u0027//www.dell.com/learn/policies-privacy\u0027\u003eDell Privacy Statement.\u003c/a\u003e",
+                        phoneRequiredValidation:"Phone name required",
+                        closeChat: "Close Chat",
+                        chatUnavailableMessage:"Sorry, no agents are available at this moment.",
+                        chatHeader:"Chat Now",
+                        pasteInvalidTextMsg: "You are trying to paste an invalid text."
+
                 };
                triggerSnapin(snapInObject,preChatlableObject);
         }

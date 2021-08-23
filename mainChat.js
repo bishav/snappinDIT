@@ -90,11 +90,17 @@ function triggerSnapin(snapInObject, preChatlableObject) {
                     //FY22-0203: Sprinklr Chatbot : Reboot Chat Context [END]
                     if (!snapInObject.snapinButtonClicked && !snapinChatGlobalObjNotEmpty()) {//FY20-1102: DEFECT 7534816  Retain chat is not working properly
                         eleExist('.embeddedServiceHelpButton', hideDomObject);
-                        //eleExist('.embeddedServiceSidebar', hideDomObject);
                         eleExistWithVariable('.modalContainer  .dockableContainer .sidebarBody .activeFeature .featureBody .embeddedServiceSidebarState .prechatUI', hideOtherDomObject, '.embeddedServiceSidebar');
-                        saveGlobalSnapinObjToSession(snapInObject);
-                        //snapinChatInitiatedState(true); //Fix for defect [7030965]
-                        //eleExist('.helpButtonEnabled #helpButtonSpan > .message', chatClick); //DEFECT 7030965 for Bishav comment this
+                        //FY22-1002: Story #10995446 : SnAS chat : when Chat button is clicked [START]
+                        if ("chatSource" in snapInObject && snapInObject.chatSource === "SnAS"){
+                            snapInObject.snapinButtonClicked = true;
+                            saveGlobalSnapinObjToSession(snapInObject);
+                            eleExist('.helpButtonEnabled #helpButtonSpan > .message', chatClick);
+                            appendCustPreChatSnapinDom(snapInObject, preChatlableObject);
+                        }else
+                            saveGlobalSnapinObjToSession(snapInObject);
+                        //FY22-1002: Story #10995446 : SnAS chat : when Chat button is clicked [END]
+                        //saveGlobalSnapinObjToSession(snapInObject); //FY22-1002: Story #10995446 : SnAS chat : Commenting old code
                         if (document.getElementById('cusPreChatSnapinDom'))
                             custPreChatShowAdditionalDetailsInUi(snapInObject, preChatlableObject);
                         initSnapIn(snapInObject);
@@ -125,75 +131,80 @@ function customChatNotCreated() {
         return true;
 }
 function appendCustPreChatSnapinDom(snapInObject, preChatlableObject) {
-    if (!document.getElementById('cusPreChatSnapinDom')) {
-        //FY21-1201: Unit testing: Adding Close that lable[START]
-        if (!("closeChat" in preChatlableObject && preChatlableObject.closeChat))
-            preChatlableObject.closeChat = "Close Chat";
-        //FY21-1201: Unit testing: Adding Close that lable[END]
-        //STORY 7193456: FY201101[START]
-        if ("isEmcProduct" in snapInObject && snapInObject.isEmcProduct) {
-            preChatlableObject.serviceTag = preChatlableObject.serialNumber;
+    try{
+        if (!document.getElementById('cusPreChatSnapinDom')) {
+            //FY21-1201: Unit testing: Adding Close that lable[START]
+            if (!("closeChat" in preChatlableObject && preChatlableObject.closeChat))
+                preChatlableObject.closeChat = "Close Chat";
+            //FY21-1201: Unit testing: Adding Close that lable[END]
+            //STORY 7193456: FY201101[START]
+            if ("isEmcProduct" in snapInObject && snapInObject.isEmcProduct) {
+                preChatlableObject.serviceTag = preChatlableObject.serialNumber;
+            }
+            //STORY 7193456: FY201101[END]
+            //FY21-1003 Story #9078562: HES Admin Chat Prechat form changes [START]
+            var domEle
+            if (isHesAdminChat(snapInObject)) {
+                domEle = createHesAdminChat(preChatlableObject, snapInObject); //FY21-1003 Defect: 9547663 TextOverflow for static content.
+            } else
+                domEle = '<div id="cusPreChatSnapinDom" class="cusPreChat-modalContainer"> <div class="cusPreChat-dockableContainer"> <div class="cusPreChat-embeddedServiceSidebarHeader"> <div class="cusPreChat-shortHeader"> <div class="cusPreChat-shortHeaderContent">  <h2 class="cusPreChat-headerText"> <div class="cusPreChat-headerTextContent"> <span id="cusPreChat-headerTextLabel">' + preChatlableObject.chatHeader + '</span> <span id="cusPreChat-headerSubtext"> </span></div></h2> <button id="cusPreChat-minimize-btn" class="cusPreChat-minimizeButton cusPreChat-headerItem"> <span class="cusPreChat-assistiveText">Minimize chat</span> <span class="cusPreChat-minimize cusPreChat-x-small cusPreChat-embeddedServiceIcon"> <svg focusable="false" data-key="minimize_window" aria-hidden="true" viewBox="0 0 52 52" class="slds-icon slds-icon-text-default slds-icon_x-small"><g><path d="M50 48.5c0 .8-.7 1.5-1.5 1.5h-45c-.8 0-1.5-.7-1.5-1.5v-3c0-.8.7-1.5 1.5-1.5h45c.8 0 1.5.7 1.5 1.5v3z"></path></g></svg> </span> </button><button id="cusPreChat-close-btn" class="cusPreChat-closeButton cusPreChat-headerItem"> <span class="cusPreChat-assistiveText">Close chat</span> <span class="cusPreChat-x-small cusPreChat-embeddedServiceIcon"> <svg focusable="false" aria-hidden="true" data-key="close" viewBox="0 0 100 100"> <path d="M65.577 53.73l27.5-27.71c1.27-1.27 1.27-3.174 0-4.445l-4.23-4.44c-1.272-1.27-3.175-1.27-4.445 0L56.694 44.847c-.847.845-2.115.845-2.96 0L26.018 16.922c-1.27-1.27-3.174-1.27-4.445 0l-4.44 4.442c-1.27 1.27-1.27 3.174 0 4.444l27.71 27.71c.846.846.846 2.116 0 2.962L16.923 84.403c-1.27 1.27-1.27 3.174 0 4.444l4.442 4.442c1.27 1.268 3.174 1.268 4.444 0l27.71-27.713c.846-.847 2.116-.847 2.962 0L84.19 93.29c1.27 1.268 3.174 1.268 4.445 0l4.44-4.445c1.27-1.268 1.27-3.17 0-4.44l-27.5-27.712c-.847-.847-.847-2.115 0-2.96z"> </path> </svg> </span> </button> </div></div></div><div class="cusPreChat-sidebarBody"> <div id="cusPreChat-sidebarLoadingIndicator" class="cusPreChat-sidebarLoadingIndicator" style="display: none;"> <div class="cusPreChat-loadingBallContainer cusPreChat-animated cusPreChat-embeddedServiceLoadingBalls"> <span class="cusPreChat-loadingBall cusPreChat-first"> </span> <span class="cusPreChat-loadingBall cusPreChat-second"> </span> <span class="cusPreChat-loadingBall cusPreChat-third"> </span></div></div><div id="cusPreChat-alertMsgContainer" class="cusPreChat-sidebarLoadingIndicator" style="display: none;"><div style="margin: 2.5em 1.75em;">' + preChatlableObject.chatUnavailableMessage + '</div><div><button id="cusPreChat-CloseChat" class="cusPreChat-embeddedServiceSidebarButton" type="button"><span class="cusPreChat-label cusPreChat-bBody">' + preChatlableObject.closeChat + '</span></button></div></div><div id="cusPreChat-hideWhileLoading" class="cusPreChat-activeFeature cusPreChat-hideWhileLoading"> <div class="cusPreChat-featureBody cusPreChat-embeddedServiceSidebarFeature"> <div class="cusPreChat-stateBody cusPreChat-embeddedServiceSidebarState"> <div class="cusPreChat-prechatUI cusPreChat-embeddedServiceLiveAgentStatePrechatDefaultUI"> <div class="cusPreChat-formContent cusPreChat-embeddedServiceSidebarForm"> <ul class="cusPreChat-fieldList"><li class="cusPreChat-inputSplitName cusPreChat-embeddedServiceSidebarFormField"> <span class="cusPreChat-split-field-container"> <div class="cusPreChat-uiInput cusPreChat-uiInputText cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel"> <span class="">' + preChatlableObject.firstName + '</span></label> <input id="cusPreChat-FirstName" class="cusPreChat-FirstName form-control cusPreChat-input" maxlength="121" type="text" aria-describedby="" placeholder="" required="" aria-required="true"></div></span> </li><li class="cusPreChat-inputSplitName cusPreChat-embeddedServiceSidebarFormField"> <span class="cusPreChat-split-field-container"> <div class="cusPreChat-uiInput cusPreChat-uiInputText cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="LastName"> <span class="">' + preChatlableObject.lastName + '</span> </label> <input id="cusPreChat-LastName" class="cusPreChat-LastName form-control cusPreChat-input" maxlength="121" type="text" aria-describedby="" placeholder="" required="" aria-required="true"></div></span> </li><li class="cusPreChat-inputEmail cusPreChat-embeddedServiceSidebarFormField"> <div class="cusPreChat-uiInput cusPreChat-uiInputEmail cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="Email"> <span>' + preChatlableObject.emailAddress + '</span></label> <input id="cusPreChat-Email" class="cusPreChat-Email form-control cusPreChat-input" maxlength="80" type="email" aria-describedby="" placeholder="" required="" aria-required="true"></div></li><li class="cusPreChat-inputPhone cusPreChat-embeddedServiceSidebarFormField"> <div class="cusPreChat-uiInput cusPreChat-uiInputPhone cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label id="Primary_Phone_Cust_Label" class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="Primary_Phone__c"> <span>' + preChatlableObject.phoneNumber + '</span> <span id="primPhoneIsOptional"> ' + preChatlableObject.optional + '</span></label> <input id="cusPreChat-Phone" class="cusPreChat-Primary_Phone__c form-control cusPreChat-input" maxlength="40" type="tel" aria-describedby="" placeholder="" required="" aria-required="true"></div></li><li class="cusPreChat-inputDispatchNum cusPreChat-embeddedServiceSidebarFormField" style="display:none;"> <div class="cusPreChat-uiInput cusPreChat-uiInputDispatchNum cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="Dispatch_Number__c"> <span>' + preChatlableObject.dispatchNumber + '</span> </label> <input id="cusPreChat-DispatchNum" class="cusPreChat-Dispatch_Number__c form-control cusPreChat-input" maxlength="15" type="text" aria-describedby="" placeholder="" required="" aria-required="true"></div></li><li class="cusPreChat-inputText cusPreChat-embeddedServiceSidebarFormField"> <div class="cusPreChat-uiInput cusPreChat-uiInputText cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label id="Issue_Description_Cust_Label" class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="Issue_Description__c"> <span>' + preChatlableObject.issueDescription + '</span> </label> <textarea id="cusPreChat-IssueDescription" class="cusPreChat-Issue_Description__c form-control cusPreChat-input" maxlength="' + preChatlableObject.issueDescriptionLength + '" type="text" aria-describedby="" placeholder="" required="" ></textarea><div id="snappinCharCounter" style="text-align:right;position:relative;font-size:.75em;line-height: 1.5;margin-right: .75em;margin-left: .5em;margin-top: 8px; float: right; color:#767676">0 / ' + preChatlableObject.issueDescriptionLength + ' ' + preChatlableObject.characters + '</div></div></li></ul>  <div id="PrechatCoveo" style="display:none;"></div> <div style="font-size: 12px;color:#767676;text-align: left;margin: 2.5em 1.75em; font-style: italic;color:#444444;">' + preChatlableObject.customerPrivacyDesc + '</div></div><div class="cusPreChat-buttonWrapper cusPreChat-embeddedServiceSidebarForm"> <button id="cusPreChat-startChat" class="cusPreChat-startButton cusPreChat-uiButton--default cusPreChat-uiButton cusPreChat-embeddedServiceSidebarButton" type="button"> <span class="cusPreChat-label cusPreChat-bBody">' + preChatlableObject.startChat + '</span> </button></div></div></div></div></div></div></div></div><div id="cusPreChat-embeddedServiceHelpButton" class="cusPreChat-embeddedServiceHelpButton" style="display: none;"> <div class="cusPreChat-helpButton" style="width: 168px;"> <button id="cusPreChat-helpButtonEnabled" class="cusPreChat-uiButton cusPreChat-helpButtonEnabled" href="javascript:void(0)" > <span class="cusPreChat-embeddedServiceIcon" aria-hidden="true" style="display: inline-block; z-index: 1; float: left"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="chat" width="100%" height="100%" style="height: 18px; width: 18px;"> <path d="M12 1.8C5.9 1.8 1 6.4 1 12c0 1.7.5 3.4 1.3 4.8.1.3.2.6.1.8l-1.4 4c-.2.3.2.6.6.6l3.9-1.6c.3-.1.5 0 .8.1 1.7.9 3.7 1.5 5.8 1.5 6 0 11-4.5 11-10.2C23 6.4 18.1 1.8 12 1.8zm-5.5 12c-1.1 0-1.9-.8-1.9-1.8s.8-1.8 1.9-1.8 1.8.8 1.8 1.8-.8 1.8-1.8 1.8zm5.5 0c-1 0-1.8-.8-1.8-1.8s.8-1.8 1.8-1.8 1.8.8 1.8 1.8-.8 1.8-1.8 1.8zm5.5 0c-1 0-1.8-.8-1.8-1.8s.8-1.8 1.8-1.8 1.9.8 1.9 1.8-.8 1.8-1.9 1.8z"></path> </svg> </span> <div class="cusPreChat-helpButtonLabel" id="cusPreChat-helpButtonSpan" aria-live="polite" aria-atomic="true"> <span class="cusPreChat-assistiveText">Live chat:</span> <span class="cusPreChat-message">' + preChatlableObject.chatHeader + '</span></div></button> </div></div>'; //FY21-1201 Story #9315449: Warranty Parts Return : Pre-Chat Form
+            //FY21-1003 Story #9078562: HES Admin Chat Prechat form changes [END]
+            var body = document.body || document.getElementsByTagName('body')[0];
+            body.insertAdjacentHTML('beforeend', domEle);
+            prePopulateCustPreFormValues(snapInObject);
+            checkIfIssueDescIsOptional(snapInObject, preChatlableObject);//STORY 6779542: Contact Us: Snapin prechat Form -Problem Description
+            checkIfPrimPhoneNumIsOptional(snapInObject, preChatlableObject);//FY21-1201 Story #9315449: Warranty Parts Return : Pre-Chat Form
+            custPreFormShowIssueDetailsCharRemainingOnKeyUp(preChatlableObject);
+            custPreChatKeypressFieldValidation(preChatlableObject);
+            custPreChatShowAdditionalDetailsInUi(snapInObject, preChatlableObject);
+            snapInObject = create_snapinChatUuid(snapInObject); //FY21-0602:[Sprinklr Chat Bot] Reporting Story:  create UUID for reporting
+            document.getElementById("cusPreChat-startChat").addEventListener("click", function () { custPrechatInitiateChat(snapInObject, preChatlableObject) });
+            document.getElementById("cusPreChat-minimize-btn").addEventListener("click", function () {
+                if (isWarrantyPartsReturnChat(snapInObject)) //FY21-1201: STORY 9602355
+                    callDellmetricsTrack("800.300.256", "SNAPIN-WarrantyReturn: Minimize");
+                else
+                    callDellmetricsTrack("890.220.007", "SNAPIN: Minimize"); //FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn
+                minimizeCustPrechat();
+            });
+            document.getElementById("cusPreChat-close-btn").addEventListener("click", function () {
+                if (isWarrantyPartsReturnChat(snapInObject)) //FY21-1201: STORY 9602355
+                    callDellmetricsTrack("800.300.257", "SNAPIN-WarrantyReturn: Close (x)");
+                else
+                    callDellmetricsTrack("890.220.006", "SNAPIN: Close (x)"); //FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn
+                closeCustPrechat(preChatlableObject);
+            });
+            document.getElementById("cusPreChat-helpButtonEnabled").addEventListener("click", function () {
+                callDellmetricsTrack("890.220.008", "SNAPIN: Maximize"); //FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn
+                maximizeCustPrechat();
+            });
+            eleExist('.helpButtonEnabled #helpButtonSpan > .message', chatClick); //DEFECT 7030965 for Bishav comment this
+    
+            /*if (typeof snapInObject.isPCFCall !== "undefined" && snapInObject.isPCFCall) {
+                isPCFCall = snapInObject.isPCFCall;
+            }*/
+    
+            if (snapInObject.isCoveoSearchEnabled === true) {
+                httpCoveoGetAsync(snapInObject.coveoViewUrl + "?isheaderRequired=false", apendToAHoverDiv);
+                coveoInit(snapInObject, preChatlableObject);
+            }
+        } else {
+            var snapinExists = document.querySelector(".embeddedServiceSidebar"), custPrechatForm = document.getElementById("cusPreChatSnapinDom");
+            if ((!snapinExists || (snapinExists && window.getComputedStyle(snapinExists).display == 'none')) && window.getComputedStyle(custPrechatForm).display == 'none')
+                maximizeCustPrechat();
+            //document.getElementById("cusPreChatSnapinDom").style.display = 'block';
+            //if (document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton').className != "uiButton helpButtonEnabled")
+            //    agentsOfflinePostChatForm();
+            var element = document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton');
+            if (element && !element.classList.contains("helpButtonEnabled"))
+                agentsOfflinePostChatForm();
+    
         }
-        //STORY 7193456: FY201101[END]
-        //FY21-1003 Story #9078562: HES Admin Chat Prechat form changes [START]
-        var domEle
-        if (isHesAdminChat(snapInObject)) {
-            domEle = createHesAdminChat(preChatlableObject, snapInObject); //FY21-1003 Defect: 9547663 TextOverflow for static content.
-        } else
-            domEle = '<div id="cusPreChatSnapinDom" class="cusPreChat-modalContainer"> <div class="cusPreChat-dockableContainer"> <div class="cusPreChat-embeddedServiceSidebarHeader"> <div class="cusPreChat-shortHeader"> <div class="cusPreChat-shortHeaderContent">  <h2 class="cusPreChat-headerText"> <div class="cusPreChat-headerTextContent"> <span id="cusPreChat-headerTextLabel">' + preChatlableObject.chatHeader + '</span> <span id="cusPreChat-headerSubtext"> </span></div></h2> <button id="cusPreChat-minimize-btn" class="cusPreChat-minimizeButton cusPreChat-headerItem"> <span class="cusPreChat-assistiveText">Minimize chat</span> <span class="cusPreChat-minimize cusPreChat-x-small cusPreChat-embeddedServiceIcon"> <svg focusable="false" data-key="minimize_window" aria-hidden="true" viewBox="0 0 52 52" class="slds-icon slds-icon-text-default slds-icon_x-small"><g><path d="M50 48.5c0 .8-.7 1.5-1.5 1.5h-45c-.8 0-1.5-.7-1.5-1.5v-3c0-.8.7-1.5 1.5-1.5h45c.8 0 1.5.7 1.5 1.5v3z"></path></g></svg> </span> </button><button id="cusPreChat-close-btn" class="cusPreChat-closeButton cusPreChat-headerItem"> <span class="cusPreChat-assistiveText">Close chat</span> <span class="cusPreChat-x-small cusPreChat-embeddedServiceIcon"> <svg focusable="false" aria-hidden="true" data-key="close" viewBox="0 0 100 100"> <path d="M65.577 53.73l27.5-27.71c1.27-1.27 1.27-3.174 0-4.445l-4.23-4.44c-1.272-1.27-3.175-1.27-4.445 0L56.694 44.847c-.847.845-2.115.845-2.96 0L26.018 16.922c-1.27-1.27-3.174-1.27-4.445 0l-4.44 4.442c-1.27 1.27-1.27 3.174 0 4.444l27.71 27.71c.846.846.846 2.116 0 2.962L16.923 84.403c-1.27 1.27-1.27 3.174 0 4.444l4.442 4.442c1.27 1.268 3.174 1.268 4.444 0l27.71-27.713c.846-.847 2.116-.847 2.962 0L84.19 93.29c1.27 1.268 3.174 1.268 4.445 0l4.44-4.445c1.27-1.268 1.27-3.17 0-4.44l-27.5-27.712c-.847-.847-.847-2.115 0-2.96z"> </path> </svg> </span> </button> </div></div></div><div class="cusPreChat-sidebarBody"> <div id="cusPreChat-sidebarLoadingIndicator" class="cusPreChat-sidebarLoadingIndicator" style="display: none;"> <div class="cusPreChat-loadingBallContainer cusPreChat-animated cusPreChat-embeddedServiceLoadingBalls"> <span class="cusPreChat-loadingBall cusPreChat-first"> </span> <span class="cusPreChat-loadingBall cusPreChat-second"> </span> <span class="cusPreChat-loadingBall cusPreChat-third"> </span></div></div><div id="cusPreChat-alertMsgContainer" class="cusPreChat-sidebarLoadingIndicator" style="display: none;"><div style="margin: 2.5em 1.75em;">' + preChatlableObject.chatUnavailableMessage + '</div><div><button id="cusPreChat-CloseChat" class="cusPreChat-embeddedServiceSidebarButton" type="button"><span class="cusPreChat-label cusPreChat-bBody">' + preChatlableObject.closeChat + '</span></button></div></div><div id="cusPreChat-hideWhileLoading" class="cusPreChat-activeFeature cusPreChat-hideWhileLoading"> <div class="cusPreChat-featureBody cusPreChat-embeddedServiceSidebarFeature"> <div class="cusPreChat-stateBody cusPreChat-embeddedServiceSidebarState"> <div class="cusPreChat-prechatUI cusPreChat-embeddedServiceLiveAgentStatePrechatDefaultUI"> <div class="cusPreChat-formContent cusPreChat-embeddedServiceSidebarForm"> <ul class="cusPreChat-fieldList"><li class="cusPreChat-inputSplitName cusPreChat-embeddedServiceSidebarFormField"> <span class="cusPreChat-split-field-container"> <div class="cusPreChat-uiInput cusPreChat-uiInputText cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel"> <span class="">' + preChatlableObject.firstName + '</span></label> <input id="cusPreChat-FirstName" class="cusPreChat-FirstName form-control cusPreChat-input" maxlength="121" type="text" aria-describedby="" placeholder="" required="" aria-required="true"></div></span> </li><li class="cusPreChat-inputSplitName cusPreChat-embeddedServiceSidebarFormField"> <span class="cusPreChat-split-field-container"> <div class="cusPreChat-uiInput cusPreChat-uiInputText cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="LastName"> <span class="">' + preChatlableObject.lastName + '</span> </label> <input id="cusPreChat-LastName" class="cusPreChat-LastName form-control cusPreChat-input" maxlength="121" type="text" aria-describedby="" placeholder="" required="" aria-required="true"></div></span> </li><li class="cusPreChat-inputEmail cusPreChat-embeddedServiceSidebarFormField"> <div class="cusPreChat-uiInput cusPreChat-uiInputEmail cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="Email"> <span>' + preChatlableObject.emailAddress + '</span></label> <input id="cusPreChat-Email" class="cusPreChat-Email form-control cusPreChat-input" maxlength="80" type="email" aria-describedby="" placeholder="" required="" aria-required="true"></div></li><li class="cusPreChat-inputPhone cusPreChat-embeddedServiceSidebarFormField"> <div class="cusPreChat-uiInput cusPreChat-uiInputPhone cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label id="Primary_Phone_Cust_Label" class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="Primary_Phone__c"> <span>' + preChatlableObject.phoneNumber + '</span> <span id="primPhoneIsOptional"> ' + preChatlableObject.optional + '</span></label> <input id="cusPreChat-Phone" class="cusPreChat-Primary_Phone__c form-control cusPreChat-input" maxlength="40" type="tel" aria-describedby="" placeholder="" required="" aria-required="true"></div></li><li class="cusPreChat-inputDispatchNum cusPreChat-embeddedServiceSidebarFormField" style="display:none;"> <div class="cusPreChat-uiInput cusPreChat-uiInputDispatchNum cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="Dispatch_Number__c"> <span>' + preChatlableObject.dispatchNumber + '</span> </label> <input id="cusPreChat-DispatchNum" class="cusPreChat-Dispatch_Number__c form-control cusPreChat-input" maxlength="15" type="text" aria-describedby="" placeholder="" required="" aria-required="true"></div></li><li class="cusPreChat-inputText cusPreChat-embeddedServiceSidebarFormField"> <div class="cusPreChat-uiInput cusPreChat-uiInputText cusPreChat-uiInput--default cusPreChat-uiInput--input"> <label id="Issue_Description_Cust_Label" class="cusPreChat-uiLabel-left cusPreChat-form-element__label cusPreChat-uiLabel" for="Issue_Description__c"> <span>' + preChatlableObject.issueDescription + '</span> </label> <textarea id="cusPreChat-IssueDescription" class="cusPreChat-Issue_Description__c form-control cusPreChat-input" maxlength="' + preChatlableObject.issueDescriptionLength + '" type="text" aria-describedby="" placeholder="" required="" ></textarea><div id="snappinCharCounter" style="text-align:right;position:relative;font-size:.75em;line-height: 1.5;margin-right: .75em;margin-left: .5em;margin-top: 8px; float: right; color:#767676">0 / ' + preChatlableObject.issueDescriptionLength + ' ' + preChatlableObject.characters + '</div></div></li></ul>  <div id="PrechatCoveo" style="display:none;"></div> <div style="font-size: 12px;color:#767676;text-align: left;margin: 2.5em 1.75em; font-style: italic;color:#444444;">' + preChatlableObject.customerPrivacyDesc + '</div></div><div class="cusPreChat-buttonWrapper cusPreChat-embeddedServiceSidebarForm"> <button id="cusPreChat-startChat" class="cusPreChat-startButton cusPreChat-uiButton--default cusPreChat-uiButton cusPreChat-embeddedServiceSidebarButton" type="button"> <span class="cusPreChat-label cusPreChat-bBody">' + preChatlableObject.startChat + '</span> </button></div></div></div></div></div></div></div></div><div id="cusPreChat-embeddedServiceHelpButton" class="cusPreChat-embeddedServiceHelpButton" style="display: none;"> <div class="cusPreChat-helpButton" style="width: 168px;"> <button id="cusPreChat-helpButtonEnabled" class="cusPreChat-uiButton cusPreChat-helpButtonEnabled" href="javascript:void(0)" > <span class="cusPreChat-embeddedServiceIcon" aria-hidden="true" style="display: inline-block; z-index: 1; float: left"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="chat" width="100%" height="100%" style="height: 18px; width: 18px;"> <path d="M12 1.8C5.9 1.8 1 6.4 1 12c0 1.7.5 3.4 1.3 4.8.1.3.2.6.1.8l-1.4 4c-.2.3.2.6.6.6l3.9-1.6c.3-.1.5 0 .8.1 1.7.9 3.7 1.5 5.8 1.5 6 0 11-4.5 11-10.2C23 6.4 18.1 1.8 12 1.8zm-5.5 12c-1.1 0-1.9-.8-1.9-1.8s.8-1.8 1.9-1.8 1.8.8 1.8 1.8-.8 1.8-1.8 1.8zm5.5 0c-1 0-1.8-.8-1.8-1.8s.8-1.8 1.8-1.8 1.8.8 1.8 1.8-.8 1.8-1.8 1.8zm5.5 0c-1 0-1.8-.8-1.8-1.8s.8-1.8 1.8-1.8 1.9.8 1.9 1.8-.8 1.8-1.9 1.8z"></path> </svg> </span> <div class="cusPreChat-helpButtonLabel" id="cusPreChat-helpButtonSpan" aria-live="polite" aria-atomic="true"> <span class="cusPreChat-assistiveText">Live chat:</span> <span class="cusPreChat-message">' + preChatlableObject.chatHeader + '</span></div></button> </div></div>'; //FY21-1201 Story #9315449: Warranty Parts Return : Pre-Chat Form
-        //FY21-1003 Story #9078562: HES Admin Chat Prechat form changes [END]
-        var body = document.body || document.getElementsByTagName('body')[0];
-        body.insertAdjacentHTML('beforeend', domEle);
-        prePopulateCustPreFormValues(snapInObject);
-        checkIfIssueDescIsOptional(snapInObject, preChatlableObject);//STORY 6779542: Contact Us: Snapin prechat Form -Problem Description
-        checkIfPrimPhoneNumIsOptional(snapInObject, preChatlableObject);//FY21-1201 Story #9315449: Warranty Parts Return : Pre-Chat Form
-        custPreFormShowIssueDetailsCharRemainingOnKeyUp(preChatlableObject);
-        custPreChatKeypressFieldValidation(preChatlableObject);
-        custPreChatShowAdditionalDetailsInUi(snapInObject, preChatlableObject);
-        snapInObject = create_snapinChatUuid(snapInObject); //FY21-0602:[Sprinklr Chat Bot] Reporting Story:  create UUID for reporting
-        document.getElementById("cusPreChat-startChat").addEventListener("click", function () { custPrechatInitiateChat(snapInObject, preChatlableObject) });
-        document.getElementById("cusPreChat-minimize-btn").addEventListener("click", function () {
-            if (isWarrantyPartsReturnChat(snapInObject)) //FY21-1201: STORY 9602355
-                callDellmetricsTrack("800.300.256", "SNAPIN-WarrantyReturn: Minimize");
-            else
-                callDellmetricsTrack("890.220.007", "SNAPIN: Minimize"); //FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn
-            minimizeCustPrechat();
-        });
-        document.getElementById("cusPreChat-close-btn").addEventListener("click", function () {
-            if (isWarrantyPartsReturnChat(snapInObject)) //FY21-1201: STORY 9602355
-                callDellmetricsTrack("800.300.257", "SNAPIN-WarrantyReturn: Close (x)");
-            else
-                callDellmetricsTrack("890.220.006", "SNAPIN: Close (x)"); //FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn
-            closeCustPrechat(preChatlableObject);
-        });
-        document.getElementById("cusPreChat-helpButtonEnabled").addEventListener("click", function () {
-            callDellmetricsTrack("890.220.008", "SNAPIN: Maximize"); //FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn
-            maximizeCustPrechat();
-        });
-        eleExist('.helpButtonEnabled #helpButtonSpan > .message', chatClick); //DEFECT 7030965 for Bishav comment this
-
-        /*if (typeof snapInObject.isPCFCall !== "undefined" && snapInObject.isPCFCall) {
-            isPCFCall = snapInObject.isPCFCall;
-        }*/
-
-        if (snapInObject.isCoveoSearchEnabled === true) {
-            httpCoveoGetAsync(snapInObject.coveoViewUrl + "?isheaderRequired=false", apendToAHoverDiv);
-            coveoInit(snapInObject, preChatlableObject);
-        }
-    } else {
-        var snapinExists = document.querySelector(".embeddedServiceSidebar"), custPrechatForm = document.getElementById("cusPreChatSnapinDom");
-        if ((!snapinExists || (snapinExists && window.getComputedStyle(snapinExists).display == 'none')) && window.getComputedStyle(custPrechatForm).display == 'none')
-            maximizeCustPrechat();
-        //document.getElementById("cusPreChatSnapinDom").style.display = 'block';
-        //if (document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton').className != "uiButton helpButtonEnabled")
-        //    agentsOfflinePostChatForm();
-        var element = document.querySelector('.embeddedServiceHelpButton .helpButton .uiButton');
-        if (element && !element.classList.contains("helpButtonEnabled"))
-            agentsOfflinePostChatForm();
-
+        prechatSettingForEmc();//STORY 7193456: FY201101
+        callDellmetricsTrack("890.220.010", "SNAPIN: Window Load"); //FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn
+    
+    }catch(e){
+        console.log("Error in: " + e);
     }
-    prechatSettingForEmc();//STORY 7193456: FY201101
-    callDellmetricsTrack("890.220.010", "SNAPIN: Window Load"); //FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn
 }
 
 //STORY 7193456: FY201101[START]
@@ -202,7 +213,9 @@ function prechatSettingForEmc() {
     makeIdReadWrite("cusPreChat-LastName");
     makeIdReadWrite("cusPreChat-Email");
     makeIdReadWrite("cusPreChat-Phone");
-    if ("isEmcProduct" in snapInObject && snapInObject.isEmcProduct) {
+    var snapInObject = sendGlobalSnapinObjToJson(); //FY22-1002: Story #10995446 : SnAS chat : Making Prechat values uneditable
+
+    if (("isEmcProduct" in snapInObject && snapInObject.isEmcProduct) || ("chatSource" in snapInObject && snapInObject.chatSource === "SnAS")) { //FY22-1002: Story #10995446 : SnAS chat : Making Prechat values uneditable
         makeIdReadOnlyIfHasVal("cusPreChat-FirstName");
         makeIdReadOnlyIfHasVal("cusPreChat-LastName");
         makeIdReadOnlyIfHasVal("cusPreChat-Email");
@@ -223,7 +236,7 @@ function makeIdReadWrite(id) {
 //STORY 7193456: FY201101[END]
 //STORY 6779542: Contact Us: Snapin prechat Form -Problem Description [START]
 function checkIfIssueDescIsOptional(snapInObject, preChatlableObject) {
-    if ((("issueVal" in snapInObject && snapInObject.issueVal != "" && snapInObject.issueVal != null && snapInObject.issueVal != undefined && snapInObject.issueVal != 'None') || isWarrantyPartsReturnChat(snapInObject)) && document.getElementById("Issue_Description_Cust_Label")) { //FY21-1201 Story #9315449: Warranty Parts Return : Pre-Chat Form
+    if ((("issueVal" in snapInObject && snapInObject.issueVal != "" && snapInObject.issueVal != null && snapInObject.issueVal != undefined && snapInObject.issueVal != 'None') || isWarrantyPartsReturnChat(snapInObject) || ("chatSource" in snapInObject && snapInObject.chatSource === "SnAS")) && document.getElementById("Issue_Description_Cust_Label")) { //FY21-1201 Story #9315449: Warranty Parts Return : Pre-Chat Form //FY22-1002: Story #10995446 : SnAS chat : Make prechat form optional
         removeDomElementbyId("issueDescIsOptional");
         var optionalLabel = document.createElement('span');
         optionalLabel.id = 'issueDescIsOptional';
@@ -1217,6 +1230,23 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
 
     //STORY 7193324: FY201101[START] //FY210803: HES Generic chat changes [START]
     var assetFieldName = "Name";
+    //FY22-1002: Story #10995446 : SnAS chat : Passing values to lightning [START]
+    if("chatSource" in snapInObject && snapInObject.chatSource === "SnAS"){
+        embedded_svc.settings.extraPrechatFormDetails = [
+            { "label": translatedLabels.firstName, "transcriptFields": ["FirstName__c"] },
+            { "label": translatedLabels.lastName, "transcriptFields": ["LastName__c"] },
+            { "label": translatedLabels.primPhone, "transcriptFields": ["ContactNumber__c"] },
+            { "label": translatedLabels.emailAdd, "transcriptFields": ["Email__c"] },
+            { "label": "Subject", "value": "Scheduling and Account Services", "transcriptFields": ["Issue__c"] },
+            { "label": translatedLabels.issueDesc, "transcriptFields": ["Description__c"] },
+            { "label": "SubIssue Key", "value": "SnAS", "transcriptFields": ["Issue_Key__c"] },
+            { "label": "Chat Source", "value": "SnAS", "transcriptFields": ["Chat_Source__c"] },
+            { "label": "Serial Number", "value": snapInObject.serialNumber, "transcriptFields": ["Serial_Number__c"] },
+            { "label": "Site Id", "value": snapInObject.siteId, "transcriptFields": ["Site_Id__c"] },
+            { "label":  "Work Order From Partner", "value": snapInObject.workOrder, "transcriptFields": ["PP_Work_Order_From_Partner__c"]}
+        ];
+    } else
+    //FY22-1002: Story #10995446 : SnAS chat : Passing values to lightning [END]
     if (snapInObject.isEmcProduct) {
         assetFieldName = "External_ID__c";
         embedded_svc.settings.extraPrechatFormDetails = [
