@@ -1,10 +1,9 @@
 ﻿﻿<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Continue Chat With Agent</title>
-    <meta content="text/html; charset=utf-8" />
+    <title>Page Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -15,7 +14,7 @@
 <body onload="checkChatConfigCookie()">
     <nav class="navbar navbar-light bg-light">
             <span id="selectLanguage" style="float: right; display: block; margin-right:5px">
-                <span style="background: #6c757d;color: #fff;width: 38px;height: 28px;padding: 2px 11px;border-radius: .25rem 0 0 .25rem;"><em class="fa fa-globe"></em></span>
+                <span style="background: #6c757d;color: #fff;width: 38px;height: 28px;padding: 2px 11px;border-radius: .25rem 0 0 .25rem;"><i class="fa fa-globe"></i></span>
                 <select id="selectLanguageOption" style="margin-left: -5px;">
                     <option>en</option>
                     <option>en-US</option>
@@ -49,10 +48,10 @@
                 </select>
             </span>
         <a class="navbar-brand" href="#">
-            <img src="../../../assets/DellTech_Logo_Prm_Blue.jpg" class="d-inline-block align-top" alt="">
+            <img src="assets/DellTech_Logo_Prm_Blue.jpg" class="d-inline-block align-top" alt="">
         </a>
         <button style="display: block;float: left;" class="btn btn-primary"  data-target=".bd-example-modal-lg" id="chatButton" type="button" onclick="showConfigSettings()">
-            <em class="fa fa-gear"></em>
+            <i class="fa fa-gear"></i>
             <span>Environment Setup</span>
         </button>
     </nav>
@@ -60,11 +59,11 @@
         <dev style="color:#fff;">You are currently in <span id="environmentName" style="font-size: 20px;"></span> environment</dev>
     </div>
     <div class="container">
-        <div id ="resume-chat-msg" class="resume-chat-msg hide">
+        <div class="resume-chat-msg hide">
             <div class="row">
-                <div class="col-lg-8 offset-lg-2">
+                <div class="col-lg-12">
                     <div class="jumbotron">
-                        <h1 class="display-4">Welcome Back <span id="resumeChatFirstName">Nishita</span></h1>
+                        <h1 class="display-4">Welcome Back</h1>
                     </div>
                 </div>
                 <div class="live-agent-resume-button hide">
@@ -76,36 +75,34 @@
                     });</script> 
                 </div>
             </div>
-            <div class="row">
-                <h3 class="live-agent-heading col-lg-8 offset-lg-2">Let Connect you to an Agent</h3>
-                <div class="call-us col-lg-8 offset-lg-2">
-                    <h5>Call Us</h5>
-                    <p class="phone-no">1-855-305-9057</p>
-                    <p>24/7</p>
-                    <p>Please Note: You will be asked to enter your Express Service Code: <strong>34285956052</strong></p>
-                    <button type="button" id="chatButton" class="btn btn-primary" onclick="initResumeChat()" style="display: block;float: left;margin-right: 20px;">Start Chat</button>
-                </div>
+            <div class="offline-msg hide">
             </div>
         </div>
-        <div id ="new-chat" class="new-chat">
+        <div class="new-chat">
             <div class="row">
                 <div class="col-lg-2"></div>
                 <div class="col-lg-8">
                     <form>
                         <div class="form-group">
-                            <label style="margin-right: 10px; margin-bottom: 20px;" for="Organization">Project : </label>
+                            <label style="margin-right: 10px; margin-bottom: 20px; font-weight: 600;" for="Organization">Project : </label>
                                 <span id="orginazationName">
-                                    <label style="display:none;"><input id = "dellWPR" type="radio" name="optradio" value = "dellWPR">&nbsp&nbspWarranty Parts Return</label>
-                                    <label><input id = "dellOrg" type="radio" name="optradio" checked>&nbsp&nbspResume chat with user</label>
-                                    <label style="display:none;"><input id = "emcOrg" type="radio" name="optradio" style="margin-left: 20px;" value = 'emcOrg'>&nbsp&nbspEMC legacy</label>
-                                    <label style="display:none;"><input id = "routSprinklrBot" type="radio" name="optradio" style="margin-left: 20px;">&nbsp&nbspSprinklr Bot Routing</label>
-                                    <label style="display:none;"><input id = "routSprinklrBotRefresh" type="radio" name="optradio" style="margin-left: 20px;">&nbsp&nbspSprinklr Bot Refresh</label>
+                                    <label><input id = "dellWPR" type="radio" name="optradio" value = "dellWPR">&nbsp&nbspWarranty Parts Return</label>
+                                    <label><input id = "dellOrg" type="radio" name="optradio" checked>&nbsp&nbspDell legacy</label>
+                                    <label><input id = "emcOrg" type="radio" name="optradio" style="margin-left: 20px;" value = 'emcOrg'>&nbsp&nbspEMC legacy</label>
+                                    <label><input id = "routSprinklrBot" type="radio" name="optradio" style="margin-left: 20px;">&nbsp&nbspSprinklr Bot Routing</label>
+                                    <label><input id = "routSprinklrBotRefresh" type="radio" name="optradio" style="margin-left: 20px;">&nbsp&nbspSprinklr Bot Refresh</label>
+                                    <label><input id = "SnAS" type="radio" name="optradio" style="margin-left: 20px;" value = 'SnAS'>&nbsp&nbspSnAS</label>
                                 </span>
+                                <hr/>
                             <dev class="dellTech">
                                 <div>
-                                    <label for="serviceTag"><span class='NonEMC'>Service Tag</span><span class='EMC' style='display:none;'>CPID (for EMC legacy)</span></label>
+                                    <label for="serviceTag">
+                                        <span class='NonEMC'>Service Tag</span>
+                                        <span class='EMC' style='display:none;'>CPID (for EMC legacy)</span>
+                                        <span class='SnAS'>DPS(Dispatch) Number / Work Order Number*</span>
+                                    </label>
                                 </div>
-                                <input type="text" class="form-control"  id="serviceTag" aria-describedby="serviceTag" placeholder="Enter Service Tag" value="6MW0204">
+                                <input type="text" class="form-control"  id="serviceTag" aria-describedby="serviceTag" placeholder="Enter Service Tag" value="DSEASSET">
                             </div>
                             <div class='EMC' style='display:none;'>
                                 <label for="epdmId">EPDM-Id(for EMC legacy)</label>
@@ -129,6 +126,44 @@
                             </div>
                             <input style='display:none;' type="text" class="form-control EMC"  id="emcAltEmail" aria-describedby="serviceTag" placeholder="Prechat UI changes based on email ID">
                             
+                            <!--SnAS Chat Input Values [START]-->
+                            
+                            <div class='SnAS' style='display:none;'>
+                                <label for="snasSerialNo">Serial Number*</label>
+                            </div>
+                            <input style='display:none;' type="text" class="form-control SnAS"  id="snasSerialNo" aria-describedby="snasSerialNo" value="4235540021456">
+                            
+                            <div class='SnAS' style='display:none;'>
+                                <label for="snasProductName">Product Name*</label>
+                            </div>
+                            <input style='display:none;' type="text" class="form-control SnAS"  id="snasProductName" aria-describedby="snasProductNo" value="HES123A55">
+                            
+                            <div class='SnAS' style='display:none;'>
+                                <label for="snasSiteId">Site Id*</label>
+                            </div>
+                            <input style='display:none;' type="text" class="form-control SnAS"  id="snasSiteId" aria-describedby="snasSiteId" value="ST122435544TESD5877">
+                        
+                            <div class='SnAS' style='display:none;'>
+                                <label for="snasFirstName">First Name*</label>
+                            </div>
+                            <input style='display:none;' type="text" class="form-control SnAS"  id="snasFirstName" aria-describedby="snasFirstName" value="User">
+                            
+                            <div class='SnAS' style='display:none;'>
+                                <label for="snasLastName">Last Name*</label>
+                            </div>
+                            <input style='display:none;' type="text" class="form-control SnAS"  id="snasLastName" aria-describedby="snasLastName" value="Name">
+                            
+                            <div class='SnAS' style='display:none;'>
+                                <label for="snasEmail">Email Address*</label>
+                            </div>
+                            <input style='display:none;' type="text" class="form-control SnAS"  id="snasEmail" aria-describedby="snasEmail" value="userEmail@dell.com">
+                            
+                            <div class='SnAS' style='display:none;'>
+                                <label for="snasPhone">Phone Number</label>
+                            </div>
+                            <input style='display:none;' type="text" class="form-control SnAS"  id="snasPhone" aria-describedby="snasPhone">
+                            
+                            <!--SnAS Chat Input Values [END]-->
                         </div>
 
                         <div class="col-lg-2"></div>
@@ -162,6 +197,12 @@
                         <h5>Chat with us</h5>
                         <p>Start a chat session with one of our technical support experts.</p>
                         <button type="button" id="chatButton" class="btn btn-primary" onclick="initChat()" style="display: block;float: left;margin-right: 20px;">Start Snap-In</button>
+                        <!--<button type="button" id="liveChatButton" class="btn btn-primary" onclick="initLiveChat()" style="display: block;float: left;margin-right: 20px;">Start LiveChat</button>
+                        <button type="button" id="chatBotButton" class="btn btn-primary" onclick="initChatBot()" style="display: block;float: left;margin-right: 20px;">Chat With Bot</button>
+                        <div class="live-agent-button">
+                                <a id="liveagent_button_online_5730b000000CbhT" href="javascript://Chat" class="enabledButton btn btn-primary btn-lg btn-block"  style="display: none;" onclick="liveagent.startChat('5730b000000CbhT')">Start Chat</a>
+                                <div id="liveagent_button_offline_5730b000000CbhT" href="javascript://Chat" class="" style="display: none;" >Agent not Avilable</div> 
+                        </div>-->
                     </div>
                 </div>
             </div>
@@ -199,10 +240,16 @@
               </button>
             </div>
             <div class="modal-body form-group" style="background: #ddd; margin-bottom: 0px;">
-                <strong>Select your prefered Environment</strong>
+                <b>Select your prefered Environment</b>
                 <div class="input-group">
                     <select class="custom-select" onChange="changeEnv()" id="environmentSelection">
                     <option selected>Choose your preferred environment</option>
+                    <option value="FY22_1003_ccks">FY22_1003_ccks</option>
+                    <option value="FY22_0802_ccks">FY22_0803_ccks</option>
+                    <option value="GE4">GE4</option>
+                    <option value="GE1">GE1</option>
+                    <option value="GE2">GE2</option>
+                    <option value="Perf1">Perf1</option>
                     <option value="Chat-POC">Chat-POC</option>
                     </select>
                     <div class="input-group-append">
@@ -210,13 +257,14 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-body config" id="FY22_0402_ccks" style="display:none">
+
+            <div class="modal-body config" id="FY22_1003_ccks" style="display:none">
                 <div class="form-group">
-                    <h5>FY22_0402_ccks Environment Settings</h5>
+                    <h5>FY22_1003_ccks Environment Settings</h5>
                 </div>
                 <div class="form-group">
                     <label for="usr">baseLiveAgentContentURL:</label>
-                    <input type="text" class="form-control" data-id="baseLiveAgentContentURL" value="https://c.la1-c1cs-ia2.salesforceliveagent.com/content">
+                    <input type="text" class="form-control" data-id="baseLiveAgentContentURL" value="https://c.la2-c1cs-ia4.salesforceliveagent.com/content">
                 </div>
 				<div class="form-group">
                     <label for="usr">deploymentId:</label>
@@ -224,11 +272,11 @@
                 </div>
                 <div class="form-group">
                     <label for="usr">buttonId:</label>
-                    <input type="text" class="form-control" data-id="buttonId" value="5730b000000CbhT">
+                    <input type="text" class="form-control" data-id="buttonId" value="5731P000000TSVq">
                 </div>
 				<div class="form-group">
                     <label for="usr">baseLiveAgentURL:</label>
-                    <input type="text" class="form-control" data-id="baseLiveAgentURL" value="https://d.la1-c1cs-ia2.salesforceliveagent.com/chat">
+                    <input type="text" class="form-control" data-id="baseLiveAgentURL" value="https://d.la2-c1cs-ia4.salesforceliveagent.com/chat">
                 </div>
 				<div class="form-group">
                     <label for="usr">LiveAgentDevName:</label>
@@ -240,7 +288,7 @@
                 </div>
 				<div class="form-group">
                     <label for="usr">organizationId:</label>
-                    <input type="text" class="form-control" data-id="organizationId" value="00D55000000JnHT">
+                    <input type="text" class="form-control" data-id="organizationId" value="00D4C0000008zH7">
                 </div>
 				<div class="form-group">
                     <label for="usr">serviceForceURL:</label>
@@ -248,24 +296,25 @@
                 </div>
 				<div class="form-group">
                     <label for="usr">snapInInitURL:</label>
-                    <input type="text" class="form-control" data-id="snapInInitURL" value="https://dellservices--0402cck.my.salesforce.com">
+                    <input type="text" class="form-control" data-id="snapInInitURL" value="https://dellservices--1003cck.my.salesforce.com">
                 </div>
 				<div class="form-group">
                     <label for="usr">snapInJs:</label>
-                    <input type="text" class="form-control" data-id="snapInJs" value="https://dellservices--0402cck.my.salesforce.com/embeddedservice/5.0/esw.min.js">
+                    <input type="text" class="form-control" data-id="snapInJs" value="https://dellservices--1003cck.my.salesforce.com/embeddedservice/5.0/esw.min.js">
                 </div>
 				<div class="form-group">
                     <label for="usr">snapInLAURL:</label>
-                    <input type="text" class="form-control" data-id="snapInLAURL" value="https://0402cck-dellservices.cs41.force.com/LASnapIn">
+                    <input type="text" class="form-control" data-id="snapInLAURL" value="https://1003cck-dellservices.cs61.force.com/LASnapIn">
                 </div>
             </div>	
-            <div class="modal-body config" id="FY22_0302_ccks" style="display:none">
+
+            <div class="modal-body config" id="FY22_0803_ccks" style="display:none">
                 <div class="form-group">
-                    <h5>FY22_0302_ccks Environment Settings</h5>
+                    <h5>FY22_0803_ccks Environment Settings</h5>
                 </div>
                 <div class="form-group">
                     <label for="usr">baseLiveAgentContentURL:</label>
-                    <input type="text" class="form-control" data-id="baseLiveAgentContentURL" value="https://c.la4-c1cs-phx.salesforceliveagent.com/content">
+                    <input type="text" class="form-control" data-id="baseLiveAgentContentURL" value="https://c.la2-c1cs-ord.salesforceliveagent.com/content">
                 </div>
 				<div class="form-group">
                     <label for="usr">deploymentId:</label>
@@ -273,11 +322,11 @@
                 </div>
                 <div class="form-group">
                     <label for="usr">buttonId:</label>
-                    <input type="text" class="form-control" data-id="buttonId" value="5730b000000CbhT">
+                    <input type="text" class="form-control" data-id="buttonId" value="5731P000000TSVq">
                 </div>
 				<div class="form-group">
                     <label for="usr">baseLiveAgentURL:</label>
-                    <input type="text" class="form-control" data-id="baseLiveAgentURL" value="https://d.la4-c1cs-phx.salesforceliveagent.com/chat">
+                    <input type="text" class="form-control" data-id="baseLiveAgentURL" value="https://d.la2-c1cs-ord.salesforceliveagent.com/chat">
                 </div>
 				<div class="form-group">
                     <label for="usr">LiveAgentDevName:</label>
@@ -289,7 +338,7 @@
                 </div>
 				<div class="form-group">
                     <label for="usr">organizationId:</label>
-                    <input type="text" class="form-control" data-id="organizationId" value="00D290000001UqL">
+                    <input type="text" class="form-control" data-id="organizationId" value="00D1k000000FxyC">
                 </div>
 				<div class="form-group">
                     <label for="usr">serviceForceURL:</label>
@@ -297,17 +346,67 @@
                 </div>
 				<div class="form-group">
                     <label for="usr">snapInInitURL:</label>
-                    <input type="text" class="form-control" data-id="snapInInitURL" value="https://dellservices--0302cck.my.salesforce.com">
+                    <input type="text" class="form-control" data-id="snapInInitURL" value="https://dellservices--0803cck.my.salesforce.com">
                 </div>
 				<div class="form-group">
                     <label for="usr">snapInJs:</label>
-                    <input type="text" class="form-control" data-id="snapInJs" value="https://dellservices--0302cck.my.salesforce.com/embeddedservice/5.0/esw.min.js">
+                    <input type="text" class="form-control" data-id="snapInJs" value="https://dellservices--0803cck.my.salesforce.com/embeddedservice/5.0/esw.min.js">
                 </div>
 				<div class="form-group">
                     <label for="usr">snapInLAURL:</label>
-                    <input type="text" class="form-control" data-id="snapInLAURL" value="https://0302cck-dellservices.cs19.force.com/LASnapIn">
+                    <input type="text" class="form-control" data-id="snapInLAURL" value="https://0803cck-dellservices.cs78.force.com/LASnapIn">
                 </div>
             </div>	
+
+            <div class="modal-body config" id="GE4" style="display:none">
+                <div class="form-group">
+                    <h5>GE4</h5>
+                </div>
+                <div class="form-group">
+                    <label for="usr">baseLiveAgentContentURL:</label>
+                    <input type="text" class="form-control" data-id="baseLiveAgentContentURL" value="https://c.la1-c1cs-ia4.salesforceliveagent.com/content">
+                </div>
+				<div class="form-group">
+                    <label for="usr">deploymentId:</label>
+                    <input type="text" class="form-control" data-id="deploymentId" value="5720b000000GneC">
+                </div>
+                <div class="form-group">
+                    <label for="usr">buttonId:</label>
+                    <input type="text" class="form-control" data-id="buttonId" value="5733K00000000N0">
+                </div>
+				<div class="form-group">
+                    <label for="usr">baseLiveAgentURL:</label>
+                    <input type="text" class="form-control" data-id="baseLiveAgentURL" value="https://d.la1-c1cs-ia4.salesforceliveagent.com/chat">
+                </div>
+				<div class="form-group">
+                    <label for="usr">LiveAgentDevName:</label>
+                    <input type="text" class="form-control" data-id="LiveAgentDevName" value="EmbeddedServiceLiveAgent_Parent04I0b000000blJJEAY_16520d15b68">
+                </div>
+				<div class="form-group">
+                    <label for="usr">componentName:</label>
+                    <input type="text" class="form-control" data-id="componentName" value="Snap_Ins_Chat_Deployment">
+                </div>
+				<div class="form-group">
+                    <label for="usr">organizationId:</label>
+                    <input type="text" class="form-control" data-id="organizationId" value="00D3K0000000PJb">
+                </div>
+				<div class="form-group">
+                    <label for="usr">serviceForceURL:</label>
+                    <input type="text" class="form-control" data-id="serviceForceURL" value="https://service.force.com">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInInitURL:</label>
+                    <input type="text" class="form-control" data-id="snapInInitURL" value="https://dellservices--ge4.my.salesforce.com">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInJs:</label>
+                    <input type="text" class="form-control" data-id="snapInJs" value="https://dellservices--ge4.my.salesforce.com/embeddedservice/5.0/esw.min.js">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInLAURL:</label>
+                    <input type="text" class="form-control" data-id="snapInLAURL" value="https://ge4-dellservices.cs125.force.com/LASnapIn">
+                </div>
+            </div>
 
             <div class="modal-body config" id="GE1" style="display:none">
                 <div class="form-group">
@@ -358,6 +457,7 @@
                     <input type="text" class="form-control" data-id="snapInLAURL" value="https://ge1-dellservices.cs44.force.com/LASnapIn">
                 </div>
             </div>
+
             <div class="modal-body config" id="GE2" style="display:none">
                 <div class="form-group">
                     <h5>GE2 Environment Settings</h5>
@@ -406,7 +506,8 @@
                     <label for="usr">snapInLAURL:</label>
                     <input type="text" class="form-control" data-id="snapInLAURL" value="https://ge2-dellservices.cs22.force.com/LASnapIn">
                 </div>
-            </div>          
+            </div> 
+
             <div class="modal-body config" id="Perf1" style="display:none">
                 <div class="form-group">
                     <h5>Perf1</h5>
@@ -456,6 +557,7 @@
                     <input type="text" class="form-control" data-id="snapInLAURL" value="https://perf1-dellservices.cs36.force.com/LASnapIn">
                 </div>
             </div>
+
             <div class="modal-body config" id="Chat-POC" style="display:none">
                 <div class="form-group">
                     <h5>Chat-POC Environment Settings</h5>
@@ -517,88 +619,6 @@
     <script src="orderSupportChat.js"></script>
        
     <script>
-        //POC [START]
-        urlParamVal = new function(){
-	
-            url = window.location.href;
-          
-            // get query string from url (optional) or window
-            var queryString = url ? url.split('?')[1] : window.location.search.slice(1);
-            
-            // we'll store the parameters here
-            var obj = {};
-          
-            // if query string exists
-            if (queryString) {
-          
-              // stuff after # is not part of query string, so get rid of it
-              queryString = queryString.split('#')[0];
-          
-              // split our query string into its component parts
-              var arr = queryString.split('&');
-          
-              for (var i = 0; i < arr.length; i++) {
-                // separate the keys and the values
-                var a = arr[i].split('=');
-          
-                // set parameter name and value (use 'true' if empty)
-                var paramName = a[0];
-                var paramValue = typeof (a[1]) === 'undefined' ? true : a[1];
-          
-                // (optional) keep case consistent
-                //paramName = paramName.toLowerCase();
-                //if (typeof paramValue === 'string') paramValue = paramValue.toLowerCase();
-          
-                // if the paramName ends with square brackets, e.g. colors[] or colors[2]
-                if (paramName.match(/\[(\d+)?\]$/)) {
-          
-                  // create key if it doesn't exist
-                  var key = paramName.replace(/\[(\d+)?\]/, '');
-                  if (!obj[key]) obj[key] = [];
-          
-                  // if it's an indexed array e.g. colors[2]
-                  if (paramName.match(/\[\d+\]$/)) {
-                    // get the index value and add the entry at the appropriate position
-                    var index = /\[(\d+)\]/.exec(paramName)[1];
-                    obj[key][index] = paramValue;
-                  } else {
-                    // otherwise add the value to the end of the array
-                    obj[key].push(paramValue);
-                  }
-                } else {
-                  // we're dealing with a string
-                  if (!obj[paramName]) {
-                    // if it doesn't exist, create property
-                    obj[paramName] = paramValue;
-                  } else if (obj[paramName] && typeof obj[paramName] === 'string'){
-                    // if property does exist and it's a string, convert it to an array
-                    obj[paramName] = [obj[paramName]];
-                    obj[paramName].push(paramValue);
-                  } else {
-                    // otherwise add the property
-                    obj[paramName].push(paramValue);
-                  }
-                }
-              }
-            }
-            return obj
-          }
-        
-          var resumeChatMsg = document.getElementById("resume-chat-msg");
-          var newChat = document.getElementById("new-chat");
-
-        if ("AgentId" in urlParamVal && urlParamVal.AgentId){
-            //Show Resume Chat
-            resumeChatMsg.classList.remove("hide");
-            newChat.classList.add("hide");
-        }
-        //POC [END]
-
-        (function () {
-            
-        })();
-
-
 
             $('input:radio[name="optradio"]').change(
                 function(){
@@ -607,12 +627,30 @@
                     }else{
                         $(".dellTech").show(); 
                     }
+
                     if ($(this).is(':checked') && $(this).val() == 'emcOrg') {
                         $(".EMC").show();
                         $(".NonEMC").hide();
-                    }else{
+                        $(".SnAS").hide();
+                    }else if ($(this).is(':checked') && $(this).val() == 'SnAS') {
+                        $(".SnAS").show();
+                        $(".EMC").hide();
+                        $(".NonEMC").hide();
+
+                        //Additional Values to be hidden
+                        $(".dropdown").hide();
+                        $(".non-live-agent").hide();
+                        $(".live-agent-heading").show();
+                        $(".call-us").show();
+                        $(".chat-with-us").show();
+                        $("#contact-row").show();
+                        
+                    }else {
                         $(".EMC").hide();
                         $(".NonEMC").show();
+                        $(".SnAS").hide();
+
+                        $(".dropdown").show();
                     }
                     
                 });
@@ -669,12 +707,6 @@
                   //  widgetSize: widgetSizeVal,
                     serviceTag: serviceTag,
                     issueVal: issueVal,
-                    srNumber:'',
-                    firstName:'',
-                    lastName:'',
-                    resumeChat:false,
-                    resumeChatComponentName: 'Snap_Ins_Resume_chat',
-                    triggerbuttonId:'chatButton',
                     snapInInitURL: 'https://dellservices--DIT4.cs11.my.salesforce.com',  
                     snapInLAURL: 'https://dit4-dellservices.cs11.force.com/LaSnapIn',
                     organizationId: '00DZ000000NE2eh',
@@ -700,14 +732,68 @@
                 triggerResumeSnapin(snapInObject);
                 eleExist('#helpButtonSpan > .message', chatClick);
                 
+            } else {
+                liveagent.addCustomDetail('deltaSr', srNumber).saveToTranscript('Delta_Sr__c');
+                liveagent.findOrCreate("Case").map("Delta_SR__c","deltaSr",true, false, true).showOnCreate();
+                liveagent.init('https://d.la4-c1cs-phx.salesforceliveagent.com/chat', '5723B0000004Crz', '00Dm0000000DQXs');
+                liveagent.setName(FirstName + ' ' + lastName);
+                document.querySelector('.live-agent-resume-button').removeClass('hide');
+                // eleExist('#liveagent_button_online_5733B0000004D95', liveAgentResume);
+                setInterval(function() {
+                    var onlineStatus = document.querySelector('#liveagent_button_online_5733B0000004D95').attr('style').split(":")[1].replace(/ /g,'').split(";")[0];
+                    var offlineStatus = document.querySelector('#liveagent_button_online_5733B0000004D95').attr('style').split(":")[1].replace(/ /g,'').split(";")[0];
+                    if( onlineStatus === 'none' ) {
+                        document.querySelector('.offline-msg').removeClass('hide');
+                    } else if( offlineStatus === 'none' ) {
+                        document.querySelector('.offline-msg').addClass('hide');
+                    }
+                }, 1000);
             } 
         }
 
         //open and initiate prechat form on click of tech chat
         function initChat() {
-                var snapInObject = {
-                    snapinButtonClicked:true
-                };
+                var snapInObject
+                if (document.getElementById('SnAS').checked){
+                    snapInObject = {
+                        //Collect details from here
+                        baseLiveAgentContentURL: getOrgCookie('baseLiveAgentContentURL'),
+                        deploymentId: getOrgCookie('deploymentId'),
+                        baseLiveAgentURL: getOrgCookie('baseLiveAgentURL'),
+                        LiveAgentDevName: getOrgCookie('LiveAgentDevName'),                
+                        componentName: getOrgCookie('componentName'),
+                        organizationId: getOrgCookie('organizationId'),
+                        serviceForceURL: getOrgCookie('serviceForceURL'),
+                        snapInInitURL: getOrgCookie('snapInInitURL'),
+                        snapInJs: getOrgCookie('snapInJs'),
+                        snapInLAURL: getOrgCookie('snapInLAURL'),
+                       
+                        buttonId: getOrgCookie('buttonId'),
+                        
+                        //Hardcoded values.
+                        chatSource: "SnAS",
+
+                        //loggedin user/customer data
+                        language: 'en',
+                        firstName: document.querySelector('#snasFirstName').value,
+                        lastName: document.querySelector('#snasLastName').value,
+                        email:document.querySelector('#snasEmail').value,  
+                                    
+                        //Service related data
+                        workOrder: document.querySelector('#serviceTag').value, //Dispatch Number and Workorder number is same.
+                        productName: document.querySelector('#snasProductName').value,
+                        siteId : document.querySelector('#snasSiteId').value,
+                        serialNumber :  document.querySelector('#snasSerialNo').value
+                        //dispatchNumber: "1435465"
+
+
+                    };
+                }else{
+                    snapInObject = {
+                        snapinButtonClicked:true
+                    };
+                }
+                
                 var preChatlableObject = {
                     firstName:"First Name",
                     lastName:"Last Name",
@@ -751,9 +837,42 @@
                       blocklistEmails:"noreply@Dell.com|testing@dell.com|cool@dell.com|ok@dell.com",
                       pasteInvalidTextMsg: "You are trying to paste an invalid text.",
                       serialNumber: "Serial Number",
-                      requiredFieldValidation:"This field is required"
+                      requiredFieldValidation:"This field is required",
+
+                      //New Values [Story: 10577402]
+                      lastNameInValid: "Please enter a valid Last Name",
+                      firstNameInValid: "Please enter a valid First Name",
+                      phoneValidation: "Please enter a valid Phone Number.",
+                      
+                      //New Values for SnAS
+                        workOrder: "Work Order Number",
+                        issueType:"Issue",
+                        siteId : "Site ID ",
+                        productName: "Product Name",
+                        dispatchNumber: "Dispatch Number",
+                        firstName:"First Name",
+                        lastName:"Last Name",
+                        emailAddress:"Email Address",
+                        phoneNumber:"Primary Phone Number",
+                        issueDescription:"Issue Description",
+                        startChat:"Start Chat",
+                        optional:"(Optional)",
+                        characters:"characters",
+                        issueDescriptionLength:"250",
+                        preChatlableObject:"Chat Now",
+                        customerPrivacyDesc:"\u003cb\u003eYour privacy is important to us.\u003c/b\u003e We will only use your information to process your request. We will not share it with anyone. To learn more about how we use and protect your data, see the \u003ca target=\u0027_blank\u0027 href=\u0027//www.dell.com/learn/policies-privacy\u0027\u003eDell Privacy Statement.\u003c/a\u003e",
+                        phoneRequiredValidation:"Phone name required",
+                        closeChat: "Close Chat",
+                        chatUnavailableMessage:"Sorry, no agents are available at this moment.",
+                        chatHeader:"Chat Now",
+                        pasteInvalidTextMsg: "You are trying to paste an invalid text."
+
                 };
-               triggerSnapin(snapInObject,preChatlableObject);
+               if (document.getElementById('SnAS').checked){
+                returnedValeu = triggerSnapin(snapInObject,preChatlableObject);
+                alert(returnedValeu);
+               }else
+                triggerSnapin(snapInObject,preChatlableObject);
         }
         
         //Initiate Snapin Tech on change of issue type [All values come from here]
@@ -766,12 +885,12 @@
                     issueType = "";
                 var snapInObject = {
                     language: language.options[language.selectedIndex].value,
-
+                    countryCode: "us",
                     //Hard coded prechat values 
-                    firstName:"",
-                    lastName: "",
-                    //email:"bnr@dell.com",
-                    phoneNo:"",
+                    firstName:"Bishav",
+                    lastName: "Rajbhandari",
+                    email:"bnr@dell.com",
+                    phoneNo:"123425",
                     issueDescription: null,
                     productCode:"Latitude",
                     serviceTag: serviceTag,
@@ -782,7 +901,7 @@
                     customernumber: "2701",
                     
                     //Collect details from here
-                    /*
+                    
                     baseLiveAgentContentURL: getOrgCookie('baseLiveAgentContentURL'),
                     deploymentId: getOrgCookie('deploymentId'),
                     buttonId: getOrgCookie('buttonId'),
@@ -794,18 +913,7 @@
                     snapInInitURL: getOrgCookie('snapInInitURL'),
                     snapInJs: getOrgCookie('snapInJs'),
                     snapInLAURL: getOrgCookie('snapInLAURL'),
-*/
-                    baseLiveAgentContentURL: "https://c.la2-c1cs-ia2.salesforceliveagent.com/content",
-                    deploymentId: "5720b000000GneC",
-                    buttonId: "5730b000000CbhT",
-                    baseLiveAgentURL: "https://d.la2-c1cs-ia2.salesforceliveagent.com/chat",
-                    LiveAgentDevName: "EmbeddedServiceLiveAgent_Parent04I0b000000blJJEAY_16520d15b68",                
-                    componentName: "Snap_Ins_Chat_Deployment",
-                    organizationId: "00D7A0000009Lip",
-                    serviceForceURL: "https://service.force.com",
-                    snapInInitURL: "https://dellservices--chat.my.salesforce.com",
-                    snapInJs: "https://dellservices--chat.my.salesforce.com/embeddedservice/5.0/esw.min.js",
-                    snapInLAURL: "https://chat-dellservices.cs44.force.com/LASnapIn",
+
                     //This is to hide the element
                     snapinButtonClicked: false
                 };
@@ -852,12 +960,17 @@
                       blocklistEmails:"noreply@Dell.com|testing@dell.com|cool@dell.com|ok@dell.com",
                       pasteInvalidTextMsg: "You are trying to paste an invalid text.",
                       serialNumber: "Serial Number",
-                      requiredFieldValidation:"This field is required"
+                      requiredFieldValidation:"This field is required",
+                      
+                      //New Values [Story: 10577402]
+                      lastNameInValid: "Please enter a valid Last Name",
+                      firstNameInValid: "Please enter a valid First Name",
+                      phoneValidation: "Please enter a valid Phone Number."
                 };
               
                 if (document.getElementById('emcOrg').checked){
-                    snapInObject.firstName="BishavBishavBishavBishavBishav",
-                    snapInObject.lastName= "NarshingRajbhandari",
+                    snapInObject.firstName="BishavBishav-BishavBishavBishav",
+                    snapInObject.lastName= "Narshing-Rajbhandari",
                     snapInObject.email="bnsdsfghjghksdfgdhgjasdfsghjhrbnsdsfghjghksdfgdhgjasdfsghjhrbnsdsfghjghksdfgdhgjasdfsghjhr@dell.com",
                     //snapInObject.phoneNo="1234567",
                     snapInObject.chatSeverity = "S2";
@@ -907,31 +1020,14 @@
         //Initiate Resume Live Agent chat
         function initResumeChat(){
             var language = document.getElementById("selectLanguageOption");
+                var serviceTag = document.querySelector('#serviceTag').value.toUpperCase();
+                var issueVal = "Slow Performance";
+               // var widgetSizeVal = detectScreen();
                 var snapInObject = {
                    language: language.options[language.selectedIndex].value,
-                    serviceTag: "6MW0204",
-                    issueVal: "Slow Performance",
-                    srNumber: "RE1",
+                    serviceTag: serviceTag,
+                    issueVal: issueVal,
                     BUID: "11",
-                    firstName: "Nishita",
-                    lastName: "De",
-                    agentid: urlParamVal.AgentId,
-                    resumeChat:false,
-                    resumeChatComponentName: 'Snap_Ins_Resume_chat',
-
-                    baseLiveAgentContentURL: "https://c.la2-c1cs-ia2.salesforceliveagent.com/content",
-                    deploymentId: "5720b000000GneC",
-                    buttonId: "5730b000000CbhT",
-                    baseLiveAgentURL: "https://d.la2-c1cs-ia2.salesforceliveagent.com/chat",
-                    LiveAgentDevName: "EmbeddedServiceLiveAgent_Parent04I0b000000blJOEAY_16520ef73c5",                
-                    componentName: "Snap_Ins_Resume_chat",
-                    organizationId: "00D7A0000009Lip",
-                    serviceForceURL: "https://service.force.com",
-                    snapInInitURL: "https://dellservices--chat.my.salesforce.com",
-                    snapInJs: "https://dellservices--chat.my.salesforce.com/embeddedservice/5.0/esw.min.js",
-                    snapInLAURL: "https://chat-dellservices.cs44.force.com/LASnapIn",
-
-                    /*
                     LiveAgentDevName: "EmbeddedServiceLiveAgent_Parent04I4F000000000LUAQ_16483b64909",
                     baseLiveAgentContentURL: 'https://c.la2-c1cs-ord.salesforceliveagent.com/content',
                     baseLiveAgentURL: "https://d.la2-c2cs-ord.salesforceliveagent.com/chat",
@@ -950,10 +1046,10 @@
                     firstName: "bishav",
                     lastName: "Rajbhandari",
                     srNumber: "RE1"
-                    */
+
 
                 }
-                triggerResumeSnapin(snapInObject);
+                initResumeLiveAgent(snapInObject);
         }
 
         //Initiate ChatBot

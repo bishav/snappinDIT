@@ -1505,7 +1505,8 @@ function triggerResumeSnapin(snapInObject) {
                     embedded_svc.settings.extraPrechatFormDetails = [
                         { "label": "Chat Source", "value": snapInObject.reconnectObject.ChatType ,"transcriptFields": ["Chat_Source__c"]},
                         { "label": translatedLabels.firstName, "name": "FirstName", "value": snapInObject.reconnectObject.Contact.FirstName, "displayToAgent": true}, 
-                        { "label": translatedLabels.lastName, "value": snapInObject.reconnectObject.Contact.LastName, "displayToAgent": true},      
+                        { "label": translatedLabels.lastName, "value": snapInObject.reconnectObject.Contact.LastName, "displayToAgent": true},  
+                        { "label": "Reconnect Chat", "value": true, "transcriptFields": ["Reconnect_Chat__c"]}, //BNR POC    
                         { "label": "Reconnect Chat Transcript", "value": snapInObject.reconnectChatKey, "transcriptFields": ["Reconnect_Chat_Transcript__c"]}
                     ];
             

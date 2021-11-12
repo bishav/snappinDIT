@@ -474,13 +474,13 @@ function routingConfig(partnerPortalDetails){
             case "LES":
 				buttonID = "5731P000000TSVt";//GCC_LA_Enterprise_SBD
 			break;
-			/*case "LCBN":
+			case "LCBN":
 				buttonID = "5731P000000TSVq";//GCC_LA_Client_Basic_NBD
 			break;
 			case "LCPSN":
 				buttonID = "5731P000000TSVr";//GCC_LA_Client_PS_NBD
 			break;
-			case "APNPSN":
+			/*case "APNPSN":
 				buttonID = "5731P000000TSVi";//GCC_AP_Non_PS_SBD_NBD
 			break;
 			case "APCPSSN":
