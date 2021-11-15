@@ -1,0 +1,681 @@
+﻿﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="APEX_chat.css" />
+</head>
+<body onload="checkChatConfigCookie()">
+    <nav class="navbar navbar-light bg-light">
+            <span id="selectLanguage" style="float: right; display: block; margin-right:5px">
+                <span style="background: #6c757d;color: #fff;width: 38px;height: 28px;padding: 2px 11px;border-radius: .25rem 0 0 .25rem;"><i class="fa fa-globe"></i></span>
+                <select id="selectLanguageOption" style="margin-left: -5px;">
+                    <option>en</option>
+                    <option>en-US</option>
+                    <option>de</option> 
+                    <option>pt</option>
+                    <option>cn</option>
+                    <option>zh</option>
+                    <option>zh-CN</option>
+                    <option>zh-tw</option>
+                    <option>es</option>
+                    <option>ko</option>
+                    <option>ja</option>       
+                    <option>fr</option>
+                    <option>da</option>
+                    <option>nl_Nl</option>   
+                    <option>nl-NL</option> 
+                    <option>nl</option> 
+                    <option>en_US</option> 
+                    <option>fi</option> 
+                    <option>it</option> 
+                    <option>no</option> 
+                    <option>pt_BR</option>
+                    <option>pt-BR</option>  
+                    <option>ru</option> 
+                    <option>es_MX</option> 
+                    <option>es-MX</option>
+                    <option>sv</option>
+                    <option>th</option>
+                    <option>pl</option>
+                    <option>sk</option>
+                </select>
+            </span>
+        <a class="navbar-brand" href="#">
+            <img src="assets/DellTech_Logo_Prm_Blue.jpg" class="d-inline-block align-top" alt="">
+        </a>
+        <button style="display: block;float: left;" class="btn btn-primary"  data-target=".bd-example-modal-lg" id="chatButton" type="button" onclick="showConfigSettings()">
+            <i class="fa fa-gear"></i>
+            <span>Environment Setup</span>
+        </button>
+    </nav>
+    <div class="navigationLink " style="text-align: center;">
+        <dev style="color:#fff;">You are currently in <span id="environmentName" style="font-size: 20px;"></span> environment</dev>
+    </div>
+    <div class="container">
+        <div class="resume-chat-msg">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="jumbotron">
+                        <h1 class="display-4">Welcome To APEX Chat</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="contact-row" class="row">
+            <div class="col-lg-2"></div>
+            <div class="col-lg-8">
+                <h3 class="non-live-agent" style="display: block;">Contact Options</h3>
+                <div class="call-us" style="display: block;">
+                    <h5>Call Us</h5>
+                    <div>1-855-305-9057</div>
+                    <div>Business Hours24/7</div>
+                    <div style="font-size: small;">Please Note: You will be asked to enter your Express Service Code: <strong>34285956052</strong></div>
+                    <h5 class="phone-no">Chat with us</h5>
+                    <div>Start a chat session with one of our support agents.</div>
+                    <button type="button" id="chatButton" class="btn btn-primary" onclick="triggerAPEX_Chat()" style="display: block;">Start Chat</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    
+    <div class="modal fade" id="settingConfig" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none; padding-right: 17px; overflow-y: auto;background: rgba(0,0,0,.7);">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+      
+            <div class="modal-header">
+              <h4 class="modal-title" id="myLargeModalLabel">Environment Setup</h4>
+              <button type="button" onClick="hideSettingConfig()" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body form-group" style="background: #ddd; margin-bottom: 0px;">
+                <b>Select your prefered Environment</b>
+                <div class="input-group">
+                    <select class="custom-select" onChange="changeEnv()" id="environmentSelection">
+                    <option selected>Choose your preferred environment</option>
+                    <option value="FY22_1003_ccks">FY22_1003_ccks</option>
+                    <option value="FY22_0802_ccks">FY22_0803_ccks</option>
+                    <option value="GE4">GE4</option>
+                    <option value="GE1">GE1</option>
+                    <option value="GE2">GE2</option>
+                    <option value="Perf1">Perf1</option>
+                    <option value="Chat-POC">Chat-POC</option>
+                    </select>
+                    <div class="input-group-append">
+                    <button style="background-color: #007bff; color:#fff" class="btn btn-outline-primary" type="button" onclick="updateEnvCookie()">Update Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-body config" id="FY22_1003_ccks" style="display:none">
+                <div class="form-group">
+                    <h5>FY22_1003_ccks Environment Settings</h5>
+                </div>
+                <div class="form-group">
+                    <label for="usr">baseLiveAgentContentURL:</label>
+                    <input type="text" class="form-control" data-id="baseLiveAgentContentURL" value="https://c.la2-c1cs-ia4.salesforceliveagent.com/content">
+                </div>
+				<div class="form-group">
+                    <label for="usr">deploymentId:</label>
+                    <input type="text" class="form-control" data-id="deploymentId" value="5720b000000GneC">
+                </div>
+                <div class="form-group">
+                    <label for="usr">buttonId:</label>
+                    <input type="text" class="form-control" data-id="buttonId" value="5731P000000TSVq">
+                </div>
+				<div class="form-group">
+                    <label for="usr">baseLiveAgentURL:</label>
+                    <input type="text" class="form-control" data-id="baseLiveAgentURL" value="https://d.la2-c1cs-ia4.salesforceliveagent.com/chat">
+                </div>
+				<div class="form-group">
+                    <label for="usr">LiveAgentDevName:</label>
+                    <input type="text" class="form-control" data-id="LiveAgentDevName" value="EmbeddedServiceLiveAgent_Parent04I0b000000blJJEAY_16520d15b68">
+                </div>
+				<div class="form-group">
+                    <label for="usr">componentName:</label>
+                    <input type="text" class="form-control" data-id="componentName" value="Snap_Ins_Chat_Deployment">
+                </div>
+				<div class="form-group">
+                    <label for="usr">organizationId:</label>
+                    <input type="text" class="form-control" data-id="organizationId" value="00D4C0000008zH7">
+                </div>
+				<div class="form-group">
+                    <label for="usr">serviceForceURL:</label>
+                    <input type="text" class="form-control" data-id="serviceForceURL" value="https://service.force.com">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInInitURL:</label>
+                    <input type="text" class="form-control" data-id="snapInInitURL" value="https://dellservices--1003cck.my.salesforce.com">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInJs:</label>
+                    <input type="text" class="form-control" data-id="snapInJs" value="https://dellservices--1003cck.my.salesforce.com/embeddedservice/5.0/esw.min.js">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInLAURL:</label>
+                    <input type="text" class="form-control" data-id="snapInLAURL" value="https://1003cck-dellservices.cs61.force.com/LASnapIn">
+                </div>
+            </div>	
+
+            <div class="modal-body config" id="FY22_0803_ccks" style="display:none">
+                <div class="form-group">
+                    <h5>FY22_0803_ccks Environment Settings</h5>
+                </div>
+                <div class="form-group">
+                    <label for="usr">baseLiveAgentContentURL:</label>
+                    <input type="text" class="form-control" data-id="baseLiveAgentContentURL" value="https://c.la2-c1cs-ord.salesforceliveagent.com/content">
+                </div>
+				<div class="form-group">
+                    <label for="usr">deploymentId:</label>
+                    <input type="text" class="form-control" data-id="deploymentId" value="5720b000000GneC">
+                </div>
+                <div class="form-group">
+                    <label for="usr">buttonId:</label>
+                    <input type="text" class="form-control" data-id="buttonId" value="5731P000000TSVq">
+                </div>
+				<div class="form-group">
+                    <label for="usr">baseLiveAgentURL:</label>
+                    <input type="text" class="form-control" data-id="baseLiveAgentURL" value="https://d.la2-c1cs-ord.salesforceliveagent.com/chat">
+                </div>
+				<div class="form-group">
+                    <label for="usr">LiveAgentDevName:</label>
+                    <input type="text" class="form-control" data-id="LiveAgentDevName" value="EmbeddedServiceLiveAgent_Parent04I0b000000blJJEAY_16520d15b68">
+                </div>
+				<div class="form-group">
+                    <label for="usr">componentName:</label>
+                    <input type="text" class="form-control" data-id="componentName" value="Snap_Ins_Chat_Deployment">
+                </div>
+				<div class="form-group">
+                    <label for="usr">organizationId:</label>
+                    <input type="text" class="form-control" data-id="organizationId" value="00D1k000000FxyC">
+                </div>
+				<div class="form-group">
+                    <label for="usr">serviceForceURL:</label>
+                    <input type="text" class="form-control" data-id="serviceForceURL" value="https://service.force.com">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInInitURL:</label>
+                    <input type="text" class="form-control" data-id="snapInInitURL" value="https://dellservices--0803cck.my.salesforce.com">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInJs:</label>
+                    <input type="text" class="form-control" data-id="snapInJs" value="https://dellservices--0803cck.my.salesforce.com/embeddedservice/5.0/esw.min.js">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInLAURL:</label>
+                    <input type="text" class="form-control" data-id="snapInLAURL" value="https://0803cck-dellservices.cs78.force.com/LASnapIn">
+                </div>
+            </div>	
+
+            <div class="modal-body config" id="GE4" style="display:none">
+                <div class="form-group">
+                    <h5>GE4</h5>
+                </div>
+                <div class="form-group">
+                    <label for="usr">baseLiveAgentContentURL:</label>
+                    <input type="text" class="form-control" data-id="baseLiveAgentContentURL" value="https://c.la1-c1cs-ia4.salesforceliveagent.com/content">
+                </div>
+				<div class="form-group">
+                    <label for="usr">deploymentId:</label>
+                    <input type="text" class="form-control" data-id="deploymentId" value="5720b000000GneC">
+                </div>
+                <div class="form-group">
+                    <label for="usr">buttonId:</label>
+                    <input type="text" class="form-control" data-id="buttonId" value="5733K00000000N0">
+                </div>
+				<div class="form-group">
+                    <label for="usr">baseLiveAgentURL:</label>
+                    <input type="text" class="form-control" data-id="baseLiveAgentURL" value="https://d.la1-c1cs-ia4.salesforceliveagent.com/chat">
+                </div>
+				<div class="form-group">
+                    <label for="usr">LiveAgentDevName:</label>
+                    <input type="text" class="form-control" data-id="LiveAgentDevName" value="EmbeddedServiceLiveAgent_Parent04I0b000000blJJEAY_16520d15b68">
+                </div>
+				<div class="form-group">
+                    <label for="usr">componentName:</label>
+                    <input type="text" class="form-control" data-id="componentName" value="Snap_Ins_Chat_Deployment">
+                </div>
+				<div class="form-group">
+                    <label for="usr">organizationId:</label>
+                    <input type="text" class="form-control" data-id="organizationId" value="00D3K0000000PJb">
+                </div>
+				<div class="form-group">
+                    <label for="usr">serviceForceURL:</label>
+                    <input type="text" class="form-control" data-id="serviceForceURL" value="https://service.force.com">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInInitURL:</label>
+                    <input type="text" class="form-control" data-id="snapInInitURL" value="https://dellservices--ge4.my.salesforce.com">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInJs:</label>
+                    <input type="text" class="form-control" data-id="snapInJs" value="https://dellservices--ge4.my.salesforce.com/embeddedservice/5.0/esw.min.js">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInLAURL:</label>
+                    <input type="text" class="form-control" data-id="snapInLAURL" value="https://ge4-dellservices.cs125.force.com/LASnapIn">
+                </div>
+            </div>
+
+            <div class="modal-body config" id="GE1" style="display:none">
+                <div class="form-group">
+                    <h5>GE1</h5>
+                </div>
+                <div class="form-group">
+                    <label for="usr">baseLiveAgentContentURL:</label>
+                    <input type="text" class="form-control" data-id="baseLiveAgentContentURL" value="https://c.la2-c1cs-ia2.salesforceliveagent.com/content">
+                </div>
+				<div class="form-group">
+                    <label for="usr">deploymentId:</label>
+                    <input type="text" class="form-control" data-id="deploymentId" value="5720b000000GneC">
+                </div>
+                <div class="form-group">
+                    <label for="usr">buttonId:</label>
+                    <input type="text" class="form-control" data-id="buttonId" value="5730b000000CbhT">
+                </div>
+				<div class="form-group">
+                    <label for="usr">baseLiveAgentURL:</label>
+                    <input type="text" class="form-control" data-id="baseLiveAgentURL" value="https://d.la2-c1cs-ia2.salesforceliveagent.com/chat">
+                </div>
+				<div class="form-group">
+                    <label for="usr">LiveAgentDevName:</label>
+                    <input type="text" class="form-control" data-id="LiveAgentDevName" value="EmbeddedServiceLiveAgent_Parent04I0b000000blJJEAY_16520d15b68">
+                </div>
+				<div class="form-group">
+                    <label for="usr">componentName:</label>
+                    <input type="text" class="form-control" data-id="componentName" value="Snap_Ins_Chat_Deployment">
+                </div>
+				<div class="form-group">
+                    <label for="usr">organizationId:</label>
+                    <input type="text" class="form-control" data-id="organizationId" value="00D7A0000004aRK">
+                </div>
+				<div class="form-group">
+                    <label for="usr">serviceForceURL:</label>
+                    <input type="text" class="form-control" data-id="serviceForceURL" value="https://service.force.com">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInInitURL:</label>
+                    <input type="text" class="form-control" data-id="snapInInitURL" value="https://dellservices--ge1.my.salesforce.com">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInJs:</label>
+                    <input type="text" class="form-control" data-id="snapInJs" value="https://dellservices--ge1.my.salesforce.com/embeddedservice/5.0/esw.min.js">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInLAURL:</label>
+                    <input type="text" class="form-control" data-id="snapInLAURL" value="https://ge1-dellservices.cs44.force.com/LASnapIn">
+                </div>
+            </div>
+
+            <div class="modal-body config" id="GE2" style="display:none">
+                <div class="form-group">
+                    <h5>GE2 Environment Settings</h5>
+                </div>
+                <div class="form-group">
+                    <label for="usr">baseLiveAgentContentURL:</label>
+                    <input type="text" class="form-control" data-id="baseLiveAgentContentURL" value="https://c.la1-c1cs-ia2.salesforceliveagent.com/content">
+                </div>
+				<div class="form-group">
+                    <label for="usr">deploymentId:</label>
+                    <input type="text" class="form-control" data-id="deploymentId" value="5720b000000GneC">
+                </div>
+                <div class="form-group">
+                    <label for="usr">buttonId:</label>
+                    <input type="text" class="form-control" data-id="buttonId" value="5730b000000CbhT">
+                </div>
+				<div class="form-group">
+                    <label for="usr">baseLiveAgentURL:</label>
+                    <input type="text" class="form-control" data-id="baseLiveAgentURL" value="https://d.la1-c1cs-ia2.salesforceliveagent.com/chat">
+                </div>
+				<div class="form-group">
+                    <label for="usr">LiveAgentDevName:</label>
+                    <input type="text" class="form-control" data-id="LiveAgentDevName" value="EmbeddedServiceLiveAgent_Parent04I0b000000blJJEAY_16520d15b68">
+                </div>
+				<div class="form-group">
+                    <label for="usr">componentName:</label>
+                    <input type="text" class="form-control" data-id="componentName" value="Snap_Ins_Chat_Deployment">
+                </div>
+				<div class="form-group">
+                    <label for="usr">organizationId:</label>
+                    <input type="text" class="form-control" data-id="organizationId" value="00D170000004F8A">
+                </div>
+				<div class="form-group">
+                    <label for="usr">serviceForceURL:</label>
+                    <input type="text" class="form-control" data-id="serviceForceURL" value="https://service.force.com">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInInitURL:</label>
+                    <input type="text" class="form-control" data-id="snapInInitURL" value="https://dellservices--ge2.my.salesforce.com">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInJs:</label>
+                    <input type="text" class="form-control" data-id="snapInJs" value="https://dellservices--ge2.my.salesforce.com/embeddedservice/5.0/esw.min.js">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInLAURL:</label>
+                    <input type="text" class="form-control" data-id="snapInLAURL" value="https://ge2-dellservices.cs22.force.com/LASnapIn">
+                </div>
+            </div> 
+
+            <div class="modal-body config" id="Perf1" style="display:none">
+                <div class="form-group">
+                    <h5>Perf1</h5>
+                </div>
+                <div class="form-group">
+                    <label for="usr">baseLiveAgentContentURL:</label>
+                    <input type="text" class="form-control" data-id="baseLiveAgentContentURL" value="https://c.la3-c1cs-ph2.salesforceliveagent.com/content">
+                </div>
+				<div class="form-group">
+                    <label for="usr">deploymentId:</label>
+                    <input type="text" class="form-control" data-id="deploymentId" value="5720b000000GneC">
+                </div>
+                <div class="form-group">
+                    <label for="usr">buttonId:</label>
+                    <input type="text" class="form-control" data-id="buttonId" value="5731P000000L3rw">
+                </div>
+				<div class="form-group">
+                    <label for="usr">baseLiveAgentURL:</label>
+                    <input type="text" class="form-control" data-id="baseLiveAgentURL" value="https://d.la3-c1cs-ph2.salesforceliveagent.com/chat">
+                </div>
+				<div class="form-group">
+                    <label for="usr">LiveAgentDevName:</label>
+                    <input type="text" class="form-control" data-id="LiveAgentDevName" value="EmbeddedServiceLiveAgent_Parent04I0b000000blJJEAY_16520d15b68">
+                </div>
+				<div class="form-group">
+                    <label for="usr">componentName:</label>
+                    <input type="text" class="form-control" data-id="componentName" value="Snap_Ins_Chat_Deployment">
+                </div>
+				<div class="form-group">
+                    <label for="usr">organizationId:</label>
+                    <input type="text" class="form-control" data-id="organizationId" value="00D2h0000000YBM">
+                </div>
+				<div class="form-group">
+                    <label for="usr">serviceForceURL:</label>
+                    <input type="text" class="form-control" data-id="serviceForceURL" value="https://service.force.com">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInInitURL:</label>
+                    <input type="text" class="form-control" data-id="snapInInitURL" value="https://dellservices--Perf1.my.salesforce.com">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInJs:</label>
+                    <input type="text" class="form-control" data-id="snapInJs" value="https://dellservices--Perf1.my.salesforce.com/embeddedservice/5.0/esw.min.js">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInLAURL:</label>
+                    <input type="text" class="form-control" data-id="snapInLAURL" value="https://perf1-dellservices.cs36.force.com/LASnapIn">
+                </div>
+            </div>
+
+            <div class="modal-body config" id="Chat-POC" style="display:none">
+                <div class="form-group">
+                    <h5>Chat-POC Environment Settings</h5>
+                </div>
+                <div class="form-group">
+                    <label for="usr">baseLiveAgentContentURL:</label>
+                    <input type="text" class="form-control" data-id="baseLiveAgentContentURL" value="https://c.la2-c1cs-ia2.salesforceliveagent.com/content">
+                </div>
+				<div class="form-group">
+                    <label for="usr">deploymentId:</label>
+                    <input type="text" class="form-control" data-id="deploymentId" value="5720b000000GneC">
+                </div>
+                <div class="form-group">
+                    <label for="usr">buttonId:</label>
+                    <input type="text" class="form-control" data-id="buttonId" value="5730b000000CbhT">
+                </div>
+				<div class="form-group">
+                    <label for="usr">baseLiveAgentURL:</label>
+                    <input type="text" class="form-control" data-id="baseLiveAgentURL" value="https://d.la2-c1cs-ia2.salesforceliveagent.com/chat">
+                </div>
+				<div class="form-group">
+                    <label for="usr">LiveAgentDevName:</label>
+                    <input type="text" class="form-control" data-id="LiveAgentDevName" value="EmbeddedServiceLiveAgent_Parent04I0b000000blJJEAY_16520d15b68">
+                </div>
+				<div class="form-group">
+                    <label for="usr">componentName:</label>
+                    <input type="text" class="form-control" data-id="componentName" value="Snap_Ins_Chat_Deployment">
+                </div>
+				<div class="form-group">
+                    <label for="usr">organizationId:</label>
+                    <input type="text" class="form-control" data-id="organizationId" value="00D7A0000009Lip">
+                </div>
+				<div class="form-group">
+                    <label for="usr">serviceForceURL:</label>
+                    <input type="text" class="form-control" data-id="serviceForceURL" value="https://service.force.com">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInInitURL:</label>
+                    <input type="text" class="form-control" data-id="snapInInitURL" value="https://dellservices--chat.my.salesforce.com">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInJs:</label>
+                    <input type="text" class="form-control" data-id="snapInJs" value="https://dellservices--chat.my.salesforce.com/embeddedservice/5.0/esw.min.js">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInLAURL:</label>
+                    <input type="text" class="form-control" data-id="snapInLAURL" value="https://chat-dellservices.cs44.force.com/LASnapIn">
+                </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>
+    <script src="https://getbootstrap.com/docs/4.0/dist/js/bootstrap.min.js"></script>
+    
+       
+    <style type='text/css'>
+        .embeddedServiceHelpButton .helpButton .uiButton {
+            background-color: #007db8;
+            font-family: "Roboto Regular", sans-serif;
+        }
+        .embeddedServiceHelpButton .helpButton .uiButton:focus {
+            outline: 1px solid #007db8;
+        }
+    </style>
+    
+    <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
+    <script src="APEX_chat.js"></script>
+
+
+    <script>
+        
+        function triggerAPEX_Chat(){
+            //Chat Option Object
+            var options = {
+                    chatOptions : {
+                        snapInInitURL: "https://dellservices--1003cck.my.salesforce.com",
+                        snapInLAURL: "https://1003cck-dellservices.cs61.force.com/LASnapIn",
+                        organizationId: "00D4C0000008zH7",
+                        componentName: "Snap_Ins_Chat_Deployment",
+                        chatConfigValues: {
+                            baseLiveAgentContentURL:
+                            "https://c.la2-c1cs-ia4.salesforceliveagent.com/content",
+                            deploymentId: "5720b000000GneC",
+                            buttonId: "5730b000000CbhT",
+                            baseLiveAgentURL: "https://d.la2-c1cs-ia4.salesforceliveagent.com/chat",
+                            eswLiveAgentDevName:
+                            "EmbeddedServiceLiveAgent_Parent04I0b000000blJJEAY_16520d15b68",
+                            isOfflineSupportEnabled: false
+                        },
+                        snapInJs: "https://dellservices--1003cck.my.salesforce.com/embeddedservice/5.0/esw.min.js",
+                        serviceForceURL: "https://service.force.com"
+                    },
+
+                    user:{
+                        givenName:"Bishav",
+                        sn:"Rajbhandari",
+                        email:"bishav_narshing_rajb@dell.com",
+                        phone:""
+                    },
+
+                    subscriptionList:[
+                        "Subscrition ABC",
+                        "Subscrition 123",
+                        "Subscrition XYZ",
+                        "Subscrition 321",
+                        "Subscrition BNR"
+                    ],
+
+                    preChatlableObject:{
+                        name: "Name",
+                        emailAddress:"Email",
+                        subscription:"Subscription", 
+                        phoneNumber:"Primary Phone Number",
+                        issueDescription:"Issue Description",
+                        startChat:"Start Chat",
+                        issueType:"Issue",
+                        optional:"(Optional)",
+                        characters:"characters",
+                        issueDescriptionLength:"250",
+                        preChatlableObject:"Chat Now",
+                        customerPrivacyDesc:"\u003cb\u003eYour privacy is important to us.\u003c/b\u003e We will only use your information to process your request. We will not share it with anyone. To learn more about how we use and protect your data, see the \u003ca target=\u0027_blank\u0027 href=\u0027//www.dell.com/learn/policies-privacy\u0027\u003eDell Privacy Statement.\u003c/a\u003e",
+                        emailValidation:"Invalid Email Validation",
+                        firstNameValidation: "First name required",
+                        lastNameValidation:"Last name required",
+                        emailRequiredValidation:"Email name required",
+                        phoneRequiredValidation:"Phone name required",
+                        issueDescriptionValidation:"Descritpion name required",
+                        browserVersionValidation: "Browser Version is required",
+                        alternateEmail: "Alternate Email",
+                        dispatchNumberValidation: "Please enter valid Dispatch Number",
+                        dispatchNumberRequiredValidation:"Dispatch number is a mandatory field",
+                        dispatchNumber:"Dispatch #",
+                        closeChat: "Close Chat",
+                        chatUnavailableMessage:"Sorry, no agents are available at this moment.",
+                        chatHeader:"Chat Now",
+                        serviceTag:"Service Tag", 
+                        blocklistEmails:"noreply@Dell.com|testing@dell.com|cool@dell.com|ok@dell.com",
+                        pasteInvalidTextMsg: "You are trying to paste an invalid text.",
+                        serialNumber: "Serial Number",
+                        requiredFieldValidation:"This field is required",
+                        lastNameInValid: "Please enter a valid Last Name",
+                        firstNameInValid: "Please enter a valid First Name",
+                        phoneValidation: "Please enter a valid Phone Number.",
+                    }
+                }
+
+            //Initiate chat in background
+            initChat(options);
+
+            //triggerChat
+            triggerChat(options);
+        }
+        
+
+        
+
+
+
+        /////////////////////////////////////////////////////////////
+        ////////ENV SETUP NOT Required for APEX [START]/////////////
+        ///////////////////////////////////////////////////////////
+        //Config Box: Show config settings
+        function showConfigSettings() {
+            var element = document.getElementById("settingConfig");
+            element.style.display = "block";
+            element.classList.add("show");
+
+            var env=getOrgCookie("environment");
+            changingEnvInDom(env);
+          }
+
+        //Config Box: hide config settings
+        function hideSettingConfig(){
+            if(getOrgCookie('buttonId') != ""){
+                var element = document.getElementById("settingConfig");
+                element.style.display = "none";
+                element.classList.remove("show");
+            }else{
+                alert("Please select an environment before you close the popup.");
+            }
+
+        }
+
+        //Config Box: Environment Changed trigger
+        function changeEnv(){
+            changingEnvInDom(document.querySelector("#environmentSelection").value);
+        }
+        
+        //Config Box: Change Environment display on DOM element 
+        function changingEnvInDom(env){
+            if (env != "" && document.querySelector('#'+env)) {
+                $('.modal-body.config').hide();
+                document.querySelector('#'+env).style.display = "block";
+                document.querySelector("#environmentSelection").value = env;
+            }
+        }
+        
+        //Config Box: Adding values to cookie
+        function checkChatConfigCookie() {
+            var env=getOrgCookie("environment");
+            if (env != "") {
+                showEnvironmentdetail(env);
+            } else {
+                showConfigSettings();
+            }
+          }
+        
+        //Config Box: update environment on clik of update button
+        function updateEnvCookie(){
+            var env=document.querySelector("#environmentSelection").value;
+            if(env !="Choose your preferred environment"){
+                setOrgCookie("environment",env,30);
+                var otherValues = document.querySelectorAll("#" + env + " .form-group .form-control");
+                for(var i=0; i<otherValues.length; i++){
+                    setOrgCookie(otherValues[i].getAttribute("data-id"),otherValues[i].value,30);
+                }
+                showEnvironmentdetail(env);
+                alert("Envirment has been updated to "+env+".");
+                hideSettingConfig();
+            }else{
+                alert("Please select a proper environment");
+            }
+        }
+
+        //Config Box: getOrgCookie for a single element
+        function getOrgCookie(cname) {
+            var name = cname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for(var i = 0; i < ca.length; i++) {
+              var c = ca[i];
+              while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+              }
+              if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+              }
+            }
+            return "";
+          }
+       
+        //Config Box: setOrgCookie for a single element
+        function setOrgCookie(cname,cvalue,exdays) {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays*24*60*60*1000));
+            var expires = "expires=" + d.toGMTString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+          }
+          
+        //Config Box: showCurrentEnvironment in UI
+        function showEnvironmentdetail(env){
+            document.querySelector('#environmentName').innerText = env;
+          }
+        /////////////////////////////////////////////////////////////
+        ////////ENV SETUP NOT Required for APEX [END]///////////////
+        ///////////////////////////////////////////////////////////
+    </script>
+</body>
+</html>
