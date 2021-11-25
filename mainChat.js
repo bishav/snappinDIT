@@ -151,7 +151,7 @@ function appendCustPreChatSnapinDom(snapInObject, preChatlableObject) {
         custPreChatKeypressFieldValidation(preChatlableObject);
         custPreChatShowAdditionalDetailsInUi(snapInObject, preChatlableObject);
         snapInObject = create_snapinChatUuid(snapInObject); //FY21-0602:[Sprinklr Chat Bot] Reporting Story:  create UUID for reporting
-        document.getElementById("cusPreChat-startChat").addEventListener("click", function () {var snapInObject = sendGlobalSnapinObjToJson(); custPrechatInitiateChat(snapInObject, preChatlableObject) }); //FY21-1102 STORY #10302620: Reconnect to same agent Unit testing
+        document.getElementById("cusPreChat-startChat").addEventListener("click", function () { var snapInObject = sendGlobalSnapinObjToJson(); custPrechatInitiateChat(snapInObject, preChatlableObject) }); //FY21-1102 STORY #10302620: Reconnect to same agent Unit testing
         document.getElementById("cusPreChat-minimize-btn").addEventListener("click", function () {
             if (isWarrantyPartsReturnChat(snapInObject)) //FY21-1201: STORY 9602355
                 callDellmetricsTrack("800.300.256", "SNAPIN-WarrantyReturn: Minimize");
@@ -1088,7 +1088,7 @@ function pushValsToSnapinInit(snapInObject) {
             case "Issue__c":
                 if ("isEmcProduct" in snapInObject && snapInObject.isEmcProduct) {//FY22-0103: STORY 11130152 Remove Severity from SR Titles
                     embedded_svc.settings.extraPrechatFormDetails[i].value = snapInObject.issueVal; //FY22-0103: STORY 11130152 Remove Severity from SR Titles
-                } else                                                                                              
+                } else
                     embedded_svc.settings.extraPrechatFormDetails[i].value = getTechSupportSubject(snapInObject); //FY21-0502: DEFECT 8624995 Check for DDS
                 break;
             case "Issue_Key__c":
@@ -1205,7 +1205,7 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
     //STORY 6929894[START]
     if ("routingModel" in snapInObject && snapInObject.routingModel && snapInObject.routingModel.toLowerCase() === "skillbased") {
         embedded_svc.settings.fallbackRouting = snapInObject.skillIds;
-    }else {
+    } else {
         embedded_svc.settings.fallbackRouting = [snapInObject.buttonId]; //FY22-1102 STORY #10302620: Unit testing bugfix to connect to correct queue.
     }
     //STORY 6929894[END]
@@ -1276,10 +1276,10 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
             "transcriptFields": ["Issue_Key__c"]
         },
         //Story #6614459: Skill Based: Resume Chat Option [END]
-         //FY22-1102 STORY #10302620: Send language and country [START]
-         { "label": "Visitor Language", "value": visitorLanguageCheck(snapInObject.language), "transcriptFields": ["Visitor_Language__c"] },
-         { "label": "Visitor Country", "value": visitorCountryCheck(snapInObject.countryCode), "transcriptFields": ["Visitor_Country__c"] },
-         //FY22-1102 STORY #10302620: Send language and country [END]
+        //FY22-1102 STORY #10302620: Send language and country [START]
+        { "label": "Visitor Language", "value": visitorLanguageCheck(snapInObject.language), "transcriptFields": ["Visitor_Language__c"] },
+        { "label": "Visitor Country", "value": visitorCountryCheck(snapInObject.countryCode), "transcriptFields": ["Visitor_Country__c"] },
+        //FY22-1102 STORY #10302620: Send language and country [END]
         {//FY21-0502:[Sprinklr Chat Bot]: Adding new Field to be pushed to transcript[START]
             "label": "Case Number",
             "value": "",
@@ -1423,17 +1423,17 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
 };
 
 //FY22-1102 STORY #10302620: Visitor language and country check [START]
-function visitorLanguageCheck(visitorLanguage){
-    if (visitorLanguage && visitorLanguage != ""){
+function visitorLanguageCheck(visitorLanguage) {
+    if (visitorLanguage && visitorLanguage != "") {
         return visitorLanguage
-    }else{
+    } else {
         return 'en'
     }
 };
-function visitorCountryCheck(visitorCountry){
-    if (visitorCountry && visitorCountry != ""){
+function visitorCountryCheck(visitorCountry) {
+    if (visitorCountry && visitorCountry != "") {
         return visitorCountry
-    }else{
+    } else {
         return 'us'
     }
 };
@@ -1473,10 +1473,10 @@ function triggerResumeSnapin(snapInObject) {
             if (eleSelector.innerText === 'Chat Now')
                 eleSelector.click();
         }//FY22-1102 STORY #10302620: Reconnect to same agent[START]
-        else if("reconnectObject" in snapInObject && snapInObject.reconnectObject){ //Trigger reconnect to same agent
-            if("ButtonId" in snapInObject.reconnectObject && snapInObject.reconnectObject.ButtonId.length > 15){
+        else if ("reconnectObject" in snapInObject && snapInObject.reconnectObject) { //Trigger reconnect to same agent
+            if ("ButtonId" in snapInObject.reconnectObject && snapInObject.reconnectObject.ButtonId.length > 15) {
                 var BtnIdStr = snapInObject.reconnectObject.ButtonId;
-                snapInObject.reconnectObject.ButtonId = BtnIdStr.substring(0,15);
+                snapInObject.reconnectObject.ButtonId = BtnIdStr.substring(0, 15);
                 console.log("ButtonId", snapInObject.reconnectObject.ButtonId);
             }
 
@@ -1484,9 +1484,9 @@ function triggerResumeSnapin(snapInObject) {
             snapInObject.snapinResumeChatInitiated = false;
             saveGlobalSnapinObjToSession(snapInObject);
             showResumeSnapinLoader();
-            if (document.querySelector(".embeddedServiceHelpButton")){
+            if (document.querySelector(".embeddedServiceHelpButton")) {
                 eleExist('.helpButtonEnabled #helpButtonSpan > .message', resumeChatClick);
-            }else{
+            } else {
                 var initESW = function (gslbBaseURL) {
                     eleExist('.helpButtonEnabled #helpButtonSpan > .message', resumeChatClick);
                     embedded_svc.settings.displayHelpButton = true;
@@ -1498,17 +1498,17 @@ function triggerResumeSnapin(snapInObject) {
                     embedded_svc.settings.enabledFeatures = ['LiveAgent'];
                     embedded_svc.settings.entryFeature = 'LiveAgent';
                     embedded_svc.settings.defaultMinimizedText = 'Chat Now';
-                            
+
                     if ("Id" in snapInObject.reconnectObject.Owner && snapInObject.reconnectObject.Owner.Id)
-                        embedded_svc.settings.fallbackRouting = [snapInObject.reconnectObject.Owner.Id , snapInObject.reconnectObject.ButtonId];
-                            
+                        embedded_svc.settings.fallbackRouting = [snapInObject.reconnectObject.Owner.Id, snapInObject.reconnectObject.ButtonId];
+
                     embedded_svc.settings.extraPrechatFormDetails = [
-                        { "label": "Chat Source", "value": snapInObject.reconnectObject.ChatType ,"transcriptFields": ["Chat_Source__c"]},
-                        { "label": translatedLabels.firstName, "name": "FirstName", "value": snapInObject.reconnectObject.Contact.FirstName, "displayToAgent": true}, 
-                        { "label": translatedLabels.lastName, "value": snapInObject.reconnectObject.Contact.LastName, "displayToAgent": true},      
-                        { "label": "Reconnect Chat Transcript", "value": snapInObject.reconnectChatKey, "transcriptFields": ["Reconnect_Chat_Transcript__c"]}
+                        { "label": "Chat Source", "value": snapInObject.reconnectObject.ChatType, "transcriptFields": ["Chat_Source__c"] },
+                        { "label": translatedLabels.firstName, "name": "FirstName", "value": snapInObject.reconnectObject.Contact.FirstName, "displayToAgent": true },
+                        { "label": translatedLabels.lastName, "value": snapInObject.reconnectObject.Contact.LastName, "displayToAgent": true },
+                        { "label": "Reconnect Chat Transcript", "value": snapInObject.reconnectChatKey, "transcriptFields": ["Reconnect_Chat_Transcript__c"] }
                     ];
-            
+
                     embedded_svc.init(snapInObject.snapInInitURL, snapInObject.snapInLAURL, gslbBaseURL, snapInObject.organizationId, snapInObject.componentName, {
                         baseLiveAgentContentURL: snapInObject.baseLiveAgentContentURL,
                         deploymentId: snapInObject.deploymentId,
@@ -1527,12 +1527,12 @@ function triggerResumeSnapin(snapInObject) {
                     document.body.appendChild(s);
                 } else {
                     initESW(snapInObject.serviceForceURL);
-                } 
+                }
             }
- 
+
         }
         //FY22-1102 STORY #10302620: Reconnect to same agent[START]
-         else {
+        else {
             pageObserverForProp20("body");
             snapInObject.snapinResumeChatInitiated = false;
             saveGlobalSnapinObjToSession(snapInObject);
@@ -2336,15 +2336,7 @@ function resumeSprinklrTechChat(snapInObject) {
     var body = document.body || document.getElementsByTagName('body')[0];
     body.insertAdjacentHTML('beforeend', loaderDomElement);
     pageObserverForProp20("body");
-
-    //FY22-1003 - FAQChat
-    if (snapInObject.isFaqResumeChat == true) {
-        startFaqSprinklr(); 
-    }
-    else {
-        startSprinklr();
-    }
-    
+    startSprinklr();
 }
 //FY22-0203: Defect 10071964 [START]
 function addPrefillDetailsForAgentTransfer(snapInObject) {
@@ -3410,7 +3402,7 @@ function onChatBotServiceTagChange() {
 //FY22-1003 - FAQChat Initiation
 function triggerSnapinWithoutPrecaht(snapInObject) {
     //snapInObject.buttonId = "5720b000000GneC",//Adding a random buttonId
-        initSnapIn(snapInObject);//initirate snapin in background
+    initSnapIn(snapInObject);//initirate snapin in background
     eleExist('.helpButtonEnabled #helpButtonSpan > .message', chatClick);//Click on Start chat
     eleExist('.embeddedServiceHelpButton', hideDomObject);//hide original buttons
     eleExistWithVariable('.modalContainer  .dockableContainer .sidebarBody .activeFeature .featureBody .embeddedServiceSidebarState .prechatUI', hideOtherDomObject, '.embeddedServiceSidebar');//hide original UI
