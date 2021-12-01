@@ -546,3 +546,25 @@ body.embeddedServicePreventScrolling {
  h2[embeddedService-chatHeader_chatHeader]{
     color: #fff !important;
 }
+
+/* PrechatLoader Start*/
+.cusPreChat-loader {
+    margin: 200px auto;
+    border: 6px solid #E4E4E4;
+    border-radius: 50%;
+    border-top: 6px solid #0071B2;
+    width: 48px;
+    height: 48px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+  }
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+/* PrechatLoader End*/

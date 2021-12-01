@@ -535,6 +535,7 @@
                         phoneNumber:"Phone Number",
                         issueDescription:"Issue",
                         startChat:"Start Chat",
+                        nextBtn:"Next",
                         issueType:"Issue",
                         optional:"(Optional)",
                         characters:"characters",
@@ -676,6 +677,28 @@
         /////////////////////////////////////////////////////////////
         ////////ENV SETUP NOT Required for APEX [END]///////////////
         ///////////////////////////////////////////////////////////
+
+
+
+        //Promiss Call
+        function getButtonQueue(subscritionDetail,showrestOfPrechatForm, showAgentOfflneInPrechat){
+            var r=confirm("Agent Avilable");
+            resultObject = {
+                "buttonId": "143254654657",
+                "agentAvilable": "true",
+            };
+            if (r==true)
+            {
+                return showrestOfPrechatForm(resultObject);
+            }
+            else
+            {
+                return showAgentOfflneInPrechat();
+            }
+
+            return x
+        }
+        
     </script>
 </body>
 </html>

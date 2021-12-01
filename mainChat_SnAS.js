@@ -977,6 +977,17 @@ function custPrechatInitiateChat(snapInObject, preChatlableObject) {
             callDellmetricsTrack("800.300.258", "SNAPIN-WarrantyReturn: Submit|Description=" + descriptionHasValue(snapInObject)); //FY20-1101 STORY 7128491 //FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn
         else
             callDellmetricsTrack("890.220.002", "SNAPIN: Submit|Description=" + descriptionHasValue(snapInObject)); //FY20-1101 STORY 7128491 //FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn
+        
+        //MS360/S&AS story: Second Agent Avibality Chack
+        window.angularComponentReference.secondAgentAvailabilityFn(1).then(res => { 
+            if (res !== 'false')
+                connectToSnapInAgent(snapInObject);
+            else
+                agentsOfflinePostChatForm();
+        });
+        
+
+        /* THis code not required for MS360/S&AS 
         //FY21-0502:[Sprinklr Chat Bot] Defect 8520090: Check for agent avilability after prechat form before connecting to sprinklr Bot [START]
         if (checkSnapinQueueStatus(snapInObject) == 1) {
             if (("chatSource" in snapInObject && snapInObject.chatSource === "SnAS") || (!checkSprinklrChatBot(snapInObject))) {//FY21-0502:[Sprinklr Chat Bot] If Normal snapIn chat has to open //FY22-1002: Story #10995446 : SnAS chat : Sprinklr check not required
@@ -988,6 +999,7 @@ function custPrechatInitiateChat(snapInObject, preChatlableObject) {
         } else {
             agentsOfflinePostChatForm();
         }//FY21-0502:[Sprinklr Chat Bot] Defect 8520090: Check for agent avilability after prechat form before connecting to sprinklr Bot [END]
+        */
     }
 
     CoveoPopoverDispose();
