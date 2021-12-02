@@ -78,8 +78,16 @@
                     <div>Business Hours24/7</div>
                     <div style="font-size: small;">Please Note: You will be asked to enter your Express Service Code: <strong>34285956052</strong></div>
                     <h5 class="phone-no">Chat with us</h5>
-                    <div>Start a chat session with one of our support agents.</div>
-                    <button type="button" id="chatButton" class="btn btn-primary" onclick="triggerAPEX_Chat()" style="display: block;">Start Chat</button>
+                    <div style="margin: 10px 0px 0px 0px;">
+                        <input type="checkbox" id="agentAvability" name="agentAvability" value="true" checked="">
+                        <label for="agentAvability">Return Agent is available via API </label>
+                    </div>
+                    <div>
+                        <p style="margin: 0px 0px 0px 0px">Number or Subscriptions</p>
+                        <div style="font-size: 14px;"><input id="noOfSubMulti" type="radio" name="noOfSub" value="noOfSubMulti" checked="" style="margin: 0px 5px 0px 10px">Greater-than One</div>
+                        <div style="font-size: 14px;"><input id="noOfSubOne" type="radio" name="noOfSub" value="noOfSubOne" style="margin: 0px 5px 0px 10px">One</div>
+                    </div>
+                    <button style="margin: 10px 0px 0px 0px;" type="button" id="chatButton" class="btn btn-primary" onclick="triggerAPEX_Chat()" style="display: block;">Start Chat</button>
                 </div>
             </div>
         </div>
@@ -490,8 +498,22 @@
 
 
     <script>
-        
         function triggerAPEX_Chat(){
+
+            if(document.querySelector('input[name="noOfSub"]:checked').value === "noOfSubMulti"){
+                subscriptionListVal = [
+                        "Subscrition ABC",
+                        "Subscrition 123",
+                        "Subscrition XYZ",
+                        "Subscrition 321",
+                        "Subscrition BNR"
+                    ]
+            }else{
+                subscriptionListVal = [
+                        "Subscrition ABC"
+                    ]
+            }
+
             //Chat Option Object
             var options = {
                     chatOptions : {
@@ -519,14 +541,7 @@
                         email:"bishav_narshing_rajb@dell.com",
                         //phone:""
                     },
-
-                    subscriptionList:[
-                        "Subscrition ABC",
-                        "Subscrition 123",
-                        "Subscrition XYZ",
-                        "Subscrition 321",
-                        "Subscrition BNR"
-                    ],
+                    subscriptionList: subscriptionListVal,
 
                     preChatlableObject:{
                         name: "Name",
@@ -554,7 +569,7 @@
                         dispatchNumberRequiredValidation:"Dispatch number is a mandatory field",
                         dispatchNumber:"Dispatch #",
                         closeChat: "Close Chat",
-                        chatUnavailableMessage:"Sorry, no agents are available at this moment.",
+                        chatUnavailableMessage:"Sorry, Chat is not unavilable at this moment for the selected subscription.",
                         chatHeader:"Chat Now",
                         serviceTag:"Service Tag", 
                         blocklistEmails:"noreply@Dell.com|testing@dell.com|cool@dell.com|ok@dell.com",
@@ -680,23 +695,21 @@
 
 
 
-        //Promiss Call
-        function getButtonQueue(subscritionDetail,showrestOfPrechatForm, showAgentOfflneInPrechat){
-            var r=confirm("Agent Avilable");
-            resultObject = {
-                "buttonId": "143254654657",
-                "agentAvilable": "true",
-            };
-            if (r==true)
-            {
-                return showrestOfPrechatForm(resultObject);
-            }
-            else
-            {
-                return showAgentOfflneInPrechat();
-            }
+        //Promiss Call for Routing
+        function getRoutingDetails(subscritionDetail, showRestOfPrechatForm, showAgentOfflneInPrechat){
+            setTimeout(function () {//Keep a delay for for the above changes to be done 
+                if (document.getElementById('agentAvability').checked){
+                    resultObject = {
+                    "chatButtonId": "5732R0000000Iu6",
+                    "agentAvailable": true,
+                    };
+                    
+                    return showRestOfPrechatForm(resultObject);
 
-            return x
+                }else{//If has some error or not checked
+                    return showAgentOfflneInPrechat();
+                }            
+        }, 2000);
         }
         
     </script>
