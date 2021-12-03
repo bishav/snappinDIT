@@ -546,7 +546,8 @@
                     preChatlableObject:{
                         name: "Name",
                         emailAddress:"Email",
-                        subscription:"Subscription", 
+                        subscription:"Subscription",
+                        changeSubscription:"Change",
                         phoneNumber:"Phone Number",
                         issueDescription:"Issue",
                         startChat:"Start Chat",
@@ -583,7 +584,7 @@
                 }
 
             //Initiate chat in background
-            initChat(options);
+            //initChat(options);
 
             //triggerChat
             triggerChat(options);
@@ -704,7 +705,7 @@
                     "agentAvailable": true,
                     };
                     
-                    return showRestOfPrechatForm(resultObject);
+                    return showRestOfPrechatForm(resultObject,subscritionDetail);
 
                 }else{//If has some error or not checked
                     return showAgentOfflneInPrechat();

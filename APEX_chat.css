@@ -557,9 +557,18 @@ body.embeddedServicePreventScrolling {
     font-size: 14px;
 }
 
+.changeSubscription{
+    cursor: pointer;
+    margin-left: 8px;
+    color: #0672CB
+}
+.changeSubscription:hover, .changeSubscription:focus{
+    color: #004b6e;
+    text-decoration:underline
+}
 /* PrechatLoader Start*/
 .cusPreChat-loader {
-    margin: 200px auto;
+    margin: 120px auto;
     border: 6px solid #E4E4E4;
     border-radius: 50%;
     border-top: 6px solid #0071B2;
