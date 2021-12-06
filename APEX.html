@@ -502,15 +502,12 @@
 
             if(document.querySelector('input[name="noOfSub"]:checked').value === "noOfSubMulti"){
                 subscriptionListVal = [
-                        "Subscrition ABC",
-                        "Subscrition 123",
-                        "Subscrition XYZ",
-                        "Subscrition 321",
-                        "Subscrition BNR"
+                        "Storage Solution — Block",
+                        "Storage Solution — Field",
                     ]
             }else{
                 subscriptionListVal = [
-                        "Subscrition ABC"
+                        "Storage Solution — Block"
                     ]
             }
 
@@ -584,7 +581,7 @@
                 }
 
             //Initiate chat in background
-            //initChat(options);
+            initChat(options);
 
             //triggerChat
             triggerChat(options);
@@ -698,10 +695,15 @@
 
         //Promiss Call for Routing
         function getRoutingDetails(subscritionDetail, showRestOfPrechatForm, showAgentOfflneInPrechat){
+            let routingButtonId = "5730b000000CbhT";
+            if (subscritionDetail == "Storage Solution — Field") {
+                buttonId = "5731P000000TSVq";
+            }
+               
             setTimeout(function () {//Keep a delay for for the above changes to be done 
                 if (document.getElementById('agentAvability').checked){
                     resultObject = {
-                    "chatButtonId": "5732R0000000Iu6",
+                    "chatButtonId": routingButtonId,
                     "agentAvailable": true,
                     };
                     

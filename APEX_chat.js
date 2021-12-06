@@ -250,6 +250,7 @@ function loadingSnapinQueue(){
 
 //Make clicks on the original buttons to connect to an agent
 function connectToSnapInAgent(user) {
+
     eleExistWithVariable('.helpButtonEnabled #helpButtonSpan > .message', click_chatNow);
     eleExistWithVariable('.embeddedServiceSidebar .startButton', click_startChat);
 }
@@ -299,7 +300,12 @@ function selectSubscription(){
 
 function showRestOfPrechatForm(routingResultObject,subscritionDetail){
 
-    if (routingResultObject.agentAvailable === true) {
+    if (routingResultObject.agentAvailable === true) { //If agent is avilable in hte queue
+
+        if(typeof embedded_svc != "undefined"){//Update buttonId in embeded service
+            embedded_svc.settings.buttonId = routingResultObject.chatButtonId;
+        }
+
         hideElement(document.getElementById("cusPreChat-loaderDisplay")); //Hide loader
         document.getElementById("cusPreChat-readonly-subscriptionVal").textContent = subscritionDetail; //add value to readonly subscription
         hideElement(document.getElementById("cusPreChat-subscriptionDisplay")); //Hide subscription dropdown
