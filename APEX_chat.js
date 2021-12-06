@@ -301,8 +301,9 @@ function selectSubscription(){
 function showRestOfPrechatForm(routingResultObject,subscritionDetail){
 
     if (routingResultObject.agentAvailable === true) { //If agent is avilable in hte queue
-
+        alert("Testing routingResultObject.chatButtonId");
         if(typeof embedded_svc != "undefined"){//Update buttonId in embeded service
+            alert(routingResultObject.chatButtonId);
             embedded_svc.settings.buttonId = routingResultObject.chatButtonId;
         }
 
