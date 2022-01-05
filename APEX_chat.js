@@ -73,6 +73,68 @@ const initChat = options => {
             Email: options.user.email,
             Primary_Phone__c: options.user.phone || "000"
           };
+
+          embedded_svc.settings.extraPrechatFormDetails = [
+            //{ "label": translatedLabels.firstName, "transcriptFields": ["FirstName__c"] },
+            //{ "label": translatedLabels.lastName, "transcriptFields": ["LastName__c"] },
+            //{ "label": translatedLabels.emailAdd, "transcriptFields": ["Email__c"] },
+            //{ "label": translatedLabels.issueDesc, "transcriptFields": ["Description__c"] },
+            { "label": "Issue Key", "value": "APEX", "transcriptFields": ["Issue_Key__c"] },
+            { "label": "Customer Number", "value": "100191466", "transcriptFields": ["CustomerNumber__c"] },
+            { "label": "CustomerBUID", "value": "11", "transcriptFields": ["CustomerBUID__c"] },
+            { "label": "Chat Source", "value": "Apex", "transcriptFields": ["Chat_Source__c"] }
+          ]
+
+          embedded_svc.addEventHandler("onHelpButtonClick", function(data) {
+            console.log("onHelpButtonClick event was fired.");
+        });
+        
+        embedded_svc.addEventHandler("onChatRequestSuccess", function(data) {
+            console.log("onChatRequestSuccess event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+        });
+        
+        embedded_svc.addEventHandler("onChatEstablished", function(data) {
+            console.log("onChatEstablished event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+        });
+        
+        embedded_svc.addEventHandler("onChasitorMessage", function(data) {
+            console.log("onChasitorMessage event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+        });
+        
+        embedded_svc.addEventHandler("onAgentMessage", function(data) {
+            console.log("onAgentMessage event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+        });
+        
+        embedded_svc.addEventHandler("onChatTransferSuccessful", function(data) {
+            console.log("onChatTransferSuccessful event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+        });
+        
+        embedded_svc.addEventHandler("onChatEndedByChasitor", function(data) {
+            console.log("onChatEndedByChasitor event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+        });
+        
+        embedded_svc.addEventHandler("onChatEndedByAgent", function(data) {
+            console.log("onChatEndedByAgent event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+        });
+        
+        embedded_svc.addEventHandler("onIdleTimeoutOccurred", function(data) {
+            console.log("onIdleTimeoutOccurred event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+        });
+        
+        embedded_svc.addEventHandler("onConnectionError", function(data) {
+            console.log("onConnectionError event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+        });
+        
+        embedded_svc.addEventHandler("onClickSubmitButton", function(data) {
+            console.log("onClickSubmitButton event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+        });
+        embedded_svc.addEventHandler("onInviteAccepted", function(data) {
+            console.log("onInviteAccepted event was fired.");
+        });
+        
+        embedded_svc.addEventHandler("onInviteRejected", function(data) {
+            console.log("onInviteRejected event was fired.");
+        });
         
     };
 
@@ -106,7 +168,9 @@ function triggerChat(options) {
 
 //Open Prechat form
 function openPrechatform(options) {
-    if (!document.getElementById("cusPreChatSnapinDom")) {
+    let snapinExists = document.querySelector(".embeddedServiceSidebar");
+    //If the custom dom element exists and the change has not started.
+    if (!document.getElementById("cusPreChatSnapinDom") && !(!document.getElementById("cusPreChatSnapinDom") && snapinExists && window.getComputedStyle(snapinExists).display === 'block')) { 
         createCustPreChat(options.preChatlableObject,options.user,options.subscriptionList);
     } else {
         var serviceSidebar = document.querySelector(".modalContainer.embeddedServiceSidebar"),
@@ -301,9 +365,8 @@ function selectSubscription(){
 function showRestOfPrechatForm(routingResultObject,subscritionDetail){
 
     if (routingResultObject.agentAvailable === true) { //If agent is avilable in hte queue
-        alert("Testing routingResultObject.chatButtonId");
+
         if(typeof embedded_svc != "undefined"){//Update buttonId in embeded service
-            alert(routingResultObject.chatButtonId);
             embedded_svc.settings.buttonId = routingResultObject.chatButtonId;
         }
 
