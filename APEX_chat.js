@@ -75,14 +75,15 @@ const initChat = options => {
           };
 
           embedded_svc.settings.extraPrechatFormDetails = [
-            { "label": "First Name", "transcriptFields": ["FirstName__c"] },
-            { "label": "Last Name", "transcriptFields": ["LastName__c"] },
-            { "label": "Email", "transcriptFields": ["Email__c"] },
-            { "label": "Issue Description", "transcriptFields": ["Description__c"] }, 
-            { "label": "Primary Phone Number", "transcriptFields": ["Primary_Phone__c"] },
+            { "label": "First Name", "value": "Bishav", "transcriptFields": ["FirstName__c"] },
+            { "label": "Last Name", "value": "NR", "transcriptFields": ["LastName__c"] },
+            { "label": "Email", "value": "bishav_narshing_rajb@dell.com", "transcriptFields": ["Email__c"] },
+            { "label": "Issue Description", "value": "this is a test", "transcriptFields": ["Description__c"] }, 
+            { "label": "Primary Phone Number", "value": "12345", "transcriptFields": ["Primary_Phone__c"] },
             { "label": "Issue Key", "value": "APEX", "transcriptFields": ["Issue_Key__c"] },
             { "label": "Customer Number", "value": "100191466", "transcriptFields": ["CustomerNumber__c"] },
             { "label": "CustomerBUID", "value": "11", "transcriptFields": ["CustomerBUID__c"] },
+            { "label": "Solution ID", "value": "1243", "transcriptFields": ["Solution_ID__c"] },
             { "label": "Chat Source", "value": "Apex", "transcriptFields": ["Chat_Source__c"] }
           ]
 
