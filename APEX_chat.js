@@ -75,10 +75,11 @@ const initChat = options => {
           };
 
           embedded_svc.settings.extraPrechatFormDetails = [
-            //{ "label": translatedLabels.firstName, "transcriptFields": ["FirstName__c"] },
-            //{ "label": translatedLabels.lastName, "transcriptFields": ["LastName__c"] },
-            //{ "label": translatedLabels.emailAdd, "transcriptFields": ["Email__c"] },
-            //{ "label": translatedLabels.issueDesc, "transcriptFields": ["Description__c"] },
+            { "label": "First Name", "transcriptFields": ["FirstName__c"] },
+            { "label": "Last Name", "transcriptFields": ["LastName__c"] },
+            { "label": "Email", "transcriptFields": ["Email__c"] },
+            { "label": "Issue Description", "transcriptFields": ["Description__c"] }, 
+            { "label": "Primary Phone Number", "transcriptFields": ["Primary_Phone__c"] },
             { "label": "Issue Key", "value": "APEX", "transcriptFields": ["Issue_Key__c"] },
             { "label": "Customer Number", "value": "100191466", "transcriptFields": ["CustomerNumber__c"] },
             { "label": "CustomerBUID", "value": "11", "transcriptFields": ["CustomerBUID__c"] },
