@@ -138,6 +138,51 @@ const initChat = options => {
             console.log("onInviteRejected event was fired.");
         });
         
+
+        //var assetFieldName = CustomerBUID === EMC_BUID ? "External_ID__c" : "Name";
+        embedded_svc.settings.extraPrechatInfo = [{
+        "entityFieldMaps": [{
+            "doCreate": false,
+            "doFind": false,
+            "fieldName": "LastName",
+            "isExactMatch": false,
+            "label": "Last Name"
+        }, {
+            "doCreate": false,
+            "doFind": false,
+            "fieldName": "FirstName",
+            "isExactMatch": false,
+            "label": "First Name"
+        }, {
+            "doCreate": false,
+            "doFind": false,
+            "fieldName": "Email",
+            "isExactMatch": false,
+            "label": "Email Address"
+        }, {
+            "doCreate": false,
+            "doFind": false,
+            "fieldName": "Primary_Phone__c",
+            "isExactMatch": false,
+            "label": "Primary Phone Number"
+        }
+        ],
+        "entityName": "Contact",
+        "saveToTranscript": ""
+    }, {
+        "entityFieldMaps": [{
+            "doCreate": false,
+            "doFind": false,
+            "fieldName": "Issue_Description__c",
+            "isExactMatch": false,
+            "label": "Issue Description"
+        }
+        ],
+        "entityName": "Case",
+        
+    }
+    ];
+
     };
 
     if (!window.embedded_svc) {
