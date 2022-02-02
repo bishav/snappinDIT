@@ -125,6 +125,18 @@
                     <h5>FY23_0302cck Environment Settings</h5>
                 </div>
                 <div class="form-group">
+                    <label for="usr">button Id*:</label>
+                    <input type="text" class="form-control" data-id="buttonId" value="5730b000000Gnry">
+                </div>
+                <div class="form-group">
+                    <label for="usr">Chat Type*:</label>
+                    <input type="text" class="form-control" data-id="ResumeChatType" value="EMC">
+                </div>
+                <div class="form-group">
+                    <label for="usr">Previous Parent Chat Id*:</label>
+                    <input type="text" class="form-control" data-id="ppcId" value="5704C0000016xQlQAI">
+                </div>
+                <div class="form-group">
                     <label for="usr">baseLiveAgentContentURL:</label>
                     <input type="text" class="form-control" data-id="baseLiveAgentContentURL" value="https://c.la3-c1cs-ia2.salesforceliveagent.com/content">
                 </div>
@@ -132,10 +144,7 @@
                     <label for="usr">deploymentId:</label>
                     <input type="text" class="form-control" data-id="deploymentId" value="5720b000000GneC">
                 </div>
-                <div class="form-group">
-                    <label for="usr">buttonId:</label>
-                    <input type="text" class="form-control" data-id="buttonId" value="5730b000000CbhT">
-                </div>
+                
 				<div class="form-group">
                     <label for="usr">baseLiveAgentURL:</label>
                     <input type="text" class="form-control" data-id="baseLiveAgentURL" value="https://d.la3-c1cs-ia2.salesforceliveagent.com/chat">
@@ -605,11 +614,11 @@
                     customernumber: "2701",
                     //Collect details from here
                     //reconnect object values
-                    reconnectChatKey:"5704C0000016xQlQAI", //Not avilable
+                    reconnectChatKey:getOrgCookie('ppcId'), //"5704C0000016xQlQAI",
                     reconnectObject:{
-                        "ButtonId": "5731P000000TSVq000", 
+                        "ButtonId": getOrgCookie('buttonId'), 
                         "LinkExpired": false,
-                        "ChatType": "Tech",
+                        "ChatType": getOrgCookie('ResumeChatType'),//"EMC",
                         "IssueType": "Damage (accidental, surge, or spill)",
                         "QueueAvailability": false,
                         "Language": "en",
