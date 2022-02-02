@@ -1531,7 +1531,7 @@ function triggerResumeSnapin(snapInObject) {
             }
 
         }
-        //FY22-1102 STORY #10302620: Reconnect to same agent[START]
+        //FY22-1102 STORY #10302620: Reconnect to same agent[END]
         else {
             pageObserverForProp20("body");
             snapInObject.snapinResumeChatInitiated = false;
