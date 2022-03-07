@@ -946,32 +946,16 @@ function custPrechatInitiateChat(snapInObject, preChatlableObject) {
         else
             callDellmetricsTrack("890.220.002", "SNAPIN: Submit|Description=" + descriptionHasValue(snapInObject)); //FY20-1101 STORY 7128491 //FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn
         //FY21-0502:[Sprinklr Chat Bot] Defect 8520090: Check for agent avilability after prechat form before connecting to sprinklr Bot [START]
-        if (snapInObject.Is24VAEnabled && snapInObject.IsVASupported) { //FY23 24x7 VA enabled in contact channel page
-            //if (snapInObject.IsVASupported) {
-            checkSprinklrChatBot(snapInObject);
-            LoadDndData(snapInObject);
-            document.getElementById("cusPreChatSnapinDom").style.display = 'none';
-            startSprinklr();
-            //}
-            //else {
-            //    if (checkSnapinQueueStatus(snapInObject) == 1)
-            //        connectToSnapInAgent(snapInObject);
-            //}
-        }
-        else {
-            if (checkSnapinQueueStatus(snapInObject) == 1) {
-                //checkSprinklrChatBot(snapInObject)
-                if (!checkSprinklrChatBot(snapInObject)) {//FY21-0502:[Sprinklr Chat Bot] If Normal snapIn chat has to open
-                    connectToSnapInAgent(snapInObject);////FY21-0502:[Sprinklr Chat Bot] New reusable methode to connect to snapin Agent
-                } else {//FY21-0502:[Sprinklr Chat Bot] If SprinklrChatBot Has to open
-                    document.getElementById("cusPreChatSnapinDom").style.display = 'none';
-                    startSprinklr();
-                }
+        if (checkSnapinQueueStatus(snapInObject) == 1) {
+            if (!checkSprinklrChatBot(snapInObject)) {//FY21-0502:[Sprinklr Chat Bot] If Normal snapIn chat has to open
+                connectToSnapInAgent(snapInObject);////FY21-0502:[Sprinklr Chat Bot] New reusable methode to connect to snapin Agent
+            } else {//FY21-0502:[Sprinklr Chat Bot] If SprinklrChatBot Has to open
+                document.getElementById("cusPreChatSnapinDom").style.display = 'none';
+                startSprinklr();
             }
-            else {
-                agentsOfflinePostChatForm();
-            }//FY21-0502:[Sprinklr Chat Bot] Defect 8520090: Check for agent avilability after prechat form before connecting to sprinklr Bot [END]
-        }
+        } else {
+            agentsOfflinePostChatForm();
+        }//FY21-0502:[Sprinklr Chat Bot] Defect 8520090: Check for agent avilability after prechat form before connecting to sprinklr Bot [END]
     }
 
     CoveoPopoverDispose();
@@ -1010,16 +994,13 @@ function checkSprinklrChatBot(snapInObject) {
                 "intentApiURL": (snapInObject.intentApiURL != null && snapInObject.intentApiURL != undefined) ? snapInObject.intentApiURL : null,
                 "sprinklrLoadingMessage": (snapInObject.sprinklrLoadingMessage != null && snapInObject.sprinklrLoadingMessage != undefined) ? snapInObject.sprinklrLoadingMessage : null
             };
-
-            var res = canSupportSprinklr(sprinklrChatBotVal, snapInObject.Is24VAEnabled);
+            var res = canSupportSprinklr(sprinklrChatBotVal);
             return res;//If true open sprinklr chatBOt, If false open Snap-in
         } else {
             console.log("Sprinklr required Value is missing in snapInObject. Pleae check the below object value", snapInObject);
-            //canSupportSprinklr(sprinklrChatBotVal, snapInObject.Is24VAEnabled);
             return false;//open Snap-in
-            //connectToSnapInAgent(snapInObject);
         }
-      
+
     } catch (e) {
         console.log("checkSprinklrChatBot-Error:", e);
         return false;//open Snap-in
@@ -1028,15 +1009,10 @@ function checkSprinklrChatBot(snapInObject) {
 //FY21-0502:[Sprinklr Chat Bot] Start either SprinklrChatBot or start Normal SnapIn Chat [END]
 
 //FY21-0502:[Sprinklr Chat Bot] If customer wants to talk to an agent after sprinklr chat bot is opened.[START]
-function triggerSnapinPostSprinkler(sfdcCaseNumber) {
+function triggerSnapinPostSprinkler(sprinklrChatBotObject) {
+    callDellmetricsTrack("890.220.017", "SNAPIN: Transferred by Sprinklr"); //FY22-0502  Chat : Story 10402965: Omniature extension for Tech Sprinklr BOT
     snapInObject = sendGlobalSnapinObjToJson();
-    if (snapInObject.isFaqResumeChat == false) {
-        if (typeof snapInObject.FaqAppName != 'undefined' && snapInObject.FaqAppName != null && snapInObject.FaqAppName != '')
-            setDellMetrics('222.830.810.516', 'nohold|transfertoAgent');
-        else
-            callDellmetricsTrack("890.220.017", "SNAPIN: Transferred by Sprinklr"); //FY22-0502  Chat : Story 10402965: Omniature extension for Tech Sprinklr BOT    
-    }
-    snapInObject.caseNumber = sfdcCaseNumber;
+    snapInObject.caseNumber = sprinklrChatBotObject;
     snapInObject.sprinklrChatbotRouted = true;//FY21-0502:[Sprinklr Chat Bot] sprinkler chat bot reoted is true only in this scenario.
     saveGlobalSnapinObjToSession(snapInObject);//Added caseNumber to SnapInObject 
     //FY22-0203: Sprinklr Chatbot : Retain Chat Context [START]
@@ -1059,8 +1035,8 @@ function sprinklerChatEnded() {
     if (document.getElementById("cusPreChatSnapinDom"))
         document.getElementById("cusPreChatSnapinDom").remove();
     //FY22:0203 [Sprinklr Chat Bot] Unit testing changes [END]
-    //console.log("Sprinklr Chat ended Successfully");
-    //console.log(sendGlobalSnapinObjToJson());
+    console.log("Sprinklr Chat ended Successfully");
+    console.log(sendGlobalSnapinObjToJson());
 }
 //FY21-0502:[Sprinklr Chat Bot] If sprinklr successfully ended the chat.[END]
 
@@ -1084,7 +1060,6 @@ function create_snapinChatUuid(snapInObject) {
         dt = Math.floor(dt / 18);
         return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(18);
     });
-    if (snapInObject == null) snapInObject = {}
     snapInObject.uuid = uuid;
     saveGlobalSnapinObjToSession(snapInObject);
     return snapInObject;
@@ -1635,23 +1610,23 @@ function triggerResumeSnapin(snapInObject) {
     }
 }
 
-//STORY 11956012: Reconnect to Same agent Chat for HES [START]
-function getReconnectChatSource(chatTypeVal) {
-    try {
+ //STORY 11956012: Reconnect to Same agent Chat for HES [START]
+function getReconnectChatSource(chatTypeVal){
+	try{
         var reconnectChatType = chatTypeVal.toLowerCase();
-        if (reconnectChatType === "hes tech chat" || reconnectChatType === "hes generic chat" || reconnectChatType === "hes admin chat") {
+        if (reconnectChatType === "hes tech chat" || reconnectChatType === "hes generic chat" || reconnectChatType === "hes admin chat"){
             return "EMC";
-        } else if (reconnectChatType === "tech") {
+        }else if(reconnectChatType === "tech"){
             return "Tech";
-        } else {
+        }else{
             return chatTypeVal;
         }
-    } catch (e) {
-        console.log("error in fuction:", e);
-        return "";
-    }
+	} catch(e){
+		console.log("error in fuction:", e);
+		return "";
+	}
 }
-//STORY 11956012: Reconnect to Same agent Chat for HES [END]
+ //STORY 11956012: Reconnect to Same agent Chat for HES [END]
 
 function showResumeSnapinLoader() {
     snapInObject = sendGlobalSnapinObjToJson();
