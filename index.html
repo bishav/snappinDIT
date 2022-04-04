@@ -92,6 +92,7 @@
                                     <label><input id = "routSprinklrBot" type="radio" name="optradio" style="margin-left: 20px;">&nbsp&nbspSprinklr Bot Routing</label>
                                     <label><input id = "routSprinklrBotRefresh" type="radio" name="optradio" style="margin-left: 20px;">&nbsp&nbspSprinklr Bot Refresh</label>
                                     <label><input id = "SnAS" type="radio" name="optradio" style="margin-left: 20px;" value = 'SnAS'>&nbsp&nbspSnAS</label>
+                                    <label><input id = "GAM" type="radio" name="optradio" style="margin-left: 20px;" value = 'GAM'>&nbsp&nbspGAM</label>
                                 </span>
                                 <hr/>
                             <dev class="dellTech">
@@ -102,24 +103,28 @@
                                         <span class='SnAS'>DPS(Dispatch) Number / Work Order Number*</span>
                                     </label>
                                 </div>
-                                <input type="text" class="form-control"  id="serviceTag" aria-describedby="serviceTag" placeholder="Enter Service Tag" value="DSEASSET">
+                                <input type="text" class="form-control"  id="serviceTag" aria-describedby="serviceTag" placeholder="Enter Service Tag" value="">
                             </div>
+                            <div class='EMC' style='display:none;'>
+                                <label for="epdmId">Dummy service Tag</label>
+                            </div>
+                            <input style='display:none;' type="text" class="form-control EMC"  id="dummyServiceTag" aria-describedby="serviceTag" value="CKM00153801037">
                             <div class='EMC' style='display:none;'>
                                 <label for="epdmId">EPDM-Id(for EMC legacy)</label>
                             </div>
-                            <input style='display:none;' type="text" class="form-control EMC"  id="epdmId" aria-describedby="serviceTag" placeholder="Enter EMPD Id">                        
+                            <input style='display:none;' type="text" class="form-control EMC"  id="epdmId" aria-describedby="serviceTag" placeholder="">                        
                             <div class='EMC' style='display:none;'>
                                 <label for="emcSiteId">Site-Id(for EMC legacy)</label>
                             </div>
-                            <input style='display:none;' type="text" class="form-control EMC"  id="emcSiteId" aria-describedby="serviceTag" placeholder="Enter Site Id" value="12345">
+                            <input style='display:none;' type="text" class="form-control EMC"  id="emcSiteId" aria-describedby="serviceTag" placeholder="Enter Site Id" value="28287371">
                             <div class='EMC' style='display:none;'>
                                 <label for="emcProductName">ProductName(for EMC legacy)</label>
                             </div>
-                            <input style='display:none;' type="text" class="form-control EMC"  id="emcProductName" aria-describedby="serviceTag" placeholder="Enter Product name" value="2.3">
+                            <input style='display:none;' type="text" class="form-control EMC"  id="emcProductName" aria-describedby="serviceTag" placeholder="Enter Product name" value="XtremIO HW Gen3 40TB">
                             <div class='EMC' style='display:none;'>
                                 <label for="Site Info">Site Name(for EMC Admin CHat)</label>
                             </div>
-                            <input style='display:none;' type="text" class="form-control EMC"  id="emcSiteName" aria-describedby="serviceTag" placeholder="Site Info" value="Site Info goes here.">
+                            <input style='display:none;' type="text" class="form-control EMC"  id="emcSiteName" aria-describedby="serviceTag" placeholder="Site Info" value="">
                             
                             <div class='EMC' style='display:none;'>
                                 <label for="emcAltEmail">Alternate Email(for EMC Admin CHat)</label>
@@ -162,8 +167,33 @@
                                 <label for="snasPhone">Phone Number</label>
                             </div>
                             <input style='display:none;' type="text" class="form-control SnAS"  id="snasPhone" aria-describedby="snasPhone">
-                            
                             <!--SnAS Chat Input Values [END]-->
+
+                            <!--GAM Input Values [START]-->
+                            <div class='GAM' style='display:none;'><label for="gamFirstName">First Name*</label></div>
+                            <input style='display:none;' type="text" class="form-control GAM"  id="gamFirstName" aria-describedby="gamFirstName" value="FName">
+
+                            <div class='GAM' style='display:none;'><label for="gamLastName">Last Name*</label></div>
+                            <input style='display:none;' type="text" class="form-control GAM"  id="gamLastName" aria-describedby="gamLastName" value="LName">
+                            
+                            <div class='GAM' style='display:none;'><label for="gamEmail">Email*</label></div>
+                            <input style='display:none;' type="text" class="form-control GAM"  id="gamEmail" aria-describedby="gamEmail" value="gamemail@dell.com">
+                            
+                            <div class='GAM' style='display:none;'><label for="gamKey">Provide the Appropriate ID</label></div>
+                            <select style='display:none;' class="form-control GAM" name="gamAppropriateKey" id="gamAppropriateKey">
+                                <option value="Site_ID">Site ID</option>
+                                <option value="Serial_Number">Product ID/Serial Number</option>
+                                <option value="Service_Tag">Service Tag</option>
+                                <option value="DCN">Dell Customer Number</option>
+                                <option value="UCID">UCID</option>
+                              </select>
+                            <input style='display:none; margin-top:10px;' type="text" class="form-control GAM"  id="gamValue" aria-describedby="gamValue" placeholder="Enter Value Here" value="">                        
+                            
+                            <div class='GAM_buid' style='display:none;'><label for="gamKey">BUID</label></div>
+                            <input style='display:none; margin-top:10px;' type="text" class="form-control GAM_buid"  id="GAM_buid" aria-describedby="gamValue" placeholder="Enter BUID Here" value="11">                        
+                            
+
+                            <!--GAM Input Values [END]-->
                         </div>
 
                         <div class="col-lg-2"></div>
@@ -244,10 +274,10 @@
                 <div class="input-group">
                     <select class="custom-select" onChange="changeEnv()" id="environmentSelection">
                     <option selected>Choose your preferred environment</option>
+                    <option value="FY23_0502kcc">FY23_0502kcc</option>
                     <option value="FY23_0402cck">FY23_0402cck</option>
                     <option value="FY23_0302cck">FY23_0302cck</option>
                     <option value="FY23_0202_cck">FY23_0202_cck</option> 
-                    <option value="FY22_0104_cc">FY22_0104_cc</option>
                     <option value="Chat-POC">Chat-POC</option>
                     <option value="GE2">GE2</option>
                     <option value="Perf1">Perf1</option>
@@ -408,13 +438,13 @@
                 </div>
             </div>	
 
-            <div class="modal-body config" id="FY22_0104_cc" style="display:none">
+            <div class="modal-body config" id="FY23_0502kcc" style="display:none">
                 <div class="form-group">
-                    <h5>FY22_0104_cc Environment Settings</h5>
+                    <h5>FY23_0502kcc Environment Settings</h5>
                 </div>
                 <div class="form-group">
                     <label for="usr">baseLiveAgentContentURL:</label>
-                    <input type="text" class="form-control" data-id="baseLiveAgentContentURL" value="https://c.la3-c1cs-ia2.salesforceliveagent.com/content">
+                    <input type="text" class="form-control" data-id="baseLiveAgentContentURL" value="https://c.la1-c1cs-ia5.salesforceliveagent.com/content">
                 </div>
 				<div class="form-group">
                     <label for="usr">deploymentId:</label>
@@ -422,11 +452,11 @@
                 </div>
                 <div class="form-group">
                     <label for="usr">buttonId:</label>
-                    <input type="text" class="form-control" data-id="buttonId" value="5731P000000TSVq">
+                    <input type="text" class="form-control" data-id="buttonId" value="5730b000000CbhT">
                 </div>
 				<div class="form-group">
                     <label for="usr">baseLiveAgentURL:</label>
-                    <input type="text" class="form-control" data-id="baseLiveAgentURL" value="https://d.la3-c1cs-ia2.salesforceliveagent.com/chat">
+                    <input type="text" class="form-control" data-id="baseLiveAgentURL" value="https://d.la1-c1cs-ia5.salesforceliveagent.com/chat">
                 </div>
 				<div class="form-group">
                     <label for="usr">LiveAgentDevName:</label>
@@ -438,7 +468,7 @@
                 </div>
 				<div class="form-group">
                     <label for="usr">organizationId:</label>
-                    <input type="text" class="form-control" data-id="organizationId" value="00D2f0000008cM6">
+                    <input type="text" class="form-control" data-id="organizationId" value="00D2C000000Cn9J">
                 </div>
 				<div class="form-group">
                     <label for="usr">serviceForceURL:</label>
@@ -446,15 +476,15 @@
                 </div>
 				<div class="form-group">
                     <label for="usr">snapInInitURL:</label>
-                    <input type="text" class="form-control" data-id="snapInInitURL" value="https://dellservices--0104cc.my.salesforce.com">
+                    <input type="text" class="form-control" data-id="snapInInitURL" value="https://dellservices--0502kcc.my.salesforce.com">
                 </div>
 				<div class="form-group">
                     <label for="usr">snapInJs:</label>
-                    <input type="text" class="form-control" data-id="snapInJs" value="https://dellservices--0104cc.my.salesforce.com/embeddedservice/5.0/esw.min.js">
+                    <input type="text" class="form-control" data-id="snapInJs" value="https://dellservices--0502kcc.my.salesforce.com/embeddedservice/5.0/esw.min.js">
                 </div>
 				<div class="form-group">
                     <label for="usr">snapInLAURL:</label>
-                    <input type="text" class="form-control" data-id="snapInLAURL" value="https://0104cc-dellservices.cs34.force.com/LASnapIn">
+                    <input type="text" class="form-control" data-id="snapInLAURL" value="https://0502kcc-dellservices.cs59.force.com/LASnapIn">
                 </div>
             </div>	
 
@@ -622,7 +652,7 @@
 
             $('input:radio[name="optradio"]').change(
                 function(){
-                    if($(this).is(':checked') && $(this).val() == 'dellWPR'){
+                    if($(this).is(':checked') && ($(this).val() == 'dellWPR' || $(this).val() == 'GAM')) {
                         $(".dellTech").hide();
                     }else{
                         $(".dellTech").show(); 
@@ -632,10 +662,14 @@
                         $(".EMC").show();
                         $(".NonEMC").hide();
                         $(".SnAS").hide();
+                        $(".GAM").hide();
+                        $(".GAM_buid").hide();
                     }else if ($(this).is(':checked') && $(this).val() == 'SnAS') {
                         $(".SnAS").show();
                         $(".EMC").hide();
                         $(".NonEMC").hide();
+                        $(".GAM").hide();
+                        $(".GAM_buid").hide();
 
                         //Additional Values to be hidden
                         $(".dropdown").hide();
@@ -645,16 +679,44 @@
                         $(".chat-with-us").show();
                         $("#contact-row").show();
                         
+                    }else if($(this).is(':checked') && $(this).val() == 'GAM'){
+                        $(".EMC").hide();
+                        $(".NonEMC").hide();
+                        $(".SnAS").hide();
+                        $(".GAM").show();
+                        
+                        //GAM_buid
+                        if($('#gamAppropriateKey').value() == "DCN") {
+                            $(".GAM_buid").show();
+                        }else{
+                            $(".GAM_buid").hide();
+                        }
+
+
+                        //Additional Values to be hidden and Show
+                        $(".dropdown").show();
+
                     }else {
                         $(".EMC").hide();
                         $(".NonEMC").show();
                         $(".SnAS").hide();
-
+                        $(".GAM").hide();
+                        $(".GAM_buid").hide();
                         $(".dropdown").show();
                     }
                     
                 });
             //EMC check[END]
+
+            $('#gamAppropriateKey').change(
+                function(){
+                    if($(this).val() == 'DCN') {
+                        $(".GAM_buid").show();
+                    }else{
+                        $(".GAM_buid").hide();
+                    }
+                });
+
         //hide elements on load of page
         var dropdownIssue = document.querySelectorAll('#issueDropdown > .dropdown-item');
         for (i = 0; i < dropdownIssue.length; i++) {
@@ -984,6 +1046,7 @@
                     snapInObject.isEmcProduct = true,
                     snapInObject.siteId = document.getElementById('emcSiteId').value,
                     snapInObject.epdmId= document.getElementById('epdmId').value,
+                    snapInObject.serviceTag = document.getElementById('dummyServiceTag').value, //For testing
                     snapInObject.productName = document.getElementById('emcProductName').value,//"2.3",
                     snapInObject.alternateEmail = document.getElementById('emcAltEmail').value,
                     snapInObject.siteName = document.getElementById('emcSiteName').value,
@@ -996,6 +1059,39 @@
                     snapInObject.issueVal = "",
                     snapInObject.productName = "",
                     snapInObject.serviceTag = "";
+                } else if(document.getElementById('GAM').checked){
+                    snapInObject.firstName= document.getElementById('gamFirstName').value,
+                    snapInObject.lastName= document.getElementById('gamLastName').value,
+                    snapInObject.email= document.getElementById('gamEmail').value,
+                    snapInObject.phoneNo = "",
+                    snapInObject.issueType = "",
+                    snapInObject.issueVal = issueVal,
+                    snapInObject.productName = "",
+
+                    snapInObject.siteId = "",
+                    snapInObject.cpid = "",
+                    snapInObject.customerNumber = "",
+                    snapInObject.serviceTag = "";
+                    
+                    snapInObject.requestType = "LDell GAM Chat";
+                    snapInObject.chatSource = findGamChatSource(document.getElementById('gamAppropriateKey').value);
+                    if(snapInObject.chatSource == "EMC"){
+                        snapInObject.isEmcProduct = true;
+                        snapInObject.requestType = "HES GAM Chat";
+                        if (document.getElementById('gamAppropriateKey').value == "Site_ID"){
+                            snapInObject.siteId = document.getElementById('gamValue').value; 
+                        } else if (document.getElementById('gamAppropriateKey').value == "UCID"){
+                            snapInObject.cpid = document.getElementById('gamValue').value; 
+                        } else if (document.getElementById('gamAppropriateKey').value == "Serial_Number"){
+                            snapInObject.serviceTag = document.getElementById('gamValue').value; 
+                        }
+                    }else if (document.getElementById('gamAppropriateKey').value == "Service_Tag"){
+                        snapInObject.serviceTag = document.getElementById('gamValue').value;
+                    } else if (document.getElementById('gamAppropriateKey').value == "DCN"){
+                        snapInObject.customerNumber = document.getElementById('gamValue').value;
+                        snapInObject.buid = document.getElementById('GAM_buid').value;
+                    }
+                   
                 } 
                 
                 
@@ -1081,6 +1177,22 @@
             initLiveAgentWithoutPrechatForm(liveAgentObject);
         }      
 
+        //Find Chat Source for GAM Chats
+        function findGamChatSource(key){
+            switch  (key) {
+                case "Service_Tag" : 
+                case "DCN" : 
+                    return("Tech");
+                    break;
+                case "UCID" :
+                case "Site_ID" :
+                case "Serial_Number" :
+                    return("EMC");
+                    break;
+            }         
+
+        }
+        
         //print tracker value in console
         function dellmetricsTrack(elementId,Message){
            if(Message)

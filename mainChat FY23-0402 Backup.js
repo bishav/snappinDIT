@@ -960,13 +960,13 @@ function custPrechatInitiateChat(snapInObject, preChatlableObject) {
         }
         else {
             if (checkSnapinQueueStatus(snapInObject) == 1) {
-                checkSprinklrChatBot(snapInObject)
-                //if (!checkSprinklrChatBot(snapInObject)) {//FY21-0502:[Sprinklr Chat Bot] If Normal snapIn chat has to open
-                //    connectToSnapInAgent(snapInObject);////FY21-0502:[Sprinklr Chat Bot] New reusable methode to connect to snapin Agent
-                //} else {//FY21-0502:[Sprinklr Chat Bot] If SprinklrChatBot Has to open
-                //    document.getElementById("cusPreChatSnapinDom").style.display = 'none';
-                //    startSprinklr();
-                //}
+                //checkSprinklrChatBot(snapInObject)
+                if (!checkSprinklrChatBot(snapInObject)) {//FY21-0502:[Sprinklr Chat Bot] If Normal snapIn chat has to open
+                    connectToSnapInAgent(snapInObject);////FY21-0502:[Sprinklr Chat Bot] New reusable methode to connect to snapin Agent
+                } else {//FY21-0502:[Sprinklr Chat Bot] If SprinklrChatBot Has to open
+                    document.getElementById("cusPreChatSnapinDom").style.display = 'none';
+                    startSprinklr();
+                }
             }
             else {
                 agentsOfflinePostChatForm();
@@ -1011,19 +1011,18 @@ function checkSprinklrChatBot(snapInObject) {
                 "sprinklrLoadingMessage": (snapInObject.sprinklrLoadingMessage != null && snapInObject.sprinklrLoadingMessage != undefined) ? snapInObject.sprinklrLoadingMessage : null
             };
 
-            // var res =
-            canSupportSprinklr(sprinklrChatBotVal, snapInObject.Is24VAEnabled);
-           // return res;//If true open sprinklr chatBOt, If false open Snap-in
+            var res = canSupportSprinklr(sprinklrChatBotVal, snapInObject.Is24VAEnabled);
+            return res;//If true open sprinklr chatBOt, If false open Snap-in
         } else {
             console.log("Sprinklr required Value is missing in snapInObject. Pleae check the below object value", snapInObject);
             //canSupportSprinklr(sprinklrChatBotVal, snapInObject.Is24VAEnabled);
-            //return false;//open Snap-in
-            connectToSnapInAgent(snapInObject);
+            return false;//open Snap-in
+            //connectToSnapInAgent(snapInObject);
         }
       
     } catch (e) {
         console.log("checkSprinklrChatBot-Error:", e);
-        //return false;//open Snap-in
+        return false;//open Snap-in
     }
 }
 //FY21-0502:[Sprinklr Chat Bot] Start either SprinklrChatBot or start Normal SnapIn Chat [END]
@@ -1120,9 +1119,14 @@ function pushValsToSnapinInit(snapInObject) {
             case "Issue_Key__c":
                 embedded_svc.settings.extraPrechatFormDetails[i].value = getIssueTypeKey(snapInObject); //FY21-0502: DEFECT 8624995 Check for DDS
                 break;
-            case "Service_Tag__c":                                                                              //FY21-0502: DEFECT 8455167 value not mapping to CPID for EMC [END]
-                embedded_svc.settings.extraPrechatFormDetails[i].value = snapInObject.serviceTag;
-                break;
+            case "Service_Tag__c":
+                // Defect 12287806: FY23 : Channels : Chat : HES : Cases are not creating for CSS = ATT AND User NOT IN (China, Egypt, Germany, Spain, France, Italy) [Start]
+                if ("isEmcProduct" in snapInObject && snapInObject.isEmcProduct) {
+                    embedded_svc.settings.extraPrechatFormDetails[i].value = ""; 
+                } else
+                    embedded_svc.settings.extraPrechatFormDetails[i].value = snapInObject.serviceTag;
+                break;                                                                              
+                // Defect 12287806: FY23 : Channels : Chat : HES : Cases are not creating for CSS = ATT AND User NOT IN (China, Egypt, Germany, Spain, France, Italy) [END]
             case "Case_Number__c": //FY21-0502:[Sprinklr Chat Bot] Sending Lightning Case Number from sprinklr to SFDC chat via eSupport
                 if (snapInObject.caseNumber)
                     embedded_svc.settings.extraPrechatFormDetails[i].value = snapInObject.caseNumber;

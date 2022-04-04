@@ -1119,9 +1119,14 @@ function pushValsToSnapinInit(snapInObject) {
             case "Issue_Key__c":
                 embedded_svc.settings.extraPrechatFormDetails[i].value = getIssueTypeKey(snapInObject); //FY21-0502: DEFECT 8624995 Check for DDS
                 break;
-            case "Service_Tag__c":                                                                              //FY21-0502: DEFECT 8455167 value not mapping to CPID for EMC [END]
-                embedded_svc.settings.extraPrechatFormDetails[i].value = snapInObject.serviceTag;
-                break;
+            case "Service_Tag__c":
+                // Defect 12287806: FY23 : Channels : Chat : HES : Cases are not creating for CSS = ATT AND User NOT IN (China, Egypt, Germany, Spain, France, Italy) [Start]
+                if ("isEmcProduct" in snapInObject && snapInObject.isEmcProduct) {
+                    embedded_svc.settings.extraPrechatFormDetails[i].value = ""; 
+                } else
+                    embedded_svc.settings.extraPrechatFormDetails[i].value = snapInObject.serviceTag;
+                break;                                                                              
+                // Defect 12287806: FY23 : Channels : Chat : HES : Cases are not creating for CSS = ATT AND User NOT IN (China, Egypt, Germany, Spain, France, Italy) [END]
             case "Case_Number__c": //FY21-0502:[Sprinklr Chat Bot] Sending Lightning Case Number from sprinklr to SFDC chat via eSupport
                 if (snapInObject.caseNumber)
                     embedded_svc.settings.extraPrechatFormDetails[i].value = snapInObject.caseNumber;
@@ -1320,7 +1325,12 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
             "label": "Service Tag",
             "value": snapInObject.serviceTag,
             "transcriptFields": ["Service_Tag__c"]
-        }, {
+        }, 
+        {"label":  "CustomerNumber", "value": snapInObject.customerNumber,"transcriptFields": ["CustomerNumber__c"]},//GAM Story FY23-0502
+        {"label":  "CustomerBUID", "value": snapInObject.buid,"transcriptFields": ["CustomerBUID__c"]},//GAM Story FY23-0502
+        {"label":  "Request Type", "value": snapInObject.requestType,"transcriptFields": ["Request_Type__c"]},//GAM Story FY23-0502
+        
+        {
             "label": translatedLabels.issueDesc,
             "transcriptFields": ["Description__c"]
         }
@@ -1474,7 +1484,7 @@ function getTechSupportSubject(snapInObject) {
     //FY21-0202 Story Defectfix for Defect # 7977210 [END]
 }
 function getTechSupportChatSource(snapInObject) {
-    if (("serviceTag" in snapInObject && snapInObject.serviceTag) || isWarrantyPartsReturnChat(snapInObject))//FY21-1201 Story #9315449: Warranty Parts Return : Pre-Chat Form
+    if (("serviceTag" in snapInObject && snapInObject.serviceTag) || isWarrantyPartsReturnChat(snapInObject) || ("customerNumber" in snapInObject && snapInObject.customerNumber))//FY21-1201 Story #9315449: Warranty Parts Return : Pre-Chat Form //GAM Story FY23-0502
         return "Tech";
     else
         return "Product";
