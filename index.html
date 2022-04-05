@@ -192,6 +192,9 @@
                             <div class='GAM_buid' style='display:none;'><label for="gamKey">BUID</label></div>
                             <input style='display:none; margin-top:10px;' type="text" class="form-control GAM_buid"  id="GAM_buid" aria-describedby="gamValue" placeholder="Enter BUID Here" value="11">                        
                             
+                            <div class='GAM_cpid' style='display:none;'><label for="gamKey">CPID</label></div>
+                            <input style='display:none; margin-top:10px;' type="text" class="form-control GAM_cpid"  id="GAM_cpid" aria-describedby="gamValue" placeholder="Enter CPID Here" value="">                        
+                            
 
                             <!--GAM Input Values [END]-->
                         </div>
@@ -664,12 +667,15 @@
                         $(".SnAS").hide();
                         $(".GAM").hide();
                         $(".GAM_buid").hide();
+                        $(".GAM_cpid").hide();
+                        
                     }else if ($(this).is(':checked') && $(this).val() == 'SnAS') {
                         $(".SnAS").show();
                         $(".EMC").hide();
                         $(".NonEMC").hide();
                         $(".GAM").hide();
                         $(".GAM_buid").hide();
+                        $(".GAM_cpid").hide();
 
                         //Additional Values to be hidden
                         $(".dropdown").hide();
@@ -684,12 +690,13 @@
                         $(".NonEMC").hide();
                         $(".SnAS").hide();
                         $(".GAM").show();
-                        
-                        //GAM_buid
-                        if($('#gamAppropriateKey').value() == "DCN") {
+                        $(".GAM_buid").hide();
+                        $(".GAM_cpid").hide();
+
+                        if($('#gamAppropriateKey').val() == "DCN") {
                             $(".GAM_buid").show();
-                        }else{
-                            $(".GAM_buid").hide();
+                        }else if ($('#gamAppropriateKey').val() == "Serial_Number"){
+                            $(".GAM_cpid").show();
                         }
 
 
@@ -702,6 +709,8 @@
                         $(".SnAS").hide();
                         $(".GAM").hide();
                         $(".GAM_buid").hide();
+                        $(".GAM_cpid").hide();
+                        
                         $(".dropdown").show();
                     }
                     
@@ -710,11 +719,14 @@
 
             $('#gamAppropriateKey').change(
                 function(){
-                    if($(this).val() == 'DCN') {
-                        $(".GAM_buid").show();
-                    }else{
                         $(".GAM_buid").hide();
-                    }
+                        $(".GAM_cpid").hide();
+
+                        if($('#gamAppropriateKey').val() == "DCN") {
+                            $(".GAM_buid").show();
+                        }else if ($('#gamAppropriateKey').val() == "Serial_Number"){
+                            $(".GAM_cpid").show();
+                        }
                 });
 
         //hide elements on load of page
@@ -1084,6 +1096,7 @@
                             snapInObject.cpid = document.getElementById('gamValue').value; 
                         } else if (document.getElementById('gamAppropriateKey').value == "Serial_Number"){
                             snapInObject.serviceTag = document.getElementById('gamValue').value; 
+                            snapInObject.cpid = document.getElementById('GAM_cpid').value;
                         }
                     }else if (document.getElementById('gamAppropriateKey').value == "Service_Tag"){
                         snapInObject.serviceTag = document.getElementById('gamValue').value;

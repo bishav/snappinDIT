@@ -1274,6 +1274,7 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
             { "label": "Visitor Language", "value": visitorLanguageCheck(snapInObject.language), "transcriptFields": ["Visitor_Language__c"] },
             { "label": "Visitor Country", "value": visitorCountryCheck(snapInObject.countryCode), "transcriptFields": ["Visitor_Country__c"] },
             //FY22-1102 STORY #10302620: Send language and country [END]
+            {"label":  "Request Type", "value": snapInObject.requestType,"transcriptFields": ["Request_Type__c"]},//GAM Story FY23-0502
             { "label": "Site Id", "value": snapInObject.siteId, "transcriptFields": ["Site_Id__c"] }
         ];
     } //STORY 7193324: FY201101[END] //FY210803: HES Generic chat changes [END] 
