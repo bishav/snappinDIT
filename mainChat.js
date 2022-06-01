@@ -598,11 +598,37 @@ function custPreChatShowAdditionalDetailsInUi(snapInObject, preChatlableObject) 
         } else
             //FY21-1201 Story #9315449: Warranty Parts Return : Pre-Chat Form [END]
             if (snapInObject.productName == null)
-                topFieldValues = '<div id="readonlyPreChatContainer" class="readonlyContainer" style="margin: 0 1.5em 6px 1.2em; text-align: left;position: relative;font-size: .75em;color: #444444;margin-bottom: 0px;">' + getChatServiceTag(preChatlableObject.serviceTag, snapInObject.serviceTag) + '<div><b>' + preChatlableObject.issueType + ':</b> <span id="preChatIssueDesc" style="font-size: 12px;">' + snapInObject.issueVal + '</span></div></div>';
+                topFieldValues = '<div id="readonlyPreChatContainer" class="readonlyContainer" style="margin: 0 1.5em 6px 1.2em; text-align: left;position: relative;font-size: .75em;color: #444444;margin-bottom: 0px;">' + getChatServiceTag(preChatlableObject.serviceTag, snapInObject.serviceTag) + displayIssueType(snapInObject, preChatlableObject) + displaySiteDetails(snapInObject) + '</div>';
             else
-                topFieldValues = '<div id="readonlyPreChatContainer" class="readonlyContainer" style="margin: 0 1.5em 6px 1.2em; text-align: left;position: relative;font-size: .75em;color: #444444;"><div style="font-size: 1.2em;">' + snapInObject.productName + '</div>' + getChatServiceTag(preChatlableObject.serviceTag, snapInObject.serviceTag) + '<div><b>' + preChatlableObject.issueType + ':</b> <span id="preChatIssueDesc" style="font-size:12px;">' + snapInObject.issueVal + '</span></div></div>';
+                topFieldValues = '<div id="readonlyPreChatContainer" class="readonlyContainer" style="margin: 0 1.5em 6px 1.2em; text-align: left;position: relative;font-size: .75em;color: #444444;"><div style="font-size: 1.2em;">' + snapInObject.productName + '</div>' + getChatServiceTag(preChatlableObject.serviceTag, snapInObject.serviceTag) + displayIssueType(snapInObject, preChatlableObject) + displaySiteDetails(snapInObject) +'</div>';
     topFields.insertAdjacentHTML("afterbegin", topFieldValues);
 }
+
+ //FY22-GAM Story [Start]
+ function displayIssueType(snapInObject, preChatlableObject){
+     var returnValue;
+    if ("issueVal" in snapInObject && snapInObject.issueVal != "" && snapInObject.issueVal != null && snapInObject.issueVal != undefined){
+        returnValue = '<div><b>' + preChatlableObject.issueType + ':</b> <span id="preChatIssueDesc" style="font-size: 12px;">' + snapInObject.issueVal + '</span></div>';
+    } else{
+        returnValue = "";
+    }
+    return returnValue;
+ }
+ function displaySiteDetails(snapInObject) {
+    var returnValueSiteInfoDom = '';
+    if("siteId" in snapInObject && snapInObject.siteId && snapInObject.siteId != "" && snapInObject.siteId != null && snapInObject.siteId != undefined){
+        if (("siteName" in snapInObject && snapInObject.siteName)) {
+            returnValueSiteInfoDom = '<div>' + snapInObject.siteId + ' : ' + snapInObject.siteName + '</div>';
+        } else {
+            returnValueSiteInfoDom = '<div>' + snapInObject.siteId + '</div>';
+        }
+    }else{
+        returnValueSiteInfoDom = ""
+    }
+    return returnValueSiteInfoDom;
+}
+
+//FY22-GAM Story [End]
 function custPreFormValidation(preChatlableObject, snapInObject) {//FY21-1003: DEFECT 9566455 : "Please enter valid email address" coming for random emailid's in HES
 
     var acceptForm,

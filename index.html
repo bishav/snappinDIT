@@ -1078,7 +1078,7 @@
                     issueDescription: null,
                     productCode:"Latitude",
                     serviceTag: serviceTag,
-                    issueVal: issueVal,
+                    issueVal: "",
                     issueType: "KNY",
                     BUID: "11",
                     productName: "Precision M4500",
@@ -1194,7 +1194,9 @@
                     snapInObject.cpid = "",
                     snapInObject.customerNumber = "",
                     snapInObject.serviceTag = "";
-                    
+                    if(snapInObject.issueVal == "None"){
+                        snapInObject.issueVal = null;
+                    }
                     snapInObject.requestType = "LDell GAM Chat";
                     snapInObject.chatSource = findGamChatSource(document.getElementById('gamAppropriateKey').value);
                     if(snapInObject.chatSource == "EMC"){
