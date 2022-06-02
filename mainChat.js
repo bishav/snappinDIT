@@ -1137,6 +1137,11 @@ function pushValsToSnapinInit(snapInObject) {
         //console.log("Values in forEach Condition:",embedded_svc.settings.extraPrechatFormDetails[i]);
         switch (fieldAPI) {
             case "Issue__c":
+                    //GAM Changes [START]
+                if ("requestType" in snapInObject && (snapInObject.requestType == "LDell GAM Chat" || snapInObject.requestType == "HES GAM Chat")) {
+                    return "GAM Chat";
+                }else
+                //GAM Changes [END]
                 if ("isEmcProduct" in snapInObject && snapInObject.isEmcProduct) {//FY22-0103: STORY 11130152 Remove Severity from SR Titles
                     embedded_svc.settings.extraPrechatFormDetails[i].value = snapInObject.issueVal; //FY22-0103: STORY 11130152 Remove Severity from SR Titles
                 } else
@@ -1520,6 +1525,11 @@ function getTechSupportChatSource(snapInObject) {
 
 //Story #6614459: Skill Based: Resume Chat Option [START]
 function getIssueTypeKey(snapInObject) {
+    //GAM Chat Changes [START]
+    if ("requestType" in snapInObject && (snapInObject.requestType == "LDell GAM Chat" || snapInObject.requestType == "HES GAM Chat")) {
+        return "GAM Chat";
+    }else
+    //GAM Chat Changes [END]
     if ("issueType" in snapInObject && snapInObject.issueType) {
         return snapInObject.issueType;
     } else {
