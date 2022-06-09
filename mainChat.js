@@ -1139,7 +1139,7 @@ function pushValsToSnapinInit(snapInObject) {
             case "Issue__c":
                     //GAM Changes [START]
                 if ("requestType" in snapInObject && (snapInObject.requestType == "LDell GAM Chat" || snapInObject.requestType == "HES GAM Chat")) {
-                    return "GAM Chat";
+                    embedded_svc.settings.extraPrechatFormDetails[i].value = "GAM Chat";
                 }else
                 //GAM Changes [END]
                 if ("isEmcProduct" in snapInObject && snapInObject.isEmcProduct) {//FY22-0103: STORY 11130152 Remove Severity from SR Titles
