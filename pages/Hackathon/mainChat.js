@@ -2037,9 +2037,8 @@ function showsAgentOflineMsg(propValue, message) {
             message.includes("Nie możemy w tej chwili rozmawiać na czacie Spróbuj ponownie później.") ||
             message.includes("Momenálne nemôžeme četovať. Skúste to znova.") ||
             message.includes("Não podemos conversar agora. Tente novamente mais tarde.") ||
-            message.includes("We can't chat right now. Try again later.") 
+            message.includes("We can't chat right now. Try again later.")
             //FY:21-0202 Fix for language related issues[END]
-            || message.includes("Hmm, looks like there's no connection. Try reconnecting or come back later.") //BNR testing
         )
     ) {
         return true;
