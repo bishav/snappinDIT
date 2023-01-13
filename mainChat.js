@@ -1905,9 +1905,20 @@ function translation(lang) {
     //BNR Additional language NEW Code [Start]
     else if (language == "in") {
         this.language = "in";
+        this.firstName = "Nama Depan";
+        this.lastName = "Nama Belakang";
     }
     else if (language == "vi") {
         this.language = "vi";
+        this.firstName = "Tên";
+        this.lastName = "Họ";
+        this.emailAdd = "Email";
+    }
+    else if (language == "cs") {
+        this.firstName = "Křestní jméno";
+        this.lastName = "Příjmení";
+        this.emailAdd = "E-mail";
+        this.language = "cs";
     }
      //BNR Additional language NEW Code [END]
     else {
