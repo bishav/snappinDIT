@@ -1901,7 +1901,16 @@ function translation(lang) {
         this.lastName = "Priezvisko";
         this.emailAdd = "E-mail";
         this.language = "sk";
-    } else {
+    }
+    //BNR Additional language NEW Code [Start]
+    else if (language == "in") {
+        this.language = "in";
+    }
+    else if (language == "vi") {
+        this.language = "vi";
+    }
+     //BNR Additional language NEW Code [END]
+    else {
         this.firstName = "First Name";
         this.lastName = "Last Name";
         this.emailAdd = "Email Address";
