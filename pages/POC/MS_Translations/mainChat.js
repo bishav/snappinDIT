@@ -1,10 +1,6 @@
 ﻿//Translator POC [START]
-var chasitorTyped = ""; 
 
 document.addEventListener('keydown', function (e) {
-    if(e.which != 13){
-            wireTextChangeListner();
-        }
        if (e.keyCode === 13) {
             visitorsendingmessage();
             e.stopPropagation();
@@ -14,21 +10,13 @@ document.addEventListener('keydown', function (e) {
        }
    }, true);
 
-function wireTextChangeListner() {
-    if (document.getElementsByClassName('chasitorText')){
-        var obj = document.getElementsByClassName('chasitorText');
-        document.getElementsByClassName('chasitorText').value ='';
-        obj[0].oninput = function() 
-            {
-                chasitorTyped = this.value;
-            };
-    }
-   }
-
 function visitorsendingmessage(){
-    var messagetosend = "Needs translation of -- "+chasitorTyped;
-    embedded_svc.postMessage("chasitor.sendMessage",messagetosend);
-    chasitorTyped = "";
+    var obj = document.getElementsByClassName('chasitorText');
+        
+    var messagetosend = "Translated to -- "+obj[0].value;
+    embedded_svc.postMessage("chasitor.sendMessage",messagetosend);//Translation goes here
+
+    obj[0].value = ""; //Clear the value in text field
 }
 //Translator POC [END]
 var snapinChatGlobalIssueType, snapinChatGlobalServiceTag, snapinChatGlobalProductName = null, snapInCurrentPage = null, trackevent = true;
