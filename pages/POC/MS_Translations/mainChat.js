@@ -1,6 +1,6 @@
 ﻿//Translator POC [START]
 function msTranslationStarted(){
-    if (!document.getElementsByClassName('chasitorText')){
+    if (document.getElementsByClassName('chasitorText')){
         var obj = document.getElementsByClassName('chasitorText');//Input DOM Object element
         document.addEventListener('keydown', function (e) {
             if (e.keyCode === 13 && obj[0] === document.activeElement && (obj[0].value !== "" || obj[0].value !== " " || obj[0].value !== null || obj[0].value !== undifined)) {//If customer clicks on enter AND activeElement is Chat input field AND Input field is not empty run this code
@@ -1493,44 +1493,98 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
         Issue_Description__c: issueDescription
     };
     embedded_svc.addEventHandler("onConnectionError", function (data) {
+        console.log("onConnectionError event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
         snapinChatInitiatedState(false);
     });
     embedded_svc.addEventHandler("onIdleTimeoutOccurred", function (data) {
+        console.log("onIdleTimeoutOccurred event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
         snapinChatInitiatedState(false);
     });
     embedded_svc.addEventHandler("onChatEndedByChasitor", function (data) {
+        console.log("onChatEndedByChasitor event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
         snapinChatInitiatedState(false);
         //callDellmetricsTrackForBot("880.130.860", data.liveAgentSessionKey); //FY21-0502: Unwanted Prop values for CareBot
     });
 
     embedded_svc.addEventHandler("onChatEndedByAgent", function (data) {
+        console.log("onChatEndedByAgent event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
         snapinChatInitiatedState(false);
     });
     embedded_svc.addEventHandler("onChasitorMessage", function (data) {
-        //Translator POC [START]
-        /*if (chasitorTyped != null){
-            console.log("ChasitorMessage data");
-            console.log(data);
-            console.log("Origianl Valiue =>" + chasitorTyped);
-            var messagetosend = "Needs translation of -- "+chasitorTyped;
-            embedded_svc.postMessage("chasitor.sendMessage",messagetosend);
-            chasitorTyped = null;
-            wireTextChangeListner();
-        }*/
-         //Translator POC [END]
-
+        console.log("onChasitorMessage event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
         snapinChatInitiatedState(true);//Fix for defect 7030965
     });
     //FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn [START]
     embedded_svc.addEventHandler("onChatEstablished", function (data) {
+        console.log("onChatEstablished event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
         callDellmetricsTrack("890.220.013", "SNAPIN: Chat Started");
 
     });
     //FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn [END]
     embedded_svc.addEventHandler("onAgentMessage", function (data) {
+        console.log("onAgentMessage event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
         msTranslationStarted();//Translator POC
         snapinChatInitiatedState(true);
     });
+    embedded_svc.addEventHandler("onHelpButtonClick", function(data) {
+        console.log("onHelpButtonClick event was fired.");
+    });
+     
+    embedded_svc.addEventHandler("onChatRequestSuccess", function(data) {
+        console.log("onChatRequestSuccess event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+    });
+     
+    embedded_svc.addEventHandler("onChatConferenceInitiated", function(data) {
+        console.log("onChatConferenceInitiated event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+    });
+     
+    embedded_svc.addEventHandler("onAgentJoinedConference", function(data) {
+        console.log("onAgentJoinedConference event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+    });
+     
+    embedded_svc.addEventHandler("onAgentLeftConference", function(data) {
+        console.log("onAgentLeftConference event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+    });
+     
+    embedded_svc.addEventHandler("onChatConferenceEnded", function(data) {
+        console.log("onChatConferenceEnded event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+    });
+     
+    embedded_svc.addEventHandler("onChatTransferSuccessful", function(data) {
+        console.log("onChatTransferSuccessful event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+    });
+    
+     
+
+     
+    embedded_svc.addEventHandler("onQueueUpdate", function(data) {
+        console.log("onQueueUpdate event was fired. liveAgentSessionKey was " + data.liveAgentSessionKey + "and queuePosition was " + data.queuePosition);
+    });
+     
+    embedded_svc.addEventHandler("onClickSubmitButton", function(data) {
+        console.log("onClickSubmitButton event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
+    });
+     
+    embedded_svc.addEventHandler("onInviteAccepted", function() {
+        console.log("onInviteAccepted event was fired.");
+    });
+     
+    embedded_svc.addEventHandler("onInviteRejected", function() {
+        console.log("onInviteRejected event was fired.");
+    });
+     
+    embedded_svc.addEventHandler("onInvitationResourceLoaded", function() {
+        console.log("onInvitationResourceLoaded event was fired.");
+    });
+    
+    embedded_svc.addEventHandler("onSettingsCallCompleted", function(data) {
+        console.log("onSettingsCallCompleted event was fired. Agent availability status is " + data.isAgentAvailable ? "online": "offline");
+    });
+     
+    embedded_svc.addEventHandler("onAvailability", function(data) {
+        console.log("onAvailability event was fired. Agent availability status is " + data.isAgentAvailable ? "online": "offline");
+    });
+
 
     embedded_svc.init(snapInObject.snapInInitURL, snapInObject.snapInLAURL, gslbBaseURL, snapInObject.organizationId, snapInObject.componentName, {
         baseLiveAgentContentURL: snapInObject.baseLiveAgentContentURL,
