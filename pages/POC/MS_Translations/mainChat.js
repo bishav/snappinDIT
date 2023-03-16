@@ -1,4 +1,14 @@
-﻿//Translator POC [START]
+﻿//Add color to Agent Message counter POC [START]
+var agentMessageCounter=0;
+
+function changeAgentMessageStyle(){
+    var colorTest = document.querySelectorAll(".embeddedServiceLiveAgentStateChatPlaintextMessageDefaultUI.agent.plaintextContent");
+    colorTest[agentMessageCounter].style.background = "#fff";
+    colorTest[agentMessageCounter].style.color = "#ccc";
+}
+//Add color to Agent Message counter POC [END]
+
+//Translator POC [START]
 function msTranslationStarted(){
     if (document.getElementsByClassName('chasitorText')){
         document.addEventListener('keydown', function (e) {
@@ -1517,6 +1527,7 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
     });
     //FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn [START]
     embedded_svc.addEventHandler("onChatEstablished", function (data) {
+        agentMessageCounter=0;//Atart from 0 for a new chat. -- Add color to Agent Message counter POC 
         msTranslationStarted();//Translator POC
         console.log("onChatEstablished event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
         callDellmetricsTrack("890.220.013", "SNAPIN: Chat Started");
@@ -1524,6 +1535,11 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
     });
     //FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn [END]
     embedded_svc.addEventHandler("onAgentMessage", function (data) {
+        //Change Color if is the even value -- Add color to Agent Message counter POC [START]
+        if (++agentMessageCounter % 2 === 1){
+            changeAgentMessageStyle();
+        }
+         //Change Color if is the even value -- Add color to Agent Message counter POC [START]
         console.log("onAgentMessage event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
         
         snapinChatInitiatedState(true);
