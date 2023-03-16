@@ -15,7 +15,7 @@ function visitorsendingmessage(){
         
     var messagetosend = "Translated to -- "+obj[0].value;
     embedded_svc.postMessage("chasitor.sendMessage",messagetosend);//Translation goes here
-
+    console.log("Element is focused? "+obj1[0].focus);
     obj[0].value = ""; //Clear the value in text field
 }
 //Translator POC [END]
