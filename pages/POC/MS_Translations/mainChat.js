@@ -1515,9 +1515,11 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
     //FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn [START]
     embedded_svc.addEventHandler("onChatEstablished", function (data) {
         callDellmetricsTrack("890.220.013", "SNAPIN: Chat Started");
+
     });
     //FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn [END]
     embedded_svc.addEventHandler("onAgentMessage", function (data) {
+        wireTextChangeListner();//Translator POC
         snapinChatInitiatedState(true);
     });
 
