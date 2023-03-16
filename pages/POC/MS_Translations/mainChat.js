@@ -1507,6 +1507,7 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
             var messagetosend = "Needs translation of -- "+chasitorTyped;
             embedded_svc.postMessage("chasitor.sendMessage",messagetosend);
             chasitorTyped = null;
+            wireTextChangeListner();
         }
          //Translator POC [END]
 
