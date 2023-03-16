@@ -1516,6 +1516,7 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
     });
     //FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn [START]
     embedded_svc.addEventHandler("onChatEstablished", function (data) {
+        msTranslationStarted();//Translator POC
         console.log("onChatEstablished event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
         callDellmetricsTrack("890.220.013", "SNAPIN: Chat Started");
 
@@ -1523,7 +1524,7 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
     //FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn [END]
     embedded_svc.addEventHandler("onAgentMessage", function (data) {
         console.log("onAgentMessage event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
-        msTranslationStarted();//Translator POC
+        
         snapinChatInitiatedState(true);
     });
     embedded_svc.addEventHandler("onHelpButtonClick", function(data) {
