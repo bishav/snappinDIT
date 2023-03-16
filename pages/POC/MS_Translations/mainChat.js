@@ -1,8 +1,8 @@
 ﻿//Translator POC [START]
 function msTranslationStarted(){
     if (document.getElementsByClassName('chasitorText')){
-        var obj = document.getElementsByClassName('chasitorText');//Input DOM Object element
         document.addEventListener('keydown', function (e) {
+             var obj = document.getElementsByClassName('chasitorText');//Input DOM Object element
             if (e.keyCode === 13 && obj[0] === document.activeElement && (obj[0].value !== "" || obj[0].value !== " " || obj[0].value !== null || obj[0].value !== undifined)) {//If customer clicks on enter AND activeElement is Chat input field AND Input field is not empty run this code
                  visitorsendingmessage();
                  e.stopPropagation();
@@ -12,7 +12,8 @@ function msTranslationStarted(){
             }
         }, true);
      
-        function visitorsendingmessage(){ 
+        function visitorsendingmessage(obj){ 
+            var obj = document.getElementsByClassName('chasitorText');
             var messagetosend = "Translated to -- "+obj[0].value; //Translation code must go heregoes here
             embedded_svc.postMessage("chasitor.sendMessage",messagetosend);//Final Output
             obj[0].value = ""; //Clear the value in text field
