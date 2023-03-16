@@ -1,0 +1,59 @@
+﻿﻿<html>
+<head>
+</head>
+<body>
+
+    <style type='text/css'>
+        .embeddedServiceHelpButton .helpButton .uiButton {
+            background-color: #005290;
+            font-family: "Arial", sans-serif;
+        }
+        .embeddedServiceHelpButton .helpButton .uiButton:focus {
+            outline: 1px solid #005290;
+        }
+    </style>
+    
+    <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
+    <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>
+    <script type='text/javascript'>
+        var initESW = function(gslbBaseURL) {
+            embedded_svc.settings.externalScripts = ["SnapInexternalJs"];//This is a test
+            embedded_svc.settings.displayHelpButton = true; //Or false
+            embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
+    
+           
+            embedded_svc.settings.enabledFeatures = ['LiveAgent'];
+            embedded_svc.settings.entryFeature = 'LiveAgent';
+    
+            embedded_svc.init(
+                'https://wiproltd-dev-ed.my.salesforce.com',
+                'https://snapins-sdl-developer-edition.gus.force.com',
+                gslbBaseURL,
+                '00DB0000000KNQ4',
+                'Snapin',
+                {
+                    baseLiveAgentContentURL: 'https://c.gla3-phx.gus.salesforce.com/content',
+                    deploymentId: '572B00000009HEV',
+                    buttonId: '573B00000009J9W',
+                    baseLiveAgentURL: 'https://d.gla3-phx.gus.salesforce.com/chat',
+                    eswLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04IB0000000Cj8JMAS_1752bfe205b',
+                    isOfflineSupportEnabled: false
+                }
+            );
+
+
+
+        };
+    
+        if (!window.embedded_svc) {
+            var s = document.createElement('script');
+            s.setAttribute('src', 'https://wiproltd-dev-ed.my.salesforce.com/embeddedservice/5.0/esw.min.js');
+            s.onload = function() {
+                initESW(null);
+            };
+            document.body.appendChild(s);
+        } else {
+            initESW('https://service.force.com');
+        }
+    </script>
+</body>
