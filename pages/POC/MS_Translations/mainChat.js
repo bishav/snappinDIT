@@ -1499,14 +1499,15 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
         snapinChatInitiatedState(false);
     });
     embedded_svc.addEventHandler("onChasitorMessage", function (data) {
-        
         //Translator POC [START]
-        console.log("ChasitorMessage data");
-        console.log(data);
-        console.log("Origianl Valiue =>" + chasitorTyped);
-        var messagetosend = "Needs translation of -- "+chasitorTyped;
-        embedded_svc.postMessage("chasitor.sendMessage",messagetosend);
-        chasitorTyped = null;
+        if (chasitorTyped != null){
+            console.log("ChasitorMessage data");
+            console.log(data);
+            console.log("Origianl Valiue =>" + chasitorTyped);
+            var messagetosend = "Needs translation of -- "+chasitorTyped;
+            embedded_svc.postMessage("chasitor.sendMessage",messagetosend);
+            chasitorTyped = null;
+        }
          //Translator POC [END]
 
         snapinChatInitiatedState(true);//Fix for defect 7030965
