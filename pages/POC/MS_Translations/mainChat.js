@@ -1,23 +1,23 @@
 ﻿//Translator POC [START]
-
-document.addEventListener('keydown', function (e) {
-       if (e.keyCode === 13) {
-            visitorsendingmessage();
-            e.stopPropagation();
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-       }
-   }, true);
-
-function visitorsendingmessage(){
-    var obj = document.getElementsByClassName('chasitorText');
-        
-    var messagetosend = "Translated to -- "+obj[0].value;
-    embedded_svc.postMessage("chasitor.sendMessage",messagetosend);//Translation goes here
-    console.log("Element is focused? ",obj[0].focus);
-    console.log("Element is selected? ",obj[0].select);
-    obj[0].value = ""; //Clear the value in text field
+function msTranslationStarted(){
+    if (!document.getElementsByClassName('chasitorText')){
+        var obj = document.getElementsByClassName('chasitorText');//Input DOM Object element
+        document.addEventListener('keydown', function (e) {
+            if (e.keyCode === 13 && obj[0] === document.activeElement && (obj[0].value !== "" || obj[0].value !== " " || obj[0].value !== null || obj[0].value !== undifined)) {//If customer clicks on enter AND activeElement is Chat input field AND Input field is not empty run this code
+                 visitorsendingmessage();
+                 e.stopPropagation();
+                 e.preventDefault();
+                 e.stopPropagation();
+                 return false;
+            }
+        }, true);
+     
+        function visitorsendingmessage(){ 
+            var messagetosend = "Translated to -- "+obj[0].value; //Translation code must go heregoes here
+            embedded_svc.postMessage("chasitor.sendMessage",messagetosend);//Final Output
+            obj[0].value = ""; //Clear the value in text field
+        }
+    }
 }
 //Translator POC [END]
 var snapinChatGlobalIssueType, snapinChatGlobalServiceTag, snapinChatGlobalProductName = null, snapInCurrentPage = null, trackevent = true;
@@ -1528,7 +1528,7 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
     });
     //FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn [END]
     embedded_svc.addEventHandler("onAgentMessage", function (data) {
-        //wireTextChangeListner();//Translator POC
+        msTranslationStarted();//Translator POC
         snapinChatInitiatedState(true);
     });
 
