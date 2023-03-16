@@ -285,193 +285,188 @@
     <script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>
     <script src="https://getbootstrap.com/docs/4.0/dist/js/bootstrap.min.js"></script>
     <script src="mainChat.js"></script>
-    <script type='text/javascript'>
-       /* $(".EMC").show();
-        $(".NonEMC").hide();*/
-        var SDL_enabled = true;
+    <script>
+
         $('input:radio[name="optradio"]').change(
-                function(){
-                    if ($(this).is(':checked') && $(this).val() == 'disabledSDL') {
-                        SDL_enabled = false;
-                    }else{
-                        SDL_enabled = true;
-                    }
-                });
-            //EMC check[END]
-        //hide elements on load of page
-        var dropdownIssue = document.querySelectorAll('#issueDropdown > .dropdown-item');
-        for (i = 0; i < dropdownIssue.length; i++) {
-            dropdownIssue[i].addEventListener('click', function(e) {
-            
-                var val = e.target.outerText;
-
-                if( val != 'Select Issue Type' ) {
-                    document.querySelector('#dropdownMenuButton').innerHTML = val;
-                    document.querySelector('#contact-row').classList.remove("hide");
-                    
-                        document.querySelector('.call-us').style.display = 'block';
-                        document.querySelector('#chatButton').style.display = 'block';
-                        document.querySelector('#selectLanguage').style.display = 'block';
-                        document.querySelector('.non-live-agent').style.display = 'block';
-                        document.querySelector('.live-agent-heading').style.display = 'none';
-                        initChatWithoutClick();
+            function(){
+                if($(this).is(':checked') && ($(this).val() == 'dellWPR' || $(this).val() == 'GAM')) {
+                    $(".dellTech").hide();
+                }else{
+                    $(".dellTech").show(); 
                 }
+
+                if ($(this).is(':checked') && $(this).val() == 'emcOrg') {
+                    $(".EMC").show();
+                    $(".NonEMC").hide();
+                    $(".SnAS").hide();
+                    $(".GAM").hide();
+                    $(".GAM_buid").hide();
+                    $(".GAM_cpid").hide();
+                    
+                }else if ($(this).is(':checked') && $(this).val() == 'SnAS') {
+                    $(".SnAS").show();
+                    $(".EMC").hide();
+                    $(".NonEMC").hide();
+                    $(".GAM").hide();
+                    $(".GAM_buid").hide();
+                    $(".GAM_cpid").hide();
+
+                    //Additional Values to be hidden
+                    $(".dropdown").hide();
+                    $(".non-live-agent").hide();
+                    $(".live-agent-heading").show();
+                    $(".call-us").show();
+                    $(".chat-with-us").show();
+                    $("#contact-row").show();
+                    
+                }else if($(this).is(':checked') && $(this).val() == 'GAM'){
+                    $(".EMC").hide();
+                    $(".NonEMC").hide();
+                    $(".SnAS").hide();
+                    $(".GAM").show();
+                    $(".GAM_buid").hide();
+                    $(".GAM_cpid").hide();
+
+                    if($('#gamAppropriateKey').val() == "DCN") {
+                        $(".GAM_buid").show();
+                    }else if ($('#gamAppropriateKey').val() == "Serial_Number"){
+                        $(".GAM_cpid").show();
+                    }
+
+
+                    //Additional Values to be hidden and Show
+                    $(".dropdown").show();
+
+                }else {
+                    $(".EMC").hide();
+                    $(".NonEMC").show();
+                    $(".SnAS").hide();
+                    $(".GAM").hide();
+                    $(".GAM_buid").hide();
+                    $(".GAM_cpid").hide();
+                    
+                    $(".dropdown").show();
+                }
+                
             });
-        }
+        //EMC check[END]
 
-        //hide issue type
-        document.querySelector('.dropdown').classList.remove("hide");
-        
-        //Trigger snapin for retain chat on page load
-        triggerSnapin();
+        $('#gamAppropriateKey').change(
+            function(){
+                    $(".GAM_buid").hide();
+                    $(".GAM_cpid").hide();
 
-        //issue type show/hide function
-        function showIssue() {
-            if( document.querySelector('#serviceTag').value.length != 0 ) {
-
-                document.querySelector('.dropdown').classList.remove("hide");
-            } else {
-                document.querySelector('.dropdown').classList.add("hide");
-                document.querySelector('#contact-row').classList.add("hide");
-               document.querySelector('#dropdownMenuButton').text = 'Select Issue Type';
-            }
-        }
-        
-        //Initiate Resume Chat
-        function resumeChat(buttonId, deploymentId, serviceTag, srNumber, FirstName, lastName, resumeType) {
-            if( resumeType === 'snapIn' ) {
-
-                var language = document.querySelector("#selectLanguageOption option:selected").val();
-                var serviceTag = document.querySelector('#serviceTag').val().toUpperCase();
-                var issueVal = document.querySelector('#dropdownMenuButton').text();
-               // var widgetSizeVal = detectScreen();
-                var snapInObject = {
-                    language: language,
-                  //  widgetSize: widgetSizeVal,
-                    serviceTag: serviceTag,
-                    issueVal: issueVal,
-                    snapInInitURL: 'https://dellservices--DIT4.cs11.my.salesforce.com',  
-                    snapInLAURL: 'https://dit4-dellservices.cs11.force.com/LaSnapIn',
-                    organizationId: '00DZ000000NE2eh',
-                    componentName: 'Snap_Ins_Chat_Deployment',
-                    baseLiveAgentContentURL: 'https://c.la3-c2cs-phx.salesforceliveagent.com/content',
-                    deploymentId: '572Z000000000KC',
-                    buttonId: '5730b000000CbhT',
-                    baseLiveAgentURL: 'https://d.la3-c2cs-phx.salesforceliveagent.com/chat',
-                    LiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04IZ00000008OIKMA2_1647fbd242d',
-                    domainName: "localhost", //"bishav.github.io",//
-                    serviceForceURL: "https://service.force.com",
-                    snapInJs: "https://service.force.com/embeddedservice/5.0/esw.min.js",
-                    resumeChat:false,
-                    resumeChatComponentName: 'Snap_Ins_Resume_chat',
-                    resumeChatButtonId: '5730b000000CbhY',
-                    resumeChatLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04IZ00000008OIUMA2_1648e3b61a5',
-                    srNumber:'',
-                    firstName:'Bishav',
-                    lastName:'',
-                    triggerbuttonId:'chatButton'
-                }
-                
-                triggerResumeSnapin(snapInObject);
-                eleExist('#helpButtonSpan > .message', chatClick);
-                
-            } else {
-                liveagent.addCustomDetail('deltaSr', srNumber).saveToTranscript('Delta_Sr__c');
-                liveagent.findOrCreate("Case").map("Delta_SR__c","deltaSr",true, false, true).showOnCreate();
-                liveagent.init('https://d.la4-c1cs-phx.salesforceliveagent.com/chat', '5723B0000004Crz', '00Dm0000000DQXs');
-                liveagent.setName(FirstName + ' ' + lastName);
-                document.querySelector('.live-agent-resume-button').removeClass('hide');
-                // eleExist('#liveagent_button_online_5733B0000004D95', liveAgentResume);
-                setInterval(function() {
-                    var onlineStatus = document.querySelector('#liveagent_button_online_5733B0000004D95').attr('style').split(":")[1].replace(/ /g,'').split(";")[0];
-                    var offlineStatus = document.querySelector('#liveagent_button_online_5733B0000004D95').attr('style').split(":")[1].replace(/ /g,'').split(";")[0];
-                    if( onlineStatus === 'none' ) {
-                        document.querySelector('.offline-msg').removeClass('hide');
-                    } else if( offlineStatus === 'none' ) {
-                        document.querySelector('.offline-msg').addClass('hide');
+                    if($('#gamAppropriateKey').val() == "DCN") {
+                        $(".GAM_buid").show();
+                    }else if ($('#gamAppropriateKey').val() == "Serial_Number"){
+                        $(".GAM_cpid").show();
                     }
-                }, 1000);
-            } 
-        }
+            });
 
-        //open and initiate prechat form on click of tech chat
-        function initChat() {
-                var snapInObject = {
-                    snapinButtonClicked:true
-                };
-                var preChatlableObject = {
-                    firstName:"First Name",
-                    lastName:"Last Name",
-                    SfdcLastName:"Last Name",
-                    emailAddress:"Email Address",
-                    phoneNumber:"Primary Phone Number",
-                    issueDescription:"Issue Description",
-                    startChat:"Start Chat",
-                    issueType:"Issue",
-                    optional:"(Optional)",
-                    characters:"characters",
-                    issueDescriptionLength:"35000",
-                    SFDCLanguageConfig:"first Name|Last Name",
-                   // summeryErrormsg:preChatModel.SummeryErrormsg,
-                  //  issueDescriptionMaxCharValidation:preChatModel.IssueDetailMaxCharValidationMsg,
-                      customerPrivacyDesc:"\u003cb\u003eYour privacy is important to us.\u003c/b\u003e We will only use your information to process your request. We will not share it with anyone. To learn more about how we use and protect your data, see the \u003ca target=\u0027_blank\u0027 href=\u0027//www.dell.com/learn/policies-privacy\u0027\u003eDell Privacy Statement.\u003c/a\u003e",
-                      emailValidation:"Invalid Email Validation",
-                      firstNameValidation: "First name required",
-                      lastNameValidation:"Last name required",
-                      emailRequiredValidation:"Email name required",
-                      phoneRequiredValidation:"Phone name required",
-                      issueDescriptionValidation:"Descritpion name required",
-                 //   phoneValidation:preChatModel.PhoneValidation,
-                 //   severityValidation:preChatModel.SeverityValidation,
-                      chatUnavailableMessage:"Sorry, no agents are available at this moment.",
-                      chatHeader:"Chat Now",
-
-                //    serialNumber:preChatModel.LblSerialNumber,
-                //    instanceId:preChatModel.LblInstanceId,
-                      serviceTag:"Service Tag",
-                //    severity:preChatModel.LblSeverity,
-                   // severityList:preChatModel.SeverityList,
-                 //   severityContents:preChatModel.SeverityContents,  
-                      blocklistEmails:"noreply@Dell.com|testing@dell.com|cool@dell.com|ok@dell.com",
-                      pasteInvalidTextMsg: "You are trying to paste an invalid text.",
-                      serialNumber: "Serial Number",
-                      requiredFieldValidation:"This field is required"
-                };
-               triggerSnapin(snapInObject,preChatlableObject);
-        }
+    //hide elements on load of page
+    var dropdownIssue = document.querySelectorAll('#issueDropdown > .dropdown-item');
+    for (i = 0; i < dropdownIssue.length; i++) {
+        dropdownIssue[i].addEventListener('click', function(e) {
         
-        //Initiate Snapin Tech on change of issue type [All values come from here]
-        function initChatWithoutClick() {
-               var language = document.getElementById("selectLanguageOption");
-                var serviceTag = document.querySelector('#serviceTag').value.toUpperCase();
-                var issueVal = document.querySelector('#dropdownMenuButton').innerHTML;
-                var issueType = "TNYKS";
-                if (issueVal === "None")
-                    issueType = "";
-                var snapInObject = {
-                    language: language.options[language.selectedIndex].value,
+            var val = e.target.outerText;
 
-                    //Hard coded prechat values 
-                    firstName:"Bishav",
-                    lastName: "Rajbhandari",
-                    email:"bnr@dell.com",
-                    phoneNo:"1234567",
-                    issueDescription:"Test of Description",
-                    productCode:"Latitude",
-                    serviceTag: serviceTag,
-                    issueVal: issueVal,
-                    issueType: "KNY",
-                    BUID: "11",
-                    productName: "Precision M4500",
-                    customernumber: "2701",
-                    
-                    //POC value
-                    SDL_enabled: SDL_enabled,
-                    //Collect details from here
-                    
+            if( val != 'Select Issue Type' ) {
+                document.querySelector('#dropdownMenuButton').innerHTML = val;
+                document.querySelector('#contact-row').classList.remove("hide");
+                
+                    document.querySelector('.call-us').style.display = 'block';
+                    document.querySelector('#chatButton').style.display = 'block';
+                    document.querySelector('#selectLanguage').style.display = 'block';
+                    document.querySelector('.non-live-agent').style.display = 'block';
+                    document.querySelector('.live-agent-heading').style.display = 'none';
+                    initChatWithoutClick();
+            }
+        });
+    }
+
+    //hide issue type
+    document.querySelector('.dropdown').classList.remove("hide");
+    
+    //Trigger snapin for retain chat on page load
+    triggerSnapin();
+
+    //issue type show/hide function
+    function showIssue() {
+        if( document.querySelector('#serviceTag').value.length != 0 ) {
+
+            document.querySelector('.dropdown').classList.remove("hide");
+        } else {
+            document.querySelector('.dropdown').classList.add("hide");
+            document.querySelector('#contact-row').classList.add("hide");
+           document.querySelector('#dropdownMenuButton').text = 'Select Issue Type';
+        }
+    }
+    
+    //Initiate Resume Chat
+    function resumeChat(buttonId, deploymentId, serviceTag, srNumber, FirstName, lastName, resumeType) {
+        if( resumeType === 'snapIn' ) {
+
+            var language = document.querySelector("#selectLanguageOption option:selected").val();
+            var serviceTag = document.querySelector('#serviceTag').val().toUpperCase();
+            var issueVal = document.querySelector('#dropdownMenuButton').text();
+           // var widgetSizeVal = detectScreen();
+            var snapInObject = {
+                language: language,
+              //  widgetSize: widgetSizeVal,
+                serviceTag: serviceTag,
+                issueVal: issueVal,
+                snapInInitURL: 'https://dellservices--DIT4.cs11.my.salesforce.com',  
+                snapInLAURL: 'https://dit4-dellservices.cs11.force.com/LaSnapIn',
+                organizationId: '00DZ000000NE2eh',
+                componentName: 'Snap_Ins_Chat_Deployment',
+                baseLiveAgentContentURL: 'https://c.la3-c2cs-phx.salesforceliveagent.com/content',
+                deploymentId: '572Z000000000KC',
+                buttonId: '5730b000000CbhT',
+                baseLiveAgentURL: 'https://d.la3-c2cs-phx.salesforceliveagent.com/chat',
+                LiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04IZ00000008OIKMA2_1647fbd242d',
+                domainName: "localhost", //"bishav.github.io",//
+                serviceForceURL: "https://service.force.com",
+                snapInJs: "https://service.force.com/embeddedservice/5.0/esw.min.js",
+                resumeChat:false,
+                resumeChatComponentName: 'Snap_Ins_Resume_chat',
+                resumeChatButtonId: '5730b000000CbhY',
+                resumeChatLiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04IZ00000008OIUMA2_1648e3b61a5',
+                srNumber:'',
+                firstName:'Bishav',
+                lastName:'',
+                triggerbuttonId:'chatButton'
+            }
+            
+            triggerResumeSnapin(snapInObject);
+            eleExist('#helpButtonSpan > .message', chatClick);
+            
+        } else {
+            liveagent.addCustomDetail('deltaSr', srNumber).saveToTranscript('Delta_Sr__c');
+            liveagent.findOrCreate("Case").map("Delta_SR__c","deltaSr",true, false, true).showOnCreate();
+            liveagent.init('https://d.la4-c1cs-phx.salesforceliveagent.com/chat', '5723B0000004Crz', '00Dm0000000DQXs');
+            liveagent.setName(FirstName + ' ' + lastName);
+            document.querySelector('.live-agent-resume-button').removeClass('hide');
+            // eleExist('#liveagent_button_online_5733B0000004D95', liveAgentResume);
+            setInterval(function() {
+                var onlineStatus = document.querySelector('#liveagent_button_online_5733B0000004D95').attr('style').split(":")[1].replace(/ /g,'').split(";")[0];
+                var offlineStatus = document.querySelector('#liveagent_button_online_5733B0000004D95').attr('style').split(":")[1].replace(/ /g,'').split(";")[0];
+                if( onlineStatus === 'none' ) {
+                    document.querySelector('.offline-msg').removeClass('hide');
+                } else if( offlineStatus === 'none' ) {
+                    document.querySelector('.offline-msg').addClass('hide');
+                }
+            }, 1000);
+        } 
+    }
+
+    //open and initiate prechat form on click of tech chat
+    function initChat() {
+            var snapInObject
+            if (document.getElementById('SnAS').checked){
+                snapInObject = {
+                    //Collect details from here BNR
                     baseLiveAgentContentURL: getOrgCookie('baseLiveAgentContentURL'),
                     deploymentId: getOrgCookie('deploymentId'),
-                    buttonId: getOrgCookie('buttonId'),
                     baseLiveAgentURL: getOrgCookie('baseLiveAgentURL'),
                     LiveAgentDevName: getOrgCookie('LiveAgentDevName'),                
                     componentName: getOrgCookie('componentName'),
@@ -480,258 +475,502 @@
                     snapInInitURL: getOrgCookie('snapInInitURL'),
                     snapInJs: getOrgCookie('snapInJs'),
                     snapInLAURL: getOrgCookie('snapInLAURL'),
+                   
+                    buttonId: getOrgCookie('buttonId'),
+                    
+                    //Hardcoded values.
+                    chatSource: "SnAS",
 
-                    //This is to hide the element
-                    snapinButtonClicked: false
+                    //loggedin user/customer data
+                    language: 'en',
+                    firstName: document.querySelector('#snasFirstName').value,
+                    lastName: document.querySelector('#snasLastName').value,
+                    email:document.querySelector('#snasEmail').value,  
+                                
+                    //Service related data
+                    workOrder: document.querySelector('#serviceTag').value, //Dispatch Number and Workorder number is same.
+                    productName: document.querySelector('#snasProductName').value,
+                    siteId : document.querySelector('#snasSiteId').value,
+                    serialNumber :  document.querySelector('#snasSerialNo').value
+                    //dispatchNumber: "1435465"
+
+
                 };
-                var preChatlableObject = {
+            }else{
+                snapInObject = {
+                    snapinButtonClicked:true
+                };
+            }
+            
+            var preChatlableObject = {
+                firstName:"First Name",
+                lastName:"Last Name",
+                SfdcLastName:"Last Name",
+                emailAddress:"Email Address",
+                phoneNumber:"Primary Phone Number",
+                issueDescription:"Issue Description",
+                startChat:"Start Chat",
+                issueType:"Issue",
+                optional:"(Optional)",
+                characters:"characters",
+                issueDescriptionLength:"35000",
+                SFDCLanguageConfig:"first Name|Last Name",
+                preChatlableObject:"Chat Now",
+               // summeryErrormsg:preChatModel.SummeryErrormsg,
+              //  issueDescriptionMaxCharValidation:preChatModel.IssueDetailMaxCharValidationMsg,
+                  customerPrivacyDesc:"\u003cb\u003eYour privacy is important to us.\u003c/b\u003e We will only use your information to process your request. We will not share it with anyone. To learn more about how we use and protect your data, see the \u003ca target=\u0027_blank\u0027 href=\u0027//www.dell.com/learn/policies-privacy\u0027\u003eDell Privacy Statement.\u003c/a\u003e",
+                  emailValidation:"Invalid Email Validation",
+                  firstNameValidation: "First name required",
+                  lastNameValidation:"Last name required",
+                  emailRequiredValidation:"Email name required",
+                  phoneRequiredValidation:"Phone name required",
+                  issueDescriptionValidation:"Descritpion name required",
+                  browserVersionValidation: "Browser Version is required",
+                  alternateEmail: "Alternate Email",
+                  dispatchNumberValidation: "Please enter valid Dispatch Number",
+                  dispatchNumberRequiredValidation:"Dispatch number is a mandatory field",
+                  dispatchNumber:"Dispatch #",
+                  closeChat: "Close Chat",
+             //   phoneValidation:preChatModel.PhoneValidation,
+             //   severityValidation:preChatModel.SeverityValidation,
+                  chatUnavailableMessage:"Sorry, no agents are available at this moment.",
+                  chatHeader:"Chat Now",
+
+            //    serialNumber:preChatModel.LblSerialNumber,
+            //    instanceId:preChatModel.LblInstanceId,
+                  serviceTag:"Service Tag",
+            //    severity:preChatModel.LblSeverity,
+               // severityList:preChatModel.SeverityList,
+             //   severityContents:preChatModel.SeverityContents,  
+                  blocklistEmails:"noreply@Dell.com|testing@dell.com|cool@dell.com|ok@dell.com",
+                  pasteInvalidTextMsg: "You are trying to paste an invalid text.",
+                  serialNumber: "Serial Number",
+                  requiredFieldValidation:"This field is required",
+
+                  //New Values [Story: 10577402]
+                  lastNameInValid: "Please enter a valid Last Name",
+                  firstNameInValid: "Please enter a valid First Name",
+                  phoneValidation: "Please enter a valid Phone Number.",
+                  
+                  //New Values for SnAS
+                    workOrder: "Work Order Number",
+                    issueType:"Issue",
+                    siteId : "Site ID ",
+                    productName: "Product Name",
+                    dispatchNumber: "Dispatch Number",
                     firstName:"First Name",
                     lastName:"Last Name",
                     emailAddress:"Email Address",
                     phoneNumber:"Primary Phone Number",
                     issueDescription:"Issue Description",
                     startChat:"Start Chat",
-                    issueType:"Issue",
                     optional:"(Optional)",
                     characters:"characters",
-                    issueDescriptionLength:"35000",
+                    issueDescriptionLength:"250",
+                    preChatlableObject:"Chat Now",
+                    customerPrivacyDesc:"\u003cb\u003eYour privacy is important to us.\u003c/b\u003e We will only use your information to process your request. We will not share it with anyone. To learn more about how we use and protect your data, see the \u003ca target=\u0027_blank\u0027 href=\u0027//www.dell.com/learn/policies-privacy\u0027\u003eDell Privacy Statement.\u003c/a\u003e",
+                    phoneRequiredValidation:"Phone name required",
+                    closeChat: "Close Chat",
+                    chatUnavailableMessage:"Sorry, no agents are available at this moment.",
+                    chatHeader:"Chat Now",
+                    pasteInvalidTextMsg: "You are trying to paste an invalid text."
 
-                   // summeryErrormsg:preChatModel.SummeryErrormsg,
-                  //  issueDescriptionMaxCharValidation:preChatModel.IssueDetailMaxCharValidationMsg,
-                      customerPrivacyDesc:"\u003cb\u003eBisahv Your privacy is important to us.\u003c/b\u003e We will only use your information to process your request. We will not share it with anyone. To learn more about how we use and protect your data, see the \u003ca target=\u0027_blank\u0027 href=\u0027//www.dell.com/learn/policies-privacy\u0027\u003eDell Privacy Statement.\u003c/a\u003e",
-                      emailValidation:"Invalid Email Validation",
-                      firstNameValidation: "First name required",
-                      lastNameValidation:"Last name required",
-                      emailRequiredValidation:"Email name required",
-                      phoneRequiredValidation:"Phone name required",
-                      issueDescriptionValidation:"Descritpion name required",
-                 //   phoneValidation:preChatModel.PhoneValidation,
-                 //   severityValidation:preChatModel.SeverityValidation,
-                      chatUnavailableMessage:"Sorry, no agents are available at this moment.",
-                //    chatHeader:preChatModel.ChatHeader,
-
-                //    serialNumber:preChatModel.LblSerialNumber,
-                //    instanceId:preChatModel.LblInstanceId,
-                      serviceTag:"Service Tag",
-                //    severity:preChatModel.LblSeverity,
-                   // severityList:preChatModel.SeverityList,
-                 //   severityContents:preChatModel.SeverityContents,  
-                      blocklistEmails:"noreply@Dell.com|testing@dell.com|cool@dell.com|ok@dell.com",
-                      serialNumber: "Serial Number"
-                };
-              
-                if (document.getElementById('emcOrg').checked){
-                    snapInObject.firstName="Bishav",
-                    snapInObject.lastName= "Rajbhandari",
-                    snapInObject.email="bnr@dell.com",
-                    snapInObject.phoneNo="1234567",
-                    snapInObject.chatSeverity = "S2";
-                    if(document.getElementById('serviceTag').value){
-                        snapInObject.serviceTag = document.getElementById('serviceTag').value,
-                        snapInObject.cpid = document.getElementById('serviceTag').value;
-                    }else{
-                        snapInObject.serviceTag = null,
-                        snapInObject.cpid = null;
-                    }
-                    snapInObject.isEmcProduct = true,
-                    snapInObject.siteId = document.getElementById('emcSiteId').value,
-                    snapInObject.epdmId= document.getElementById('epdmId').value,
-                    snapInObject.productName = document.getElementById('emcProductName').value,//"2.3",
-                    snapInObject.emcProductId = "ABC1235";
-                }
-                snapInObject.domainName = "localhost";//"bishav.github.io";//
-                triggerSnapin(snapInObject, preChatlableObject); 
-        }
-        
-        //Initiate Resume Live Agent chat
-        function initResumeChat(){
-            var language = document.getElementById("selectLanguageOption");
-                var serviceTag = document.querySelector('#serviceTag').value.toUpperCase();
-                var issueVal = "Slow Performance";
-               // var widgetSizeVal = detectScreen();
-                var snapInObject = {
-                   language: language.options[language.selectedIndex].value,
-                    serviceTag: serviceTag,
-                    issueVal: issueVal,
-                    BUID: "11",
-                    LiveAgentDevName: "EmbeddedServiceLiveAgent_Parent04I4F000000000LUAQ_16483b64909",
-                    baseLiveAgentContentURL: 'https://c.la2-c1cs-ord.salesforceliveagent.com/content',
-                    baseLiveAgentURL: "https://d.la2-c2cs-ord.salesforceliveagent.com/chat",
-                    buttonId: "5734F000000CaWx",//"5730b000000CbhT", // 
-                    componentName: "Snap_Ins_Chat_Deployment",
-                    customernumber: "2701",
-                    deploymentId: "5724F0000008OKB",
-                    domainName:"localhost",//"bishav.github.io",//
-                    organizationId: "00D4F0000000TPX",
-                    productName: "Precision M4500",
-                    serviceForceURL: "https://service.force.com",
-                    serviceTag: serviceTag,
-                    snapInInitURL: "https://dellservices--SIT2.cs93.my.salesforce.com",
-                    snapInJs: "https://dellservices--SIT2.cs93.my.salesforce.com/embeddedservice/5.0/esw.min.js",
-                    snapInLAURL: "https://sit2-dellservices.cs93.force.com/LaSnapIn",
-                    firstName: "bishav",
-                    lastName: "Rajbhandari",
-                    srNumber: "RE1"
-
-
-                }
-                initResumeLiveAgent(snapInObject);
-        }
-
-        //Initiate ChatBot
-        function initChatBot(){
-            var chatBotObject = {
-                chatBotInitURL: 'https://dellservices--SIT2.cs93.my.salesforce.com',
-                chatBotLAURL: 'https://sit2-dellservices.cs93.force.com/LaSnapIn',
-                organizationId: '00D4F0000000TPX',
-                componentName: 'DellChatBot',
-                baseLiveAgentContentURL: 'https://c.la2-c1cs-ord.salesforceliveagent.com/content',
-                deploymentId: '5724F0000008OKB',
-                buttonId: '5734F000000CaTc',
-                baseLiveAgentURL: 'https://d.la2-c1cs-ord.salesforceliveagent.com/chat',
-                LiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I4F000000CaRRUA0_164929267be',
-                serviceForceURL: "https://service.force.com",
-                snapInJs: 'https://dellservices--SIT2.cs93.my.salesforce.com/embeddedservice/5.0/esw.min.js',
-                domainName: "bishav.github.io",//"localhost" //
-            }
-            triggerChatBot(chatBotObject);
-        }
-        
-        //Initiate Live Agent Chat
-        function initLiveChat(){
+            };
+           if (document.getElementById('SnAS').checked){
+            returnedValeu = triggerSnapin(snapInObject,preChatlableObject);
+            alert(returnedValeu);
+           }else
+            triggerSnapin(snapInObject,preChatlableObject);
+    }
+    
+    //Initiate Snapin Tech on change of issue type [All values come from here]
+    function initChatWithoutClick() {
+           var language = document.getElementById("selectLanguageOption");
             var serviceTag = document.querySelector('#serviceTag').value.toUpperCase();
             var issueVal = document.querySelector('#dropdownMenuButton').innerHTML;
-            var liveAgentObject = {
-            }
-            document.querySelector('.live-agent-button').style.display = 'block';
-            initLiveAgentWithoutPrechatForm(liveAgentObject);
-        }      
+            var issueType = "TNYKS";
+            if (issueVal === "None")
+                issueType = "";
+            var snapInObject = {
+                language: language.options[language.selectedIndex].value,
+                countryCode: "us",
+                //Hard coded prechat values 
+                firstName:"Bishav",
+                lastName: "Rajbhandari",
+                email:"bee@dell.com",
+                phoneNo:"123425",
+                issueDescription: null,
+                productCode:"Latitude",
+                serviceTag: serviceTag,
+                issueVal: "",
+                issueType: "KNY",
+                BUID: "11",
+                productName: "Precision M4500",
+                customernumber: "2701",
+                
+                //Collect details from here
+                
+                baseLiveAgentContentURL: getOrgCookie('baseLiveAgentContentURL'),
+                deploymentId: getOrgCookie('deploymentId'),
+                buttonId: getOrgCookie('buttonId'),
+                baseLiveAgentURL: getOrgCookie('baseLiveAgentURL'),
+                LiveAgentDevName: getOrgCookie('LiveAgentDevName'),                
+                componentName: getOrgCookie('componentName'),
+                organizationId: getOrgCookie('organizationId'),
+                serviceForceURL: getOrgCookie('serviceForceURL'),
+                snapInInitURL: getOrgCookie('snapInInitURL'),
+                snapInJs: getOrgCookie('snapInJs'),
+                snapInLAURL: getOrgCookie('snapInLAURL'),
+                requestType: null,
+                //This is to hide the element
+                snapinButtonClicked: false
+            };
+            var preChatlableObject = {
+                firstName:"First Name",
+                lastName:"Last Name",
+                SfdcLastName:"Last Name",
+                emailAddress:"Email Address",
+                phoneNumber:"Primary Phone Number",
+                issueDescription:"Issue Description",
+                startChat:"Start Chat",
+                issueType:"Issue",
+                optional:"(Optional)",
+                characters:"characters",
+                issueDescriptionLength:"35000",
+                SFDCLanguageConfig:"first Name|Last Name",
+                preChatlableObject:"Chat Now",
+               // summeryErrormsg:preChatModel.SummeryErrormsg,
+              //  issueDescriptionMaxCharValidation:preChatModel.IssueDetailMaxCharValidationMsg,
+                  customerPrivacyDesc:"\u003cb\u003eYour privacy is important to us.\u003c/b\u003e We will only use your information to process your request. We will not share it with anyone. To learn more about how we use and protect your data, see the \u003ca target=\u0027_blank\u0027 href=\u0027//www.dell.com/learn/policies-privacy\u0027\u003eDell Privacy Statement.\u003c/a\u003e",
+                  emailValidation:"Invalid Email Validation",
+                  firstNameValidation: "First name required",
+                  lastNameValidation:"Last name required",
+                  emailRequiredValidation:"Email name required",
+                  phoneRequiredValidation:"Phone name required",
+                  issueDescriptionValidation:"Descritpion name required",
+                  browserVersionValidation: "Browser Version is required",
+                  alternateEmail: "Alternate Email",
+                  dispatchNumberValidation: "Please enter valid Dispatch Number",
+                  dispatchNumberRequiredValidation:"Dispatch number is a mandatory field",
+                  dispatchNumber:"Dispatch #",
+                  closeChat: "Close Chat",
+             //   phoneValidation:preChatModel.PhoneValidation,
+             //   severityValidation:preChatModel.SeverityValidation,
+                  chatUnavailableMessage:"Sorry, no agents are available at this moment.",
+                  chatHeader:"Chat Now",
 
-        //print tracker value in console
-        function dellmetricsTrack(elementId,Message){
-           if(Message)
-				console.log("PropValue = %c"+elementId+": "+Message, 'color:#0e0; background: #000;');
-			else
-                console.log("PropValue = %c"+elementId, 'color:#0e0; background: #000;');
-        }
-        
-        //Config Box: Show config settings
-        function showConfigSettings() {
-            var element = document.getElementById("settingConfig");
-            element.style.display = "block";
-            element.classList.add("show");
-
-            var env=getOrgCookie("environment");
-            changingEnvInDom(env);
-          }
-
-        //Config Box: hide config settings
-        function hideSettingConfig(){
-            if(getOrgCookie('buttonId') != ""){
-                var element = document.getElementById("settingConfig");
-                element.style.display = "none";
-                element.classList.remove("show");
-            }else{
-                alert("Please select an environment before you close the popup.");
-            }
-
-        }
-
-        //Config Box: Environment Changed trigger
-        function changeEnv(){
-            changingEnvInDom(document.querySelector("#environmentSelection").value);
-        }
-        
-        //Config Box: Change Environment display on DOM element 
-        function changingEnvInDom(env){
-            if (env != "" && document.querySelector('#'+env)) {
-                $('.modal-body.config').hide();
-                document.querySelector('#'+env).style.display = "block";
-                document.querySelector("#environmentSelection").value = env;
-            }
-        }
-        
-        //Config Box: Adding values to cookie
-        function checkChatConfigCookie() {
-            var env=getOrgCookie("environment");
-            if (env != "") {
-                showEnvironmentdetail(env);
-            } else {
-                showConfigSettings();
-            }
-          }
-        
-        //Config Box: update environment on clik of update button
-        function updateEnvCookie(){
-            var env=document.querySelector("#environmentSelection").value;
-            if(env !="Choose your preferred environment"){
-                setOrgCookie("environment",env,30);
-                var otherValues = document.querySelectorAll("#" + env + " .form-group .form-control");
-                for(var i=0; i<otherValues.length; i++){
-                    setOrgCookie(otherValues[i].getAttribute("data-id"),otherValues[i].value,30);
-                }
-                showEnvironmentdetail(env);
-                alert("Envirment has been updated to "+env+".");
-                hideSettingConfig();
-            }else{
-                alert("Please select a proper environment");
-            }
-        }
-
-        //Config Box: getOrgCookie for a single element
-        function getOrgCookie(cname) {
-            var name = cname + "=";
-            var decodedCookie = decodeURIComponent(document.cookie);
-            var ca = decodedCookie.split(';');
-            for(var i = 0; i < ca.length; i++) {
-              var c = ca[i];
-              while (c.charAt(0) == ' ') {
-                c = c.substring(1);
-              }
-              if (c.indexOf(name) == 0) {
-                return c.substring(name.length, c.length);
-              }
-            }
-            return "";
-          }
-       
-        //Config Box: setOrgCookie for a single element
-        function setOrgCookie(cname,cvalue,exdays) {
-            var d = new Date();
-            d.setTime(d.getTime() + (exdays*24*60*60*1000));
-            var expires = "expires=" + d.toGMTString();
-            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-          }
+            //    serialNumber:preChatModel.LblSerialNumber,
+            //    instanceId:preChatModel.LblInstanceId,
+                  serviceTag:"Service Tag",
+            //    severity:preChatModel.LblSeverity,
+               // severityList:preChatModel.SeverityList,
+             //   severityContents:preChatModel.SeverityContents,  
+                  blocklistEmails:"noreply@Dell.com|testing@dell.com|cool@dell.com|ok@dell.com",
+                  pasteInvalidTextMsg: "You are trying to paste an invalid text.",
+                  serialNumber: "Serial Number",
+                  requiredFieldValidation:"This field is required",
+                  
+                  //New Values [Story: 10577402]
+                  lastNameInValid: "Please enter a valid Last Name",
+                  firstNameInValid: "Please enter a valid First Name",
+                  phoneValidation: "Please enter a valid Phone Number."
+            };
           
-        //Config Box: showCurrentEnvironment in UI
-        function showEnvironmentdetail(env){
-            document.querySelector('#environmentName').innerText = env;
+            if (document.getElementById('emcOrg').checked){
+                snapInObject.firstName="Bishav",
+                snapInObject.lastName= "Rajbhandari",
+                snapInObject.email="bishav_narshing_rajb@dell.com",
+                //snapInObject.phoneNo="1234567",
+                snapInObject.chatSeverity = "S2";
+                if(document.getElementById('serviceTag').value){
+                    snapInObject.serviceTag = document.getElementById('serviceTag').value,
+                    snapInObject.cpid = document.getElementById('serviceTag').value;
+                }else{
+                    snapInObject.serviceTag = null,
+                    snapInObject.cpid = null;
+                }
+                snapInObject.isEmcProduct = true,
+                snapInObject.siteId = document.getElementById('emcSiteId').value,
+                snapInObject.epdmId= document.getElementById('epdmId').value,
+                snapInObject.serviceTag = document.getElementById('dummyServiceTag').value, //For testing
+                snapInObject.productName = document.getElementById('emcProductName').value,//"2.3",
+                snapInObject.alternateEmail = document.getElementById('emcAltEmail').value,
+                snapInObject.siteName = document.getElementById('emcSiteName').value,
+                snapInObject.emcProductId = "ABC1235";
+                snapInObject.requestType = "HES Admin Chat";
+            } else if(document.getElementById('dellWPR').checked){
+                snapInObject.phoneNo = "123425",
+                snapInObject.issueType = "",
+                snapInObject.requestType = "warrantyReturn",
+                snapInObject.issueVal = "",
+                snapInObject.productName = "",
+                snapInObject.serviceTag = "";
+            } else if(document.getElementById('GAM').checked){
+                snapInObject.firstName= document.getElementById('gamFirstName').value,
+                snapInObject.lastName= document.getElementById('gamLastName').value,
+                snapInObject.email= document.getElementById('gamEmail').value,
+                snapInObject.phoneNo = "",
+                snapInObject.issueType = "",
+                snapInObject.issueVal = issueVal,
+                snapInObject.productName = "",
+
+                snapInObject.siteId = "",
+                snapInObject.cpid = "",
+                snapInObject.customerNumber = "",
+                snapInObject.serviceTag = "";
+                if(snapInObject.issueVal == "None"){
+                    snapInObject.issueVal = null;
+                }
+                snapInObject.requestType = "LDell GAM Chat";
+                snapInObject.chatSource = findGamChatSource(document.getElementById('gamAppropriateKey').value);
+                if(snapInObject.chatSource == "EMC"){
+                    snapInObject.isEmcProduct = true;
+                    snapInObject.requestType = "HES GAM Chat";
+                    if (document.getElementById('gamAppropriateKey').value == "Site_ID"){
+                        snapInObject.siteId = document.getElementById('gamValue').value; 
+                    } else if (document.getElementById('gamAppropriateKey').value == "UCID"){
+                        snapInObject.cpid = document.getElementById('gamValue').value; 
+                    } else if (document.getElementById('gamAppropriateKey').value == "Serial_Number"){
+                        snapInObject.serviceTag = document.getElementById('gamValue').value; 
+                        snapInObject.cpid = document.getElementById('GAM_cpid').value;
+                    }
+                }else if (document.getElementById('gamAppropriateKey').value == "Service_Tag"){
+                    snapInObject.serviceTag = document.getElementById('gamValue').value;
+                } else if (document.getElementById('gamAppropriateKey').value == "DCN"){
+                    snapInObject.customerNumber = document.getElementById('gamValue').value;
+                    snapInObject.buid = document.getElementById('GAM_buid').value;
+                }
+               
+            } 
+            
+            
+            snapInObject.domainName = "localhost";//"bishav.github.io";//
+            if(document.getElementById('routSprinklrBotRefresh').checked){
+                snapInObject.Name = "BishavA",
+                snapInObject.lastName = "RajbIII",
+                snapInObject.email = "bee12345@dell.com",
+                snapInObject.phone = "123425",
+                snapInObject.issueDescription = null,
+                snapInObject.issueType = "POWER_STARTUP",
+                snapInObject.issueVal = "Power and Startup",
+                snapInObject.snapinButtonClicked = false,
+                snapInObject.Service_Tag = document.getElementById('serviceTag').value,
+                snapInObject.sprinklrUserAuthToken = '123456789012345678',
+                snapInObject.sprinklrContextId = 'contextId12345',
+                snapInObject.requestId = 'requestId12345';
+            }
+            triggerSnapin(snapInObject, preChatlableObject); 
+    }
+    
+    //Initiate Resume Live Agent chat
+    function initResumeChat(){
+        var language = document.getElementById("selectLanguageOption");
+            var serviceTag = document.querySelector('#serviceTag').value.toUpperCase();
+            var issueVal = "Slow Performance";
+           // var widgetSizeVal = detectScreen();
+            var snapInObject = {
+               language: language.options[language.selectedIndex].value,
+                serviceTag: serviceTag,
+                issueVal: issueVal,
+                BUID: "11",
+                LiveAgentDevName: "EmbeddedServiceLiveAgent_Parent04I4F000000000LUAQ_16483b64909",
+                baseLiveAgentContentURL: 'https://c.la2-c1cs-ord.salesforceliveagent.com/content',
+                baseLiveAgentURL: "https://d.la2-c2cs-ord.salesforceliveagent.com/chat",
+                buttonId: "5734F000000CaWx",//"5730b000000CbhT", // 
+                componentName: "Snap_Ins_Chat_Deployment",
+                customernumber: "2701",
+                deploymentId: "5724F0000008OKB",
+                domainName:"localhost",//"bishav.github.io",//
+                organizationId: "00D4F0000000TPX",
+                productName: "Precision M4500",
+                serviceForceURL: "https://service.force.com",
+                serviceTag: serviceTag,
+                snapInInitURL: "https://dellservices--SIT2.cs93.my.salesforce.com",
+                snapInJs: "https://dellservices--SIT2.cs93.my.salesforce.com/embeddedservice/5.0/esw.min.js",
+                snapInLAURL: "https://sit2-dellservices.cs93.force.com/LaSnapIn",
+                firstName: "bishav",
+                lastName: "Rajbhandari",
+                srNumber: "RE1"
+
+
+            }
+            initResumeLiveAgent(snapInObject);
+    }
+
+    //Initiate ChatBot
+    function initChatBot(){
+        var chatBotObject = {
+            chatBotInitURL: 'https://dellservices--SIT2.cs93.my.salesforce.com',
+            chatBotLAURL: 'https://sit2-dellservices.cs93.force.com/LaSnapIn',
+            organizationId: '00D4F0000000TPX',
+            componentName: 'DellChatBot',
+            baseLiveAgentContentURL: 'https://c.la2-c1cs-ord.salesforceliveagent.com/content',
+            deploymentId: '5724F0000008OKB',
+            buttonId: '5734F000000CaTc',
+            baseLiveAgentURL: 'https://d.la2-c1cs-ord.salesforceliveagent.com/chat',
+            LiveAgentDevName: 'EmbeddedServiceLiveAgent_Parent04I4F000000CaRRUA0_164929267be',
+            serviceForceURL: "https://service.force.com",
+            snapInJs: 'https://dellservices--SIT2.cs93.my.salesforce.com/embeddedservice/5.0/esw.min.js',
+            domainName: "bishav.github.io",//"localhost" //
+        }
+        triggerChatBot(chatBotObject);
+    }
+    
+    //Initiate Live Agent Chat
+    function initLiveChat(){
+        var serviceTag = document.querySelector('#serviceTag').value.toUpperCase();
+        var issueVal = document.querySelector('#dropdownMenuButton').innerHTML;
+        var liveAgentObject = {
+        }
+        document.querySelector('.live-agent-button').style.display = 'block';
+        initLiveAgentWithoutPrechatForm(liveAgentObject);
+    }      
+
+    //Find Chat Source for GAM Chats
+    function findGamChatSource(key){
+        switch  (key) {
+            case "Service_Tag" : 
+            case "DCN" : 
+                return("Tech");
+                break;
+            case "UCID" :
+            case "Site_ID" :
+            case "Serial_Number" :
+                return("EMC");
+                break;
+        }         
+
+    }
+    
+    //print tracker value in console
+    function dellmetricsTrack(elementId,Message){
+       if(Message)
+            console.log("PropValue = %c"+elementId+": "+Message, 'color:#0e0; background: #000;');
+        else
+            console.log("PropValue = %c"+elementId, 'color:#0e0; background: #000;');
+    }
+    
+    //Config Box: Show config settings
+    function showConfigSettings() {
+        var element = document.getElementById("settingConfig");
+        element.style.display = "block";
+        element.classList.add("show");
+
+        var env=getOrgCookie("environment");
+        changingEnvInDom(env);
+      }
+
+    //Config Box: hide config settings
+    function hideSettingConfig(){
+        if(getOrgCookie('buttonId') != ""){
+            var element = document.getElementById("settingConfig");
+            element.style.display = "none";
+            element.classList.remove("show");
+        }else{
+            alert("Please select an environment before you close the popup.");
+        }
+
+    }
+
+    //Config Box: Environment Changed trigger
+    function changeEnv(){
+        changingEnvInDom(document.querySelector("#environmentSelection").value);
+    }
+    
+    //Config Box: Change Environment display on DOM element 
+    function changingEnvInDom(env){
+        if (env != "" && document.querySelector('#'+env)) {
+            $('.modal-body.config').hide();
+            document.querySelector('#'+env).style.display = "block";
+            document.querySelector("#environmentSelection").value = env;
+        }
+    }
+    
+    //Config Box: Adding values to cookie
+    function checkChatConfigCookie() {
+        var env=getOrgCookie("environment");
+        if (env != "") {
+            showEnvironmentdetail(env);
+        } else {
+            showConfigSettings();
+        }
+      }
+    
+    //Config Box: update environment on clik of update button
+    function updateEnvCookie(){
+        var env=document.querySelector("#environmentSelection").value;
+        if(env !="Choose your preferred environment"){
+            setOrgCookie("environment",env,30);
+            var otherValues = document.querySelectorAll("#" + env + " .form-group .form-control");
+            for(var i=0; i<otherValues.length; i++){
+                setOrgCookie(otherValues[i].getAttribute("data-id"),otherValues[i].value,30);
+            }
+            showEnvironmentdetail(env);
+            alert("Envirment has been updated to "+env+".");
+            hideSettingConfig();
+        }else{
+            alert("Please select a proper environment");
+        }
+    }
+
+    //Config Box: getOrgCookie for a single element
+    function getOrgCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for(var i = 0; i < ca.length; i++) {
+          var c = ca[i];
+          while (c.charAt(0) == ' ') {
+            c = c.substring(1);
           }
+          if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+          }
+        }
+        return "";
+      }
+   
+    //Config Box: setOrgCookie for a single element
+    function setOrgCookie(cname,cvalue,exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays*24*60*60*1000));
+        var expires = "expires=" + d.toGMTString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+      }
+      
+    //Config Box: showCurrentEnvironment in UI
+    function showEnvironmentdetail(env){
+        document.querySelector('#environmentName').innerText = env;
+      }
 
-        //eSupportCode
-        function canSupportSprinklr(sprinklrChatBotVal){
-            //if(document.getElementById('routSprinklrBot').checked){
-            //    return true;
-            //}
-            return false; 
+    //eSupportCode
+    function canSupportSprinklr(sprinklrChatBotVal){
+        if(document.getElementById('routSprinklrBot').checked || document.getElementById('routSprinklrBotRefresh').checked){
+            return true;
         }
+        return false; 
+    }
 
-        function startSprinklr(){
-            document.getElementById('sprinklrBotEle').style.display = "block";
-        }
-        function transfertoAgentViaSprinklr(){
-            var caseNumberInputField = document.getElementById('caseNumberInputField').value;
-            /*var sprinklrChatBotObject = {
-                caseNumber: caseNumberInputField//"50711422"//"50711843"//"50711675"
-                }*/
-            document.getElementById('sprinklrBotEle').style.display = "none";
-            triggerSnapinPostSprinkler(caseNumberInputField);
-        }
-        function endSprinklrChatBotSuccessfully(){
-            document.getElementById('sprinklrBotEle').style.display = "none";
-            sprinklerChatEnded();
-        }
-    </script>
+    function startSprinklr(){
+        document.getElementById('sprinklrBotEle').style.display = "block";
+    }
+    function transfertoAgentViaSprinklr(){
+        var caseNumberInputField = document.getElementById('caseNumberInputField').value;
+        /*var sprinklrChatBotObject = {
+            caseNumber: caseNumberInputField//"50711422"//"50711843"//"50711675"
+            }*/
+        document.getElementById('sprinklrBotEle').style.display = "none";
+        triggerSnapinPostSprinkler(caseNumberInputField);
+    }
+    function endSprinklrChatBotSuccessfully(){
+        document.getElementById('sprinklrBotEle').style.display = "none";
+        sprinklerChatEnded();
+    }
+    function canSupportSprinklr(sprinklrChatBotVal, Is24VAEnabled){
+        var snapInSessionObject = sessionStorage.getItem("snapInObjectSession");
+        connectToSnapInAgent(snapInSessionObject);
+    }
+</script>
     
 </body>
 </html>
