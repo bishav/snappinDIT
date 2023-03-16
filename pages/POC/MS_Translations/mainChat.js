@@ -1268,6 +1268,8 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
         snapinChatInitiatedState(false);
     });
     embedded_svc.addEventHandler("onChasitorMessage", function (data) {
+        alert("Manoj User is timing");
+        console.log(data);
         snapinChatInitiatedState(true);//Fix for defect 7030965
     });
     //FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn [START]
