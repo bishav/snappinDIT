@@ -1,4 +1,19 @@
-﻿var snapinChatGlobalIssueType, snapinChatGlobalServiceTag, snapinChatGlobalProductName = null, snapInCurrentPage = null, trackevent = true;
+﻿//Translator POC [START]
+var chasitorTyped = ""; 
+
+function wireTextChangeListner() {
+    debugger;
+    var obj = document.getElementsByClassName('chasitorText');
+    document.getElementsByClassName('chasitorText').value ='';
+    obj[0].oninput = function() 
+        {
+            chasitorTyped = this.value;
+        };
+
+   }
+wireTextChangeListner();
+//Translator POC [END]
+var snapinChatGlobalIssueType, snapinChatGlobalServiceTag, snapinChatGlobalProductName = null, snapInCurrentPage = null, trackevent = true;
 var coveoHeader = "", isCoveoSearchEnabled = false;
 
 (function () {
@@ -1485,6 +1500,16 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
         snapinChatInitiatedState(false);
     });
     embedded_svc.addEventHandler("onChasitorMessage", function (data) {
+        
+        //Translator POC [START]
+        console.log("ChasitorMessage data");
+        console.log(data);
+        console.log("Origianl Valiue =>" + chasitorTyped);
+        var messagetosend = "Needs translation of -- "+chasitorTyped;
+        embedded_svc.postMessage("chasitor.sendMessage",messagetosend);
+        chasitorTyped = null;
+         //Translator POC [END]
+
         snapinChatInitiatedState(true);//Fix for defect 7030965
     });
     //FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn [START]
