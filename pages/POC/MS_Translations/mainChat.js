@@ -15,14 +15,14 @@ document.addEventListener('keydown', function (e) {
    }, true);
 
 function wireTextChangeListner() {
-    debugger;
-    var obj = document.getElementsByClassName('chasitorText');
-    document.getElementsByClassName('chasitorText').value ='';
-    obj[0].oninput = function() 
-        {
-            chasitorTyped = this.value;
-        };
-
+    if (document.getElementsByClassName('chasitorText')){
+        var obj = document.getElementsByClassName('chasitorText');
+        document.getElementsByClassName('chasitorText').value ='';
+        obj[0].oninput = function() 
+            {
+                chasitorTyped = this.value;
+            };
+    }
    }
 
 function visitorsendingmessage(){
