@@ -11,7 +11,6 @@ function wireTextChangeListner() {
         };
 
    }
-wireTextChangeListner();
 //Translator POC [END]
 var snapinChatGlobalIssueType, snapinChatGlobalServiceTag, snapinChatGlobalProductName = null, snapInCurrentPage = null, trackevent = true;
 var coveoHeader = "", isCoveoSearchEnabled = false;
