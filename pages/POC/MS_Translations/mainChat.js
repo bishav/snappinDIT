@@ -2,9 +2,12 @@
 var agentMessageCounter=0;
 
 function changeAgentMessageStyle(){
-    var colorTest = document.querySelectorAll(".embeddedServiceLiveAgentStateChatPlaintextMessageDefaultUI.agent.plaintextContent");
-    colorTest[agentMessageCounter].style.background = "#fff";
-    colorTest[agentMessageCounter].style.color = "#ccc";
+    if (agentMessageCounter % 2 !== 1){
+        var colorTest = document.querySelectorAll(".embeddedServiceLiveAgentStateChatPlaintextMessageDefaultUI.agent.plaintextContent");
+        colorTest[agentMessageCounter].style.background = "#fff";
+        colorTest[agentMessageCounter].style.color = "#ccc";
+    }
+    ++agentMessageCounter;
 }
 //Add color to Agent Message counter POC [END]
 
@@ -1536,9 +1539,7 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
     //FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn [END]
     embedded_svc.addEventHandler("onAgentMessage", function (data) {
         //Change Color if is the even value -- Add color to Agent Message counter POC [START]
-        if (++agentMessageCounter % 2 === 1){
-            changeAgentMessageStyle();
-        }
+        changeAgentMessageStyle();
          //Change Color if is the even value -- Add color to Agent Message counter POC [START]
         console.log("onAgentMessage event was fired.  liveAgentSessionKey was " + data.liveAgentSessionKey);
         
