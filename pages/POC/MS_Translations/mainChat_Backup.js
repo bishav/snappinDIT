@@ -1,19 +1,6 @@
 ﻿//Translator POC [START]
 var chasitorTyped = ""; 
 
-document.addEventListener('keydown', function (e) {
-    if(e.which != 13){
-            wireTextChangeListner();
-        }
-       if (e.keyCode === 13) {
-            visitorsendingmessage();
-            e.stopPropagation();
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-       }
-   }, true);
-
 function wireTextChangeListner() {
     debugger;
     var obj = document.getElementsByClassName('chasitorText');
@@ -24,12 +11,6 @@ function wireTextChangeListner() {
         };
 
    }
-
-function visitorsendingmessage(){
-    var messagetosend = "Needs translation of -- "+chasitorTyped;
-    embedded_svc.postMessage("chasitor.sendMessage",messagetosend);
-    chasitorTyped = "";
-}
 //Translator POC [END]
 var snapinChatGlobalIssueType, snapinChatGlobalServiceTag, snapinChatGlobalProductName = null, snapInCurrentPage = null, trackevent = true;
 var coveoHeader = "", isCoveoSearchEnabled = false;
@@ -1519,7 +1500,7 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
     });
     embedded_svc.addEventHandler("onChasitorMessage", function (data) {
         //Translator POC [START]
-        /*if (chasitorTyped != null){
+        if (chasitorTyped != null){
             console.log("ChasitorMessage data");
             console.log(data);
             console.log("Origianl Valiue =>" + chasitorTyped);
@@ -1527,7 +1508,7 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
             embedded_svc.postMessage("chasitor.sendMessage",messagetosend);
             chasitorTyped = null;
             wireTextChangeListner();
-        }*/
+        }
          //Translator POC [END]
 
         snapinChatInitiatedState(true);//Fix for defect 7030965
@@ -1539,7 +1520,7 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
     });
     //FY21-0502: STORY 8443194: Prop value Fix for Tech SnapIn [END]
     embedded_svc.addEventHandler("onAgentMessage", function (data) {
-        //wireTextChangeListner();//Translator POC
+        wireTextChangeListner();//Translator POC
         snapinChatInitiatedState(true);
     });
 
