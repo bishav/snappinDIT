@@ -611,7 +611,7 @@ function custPreChatShowAdditionalDetailsInUi(snapInObject, preChatlableObject) 
     //STORY 7193456: FY201101[END]
     //Story 14504126: FY24 - Transform - Channels - NCE- Pre Chat form for Agreement based chat[START]
     else if (isAgreementBasedChat("AgrementId",snapInObject)){
-        preChatlableObject.serviceTag = preChatlableObject.serialNumber,
+        preChatlableObject.serviceTag = preChatlableObject.agreementId,
         snapInObject.serviceTag = snapInObject.agreementId;
     }
     //Story 14504126: FY24 - Transform - Channels - NCE- Pre Chat form for Agreement based chat[END]
