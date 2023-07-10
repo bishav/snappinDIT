@@ -609,12 +609,6 @@ function custPreChatShowAdditionalDetailsInUi(snapInObject, preChatlableObject) 
         preChatlableObject.serviceTag = preChatlableObject.serialNumber;
     }
     //STORY 7193456: FY201101[END]
-    //Story 14504126: FY24 - Transform - Channels - NCE- Pre Chat form for Agreement based chat[START]
-    else if (isAgreementBasedChat("AgrementId",snapInObject)){
-        preChatlableObject.serviceTag = preChatlableObject.agreementId,
-        snapInObject.serviceTag = snapInObject.agreementId;
-    }
-    //Story 14504126: FY24 - Transform - Channels - NCE- Pre Chat form for Agreement based chat[END]
     //FY21-1003 Story #9078562: HES Admin Chat Prechat form changes [START]
     if (isHesAdminChat(snapInObject)) {
         topFieldValues = createHesAdminChatTopField(snapInObject, preChatlableObject);
@@ -625,6 +619,11 @@ function custPreChatShowAdditionalDetailsInUi(snapInObject, preChatlableObject) 
             topFieldValues = ""; //Remove the Sub-Header details
             document.querySelector(".cusPreChat-inputDispatchNum.cusPreChat-embeddedServiceSidebarFormField").style.display = 'block'; //Make DIspatch Number field Visible.
         } else
+        //Story 14504126: FY24 - Transform - Channels - NCE- Pre Chat form for Agreement based chat[START]
+        if(isAgreementBasedChat("AgrementId",snapInObject)){
+            topFieldValues = '<div id="readonlyPreChatContainer" class="readonlyContainer" style="margin: 0 1.5em 6px 1.2em; text-align: left;position: relative;font-size: .75em;color: #444444;">' + getChatServiceTag(preChatlableObject.agreementId, snapInObject.agreementId)+ '</div>';
+        }else
+        //Story 14504126: FY24 - Transform - Channels - NCE- Pre Chat form for Agreement based chat[END]
             //FY21-1201 Story #9315449: Warranty Parts Return : Pre-Chat Form [END]
             if (snapInObject.productName == null)
                 topFieldValues = '<div id="readonlyPreChatContainer" class="readonlyContainer" style="margin: 0 1.5em 6px 1.2em; text-align: left;position: relative;font-size: .75em;color: #444444;margin-bottom: 0px;">' + getChatServiceTag(preChatlableObject.serviceTag, snapInObject.serviceTag) + displayIssueType(snapInObject, preChatlableObject) + displaySiteDetails(snapInObject) + '</div>';
