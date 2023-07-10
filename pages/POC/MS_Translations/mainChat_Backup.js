@@ -1501,9 +1501,6 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
     embedded_svc.addEventHandler("onChasitorMessage", function (data) {
         //Translator POC [START]
         if (chasitorTyped != null){
-            console.log("ChasitorMessage data");
-            console.log(data);
-            console.log("Origianl Valiue =>" + chasitorTyped);
             var messagetosend = "Needs translation of -- "+chasitorTyped;
             embedded_svc.postMessage("chasitor.sendMessage",messagetosend);
             chasitorTyped = null;

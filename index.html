@@ -86,6 +86,11 @@
                 <div class="col-lg-8">
                     <form>
                         <div class="form-group">
+                            <label style="margin-right: 10px; margin-bottom: 20px; font-weight: 600;" for="Organization">NCE : </label>
+                                <span id="NCE_Boolean">
+                                    <label><input id = "NCE_True" type="radio" name="NCE_Boolean" value = "NCE_True">True</label>
+                                    <label><input id = "NCE_False" type="radio" name="NCE_Boolean" value = "NCE_False" checked>No</label>
+                                </span>
                             <label style="margin-right: 10px; margin-bottom: 20px; font-weight: 600;" for="Organization">Project : </label>
                                 <span id="orginazationName">
                                     <label><input id = "dellWPR" type="radio" name="optradio" value = "dellWPR">&nbsp&nbspWarranty Parts Return</label>
@@ -712,6 +717,7 @@
        
     <script>
 
+
             $('input:radio[name="optradio"]').change(
                 function(){
                     if($(this).is(':checked') && ($(this).val() == 'dellWPR' || $(this).val() == 'GAM')) {
@@ -1094,13 +1100,14 @@
                       pasteInvalidTextMsg: "You are trying to paste an invalid text.",
                       serialNumber: "Serial Number",
                       requiredFieldValidation:"This field is required",
-                      
+                      agreementId: "Agreement ID",
                       //New Values [Story: 10577402]
                       lastNameInValid: "Please enter a valid Last Name",
                       firstNameInValid: "Please enter a valid First Name",
                       phoneValidation: "Please enter a valid Phone Number."
                 };
-              
+                
+
                 if (document.getElementById('emcOrg').checked){
                     snapInObject.firstName="Bishav",
                     snapInObject.lastName= "Rajbhandari",
@@ -1184,6 +1191,13 @@
                     snapInObject.sprinklrContextId = 'contextId12345',
                     snapInObject.requestId = 'requestId12345';
                 }
+
+                if (document.getElementById('NCE_True').checked){
+                    snapInObject.offerGroup = "Microsoft Dynamics 365",
+                    snapInObject.agreementId = "100155747",
+                    snapInObject.requestType = "Agreement";
+                }
+
                 triggerSnapin(snapInObject, preChatlableObject); 
         }
         
