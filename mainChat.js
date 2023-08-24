@@ -13,7 +13,7 @@ var coveoHeader = "", isCoveoSearchEnabled = false;
     }, false);
 
     if (!document.getElementById('snapinStyle')) {//FY21-0702: DEFECT 8910461 CSS fix: added new CSS
-        var css = '.cusPreChat-FormBtns:hover, .cusPreChatFormBtns:hover .cusPreChat-FormBtnchild,.cusPreChatFormBtns:hover .cusPreChat-FormBtnchild path {color: #004071 !important;fill: #004071;}.cusPreChat-FormBtns, .cusPreChatFormBtns .cusPreChat-FormBtnchild, .cusPreChatFormBtns .cusPreChat-FormBtnchild path {color: #006BBD;fill: #006BBD;}.embeddedServiceSidebarHeader,.embeddedServiceSidebarMinimizedDefaultUI{background-color:#00447C!important;border:1px!important}.embeddedServiceSidebarFormField .uiInput .uiLabel-left{padding-top:0!important;margin-top:11px;color:#444!important;font-weight:300!important}.embeddedServiceSidebarForm.formContent{background:#f1f1f1!important}.embeddedServiceHelpButton .helpButton .uiButton{background-color:#005290!important;font-family:"Salesforce Sans",sans-serif}.embeddedServiceHelpButton .helpButton .uiButton:focus{outline:#005290 solid 1px}.embeddedServiceSidebarForm .uiButton,.embeddedServiceSidebarFormField .slds-style-inputtext{border-radius:0!important}.embeddedServiceSidebarFormField .slds-style-inputtext{border-radius:0!important;border:none!important}.embeddedServiceSidebarForm.buttonWrapper{background:linear-gradient(to bottom,rgba(247,247,247,0) 0,rgba(247,247,247,1) calc(100% - 77px),rgba(247,247,247,1) 100%)}.embeddedServiceSidebarButton.uiButton--inverse{background:#f7f7f7!important;border-radius:0!important;border:1px solid #ccc!important}.embeddedServiceSidebarButton.uiButton--inverse:not(:disabled):focus{box-shadow:0 0 3px 0 #ddd!important}.embeddedServiceSidebarDialogState .dialogButton{border-radius:0!important}.embeddedServiceSidebarDialogState .dialogButton:not(:disabled):focus{text-decoration:none!important}.embeddedServiceSidebarFormField .slds-style-inputtext,.embeddedServiceSidebarFormField .slds-style-select{color:#444!important}.embeddedServiceSidebarForm .fieldList{margin:12px 12px 0 0!important}.embeddedServiceLiveAgentStateChatHeaderOption .optionName{color:#fff!important;text-decoration:none!important}.embeddedServiceSidebarHeader .headerText{margin-bottom:0!important}.embeddedServiceSidebarMinimizedDefaultUI .minimizedImage{display:none!important}.embeddedServiceLiveAgentStateChatHeader.reconnecting.alert{background-color:#cb2b19!important;padding-top:46px!important}.embeddedServiceSidebarForm.buttonWrapper{background-color:#f1f1f1!important}.cusPreChat-modalContainer,.cusPreChat-shortHeader{font-weight:400;-webkit-font-smoothing:subpixel-antialiased}.cusPreChat-embeddedServiceHelpButton .cusPreChat-helpButton .cusPreChat-uiButton:focus,.cusPreChat-headerItem:focus,.cusPreChat-headerItem:hover{outline:0}.cusPreChat-modalContainer{box-sizing:border-box;line-height:1.5;color:#212529;display:block;position:fixed;z-index:5001;font-family:"Salesforce Sans",sans-serif;top:0;font-size:16px;pointer-events:all;backface-visibility:hidden;text-align:left}.cusPreChat-modalContainer li,.cusPreChat-modalContainer ul{display:block;list-style:none}.cusPreChat-dockableContainer{width:80%;border-radius:8px 8px 0 0;position:fixed;left:auto;bottom:0;right:0px;margin:0;height:90%;box-shadow:2px 2px 20px rgba(0,0,0,.2);z-index:15;text-align:center;overflow:hidden;max-width:40em;pointer-events:all}.cusPreChat-embeddedServiceSidebarHeader{position:absolute;top:0;width:100%;border-radius:8px 8px 0 0;background-color:#00447C;border:1px;text-align:center;pointer-events:all}.cusPreChat-shortHeader{color:#fff;border-radius:8px 8px 0 0;line-height:3;text-align:center;font-size:.875em;height:44px;clear:both;overflow:hidden;z-index:3;position:relative;transform:translate3d(0,0,0)}.cusPreChat-shortHeaderContent{position:relative;display:flex;height:100%}.cusPreChat-headerItem{color:#fff;font-size:1em;background:0 0;border:none}.cusPreChat-headerItem:focus:before,.cusPreChat-headerItem:hover:before{content:" ";position:absolute;background-color:#fff;opacity:.2;border-radius:4px;box-sizing:border-box;pointer-events:none;top:20%}.cusPreChat-closeButton,.cusPreChat-minimizeButton{transition:color .7s ease;padding:14px;line-height:0}.cusPreChat-minimizeButton:focus:before,.cusPreChat-minimizeButton:hover:before{right:48px;width:30px;height:60%}.cusBotPreChat-minimizeButton:focus:before,.cusBotPreChat-minimizeButton:hover:before{left:6px!important;width:30px;height:60%}.cusPreChat-closeButton:focus:before,.cusPreChat-closeButton:hover:before{right:6px;width:30px;height:60%}.cusPreChat-assistiveText{position:absolute;height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px)}.cusPreChat-embeddedServiceIcon{display:flex}.cusPreChat-embeddedServiceIcon svg{display:inline-block;box-sizing:border-box;width:1em;height:1em;fill:#fff}.cusPreChat-headerText{color: #ffffff;margin: 0;align-self: center;flex-grow: 1;text-align: left;vertical-align: middle;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;font-size: inherit;font-weight: 400;letter-spacing: .025em;padding-left: 14px;}.cusPreChat-sidebarBody{position:absolute;width:100%;height:100%;top:44px;z-index:0;background-color:#f1f1f1;transform:translate3d(0,0,0);-webkit-overflow-scrolling:touch}.cusPreChat-sidebarLoadingIndicator{position:relative;height:100%;background-color:#fff}.cusPreChat-activeFeature{width:100%;height: 100%}.cusPreChat-embeddedServiceLiveAgentStatePrechatDefaultUI{overflow:hidden;height:100%;position:absolute}.cusPreChat-formContent{width:100%;height:calc(100% - 97px);overflow-y:auto;position:relative;background-color:#f1f1f1;margin-bottom:81px;border-radius:0 0 8px 8px}.cusPreChat-fieldList{margin:5px 12px 0 0;padding:0}.cusPreChat-embeddedServiceSidebarFormField{display:block;margin-block-end:0;margin-inline-start:0;margin-inline-end:0;padding-inline-start:40px;list-style:none;padding:0;box-sizing:border-box;margin-left:12px}.cusPreChat-embeddedServiceSidebarFormField.cusPreChat-inputSplitName{width:calc(50% - 12px);display:inline-block;vertical-align:top;margin-left:9px}.cusPreChat-split-field-container{margin-bottom:6px}.cusPreChat-uiInput{text-align:left}.cusPreChat-uiInput .cusPreChat-uiLabel-left{padding:0!important;color:#444!important;font-weight:300!important;position:relative;font-size:.75em;line-height:1.5;margin:11px .75em 2px 1px}.cusPreChat-uiInput .cusPreChat-required{position:absolute;color:#c23934;left:-6px;top:0}.cusPreChat-slds-style-inputtext{display:inline-block;line-height:30px;box-sizing:border-box;box-shadow:none;background-color:#fff;width:100%;height:44px !important;padding:0 12px !important;font-size:.875em;border:none !important;}.cusPreChat-slds-style-inputtext:focus{outline:0;box-shadow:0 0 2px 0 #007db8}.cusPreChat-buttonWrapper{text-align:center;padding:0px 24px 24px;margin:0;width:100%;position:fixed;box-sizing:border-box;bottom:44px; box-shadow: 0px -10px 5px rgba(241, 241, 241,0.7); background: #f1f1f1}.cusPreChat-embeddedServiceSidebarButton{background:#007db8;font-family:"Roboto Regular",sans-serif;border-radius:0!important;position:relative;border:none;text-shadow:none;box-shadow:none;transition:background .4s ease;color:#fff;font-size:1em;font-weight:400;width:100%;margin:0;height:44px;cursor:pointer}.cusPreChat-embeddedServiceSidebarButton:not(:disabled):focus,.cusPreChat-embeddedServiceSidebarButton:not(:disabled):hover{background:#004b6e}.cusPreChat-has-error{margin:0 0 0px;padding:0}.cusPreChat-has-error .cusPreChat-form-element__help{font-size:.75em;color:#c23934}.cusPreChat-embeddedServiceHelpButton{display:block;position:fixed;top:0;left:0;background:0 0;box-shadow:none;overflow:visible;z-index:1000;font-family:sans-serif}.cusPreChat-embeddedServiceHelpButton .cusPreChat-helpButton{position:fixed;bottom:12px;right:12px;height:46px;-webkit-font-smoothing:subpixel-antialiased}.cusPreChat-embeddedServiceHelpButton .cusPreChat-helpButton .cusPreChat-uiButton{box-sizing:border-box;margin:0;padding:0 12px;height:46px;box-shadow:0 0 12px 0 rgba(0,0,0,.5);border-radius:23px;line-height:1;background:#007db8;font-size:.875em;color:#fff;font-weight:400;text-shadow:none;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:justify;-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;font-family:"Roboto Regular",sans-serif;width:168px;cursor:pointer;position:relative;border:0}.cusPreChat-embeddedServiceHelpButton .cusPreChat-helpButton .cusPreChat-helpButtonEnabled:focus::before,.cusPreChat-embeddedServiceHelpButton .cusPreChat-helpButton .cusPreChat-helpButtonEnabled:hover::before{content:" ";position:absolute;top:0;left:0;width:100%;height:100%;border-radius:23px;background-color:#000;opacity:.2;pointer-events:none}.cusPreChat-embeddedServiceHelpButton .cusPreChat-helpButton .cusPreChat-uiButton .cusPreChat-label{color:#fff}.cusPreChat-embeddedServiceHelpButton .cusPreChat-uiButton .cusPreChat-helpButtonLabel{position:relative;z-index:1;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-pack:center;webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-flex:1;-webkit-flex-grow:1;-ms-flex-positive:1;flex-grow:1;-webkit-align-self:stretch;-ms-flex-item-align:stretch;align-self:stretch;max-width:100%;line-height:normal;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}@media only screen and (min-width:48em){.cusPreChat-embeddedServiceHelpButton{background-color:transparent}.cusPreChat-embeddedServiceHelpButton .cusPreChat-helpButton{position:fixed;bottom:0}.cusPreChat-embeddedServiceHelpButton .cusPreChat-helpButton .cusPreChat-uiButton,.cusPreChat-embeddedServiceHelpButton .cusPreChat-helpButton .cusPreChat-uiButton:focus::before,.cusPreChat-embeddedServiceHelpButton .cusPreChat-helpButton .cusPreChat-uiButton:hover::before{border-radius:8px 8px 0 0}}.cusPreChat-sidebarLoadingIndicator{align-self:stretch;max-height:100%;flex-grow:1;display:flex;flex-direction:column;justify-content:center;text-align:center;padding:0 24px}.cusPreChat-loadingBallContainer{display:inline-block}.cusPreChat-loadingBallContainer.cusPreChat-animated .cusPreChat-loadingBall{animation:cusPreChat-ballanimate 2.25s infinite ease-in-out;display:inline-block;width:1em;height:1em;border-radius:2em;font-size:8px;text-align:center;background:#0074bd;margin:3px}.cusPreChat-embeddedServiceLoadingBalls.cusPreChat-animated .cusPreChat-second{animation-name:cusPreChat-ballanimate-2}.cusPreChat-embeddedServiceLoadingBalls.cusPreChat-animated .cusPreChat-third{animation-name:cusPreChat-ballanimate-3}@keyframes cusPreChat-ballanimate{0%,32%{transform:scale(1)}16%{transform:scale(1.5)}}@keyframes cusPreChat-ballanimate-2{32%,64%{transform:scale(1)}48%{transform:scale(1.5)}}@keyframes cusPreChat-ballanimate-3{64%,96%{transform:scale(1)}80%{transform:scale(1.5)}}@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {.cusPreChat-buttonWrapper{bottom: 3px;}}body.embeddedServicePreventScrolling {overflow: auto !important;position: inherit !important;}.dockableContainer .endChatContainer .endChatButton.postChatButton{background:#007db8!important;border:none!important}.dockableContainer .endChatContainer .endChatButton.postChatButton span{color:#fff!important}.dockableContainer .endChatContainer .endChatButton.postChatButton:focus,.dockableContainer .endChatContainer .endChatButton.postChatButton:hover{background:#004b6e!important;text-decoration:none}.dockableContainer .endChatContainer .endChatButton.closeChatButton{color:#007db8;background:#f7f7f7!important;border-radius:0!important;border:1px solid #ccc!important}.dockableContainer .endChatContainer .endChatButton.closeChatButton span{color:#007db8}.dockableContainer .endChatContainer .endChatButton.closeChatButton span:hover{color:#007db8;text-decoration:underline} h2[embeddedService-chatHeader_chatHeader]{color: #fff !important;} @media (max-width: 575.98px) {  .cusPreChat-dockableContainer { width: 80%; height: 85%; } } @media (min-width: 576px) and (max-width: 767.98px) {  .cusPreChat-dockableContainer { width: 80%; height: 85%; } } @media (min-width: 768px) and (max-width: 991.98px) {  .cusPreChat-dockableContainer { width: 45%; height: 85%; } } @media (min-width: 992px) and (max-width: 1199.98px) { .cusPreChat-dockableContainer { width: 27%; height: 85%; } } @media (min-width: 1200px) { .cusPreChat-dockableContainer { width: 27%; height: 85%; } }',
+        var css = '.cusPreChat-FormBtns:hover, .cusPreChatFormBtns:hover .cusPreChat-FormBtnchild,.cusPreChatFormBtns:hover .cusPreChat-FormBtnchild path {color: #004071 !important;fill: #004071;}.cusPreChat-FormBtns, .cusPreChatFormBtns .cusPreChat-FormBtnchild, .cusPreChatFormBtns .cusPreChat-FormBtnchild path {color: #006BBD;fill: #006BBD;}.embeddedServiceSidebarHeader,.embeddedServiceSidebarMinimizedDefaultUI{background-color:#00447C!important;border:1px!important}.embeddedServiceSidebarFormField .uiInput .uiLabel-left{padding-top:0!important;margin-top:11px;color:#444!important;font-weight:300!important}.embeddedServiceSidebarForm.formContent{background:#f1f1f1!important}.embeddedServiceHelpButton .helpButton .uiButton{background-color:#005290!important;font-family:"Salesforce Sans",sans-serif}.embeddedServiceHelpButton .helpButton .uiButton:focus{outline:#005290 solid 1px}.embeddedServiceSidebarForm .uiButton,.embeddedServiceSidebarFormField .slds-style-inputtext{border-radius:0!important}.embeddedServiceSidebarFormField .slds-style-inputtext{border-radius:0!important;border:none!important}.embeddedServiceSidebarForm.buttonWrapper{background:linear-gradient(to bottom,rgba(247,247,247,0) 0,rgba(247,247,247,1) calc(100% - 77px),rgba(247,247,247,1) 100%)}.embeddedServiceSidebarButton.uiButton--inverse{text-align: center; background:#f7f7f7!important;border-radius:0!important;border:1px solid #ccc!important}.embeddedServiceSidebarButton.uiButton--inverse:not(:disabled):focus{box-shadow:0 0 3px 0 #ddd!important}.embeddedServiceSidebarDialogState .dialogButton{border-radius:0!important}.embeddedServiceSidebarDialogState .dialogButton:not(:disabled):focus{text-decoration:none!important}.embeddedServiceSidebarFormField .slds-style-inputtext,.embeddedServiceSidebarFormField .slds-style-select{color:#444!important}.embeddedServiceSidebarForm .fieldList{margin:12px 12px 0 0!important}.embeddedServiceLiveAgentStateChatHeaderOption .optionName{color:#fff!important;text-decoration:none!important}.embeddedServiceSidebarHeader .headerText{margin-bottom:0!important}.embeddedServiceSidebarMinimizedDefaultUI .minimizedImage{display:none!important}.embeddedServiceLiveAgentStateChatHeader.reconnecting.alert{background-color:#cb2b19!important;padding-top:46px!important}.embeddedServiceSidebarForm.buttonWrapper{background-color:#f1f1f1!important}.cusPreChat-modalContainer,.cusPreChat-shortHeader{font-weight:400;-webkit-font-smoothing:subpixel-antialiased}.cusPreChat-embeddedServiceHelpButton .cusPreChat-helpButton .cusPreChat-uiButton:focus,.cusPreChat-headerItem:focus,.cusPreChat-headerItem:hover{outline:0}.cusPreChat-modalContainer{box-sizing:border-box;line-height:1.5;color:#212529;display:block;position:fixed;z-index:5001;font-family:"Salesforce Sans",sans-serif;top:0;font-size:16px;pointer-events:all;backface-visibility:hidden;text-align:left}.cusPreChat-modalContainer li,.cusPreChat-modalContainer ul{display:block;list-style:none}.cusPreChat-dockableContainer{width:80%;border-radius:8px 8px 0 0;position:fixed;left:auto;bottom:0;right:0px;margin:0;height:90%;box-shadow:2px 2px 20px rgba(0,0,0,.2);z-index:15;text-align:center;overflow:hidden;max-width:40em;pointer-events:all}.cusPreChat-embeddedServiceSidebarHeader{position:absolute;top:0;width:100%;border-radius:8px 8px 0 0;background-color:#00447C;border:1px;text-align:center;pointer-events:all}.cusPreChat-shortHeader{color:#fff;border-radius:8px 8px 0 0;line-height:3;text-align:center;font-size:.875em;height:44px;clear:both;overflow:hidden;z-index:3;position:relative;transform:translate3d(0,0,0)}.cusPreChat-shortHeaderContent{position:relative;display:flex;height:100%}.cusPreChat-headerItem{color:#fff;font-size:1em;background:0 0;border:none}.cusPreChat-headerItem:focus:before,.cusPreChat-headerItem:hover:before{content:" ";position:absolute;background-color:#fff;opacity:.2;border-radius:4px;box-sizing:border-box;pointer-events:none;top:20%}.cusPreChat-closeButton,.cusPreChat-minimizeButton{transition:color .7s ease;padding:14px;line-height:0}.cusPreChat-minimizeButton:focus:before,.cusPreChat-minimizeButton:hover:before{right:48px;width:30px;height:60%}.cusBotPreChat-minimizeButton:focus:before,.cusBotPreChat-minimizeButton:hover:before{left:6px!important;width:30px;height:60%}.cusPreChat-closeButton:focus:before,.cusPreChat-closeButton:hover:before{right:6px;width:30px;height:60%}.cusPreChat-assistiveText{position:absolute;height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px)}.cusPreChat-embeddedServiceIcon{display:flex}.cusPreChat-embeddedServiceIcon svg{display:inline-block;box-sizing:border-box;width:1em;height:1em;fill:#fff}.cusPreChat-headerText{color: #ffffff;margin: 0;align-self: center;flex-grow: 1;text-align: left;vertical-align: middle;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;font-size: inherit;font-weight: 400;letter-spacing: .025em;padding-left: 14px;}.cusPreChat-sidebarBody{position:absolute;width:100%;height:100%;top:44px;z-index:0;background-color:#f1f1f1;transform:translate3d(0,0,0);-webkit-overflow-scrolling:touch}.cusPreChat-sidebarLoadingIndicator{position:relative;height:100%;background-color:#fff}.cusPreChat-activeFeature{width:100%;height: 100%}.cusPreChat-embeddedServiceLiveAgentStatePrechatDefaultUI{overflow:hidden;height:100%;position:absolute}.cusPreChat-formContent{width:100%;height:calc(100% - 97px);overflow-y:auto;position:relative;background-color:#f1f1f1;margin-bottom:81px;border-radius:0 0 8px 8px}.cusPreChat-fieldList{margin:5px 12px 0 0;padding:0}.cusPreChat-embeddedServiceSidebarFormField{display:block;margin-block-end:0;margin-inline-start:0;margin-inline-end:0;padding-inline-start:40px;list-style:none;padding:0;box-sizing:border-box;margin-left:12px}.cusPreChat-embeddedServiceSidebarFormField.cusPreChat-inputSplitName{width:calc(50% - 12px);display:inline-block;vertical-align:top;margin-left:9px}.cusPreChat-split-field-container{margin-bottom:6px}.cusPreChat-uiInput{text-align:left}.cusPreChat-uiInput .cusPreChat-uiLabel-left{padding:0!important;color:#444!important;font-weight:300!important;position:relative;font-size:.75em;line-height:1.5;margin:11px .75em 2px 1px}.cusPreChat-uiInput .cusPreChat-required{position:absolute;color:#c23934;left:-6px;top:0}.cusPreChat-slds-style-inputtext{display:inline-block;line-height:30px;box-sizing:border-box;box-shadow:none;background-color:#fff;width:100%;height:44px !important;padding:0 12px !important;font-size:.875em;border:none !important;}.cusPreChat-slds-style-inputtext:focus{outline:0;box-shadow:0 0 2px 0 #007db8}.cusPreChat-buttonWrapper{text-align:center;padding:0px 24px 24px;margin:0;width:100%;position:fixed;box-sizing:border-box;bottom:44px; box-shadow: 0px -10px 5px rgba(241, 241, 241,0.7); background: #f1f1f1}.cusPreChat-embeddedServiceSidebarButton{text-align: center;background:#007db8;font-family:"Roboto Regular",sans-serif;border-radius:0!important;position:relative;border:none;text-shadow:none;box-shadow:none;transition:background .4s ease;color:#fff;font-size:1em;font-weight:400;width:100%;margin:0;height:44px;cursor:pointer}.cusPreChat-embeddedServiceSidebarButton:not(:disabled):focus,.cusPreChat-embeddedServiceSidebarButton:not(:disabled):hover{background:#004b6e}.cusPreChat-has-error{margin:0 0 0px;padding:0}.cusPreChat-has-error .cusPreChat-form-element__help{font-size:.75em;color:#c23934}.cusPreChat-embeddedServiceHelpButton{display:block;position:fixed;top:0;left:0;background:0 0;box-shadow:none;overflow:visible;z-index:1000;font-family:sans-serif}.cusPreChat-embeddedServiceHelpButton .cusPreChat-helpButton{position:fixed;bottom:12px;right:12px;height:46px;-webkit-font-smoothing:subpixel-antialiased}.cusPreChat-embeddedServiceHelpButton .cusPreChat-helpButton .cusPreChat-uiButton{box-sizing:border-box;margin:0;padding:0 12px;height:46px;box-shadow:0 0 12px 0 rgba(0,0,0,.5);border-radius:23px;line-height:1;background:#007db8;font-size:.875em;color:#fff;font-weight:400;text-shadow:none;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:justify;-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;font-family:"Roboto Regular",sans-serif;width:168px;cursor:pointer;position:relative;border:0}.cusPreChat-embeddedServiceHelpButton .cusPreChat-helpButton .cusPreChat-helpButtonEnabled:focus::before,.cusPreChat-embeddedServiceHelpButton .cusPreChat-helpButton .cusPreChat-helpButtonEnabled:hover::before{content:" ";position:absolute;top:0;left:0;width:100%;height:100%;border-radius:23px;background-color:#000;opacity:.2;pointer-events:none}.cusPreChat-embeddedServiceHelpButton .cusPreChat-helpButton .cusPreChat-uiButton .cusPreChat-label{color:#fff}.cusPreChat-embeddedServiceHelpButton .cusPreChat-uiButton .cusPreChat-helpButtonLabel{position:relative;z-index:1;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-pack:center;webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-box-flex:1;-webkit-flex-grow:1;-ms-flex-positive:1;flex-grow:1;-webkit-align-self:stretch;-ms-flex-item-align:stretch;align-self:stretch;max-width:100%;line-height:normal;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}@media only screen and (min-width:48em){.cusPreChat-embeddedServiceHelpButton{background-color:transparent}.cusPreChat-embeddedServiceHelpButton .cusPreChat-helpButton{position:fixed;bottom:0}.cusPreChat-embeddedServiceHelpButton .cusPreChat-helpButton .cusPreChat-uiButton,.cusPreChat-embeddedServiceHelpButton .cusPreChat-helpButton .cusPreChat-uiButton:focus::before,.cusPreChat-embeddedServiceHelpButton .cusPreChat-helpButton .cusPreChat-uiButton:hover::before{border-radius:8px 8px 0 0}}.cusPreChat-sidebarLoadingIndicator{align-self:stretch;max-height:100%;flex-grow:1;display:flex;flex-direction:column;justify-content:center;text-align:center;padding:0 24px}.cusPreChat-loadingBallContainer{display:inline-block}.cusPreChat-loadingBallContainer.cusPreChat-animated .cusPreChat-loadingBall{animation:cusPreChat-ballanimate 2.25s infinite ease-in-out;display:inline-block;width:1em;height:1em;border-radius:2em;font-size:8px;text-align:center;background:#0074bd;margin:3px}.cusPreChat-embeddedServiceLoadingBalls.cusPreChat-animated .cusPreChat-second{animation-name:cusPreChat-ballanimate-2}.cusPreChat-embeddedServiceLoadingBalls.cusPreChat-animated .cusPreChat-third{animation-name:cusPreChat-ballanimate-3}@keyframes cusPreChat-ballanimate{0%,32%{transform:scale(1)}16%{transform:scale(1.5)}}@keyframes cusPreChat-ballanimate-2{32%,64%{transform:scale(1)}48%{transform:scale(1.5)}}@keyframes cusPreChat-ballanimate-3{64%,96%{transform:scale(1)}80%{transform:scale(1.5)}}@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {.cusPreChat-buttonWrapper{bottom: 3px;}}body.embeddedServicePreventScrolling {overflow: auto !important;position: inherit !important;}.dockableContainer .endChatContainer .endChatButton.postChatButton{background:#007db8!important;border:none!important}.dockableContainer .endChatContainer .endChatButton.postChatButton span{color:#fff!important}.dockableContainer .endChatContainer .endChatButton.postChatButton:focus,.dockableContainer .endChatContainer .endChatButton.postChatButton:hover{background:#004b6e!important;text-decoration:none}.dockableContainer .endChatContainer .endChatButton.closeChatButton{color:#007db8;background:#f7f7f7!important;border-radius:0!important;border:1px solid #ccc!important}.dockableContainer .endChatContainer .endChatButton.closeChatButton span{color:#007db8}.dockableContainer .endChatContainer .endChatButton.closeChatButton span:hover{color:#007db8;text-decoration:underline} h2[embeddedService-chatHeader_chatHeader]{color: #fff !important;} @media (max-width: 575.98px) {  .cusPreChat-dockableContainer { width: 80%; height: 85%; } } @media (min-width: 576px) and (max-width: 767.98px) {  .cusPreChat-dockableContainer { width: 80%; height: 85%; } } @media (min-width: 768px) and (max-width: 991.98px) {  .cusPreChat-dockableContainer { width: 45%; height: 85%; } } @media (min-width: 992px) and (max-width: 1199.98px) { .cusPreChat-dockableContainer { width: 27%; height: 85%; } } @media (min-width: 1200px) { .cusPreChat-dockableContainer { width: 27%; height: 85%; } }',
             head = document.head || document.getElementsByTagName('head')[0],
             style = document.createElement('style');
         style.type = 'text/css';
@@ -93,6 +93,7 @@ function triggerSnapin(snapInObject, preChatlableObject) {
                         //eleExist('.embeddedServiceSidebar', hideDomObject);
                         eleExistWithVariable('.modalContainer  .dockableContainer .sidebarBody .activeFeature .featureBody .embeddedServiceSidebarState .prechatUI', hideOtherDomObject, '.embeddedServiceSidebar');
                         saveGlobalSnapinObjToSession(snapInObject);
+                        saveGlobalSnapinLableObjToSession(preChatlableObject);
                         //snapinChatInitiatedState(true); //Fix for defect [7030965]
                         //eleExist('.helpButtonEnabled #helpButtonSpan > .message', chatClick); //DEFECT 7030965 for Bishav comment this
                         if (document.getElementById('cusPreChatSnapinDom'))
@@ -102,6 +103,7 @@ function triggerSnapin(snapInObject, preChatlableObject) {
                         snapInObject = sendGlobalSnapinObjToJson();
                         snapInObject.snapinButtonClicked = true;
                         saveGlobalSnapinObjToSession(snapInObject);
+                        saveGlobalSnapinLableObjToSession(preChatlableObject);
                         appendCustPreChatSnapinDom(snapInObject, preChatlableObject)
                     }
             }
@@ -922,38 +924,102 @@ function sendGlobalSnapinObjToJson() {
     snapInObject = JSON.parse(snapInObjectGlobal);
     return snapInObject;
 }
+//Create andf retrive SnapinLable Sesson Object [START]
+function saveGlobalSnapinLableObjToSession(snapInLableObject) {
+    if (snapInLableObject) {
+        snapInLableObjectGlobal = JSON.stringify(snapInLableObject);
+        sessionStorage.setItem("snapInLableObjectSession", snapInLableObjectGlobal);
+    }
+}
+function sendGlobalSnapinLableObjToJson() {
+    snapInLableObjectGlobal = sessionStorage.getItem("snapInLableObjectSession");
+    snapInLableObject = JSON.parse(snapInLableObjectGlobal);
+    return snapInLableObject;
+}
+//Create andf retrive SnapinLable Sesson Object [START]
 //Story 14302763: FY24 - Channels - Omni channel - LCT-(Customer Chat Experience) Display both Original text and Translated text message in Chat window [START]
 function loadTranslationAlertMsgContainer(snapInObject, preChatlableObject, initiatedFrom) {
-    displayEleById("cusPreChat-TranslationAlertMsgContainer", "flex");
-    displayEleById("cusPreChat-sidebarLoadingIndicator", "none");
-    displayEleById("cusPreChat-hideWhileLoading", "none");
-    displayEleById("cusPreChat-minimize-btn", "none");
-    //displayEleById("cusPreChat-close-btn", "none");
-    if (document.getElementById("cusPreChat-FirstName")){
-        document.getElementById("cusPreChat-TranslationAlertMsg-CustomerName").innerHTML = document.getElementById("cusPreChat-FirstName").value;
-    }else if (document.getElementById("cusPreChat-TranslationAlertMsg-CustomerName").innerHTML == "undefined"){
-        document.getElementById("cusPreChat-TranslationAlertMsg-CustomerName").innerHTML = "";
-    }
-
-    document.getElementById("cusPreChat-ContinueTranslationChatBtn").addEventListener("click", function () {
-        if (initiatedFrom === "FAQVA"){
-            triggerSnapinWithoutPrecahtInitiated();
+    try{
+        if(initiatedFrom === "FAQVA"){
+            callDellmetricsTrack("222.830.810.551", "SNAPIN-on_FAQVA_AgentTransfer: Translation Confirmation Widget");
         }else if(initiatedFrom === "TechVA"){
-            triggerSnapinWithoutPrecahtInitiated();
-            startSprinklr();
-        }else{
-            loadPostTranslateAlertComponentOnInitiateChat(snapInObject , preChatlableObject);
+            callDellmetricsTrack("222.830.810.551", "SNAPIN-on_TechVA_AgentTransfer: Translation Confirmation Widget");
+        }else {
+            callDellmetricsTrack("222.830.810.551", "SNAPIN: Translation Confirmation Widget");
+        }
+
+        
+        displayEleById("cusPreChatSnapinDom", "block");
+        displayEleById("cusPreChat-TranslationAlertMsgContainer", "flex");
+        displayEleById("cusPreChat-sidebarLoadingIndicator", "none");
+        displayEleById("cusPreChat-hideWhileLoading", "none");
+        displayEleById("cusPreChat-minimize-btn", "none");
+        displayEleById("cusPreChat-close-btn", "block");
+        if (document.getElementById("cusPreChat-FirstName") && document.getElementById("cusPreChat-FirstName").value && document.getElementById("cusPreChat-FirstName").value !== ""){
+            document.getElementById("cusPreChat-TranslationAlertMsg-CustomerName").innerHTML = document.getElementById("cusPreChat-FirstName").value;
+        }else if("c_firstName" in snapInObject && snapInObject.c_firstName && snapInObject.c_firstName !== ""){
+            document.getElementById("cusPreChat-TranslationAlertMsg-CustomerName").innerHTML = snapInObject.c_firstName;
+        }if (document.getElementById("cusPreChat-TranslationAlertMsg-CustomerName").innerHTML == "undefined"){
+            document.getElementById("cusPreChat-TranslationAlertMsg-CustomerName").innerHTML = "";
         }
         
-    });
-    document.getElementById("cusPreChat-EndTranslationChatBtn").addEventListener("click", function () {
-        closeCustomPrechatDom();
-    });
-    document.getElementById("cusPreChat-EndTranslationAndContactTechSupport").addEventListener("click", function () {
-        closeCustomPrechatDom();
-        var redirectURL = document.getElementById("cusPreChat-EndTranslationAndContactTechSupport").getAttribute("data-url");
-        window.open(redirectURL, "_self");
-    });
+        document.getElementById("cusPreChat-ContinueTranslationChatBtn").addEventListener("click", function () {
+            if (initiatedFrom === "FAQVA"){
+                callDellmetricsTrack("222.830.810.552", "SNAPIN-on_FAQVA_AgentTransfer: Continue to Translation Queue");
+                triggerSnapinWithoutPrecahtInitiated();
+            }else if(initiatedFrom === "TechVA"){
+                callDellmetricsTrack("222.830.810.552", "SNAPIN-on_TechVA_AgentTransfer: Continue to Translation Queue");
+                if (isResumeSprinklr()) {
+                    displayEleById("cusPreChatSnapinDom", "block");
+                }
+                connectToSnapInAgent(snapInObject);
+            }else{
+                callDellmetricsTrack("222.830.810.552", "SNAPIN: Continue to Translation Queue");
+                loadPostTranslateAlertComponentOnInitiateChat(snapInObject , preChatlableObject);
+            }
+            
+        });
+        document.getElementById("cusPreChat-EndTranslationChatBtn").addEventListener("click", function () {
+            if (initiatedFrom === "FAQVA"){
+                callDellmetricsTrack("222.830.810.553", "SNAPIN-on_FAQVA_AgentTransfer: Contact Tech Support");
+                closeCustomPrechatDom();
+                var redirectURL = document.getElementById("cusPreChat-EndTranslationChatBtn").getAttribute("data-url");
+                window.open(redirectURL, "_self");
+            }else{
+                if(initiatedFrom === "TechVA"){
+                    callDellmetricsTrack("890.220.006", "SNAPIN-on_TechVA_AgentTransfer: Close Button from Translation Confirmation Widget");
+                }else {
+                    callDellmetricsTrack("890.220.006", "SNAPIN: Close Button from Translation Confirmation Widget");
+                }
+                closeCustomPrechatDom();
+            }
+        });
+
+        //Trigger for close button if appendCustPreChatSnapinDom methode was not called.
+        if(initiatedFrom === "FAQVA" || isCloseBtnForResumeVA){
+            document.getElementById("cusPreChat-close-btn").addEventListener("click", function () {
+                if(initiatedFrom === "FAQVA"){
+                    callDellmetricsTrack("890.220.006", "SNAPIN-on_FAQVA_AgentTransfer: Close (x)");
+                }else{
+                    callDellmetricsTrack("890.220.006", "SNAPIN-on_TechVA_AgentTransfer: Close (x)");
+                }
+                closeCustomPrechatDom();
+            });
+        }
+    }catch(e){
+        console.log(e);
+    }
+}
+function isCloseBtnForResumeVA(){//This is to check if the Button belongs to ResumeVA
+    try{
+        if(document.getElementById("cusPreChat-close-btn") && document.getElementById("cusPreChat-close-btn").getAttribute("data-key") === "resumeVA-close-btn"){
+            return true;
+        }
+        return false;
+    }catch(e){
+        console.log(e);
+        return false;
+    }
 }
 function closeCustomPrechatDom(){
         displayEleById("cusPreChat-embeddedServiceHelpButton", "none");
@@ -995,16 +1061,18 @@ function displayEleById(domEle, displayStyle) {
 //FY22-0203: Unit Testing [END]
 function agentsOfflinePostChatForm() {
     snapinChatInitiatedState(false);
-    document.getElementById("cusPreChatSnapinDom").style.display = 'block';
-    document.getElementById("cusPreChat-sidebarLoadingIndicator").style.display = 'none';
+    displayEleById("cusPreChatSnapinDom", "block");
+    displayEleById("cusPreChat-sidebarLoadingIndicator", "none");
     displayEleById("cusPreChat-TranslationAlertMsgContainer", "none");
-    document.getElementById("cusPreChat-alertMsgContainer").style.display = 'flex';
-    document.getElementById("cusPreChat-hideWhileLoading").style.display = 'none';
-    document.getElementById("cusPreChat-minimize-btn").style.display = 'none';
-    document.getElementById("cusPreChat-close-btn").style.display = 'none';
-    document.getElementById("cusPreChat-CloseChat").addEventListener("click", function () {
-        closeCustomPrechatDom();
-    });
+    displayEleById("cusPreChat-alertMsgContainer", "flex");
+    displayEleById("cusPreChat-hideWhileLoading", "none");
+    displayEleById("cusPreChat-minimize-btn", "none");
+    displayEleById("cusPreChat-close-btn", "none");
+    if (document.getElementById("cusPreChat-CloseChat")){
+        document.getElementById("cusPreChat-CloseChat").addEventListener("click", function () {
+            closeCustomPrechatDom();
+        });
+    }
 }
 function removeLoaderIn10() {
     setTimeout(function () {
@@ -1030,19 +1098,25 @@ function snapinChatInitiatedState(booleanValue) {
     }
 }
 function custPrechatInitiateChat(snapInObject, preChatlableObject) {
-    if (custPreFormValidation(preChatlableObject, snapInObject)) {//FY21-1003: DEFECT 9566455 : "Please enter valid email address" coming for random emailid's in HES
-        snapInObject = addCustFormDetailsTo(snapInObject);
-        snapInObject.sprinklrChatbotRouted = false;//FY21-0502:[Sprinklr Chat Bot] insure sprinklr routed is false in the start
-        saveGlobalSnapinObjToSession(snapInObject);
-        componentLoading();// Show Loading Sign
-        if(needsTranslation(snapInObject) && document.getElementById("cusPreChat-TranslationAlertMsgContainer") && !snapInObject.Is24VAEnabled && !snapInObject.IsVASupported && !checkSprinklrChatBot(snapInObject)){
-            loadTranslationAlertMsgContainer(snapInObject , preChatlableObject, "Tech");
-         }else{
-            loadPostTranslateAlertComponentOnInitiateChat(snapInObject , preChatlableObject);
-         }
-    }
+    try{
+        if (custPreFormValidation(preChatlableObject, snapInObject)) {//FY21-1003: DEFECT 9566455 : "Please enter valid email address" coming for random emailid's in HES
+            snapInObject = addCustFormDetailsTo(snapInObject);
+            snapInObject.sprinklrChatbotRouted = false;//FY21-0502:[Sprinklr Chat Bot] insure sprinklr routed is false in the start
+            saveGlobalSnapinObjToSession(snapInObject);
+            saveGlobalSnapinLableObjToSession(preChatlableObject);
+            componentLoading();// Show Loading Sign
+            if(needsTranslation(snapInObject) && document.getElementById("cusPreChat-TranslationAlertMsgContainer") && !snapInObject.Is24VAEnabled && !snapInObject.IsVASupported && !checkSprinklrChatBot(snapInObject)){
+                loadTranslationAlertMsgContainer(snapInObject , preChatlableObject, "Tech");
+             }else{
+                loadPostTranslateAlertComponentOnInitiateChat(snapInObject , preChatlableObject);
+             }
+        }
+    
+        CoveoPopoverDispose();
 
-    CoveoPopoverDispose();
+    }catch(e){
+        console.log(e); 
+    }
 }
 
 function loadPostTranslateAlertComponentOnInitiateChat(snapInObject , preChatlableObject){
@@ -1137,6 +1211,7 @@ function checkSprinklrChatBot(snapInObject) {
 //FY21-0502:[Sprinklr Chat Bot] If customer wants to talk to an agent after sprinklr chat bot is opened.[START]
 function triggerSnapinPostSprinkler(sfdcCaseNumber) {
     snapInObject = sendGlobalSnapinObjToJson();
+    preChatlableObject = sendGlobalSnapinLableObjToJson();
     if (snapInObject.isFaqResumeChat == false) {
         if (typeof snapInObject.FaqAppName != 'undefined' && snapInObject.FaqAppName != null && snapInObject.FaqAppName != '')
             setDellMetrics('222.830.810.516', 'nohold|transfertoAgent');
@@ -1146,12 +1221,20 @@ function triggerSnapinPostSprinkler(sfdcCaseNumber) {
     snapInObject.caseNumber = sfdcCaseNumber;
     snapInObject.sprinklrChatbotRouted = true;//FY21-0502:[Sprinklr Chat Bot] sprinkler chat bot reoted is true only in this scenario.
     saveGlobalSnapinObjToSession(snapInObject);//Added caseNumber to SnapInObject 
-    //FY22-0203: Sprinklr Chatbot : Retain Chat Context [START]
-    if (isResumeSprinklr()) {
-        document.getElementById("cusPreChatSnapinDom").style.display = "block";
-    }
-    //FY22-0203: Sprinklr Chatbot : Retain Chat Context [END]
-    connectToSnapInAgent(snapInObject);
+    setTimeout(function(){
+        componentLoading();
+        if(needsTranslation(snapInObject)){
+            loadTranslationAlertMsgContainer(snapInObject , preChatlableObject , "TechVA");
+        }else{
+            //FY22-0203: Sprinklr Chatbot : Retain Chat Context [START]
+            if (isResumeSprinklr()) {
+                document.getElementById("cusPreChatSnapinDom").style.display = "block";
+            }
+            //FY22-0203: Sprinklr Chatbot : Retain Chat Context [END]
+            connectToSnapInAgent(snapInObject);
+        }
+    },200);//Customer Widget: To show snapin is Loading
+
 }
 //FY21-0502:[Sprinklr Chat Bot] If customer wants to talk to an agent after sprinklr chat bot is opened.[END]
 
@@ -1175,11 +1258,16 @@ function sprinklerChatEnded() {
 function connectToSnapInAgent(snapInObject) {
     pushValsToSnapinInit(snapInObject);//FY21-0502:[Sprinklr Chat Bot] Send CaseNumberand other detailsback to Snap-in before connecting to an agent.
     if (checkSnapinQueueStatus(snapInObject) == 1) {//FY20-1102 Avilability and Business Hr Chack
-        if (("snapinChatInitiated" in snapInObject && snapInObject.snapinChatInitiated) || ("snapinButtonClicked" in snapInObject && snapInObject.snapinButtonClicked))
+        //Log1
+        if (("snapinChatInitiated" in snapInObject && snapInObject.snapinChatInitiated) || ("snapinButtonClicked" in snapInObject && snapInObject.snapinButtonClicked)){
+            //Log2
             eleExistWithVariable('.helpButtonEnabled #helpButtonSpan > .message', chatClick);
+        }
         eleExistWithVariable('.embeddedServiceSidebar .startButton', chatStarted, snapInObject);
-    } else //FY20-1102 Avilability and Business Hr Chack
+    } else{ //FY20-1102 Avilability and Business Hr Chack
+        //Log3
         agentsOfflinePostChatForm(); //FY20-1102 Avilability and Business Hr Chack
+    }
 }
 //FY21-0502:[Sprinklr Chat Bot] Connect to and Agent[END]
 
@@ -1274,6 +1362,9 @@ function pushValsToSnapinInit(snapInObject) {
             case "Solution_ID__c":
                 embedded_svc.settings.extraPrechatFormDetails[i].value = isAgreementBasedChat("AgrementId",snapInObject);
                 break;
+            case "AccountId":
+                embedded_svc.settings.extraPrechatFormDetails[i].value = isAgreementBasedChat("AccountId",snapInObject);
+                break;
             //Story 14504126: FY24 - Transform - Channels - NCE- Pre Chat form for Agreement based chat [END]
             default:
                 break;
@@ -1296,7 +1387,7 @@ function checkSnapinQueueStatus(snapInObject) {
                     snapInObject.queueType = responseJsonValue.ChatRoutingInfo.QueueType;
                     snapInObject.buttonId = responseJsonValue.ChatRoutingInfo.SFDCId;
                     snapInObject.primaryButtonId = responseJsonValue.ChatRoutingInfo.PrimaryChatButtonId;
-                    saveGlobalSnapinObjToSession(snapInObject)
+                    saveGlobalSnapinObjToSession(snapInObject);
                     
                     returnValue = responseJsonValue.QueueStatus;
                 }
@@ -1358,7 +1449,7 @@ function checkSnapinQueueStatus(snapInObject) {
         return httpGetBusinessHrAgentAvailability(snapInObject.checkQueueStatusInBizHoursUrl + "?buttonId=" + snapInObject.buttonId);
     }
     //FY21-1201: Story #9475073: HES_Second Check for Business Hours and Agent Availability [END]
-    else if ("checkBtnAvailabilityUrl" in snapInObject && snapInObject.checkBtnAvailabilityUrl && snapInObject.checkBtnAvailabilityUrl != "") {
+    /*else if ("checkBtnAvailabilityUrl" in snapInObject && snapInObject.checkBtnAvailabilityUrl && snapInObject.checkBtnAvailabilityUrl != "") {
         var btnAvailabilityResVal = httpGetAgentAvailability(snapInObject.checkBtnAvailabilityUrl + snapInObject.buttonId);
         if (btnAvailabilityResVal) {
             returnValue = 1;
@@ -1367,7 +1458,7 @@ function checkSnapinQueueStatus(snapInObject) {
             returnValue = 4;
             return returnValue;
         }
-    }
+    }*/
     //FY21-0803: Story #8842192 check for HES/EMC products[END]
     else {
         returnValue = 1;
@@ -1466,7 +1557,8 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
             { "label": "PrimaryButtonid", "value": snapInObject.primaryButtonId, "transcriptFields": ["PrimaryButtonid__c"] },
             //Story 14464899: FY24 - Channels - LCT - Updates on sfdcChatCoreJS to accommodate changed related to Routing API [END]
             { "label": "Offer Group", "value": isAgreementBasedChat("OfferGroup",snapInObject), "transcriptFields": ["OfferGroup__c"] },
-            { "label": "Solution ID", "value": isAgreementBasedChat("AgrementId",snapInObject), "transcriptFields": ["Solution_ID__c"] }
+            { "label": "Solution ID", "value": isAgreementBasedChat("AgrementId",snapInObject), "transcriptFields": ["Solution_ID__c"] },
+            { "label": "Account Name", "value": isAgreementBasedChat("AccountId",snapInObject), "transcriptFields": ["AccountId"] }
         ];
     embedded_svc.settings.extraPrechatInfo = [{
         "entityFieldMaps": [{
@@ -1583,7 +1675,7 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
         //Story 14302763: FY24 - Channels - Omni channel - LCT-(Customer Chat Experience) Display both Original text and Translated text message in Chat window [START]
         var snapInObject = sendGlobalSnapinObjToJson();
         if (needsTranslation(snapInObject) && "agentLangApi" in snapInObject && snapInObject.agentLangApi !== null){
-            httpGetAgentLang(snapInObject.agentLangApi + data.liveAgentSessionKey);
+            httpGetAgentLang(snapInObject.agentLangApi + data.liveAgentSessionKey,"onChatEstablished");
         }
         //Story 14302763: FY24 - Channels - Omni channel - LCT-(Customer Chat Experience) Display both Original text and Translated text message in Chat window [END]
     });
@@ -1595,7 +1687,7 @@ function initOriginalESW(gslbBaseURL, snapInObject) {
     embedded_svc.addEventHandler("onChatTransferSuccessful", function(data) {
         var snapInObject = sendGlobalSnapinObjToJson();
         if (needsTranslation(snapInObject) && "agentLangApi" in snapInObject && snapInObject.agentLangApi !== null){
-            httpGetAgentLang(snapInObject.agentLangApi + data.liveAgentSessionKey);
+            httpGetAgentLang(snapInObject.agentLangApi + data.liveAgentSessionKey,"onChatTransferSuccessful");
         }
     });
     //Story 14302763: FY24 - Channels - Omni channel - LCT-(Customer Chat Experience) Display both Original text and Translated text message in Chat window [END]
@@ -1638,7 +1730,7 @@ function getTechSupportSubject(snapInObject) {
     //FY21-0202 Story Defectfix for Defect # 7977210 [END]
 }
 function getTechSupportChatSource(snapInObject) {
-    if (("serviceTag" in snapInObject && snapInObject.serviceTag) || isWarrantyPartsReturnChat(snapInObject) || ("customerNumber" in snapInObject && snapInObject.customerNumber))//FY21-1201 Story #9315449: Warranty Parts Return : Pre-Chat Form //GAM Story FY23-0502
+    if (("serviceTag" in snapInObject && snapInObject.serviceTag) || isWarrantyPartsReturnChat(snapInObject) || ("customerNumber" in snapInObject && snapInObject.customerNumber) || isAgreementBasedChat("AgrementId",snapInObject))//FY21-1201 Story #9315449: Warranty Parts Return : Pre-Chat Form //GAM Story FY23-0502
         return "Tech";
     else
         return "Product";
@@ -1871,11 +1963,13 @@ function chatStarted(eleSelector, findingEle, snapInObject) {
         if (element && element.classList.contains("helpButtonEnabled"))
             changePrechatValues(snapInObject, clickSnapinChatBtn);
         else {
+            //Rajkumar add log here it says agents are offline.
             agentsOfflinePostChatForm();
             clearInterval(findingEle);
         }
         function clickSnapinChatBtn() {
             snapInObject = sendGlobalSnapinObjToJson();
+            //Rajkumar to Start a chat 
             document.querySelector(eleSelector).click();
             clearInterval(findingEle);
         }
@@ -2273,7 +2367,7 @@ function pageObserverForProp20(eleSelector, preChatlableObject) {
                             snapInCurrentPage = "snapInhelpBtnEnabled";
                             snapInhelpBtnEnabled.style.display = "none";
                         } else if(snapInChatStarted && snapInCurrentPage === "snapInChatStarted"){	
-                            chatEstablishedInUI(); //Story 14302763: FY24 - Channels - Omni channel - LCT-(Customer Chat Experience) Display both Original text and Translated text message in Chat window 
+                            //chatEstablishedInUI(); //Story 14302763: FY24 - Channels - Omni channel - LCT-(Customer Chat Experience) Display both Original text and Translated text message in Chat window 
                     
                         }
                     }
@@ -2291,7 +2385,7 @@ function pageObserverForProp20(eleSelector, preChatlableObject) {
 //FY20-0202 [START]
 function addChatPrivacyInfo(preChatlableObject) {
     setTimeout(function () {
-        chatEstablishedInUI(); //Story 14302763: FY24 - Channels - Omni channel - LCT-(Customer Chat Experience) Display both Original text and Translated text message in Chat window 
+        //chatEstablishedInUI(); //Story 14302763: FY24 - Channels - Omni channel - LCT-(Customer Chat Experience) Display both Original text and Translated text message in Chat window 
         var snapinChatPopUpMsgDom = document.getElementById("snapinChatPopUpMsg");
         var snapinChasnapinCHatEnded = document.querySelector(".dockableContainer .chatMessage.ended");
         if (!snapinChatPopUpMsgDom) {
@@ -2565,21 +2659,14 @@ function isRebootSprinklr(snapInObject) {
 
 function resumeSprinklrTechChat(snapInObject, preChatlableObject) {
     initSnapIn(snapInObject);//init Snapin
-    //eleExist('.helpButtonEnabled #helpButtonSpan > .message', chatClick);//Click on Start chat
-    //eleExist('.embeddedServiceHelpButton', hideDomObject);//hide original buttons
+    eleExist('.helpButtonEnabled #helpButtonSpan > .message', chatClick);//Click on Start chat
+    eleExist('.embeddedServiceHelpButton', hideDomObject);//hide original buttons
     eleExistWithVariable('.modalContainer  .dockableContainer .sidebarBody .activeFeature .featureBody .embeddedServiceSidebarState .prechatUI', hideOtherDomObject, '.embeddedServiceSidebar');//hide original UI
-    var loaderDomElement = '<div id="cusPreChatSnapinDom" class="cusPreChat-modalContainer" style="display: none;"> <div class="cusPreChat-dockableContainer"> <div class="cusPreChat-embeddedServiceSidebarHeader"> <div class="cusPreChat-shortHeader"> <div class="cusPreChat-shortHeaderContent">  <h2 class="cusPreChat-headerText"> <div class="cusPreChat-headerTextContent"> <span id="cusPreChat-headerTextLabel">Chat Now</span> <span id="cusPreChat-headerSubtext"> </span></div></h2>  </div></div></div><div class="cusPreChat-sidebarBody"> '+ createTranslationAlertMsgContainer(snapInObject, preChatlableObject, "Tech") +'<div id="cusPreChat-sidebarLoadingIndicator" class="cusPreChat-sidebarLoadingIndicator"> <div class="cusPreChat-loadingBallContainer cusPreChat-animated cusPreChat-embeddedServiceLoadingBalls"> <span class="cusPreChat-loadingBall cusPreChat-first"> </span> <span class="cusPreChat-loadingBall cusPreChat-second"> </span> <span class="cusPreChat-loadingBall cusPreChat-third"> </span></div></div><div id="cusPreChat-alertMsgContainer" class="cusPreChat-sidebarLoadingIndicator" style="display: none;"><div style="margin: 2.5em 1.75em;">Sorry Currently Chat is not Avilable</div><div><button id="cusPreChat-CloseChat" class="cusPreChat-embeddedServiceSidebarButton" type="button"><span class="cusPreChat-label cusPreChat-bBody">Close Chat</span></button></div></div></div></div></div>';
+    var loaderDomElement = '<div id="cusPreChatSnapinDom" class="cusPreChat-modalContainer" style="display: none;"> <div class="cusPreChat-dockableContainer"> <div class="cusPreChat-embeddedServiceSidebarHeader"> <div class="cusPreChat-shortHeader"> <div class="cusPreChat-shortHeaderContent">  <h2 class="cusPreChat-headerText"> <div class="cusPreChat-headerTextContent"> <span id="cusPreChat-headerTextLabel">Chat Now</span> <span id="cusPreChat-headerSubtext"> </span></div></h2> <button id="cusPreChat-close-btn" data-key ="resumeVA-close-btn" class="cusPreChat-closeButton cusPreChat-headerItem"> <span class="cusPreChat-assistiveText">Close chat</span> <span class="cusPreChat-x-small cusPreChat-embeddedServiceIcon"> <svg focusable="false" aria-hidden="true" data-key="close" viewBox="0 0 100 100"> <path d="M65.577 53.73l27.5-27.71c1.27-1.27 1.27-3.174 0-4.445l-4.23-4.44c-1.272-1.27-3.175-1.27-4.445 0L56.694 44.847c-.847.845-2.115.845-2.96 0L26.018 16.922c-1.27-1.27-3.174-1.27-4.445 0l-4.44 4.442c-1.27 1.27-1.27 3.174 0 4.444l27.71 27.71c.846.846.846 2.116 0 2.962L16.923 84.403c-1.27 1.27-1.27 3.174 0 4.444l4.442 4.442c1.27 1.268 3.174 1.268 4.444 0l27.71-27.713c.846-.847 2.116-.847 2.962 0L84.19 93.29c1.27 1.268 3.174 1.268 4.445 0l4.44-4.445c1.27-1.268 1.27-3.17 0-4.44l-27.5-27.712c-.847-.847-.847-2.115 0-2.96z"> </path> </svg> </span> </button> </div></div></div><div class="cusPreChat-sidebarBody"> '+ createTranslationAlertMsgContainer(snapInObject, preChatlableObject, "Tech") +'<div id="cusPreChat-sidebarLoadingIndicator" class="cusPreChat-sidebarLoadingIndicator"> <div class="cusPreChat-loadingBallContainer cusPreChat-animated cusPreChat-embeddedServiceLoadingBalls"> <span class="cusPreChat-loadingBall cusPreChat-first"> </span> <span class="cusPreChat-loadingBall cusPreChat-second"> </span> <span class="cusPreChat-loadingBall cusPreChat-third"> </span></div></div><div id="cusPreChat-alertMsgContainer" class="cusPreChat-sidebarLoadingIndicator" style="display: none;"><div style="margin: 2.5em 1.75em;">Sorry Currently Chat is not Avilable</div><div><button id="cusPreChat-CloseChat" class="cusPreChat-embeddedServiceSidebarButton" type="button"><span class="cusPreChat-label cusPreChat-bBody">Close Chat</span></button></div></div></div></div></div>';
     var body = document.body || document.getElementsByTagName('body')[0];
     body.insertAdjacentHTML('beforeend', loaderDomElement);
-    //pageObserverForProp20("body");
-    //startSprinklr();
-
-    if(needsTranslation(snapInObject)){
-        loadTranslationAlertMsgContainer(snapInObject , FAQVAlabels , "TechVA");
-    }else{
-        triggerSnapinWithoutPrecahtInitiated();
-        startSprinklr();
-    }
+    pageObserverForProp20("body");
+    startSprinklr();
 }
 //FY22-0203: Defect 10071964 [START]
 function addPrefillDetailsForAgentTransfer(snapInObject) {
@@ -2596,12 +2683,22 @@ function addPrefillDetailsForAgentTransfer(snapInObject) {
 //Story 14302763: FY24 - Channels - Omni channel - LCT-(Customer Chat Experience) Display both Original text and Translated text message in Chat window [START]
 
 function needsTranslation(snapInObject){
-    if("queueType" in snapInObject && snapInObject.queueType === "Translate"){
-        return true;
+    if("queueType" in snapInObject){
+        return tranlateChecker(snapInObject);
+    }else{
+        snapInObject = sendGlobalSnapinObjToJson();
+        return tranlateChecker(snapInObject);
     }
-    return false;
 }
-function httpGetAgentLang(theUrl) {
+
+function tranlateChecker(snapInObject){
+    if("queueType" in snapInObject && snapInObject.queueType === "Translate"){
+        return true;  
+    }
+    return false;  
+}
+
+function httpGetAgentLang(theUrl, langCheckFrom) {
     try {
         var xmlHttp = new XMLHttpRequest();
         xmlHttp.onreadystatechange = function () {
@@ -2611,6 +2708,9 @@ function httpGetAgentLang(theUrl) {
                 snapInObject.agentLanguage = responseJsonValue.agentLanguage;
                 snapInObject.translationSession = responseJsonValue.token;
                 saveGlobalSnapinObjToSession(snapInObject);
+                if(langCheckFrom === "onChatEstablished"){
+                    setTimeout(chasitorTextChangeListner, 300);
+                }
             }
         }
         xmlHttp.open("GET", theUrl, false);
@@ -2672,6 +2772,7 @@ function chasitorTextChangeListner() {
 	}
    }
 
+/*
 function chatEstablishedInUI(){
     var snapInObject =  sendGlobalSnapinObjToJson();
     if(snapInObject && snapInObject.agentLanguage !== "null" && snapInObject.agentLanguage !== snapInObject.language && needsTranslation(snapInObject)){
@@ -2679,17 +2780,24 @@ function chatEstablishedInUI(){
     }
 
 }
+*/
 
 function createTranslationAlertMsgContainer(snapInObject,preChatlableObject,initiatedFrom){
-    var domEle = '';
-    if ("translatedNotification" in preChatlableObject && preChatlableObject.translatedNotification !==""){
-        if(initiatedFrom === "FAQVA"){
-            domEle = '<div id="cusPreChat-TranslationAlertMsgContainer" class="cusPreChat-sidebarLoadingIndicator" style="justify-content:space-around;display:none"><div><div style="margin:2.5em 1.75em">' + preChatlableObject.greet + ' <span id="cusPreChat-TranslationAlertMsg-CustomerName">' + snapInObject.c_firstName + '</span></div><span role="presentation" aria-hidden="true" class="queuePositionChatIcon large embeddedServiceIcon" data-aura-rendered-by="452:0" data-aura-class="embeddedServiceIcon" style="justify-content:center"><span class="cusPreChat-loadingBallContainer cusPreChat-animated cusPreChat-embeddedServiceLoadingBalls" style="margin: 23px 17px; top:auto; position: absolute;"><span class="cusPreChat-loadingBall cusPreChat-first" style="background-color: #767676;"> </span><span class="cusPreChat-loadingBall cusPreChat-second" style="background-color: #767676;"> </span><span class="cusPreChat-loadingBall cusPreChat-third" style="background-color: #767676;"> </span></span><svg focusable="false" aria-hidden="true" data-key="chat_bubble" viewBox="0 0 100 100" class="icon" style="fill:#eaeaea;width:75px;height:75px"><path d="M49.963 0C22.234 0 .134 20.432.134 45.659c0 7.923 2.293 15.428 6.046 22.1.626 1.042.835 2.292.418 3.543L.134 89.024c-.625 1.669 1.043 3.127 2.711 2.71l17.93-6.88c1.042-.416 2.292-.208 3.545.418 7.504 4.17 16.469 6.67 26.06 6.67C77.691 91.736 100 71.513 100 46.078 99.791 20.43 77.483 0 49.963 0z"></path></svg></span><div style="margin:2.5em 1.75em">' + preChatlableObject.connect + '...</div></div><div style="background:rgba(223,242,254,1);border:1px solid rgba(0,107,189,1);padding:15px"><span style="margin-right:2px"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M11 22C17.0751 22 22 17.0751 22 11C22 4.92487 17.0751 0 11 0C4.92487 0 0 4.92487 0 11C0 17.0751 4.92487 22 11 22ZM12.0625 19V8.43359H9.24023V19H12.0625ZM9.49414 4.66406C9.20768 4.93099 9.06445 5.26953 9.06445 5.67969C9.06445 6.08984 9.20768 6.42839 9.49414 6.69531C9.7806 6.96224 10.1647 7.0957 10.6465 7.0957C11.1217 7.0957 11.5026 6.96224 11.7891 6.69531C12.082 6.42839 12.2285 6.08984 12.2285 5.67969C12.2285 5.26953 12.082 4.93099 11.7891 4.66406C11.5026 4.39714 11.1217 4.26367 10.6465 4.26367C10.1647 4.26367 9.7806 4.39714 9.49414 4.66406Z" fill="#006BBD"></path></svg></span><span style="text-align:left">' + preChatlableObject.translatedNotification + '</span></div><div><div><button id="cusPreChat-ContinueTranslationChatBtn" class="cusPreChat-embeddedServiceSidebarButton" type="button"><span class="cusPreChat-label cusPreChat-bBody">' + preChatlableObject.connect + '</span></button></div><div style="margin-top:10px;margin-bottom:30px"><button id="cusPreChat-EndTranslationAndContactTechSupport" data-url="'+preChatlableObject.contactHomeUrl+'" style = "width: 100%;height: 44px;" aria-live="off" type="button" class="dialogButton dialog-button-1 uiButton--inverse uiButton embeddedServiceSidebarButton" data-aura-class="uiButton--inverse uiButton embeddedServiceSidebarButton"><span dir="ltr" class="label bBody">' + preChatlableObject.contactTechnicalSupport + '</span></button></div></div></div>';
-        }else{
-            domEle = '<div id="cusPreChat-TranslationAlertMsgContainer" class="cusPreChat-sidebarLoadingIndicator" style="justify-content:space-around;display:none"><div><div style="margin:2.5em 1.75em">' + preChatlableObject.greet + ' <span id="cusPreChat-TranslationAlertMsg-CustomerName">' + snapInObject.c_firstName + '</span></div><span role="presentation" aria-hidden="true" class="queuePositionChatIcon large embeddedServiceIcon" data-aura-rendered-by="452:0" data-aura-class="embeddedServiceIcon" style="justify-content:center"><span class="cusPreChat-loadingBallContainer cusPreChat-animated cusPreChat-embeddedServiceLoadingBalls" style="margin: 23px 17px; top:auto; position: absolute;"><span class="cusPreChat-loadingBall cusPreChat-first" style="background-color: #767676;"> </span><span class="cusPreChat-loadingBall cusPreChat-second" style="background-color: #767676;"> </span><span class="cusPreChat-loadingBall cusPreChat-third" style="background-color: #767676;"> </span></span><svg focusable="false" aria-hidden="true" data-key="chat_bubble" viewBox="0 0 100 100" class="icon" style="fill:#eaeaea;width:75px;height:75px"><path d="M49.963 0C22.234 0 .134 20.432.134 45.659c0 7.923 2.293 15.428 6.046 22.1.626 1.042.835 2.292.418 3.543L.134 89.024c-.625 1.669 1.043 3.127 2.711 2.71l17.93-6.88c1.042-.416 2.292-.208 3.545.418 7.504 4.17 16.469 6.67 26.06 6.67C77.691 91.736 100 71.513 100 46.078 99.791 20.43 77.483 0 49.963 0z"></path></svg></span><div style="margin:2.5em 1.75em">' + preChatlableObject.connect + '...</div></div><div style="background:rgba(223,242,254,1);border:1px solid rgba(0,107,189,1);padding:15px"><span style="margin-right:2px"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M11 22C17.0751 22 22 17.0751 22 11C22 4.92487 17.0751 0 11 0C4.92487 0 0 4.92487 0 11C0 17.0751 4.92487 22 11 22ZM12.0625 19V8.43359H9.24023V19H12.0625ZM9.49414 4.66406C9.20768 4.93099 9.06445 5.26953 9.06445 5.67969C9.06445 6.08984 9.20768 6.42839 9.49414 6.69531C9.7806 6.96224 10.1647 7.0957 10.6465 7.0957C11.1217 7.0957 11.5026 6.96224 11.7891 6.69531C12.082 6.42839 12.2285 6.08984 12.2285 5.67969C12.2285 5.26953 12.082 4.93099 11.7891 4.66406C11.5026 4.39714 11.1217 4.26367 10.6465 4.26367C10.1647 4.26367 9.7806 4.39714 9.49414 4.66406Z" fill="#006BBD"></path></svg></span><span style="text-align:left">' + preChatlableObject.translatedNotification + '</span></div><div><div><button id="cusPreChat-ContinueTranslationChatBtn" class="cusPreChat-embeddedServiceSidebarButton" type="button"><span class="cusPreChat-label cusPreChat-bBody">' + preChatlableObject.continue + '</span></button></div><div style="margin-top:10px;margin-bottom:30px"><button id="cusPreChat-EndTranslationChatBtn" style = "width: 100%;height: 44px;" aria-live="off" type="button" class="dialogButton dialog-button-1 uiButton--inverse uiButton embeddedServiceSidebarButton" data-aura-class="uiButton--inverse uiButton embeddedServiceSidebarButton"><span dir="ltr" class="label bBody">' + preChatlableObject.cancelChat + '</span></button></div></div></div>';
+    try{
+        var domEle = '';
+        if ("translatedNotification" in preChatlableObject && preChatlableObject.translatedNotification !==""){
+            if(initiatedFrom === "FAQVA"){
+                domEle = '<div id="cusPreChat-TranslationAlertMsgContainer" class="cusPreChat-sidebarLoadingIndicator" style="justify-content:space-between; overflow-y: auto; padding-top: 10px; padding-bottom: 50px; display:none"><div><div style="margin:2.5em 1.75em">' + preChatlableObject.greet + ' <span id="cusPreChat-TranslationAlertMsg-CustomerName">' + snapInObject.c_firstName + '</span></div><span role="presentation" aria-hidden="true" class="queuePositionChatIcon large embeddedServiceIcon" data-aura-rendered-by="452:0" data-aura-class="embeddedServiceIcon" style="justify-content:center"><span class="cusPreChat-loadingBallContainer cusPreChat-animated cusPreChat-embeddedServiceLoadingBalls" style="margin: 23px 17px; top:auto; position: absolute;"><span class="cusPreChat-loadingBall cusPreChat-first" style="background-color: #767676;"> </span><span class="cusPreChat-loadingBall cusPreChat-second" style="background-color: #767676;"> </span><span class="cusPreChat-loadingBall cusPreChat-third" style="background-color: #767676;"> </span></span><svg focusable="false" aria-hidden="true" data-key="chat_bubble" viewBox="0 0 100 100" class="icon" style="fill:#eaeaea;width:75px;height:75px"><path d="M49.963 0C22.234 0 .134 20.432.134 45.659c0 7.923 2.293 15.428 6.046 22.1.626 1.042.835 2.292.418 3.543L.134 89.024c-.625 1.669 1.043 3.127 2.711 2.71l17.93-6.88c1.042-.416 2.292-.208 3.545.418 7.504 4.17 16.469 6.67 26.06 6.67C77.691 91.736 100 71.513 100 46.078 99.791 20.43 77.483 0 49.963 0z"></path></svg></span><div style="margin:2.5em 1.75em">' + preChatlableObject.connect + '...</div></div><div style="background:rgba(223,242,254,1);border:1px solid rgba(0,107,189,1);padding:15px; margin-top: 20px; margin-bottom: 20px; display: flex;"><span style="margin-right:5px"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M11 22C17.0751 22 22 17.0751 22 11C22 4.92487 17.0751 0 11 0C4.92487 0 0 4.92487 0 11C0 17.0751 4.92487 22 11 22ZM12.0625 19V8.43359H9.24023V19H12.0625ZM9.49414 4.66406C9.20768 4.93099 9.06445 5.26953 9.06445 5.67969C9.06445 6.08984 9.20768 6.42839 9.49414 6.69531C9.7806 6.96224 10.1647 7.0957 10.6465 7.0957C11.1217 7.0957 11.5026 6.96224 11.7891 6.69531C12.082 6.42839 12.2285 6.08984 12.2285 5.67969C12.2285 5.26953 12.082 4.93099 11.7891 4.66406C11.5026 4.39714 11.1217 4.26367 10.6465 4.26367C10.1647 4.26367 9.7806 4.39714 9.49414 4.66406Z" fill="#006BBD"></path></svg></span><span style="text-align:left">' + preChatlableObject.translatedNotification + '</span></div><div><div><button id="cusPreChat-ContinueTranslationChatBtn" class="cusPreChat-embeddedServiceSidebarButton" type="button"><span class="cusPreChat-label cusPreChat-bBody">' + preChatlableObject.continue + '</span></button></div><div style="margin-top:10px;margin-bottom:30px"><button id="cusPreChat-EndTranslationChatBtn" data-url="'+preChatlableObject.contactHomeUrl+'" style = "width: 100%;height: 44px;" aria-live="off" type="button" class="dialogButton dialog-button-1 uiButton--inverse uiButton embeddedServiceSidebarButton" data-aura-class="uiButton--inverse uiButton embeddedServiceSidebarButton"><span dir="ltr" class="label bBody">' + preChatlableObject.contactTechnicalSupport + '</span></button></div></div></div>';
+            }else{
+                domEle = '<div id="cusPreChat-TranslationAlertMsgContainer" class="cusPreChat-sidebarLoadingIndicator" style="justify-content:space-between; overflow-y: auto; padding-top: 10px; padding-bottom: 50px; display:none"><div><div style="margin:2.5em 1.75em">' + preChatlableObject.greet + ' <span id="cusPreChat-TranslationAlertMsg-CustomerName">' + snapInObject.c_firstName + '</span></div><span role="presentation" aria-hidden="true" class="queuePositionChatIcon large embeddedServiceIcon" data-aura-rendered-by="452:0" data-aura-class="embeddedServiceIcon" style="justify-content:center"><span class="cusPreChat-loadingBallContainer cusPreChat-animated cusPreChat-embeddedServiceLoadingBalls" style="margin: 23px 17px; top:auto; position: absolute;"><span class="cusPreChat-loadingBall cusPreChat-first" style="background-color: #767676;"> </span><span class="cusPreChat-loadingBall cusPreChat-second" style="background-color: #767676;"> </span><span class="cusPreChat-loadingBall cusPreChat-third" style="background-color: #767676;"> </span></span><svg focusable="false" aria-hidden="true" data-key="chat_bubble" viewBox="0 0 100 100" class="icon" style="fill:#eaeaea;width:75px;height:75px"><path d="M49.963 0C22.234 0 .134 20.432.134 45.659c0 7.923 2.293 15.428 6.046 22.1.626 1.042.835 2.292.418 3.543L.134 89.024c-.625 1.669 1.043 3.127 2.711 2.71l17.93-6.88c1.042-.416 2.292-.208 3.545.418 7.504 4.17 16.469 6.67 26.06 6.67C77.691 91.736 100 71.513 100 46.078 99.791 20.43 77.483 0 49.963 0z"></path></svg></span><div style="margin:2.5em 1.75em">' + preChatlableObject.connect + '...</div></div><div style="background:rgba(223,242,254,1);border:1px solid rgba(0,107,189,1);padding:15px; margin-top: 20px; margin-bottom: 20px; display: flex;"><span style="margin-right:5px"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M11 22C17.0751 22 22 17.0751 22 11C22 4.92487 17.0751 0 11 0C4.92487 0 0 4.92487 0 11C0 17.0751 4.92487 22 11 22ZM12.0625 19V8.43359H9.24023V19H12.0625ZM9.49414 4.66406C9.20768 4.93099 9.06445 5.26953 9.06445 5.67969C9.06445 6.08984 9.20768 6.42839 9.49414 6.69531C9.7806 6.96224 10.1647 7.0957 10.6465 7.0957C11.1217 7.0957 11.5026 6.96224 11.7891 6.69531C12.082 6.42839 12.2285 6.08984 12.2285 5.67969C12.2285 5.26953 12.082 4.93099 11.7891 4.66406C11.5026 4.39714 11.1217 4.26367 10.6465 4.26367C10.1647 4.26367 9.7806 4.39714 9.49414 4.66406Z" fill="#006BBD"></path></svg></span><span style="text-align:left">' + preChatlableObject.translatedNotification + '</span></div><div><div><button id="cusPreChat-ContinueTranslationChatBtn" class="cusPreChat-embeddedServiceSidebarButton" type="button"><span class="cusPreChat-label cusPreChat-bBody">' + preChatlableObject.continue + '</span></button></div><div style="margin-top:10px;margin-bottom:30px"><button id="cusPreChat-EndTranslationChatBtn" style = "width: 100%;height: 44px;" aria-live="off" type="button" class="dialogButton dialog-button-1 uiButton--inverse uiButton embeddedServiceSidebarButton" data-aura-class="uiButton--inverse uiButton embeddedServiceSidebarButton"><span dir="ltr" class="label bBody">' + preChatlableObject.cancelChat + '</span></button></div></div></div>';
+            }
         }
+        return domEle;
+
+    }catch(e){
+        console.log("Error in: " + e);
+        return '';
     }
-    return '';
     }
 //Story 14302763: FY24 - Channels - Omni channel - LCT-(Customer Chat Experience) Display both Original text and Translated text message in Chat window [END]
 
@@ -2700,6 +2808,8 @@ function isAgreementBasedChat(key, snapInObject){
             return snapInObject.agreementId;
         }else if(key === "OfferGroup" && "offerGroup" in snapInObject && snapInObject.offerGroup){
             return snapInObject.offerGroup;
+        }else if(key === "AccountId" && "accountId" in snapInObject && snapInObject.accountId){
+            return snapInObject.accountId;
         }
     }
     return false;
@@ -3171,7 +3281,7 @@ function OmniChatBotTrackerListner() {
     }
 }
 
-
+eleExist
 function callDellmetricsTrackForBot(propValue, message) {
     if (typeof (dellmetricsTrack) == "function") {
         if (dellmetricsTrack) {
@@ -3758,26 +3868,35 @@ function onChatBotServiceTagChange() {
 
 //FY22-1003 - FAQChat Initiation
 function triggerSnapinWithoutPrecaht(snapInObject, FAQVAlabels) {
-    //snapInObject.buttonId = "5720b000000GneC",//Adding a random buttonId
-    initSnapIn(snapInObject);//initirate snapin in background
-    //eleExist('.helpButtonEnabled #helpButtonSpan > .message', chatClick);//Click on Start chat
-    //eleExist('.embeddedServiceHelpButton', hideDomObject);//hide original buttons
-    eleExistWithVariable('.modalContainer  .dockableContainer .sidebarBody .activeFeature .featureBody .embeddedServiceSidebarState .prechatUI', hideOtherDomObject, '.embeddedServiceSidebar');//hide original UI
-    var loaderDomElement = '<div id="cusPreChatSnapinDom" class="cusPreChat-modalContainer" style="display: none;"> <div class="cusPreChat-dockableContainer"> <div class="cusPreChat-embeddedServiceSidebarHeader"> <div class="cusPreChat-shortHeader"> <div class="cusPreChat-shortHeaderContent">  <h2 class="cusPreChat-headerText"> <div class="cusPreChat-headerTextContent"> <span id="cusPreChat-headerTextLabel">Chat Now</span> <span id="cusPreChat-headerSubtext"> </span></div></h2>  </div></div></div><div class="cusPreChat-sidebarBody"> '+ createTranslationAlertMsgContainer(snapInObject, FAQVAlabels, "FAQVA") +'<div id="cusPreChat-sidebarLoadingIndicator" class="cusPreChat-sidebarLoadingIndicator"> <div class="cusPreChat-loadingBallContainer cusPreChat-animated cusPreChat-embeddedServiceLoadingBalls"> <span class="cusPreChat-loadingBall cusPreChat-first"> </span> <span class="cusPreChat-loadingBall cusPreChat-second"> </span> <span class="cusPreChat-loadingBall cusPreChat-third"> </span></div></div><div id="cusPreChat-alertMsgContainer" class="cusPreChat-sidebarLoadingIndicator" style="display: none;"><div style="margin: 2.5em 1.75em;">Sorry Currently Chat is not Avilable</div><div><button id="cusPreChat-CloseChat" class="cusPreChat-embeddedServiceSidebarButton" type="button"><span class="cusPreChat-label cusPreChat-bBody">Close Chat</span></button></div></div></div></div></div>';
-    var body = document.body || document.getElementsByTagName('body')[0];
-    body.insertAdjacentHTML('beforeend', loaderDomElement);
+    try{
+        //Create Custom loader and other required Pop-ups.
+        var loaderDomElement = '<div id="cusPreChatSnapinDom" class="cusPreChat-modalContainer" style="display: none;"> <div class="cusPreChat-dockableContainer"> <div class="cusPreChat-embeddedServiceSidebarHeader"> <div class="cusPreChat-shortHeader"> <div class="cusPreChat-shortHeaderContent">  <h2 class="cusPreChat-headerText"> <div class="cusPreChat-headerTextContent"> <span id="cusPreChat-headerTextLabel">Chat Now</span> <span id="cusPreChat-headerSubtext"> </span></div></h2><button id="cusPreChat-close-btn" class="cusPreChat-closeButton cusPreChat-headerItem"> <span class="cusPreChat-assistiveText">Close chat</span> <span class="cusPreChat-x-small cusPreChat-embeddedServiceIcon"> <svg focusable="false" aria-hidden="true" data-key="close" viewBox="0 0 100 100"> <path d="M65.577 53.73l27.5-27.71c1.27-1.27 1.27-3.174 0-4.445l-4.23-4.44c-1.272-1.27-3.175-1.27-4.445 0L56.694 44.847c-.847.845-2.115.845-2.96 0L26.018 16.922c-1.27-1.27-3.174-1.27-4.445 0l-4.44 4.442c-1.27 1.27-1.27 3.174 0 4.444l27.71 27.71c.846.846.846 2.116 0 2.962L16.923 84.403c-1.27 1.27-1.27 3.174 0 4.444l4.442 4.442c1.27 1.268 3.174 1.268 4.444 0l27.71-27.713c.846-.847 2.116-.847 2.962 0L84.19 93.29c1.27 1.268 3.174 1.268 4.445 0l4.44-4.445c1.27-1.268 1.27-3.17 0-4.44l-27.5-27.712c-.847-.847-.847-2.115 0-2.96z"> </path> </svg> </span> </button></div></div></div><div class="cusPreChat-sidebarBody"> '+ createTranslationAlertMsgContainer(snapInObject, FAQVAlabels, "FAQVA") +'<div id="cusPreChat-sidebarLoadingIndicator" class="cusPreChat-sidebarLoadingIndicator"> <div class="cusPreChat-loadingBallContainer cusPreChat-animated cusPreChat-embeddedServiceLoadingBalls"> <span class="cusPreChat-loadingBall cusPreChat-first"> </span> <span class="cusPreChat-loadingBall cusPreChat-second"> </span> <span class="cusPreChat-loadingBall cusPreChat-third"> </span></div></div><div id="cusPreChat-alertMsgContainer" class="cusPreChat-sidebarLoadingIndicator" style="display: none;"><div style="margin: 2.5em 1.75em;">Sorry Currently Chat is not Avilable</div><div><button id="cusPreChat-CloseChat" class="cusPreChat-embeddedServiceSidebarButton" type="button"><span class="cusPreChat-label cusPreChat-bBody">Close Chat</span></button></div></div></div></div></div>';
+        var body = document.body || document.getElementsByTagName('body')[0];
+        body.insertAdjacentHTML('beforeend', loaderDomElement);
+        
+        eleExist('.embeddedServiceHelpButton', hideDomObject);//hide original buttons
+        
+        setTimeout(function(){
+            componentLoading();
 
-    if(needsTranslation(snapInObject)){
-        loadTranslationAlertMsgContainer(snapInObject , FAQVAlabels , "FAQVA");
-    }else{
-        triggerSnapinWithoutPrecahtInitiated();
+            initSnapIn(snapInObject);//initiate snapin in background
+            eleExistWithVariable('.modalContainer  .dockableContainer .sidebarBody .activeFeature .featureBody .embeddedServiceSidebarState .prechatUI', hideOtherDomObject, '.embeddedServiceSidebar');//hide original UI
+                
+            if(needsTranslation(snapInObject)){ //If routed to translated Queue
+                loadTranslationAlertMsgContainer(snapInObject , FAQVAlabels , "FAQVA");
+            }else{ //If routed to non-translated Queue
+                triggerSnapinWithoutPrecahtInitiated(); 
+            }
+        },200);//Customer Widget: To show snapin is Loading
+            
+
+    }catch(e){
+        console.log(e);
     }
-    //pageObserverForProp20("body");
 }
 
 function  triggerSnapinWithoutPrecahtInitiated(){
     eleExist('.helpButtonEnabled #helpButtonSpan > .message', chatClick);//Click on Start chat
-    eleExist('.embeddedServiceHelpButton', hideDomObject);//hide original buttons
     pageObserverForProp20("body");
 }
 
