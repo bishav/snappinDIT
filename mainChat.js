@@ -2761,7 +2761,7 @@ function httpGetTranslation(snapInObject, translatedLabels, chatKey){
 }
 
 var chasitorTypedMsg = ""; 
-var chasitorTextChangeListner_Running = False;
+var chasitorTextChangeListner_Running = false;
 function chasitorTextChangeListner() {
     if (chasitorTextChangeListner_Running) return;
     var obj = document.getElementsByClassName('chasitorText');
@@ -2772,7 +2772,7 @@ function chasitorTextChangeListner() {
             chasitorTypedMsg = this.value;
         };	
 	}
-    chasitorTextChangeListner_Running = True;
+    chasitorTextChangeListner_Running = true;
 }
 
 /*
