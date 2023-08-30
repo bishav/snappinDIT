@@ -2367,7 +2367,7 @@ function pageObserverForProp20(eleSelector, preChatlableObject) {
                             snapInCurrentPage = "snapInhelpBtnEnabled";
                             snapInhelpBtnEnabled.style.display = "none";
                         } else if(snapInChatStarted && snapInCurrentPage === "snapInChatStarted"){	
-                            chasitorTextChangeListner(); //Story 14302763: FY24 - Channels - Omni channel - LCT-(Customer Chat Experience) Display both Original text and Translated text message in Chat window 
+                            //chasitorTextChangeListner(); //Story 14302763: FY24 - Channels - Omni channel - LCT-(Customer Chat Experience) Display both Original text and Translated text message in Chat window 
                     
                         }
                     }
@@ -2761,9 +2761,7 @@ function httpGetTranslation(snapInObject, translatedLabels, chatKey){
 }
 
 var chasitorTypedMsg = ""; 
-var chasitorTextChangeListner_Running = false;
 function chasitorTextChangeListner() {
-    if (chasitorTextChangeListner_Running) return;
     var obj = document.getElementsByClassName('chasitorText');
     if(obj && obj.length > 0){
         document.getElementsByClassName('chasitorText').value ='';
@@ -2772,7 +2770,6 @@ function chasitorTextChangeListner() {
             chasitorTypedMsg = this.value;
         };	
 	}
-    chasitorTextChangeListner_Running = true;
 }
 
 /*
