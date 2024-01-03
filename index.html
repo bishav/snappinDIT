@@ -1265,6 +1265,15 @@
             var snapInSessionObject = sessionStorage.getItem("snapInObjectSession");
             connectToSnapInAgent(snapInSessionObject);
         }
+        function LogCaseVAtransfer(QueueAvilable, sprinklrCaseNumber, lightningCaseNumber, value, serviceTag){
+            try{
+                console.log(QueueAvilable, sprinklrCaseNumber, lightningCaseNumber, value, serviceTag);
+                return true;
+            }catch (e){
+                return true;
+            }
+            
+        }
     </script>
     
 </body>
