@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿﻿<!DOCTYPE html>
 <html>
 <head>
@@ -306,4 +307,314 @@
 
     
 </body>
+=======
+﻿﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="../../../node_modules/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="../../../node_modules/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="../../../main.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body onload="checkChatConfigCookie()">
+    <nav class="navbar navbar-light bg-light">
+            <span id="selectLanguage" style="float: right; display: block; margin-right:5px">
+                <span style="background: #6c757d;color: #fff;width: 38px;height: 28px;padding: 2px 11px;border-radius: .25rem 0 0 .25rem;"><i class="fa fa-globe"></i></span>
+                <select id="selectLanguageOption" style="margin-left: -5px;">
+                    <option>en</option>
+                    <option>fr</option>
+                    <option>ja</option> 
+                    <option>de</option>       
+                    <option>da</option>
+                    <option>es</option>
+                    <option>en-US</option>
+                    <option>pt</option>
+                    <option>cn</option>
+                    <option>zh</option>
+                    <option>zh-CN</option>
+                    <option>zh-tw</option>
+                    <option>ko</option>
+                    <option>nl_Nl</option>   
+                    <option>nl-NL</option> 
+                    <option>nl</option> 
+                    <option>en_US</option> 
+                    <option>fi</option> 
+                    <option>it</option> 
+                    <option>no</option> 
+                    <option>pt_BR</option>
+                    <option>pt-BR</option>  
+                    <option>ru</option> 
+                    <option>es_MX</option> 
+                    <option>es-MX</option>
+                    <option>sv</option>
+                    <option>th</option>
+                    <option>pl</option>
+                    <option>sk</option>
+                </select>
+            </span>
+        <a class="navbar-brand" href="#">
+            <img src="../../../assets/DellTech_Logo_Prm_Blue.jpg" class="d-inline-block align-top" alt="">
+        </a>
+        <button style="display: block;float: left;" class="btn btn-primary"  data-target=".bd-example-modal-lg" id="chatButton" type="button" onclick="showConfigSettings()">
+            <i class="fa fa-gear"></i>
+            <span>Environment Setup</span>
+        </button>
+    </nav>
+    <div class="navigationLink " style="text-align: center;">
+        <dev style="color:#fff;">You are currently in <span id="environmentName" style="font-size: 20px;"></span> environment</dev>
+    </div>
+    <div class="container">
+        <div class="resume-chat-msg hide">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="jumbotron">
+                        <h1 class="display-4">Welcome Back</h1>
+                    </div>
+                </div>
+                <div class="live-agent-resume-button hide">
+                    <script type='text/javascript' src='https://c.la4-c1cs-phx.salesforceliveagent.com/content/g/js/43.0/deployment.js'></script>
+                <a id="liveagent_button_online_5733B0000004D95" class="btn btn-primary" href="javascript://Chat" onclick="liveagent.startChat('5733B0000004D95')" style="display: none;">Start Chat</a><div id="liveagent_button_offline_5733B0000004D95" style="display: none;"><!-- Offline Chat Content --></div><script type="text/javascript">
+                    if (!window._laq) { window._laq = []; }
+                    window._laq.push(function(){liveagent.showWhenOnline('5733B0000004D95', document.getElementById('liveagent_button_online_5733B0000004D95'));
+                    liveagent.showWhenOffline('5733B0000004D95', document.getElementById('liveagent_button_offline_5733B0000004D95'));
+                    });</script> 
+                </div>
+            </div>
+            <div class="offline-msg hide">
+            </div>
+        </div>
+        <div class="new-chat">
+            <div class="row">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8">
+                    <form>
+                        <div class="form-group">
+                            <label style="margin-right: 10px; margin-bottom: 20px;" for="Organization">SDL Queue : </label>
+                            <span id="translationEnabled">
+                                <label><input id="dellOrg" type="radio" name="optradio" checked="" value="enableSDL">&nbsp;&nbsp;Enabled</label>
+                                <label><input id="emcOrg" type="radio" name="optradio" style="margin-left: 20px;" value="disabledSDL">&nbsp;&nbsp;Disabled</label>
+                            </span>
+                            <div>
+                            <label for="serviceTag"><span class='NonEMC'>Service Tag</span><span class='EMC' style='display:none;'>CPID (for EMC legacy)</span></label>
+                            </div>
+                            <input type="text" class="form-control"  id="serviceTag" aria-describedby="serviceTag" placeholder="Enter Service Tag" value="6MW0204">
+                        </div>
+
+                        
+                        <div class="dropdown hide">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Select Issue Type
+                            </button>
+                            <div id="issueDropdown" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item dropdown-item1" href="#">None</a>
+                                <a class="dropdown-item dropdown-item1" href="#">Slow Performance</a>
+                                <a class="dropdown-item dropdown-item2" href="#">Keyboard not working</a>
+                                <a class="dropdown-item dropdown-item3" href="#">Touch pad not working</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div id="contact-row" class="row hide">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8">
+                    <h3 class="non-live-agent">Contact Options</h3>
+                    <h3 class="live-agent-heading">Contact Options for Live Agent</h3>
+                    <div class="call-us">
+                        <h5>Call Us</h5>
+                        <p class="phone-no">1-855-305-9057</p>
+                        <p>24/7</p>
+                        <p>Please Note: You will be asked to enter your Express Service Code: <strong>34285956052</strong></p>
+                    </div>
+                    <div class="chat-with-us">
+                        <h5>Chat with us</h5>
+                        <p>Start a chat session with one of our technical support experts.</p>
+                        <button type="button" id="chatButton" class="btn btn-primary" onclick="initChat()" style="display: block;float: left;margin-right: 20px;">Start Snap-In</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="sprinklrBotEle" style="display:none; background: #00447C;color: #fff;width: 320px;max-height: 720px;border-radius: 8px 8px 0 0;position: fixed;left: auto;bottom: 0;right: 20px;margin: 0;height: 90%;box-shadow: 2px 2px 20px rgba(0,0,0,.2);z-index: 15;text-align: center;overflow: hidden;max-width: 40em;pointer-events: all;">
+        <dev>
+           <h5 style="padding: 10px;background: #000;">SprinklrBot</h5>
+           <button id="closeSprinklrChat" onclick="endSprinklrChatBotSuccessfully()" class="" style="position: absolute;right: 7px;top: 8px;margin: 0px;padding: 7px;background: #333;border: none;cursor: pointer;border-radius: 6px;">
+              <span class="cusPreChat-assistiveText">Close chat</span> 
+              <span class="cusPreChat-x-small cusPreChat-embeddedServiceIcon">
+                 <svg viewBox="0 0 100 100" data-key="close" aria-hidden="true" focusable="false">
+                    <path d="M65.577 53.73l27.5-27.71c1.27-1.27 1.27-3.174 0-4.445l-4.23-4.44c-1.272-1.27-3.175-1.27-4.445 0L56.694 44.847c-.847.845-2.115.845-2.96 0L26.018 16.922c-1.27-1.27-3.174-1.27-4.445 0l-4.44 4.442c-1.27 1.27-1.27 3.174 0 4.444l27.71 27.71c.846.846.846 2.116 0 2.962L16.923 84.403c-1.27 1.27-1.27 3.174 0 4.444l4.442 4.442c1.27 1.268 3.174 1.268 4.444 0l27.71-27.713c.846-.847 2.116-.847 2.962 0L84.19 93.29c1.27 1.268 3.174 1.268 4.445 0l4.44-4.445c1.27-1.268 1.27-3.17 0-4.44l-27.5-27.712c-.847-.847-.847-2.115 0-2.96z"> </path>
+                 </svg>
+              </span>
+           </button>
+        </dev>
+        <div class="form-group" style="margin: 28px;height: 152px;">
+           <div><label for="serviceTag" style="font-size: 13px;">Enter Case Number created by Sprinklr Bot</label></div>
+           <input type="text" class="form-control" id="caseNumberInputField" aria-describedby="caseNumberInputField" placeholder="Required if you click on Transfer" value="">
+           <button type="button" id="transfertoAgentViaSprinklr" class="btn btn-primary" onclick="transfertoAgentViaSprinklr()" style="display: block;float: left;margin-top: 20px;width: 100%;">Transfer To Agent</button>
+        </div>
+     </div>
+
+    
+    
+    <div class="modal fade" id="settingConfig" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none; padding-right: 17px; overflow-y: auto;background: rgba(0,0,0,.7);">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+      
+            <div class="modal-header">
+              <h4 class="modal-title" id="myLargeModalLabel">Environment Setup</h4>
+              <button type="button" onClick="hideSettingConfig()" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body form-group" style="background: #ddd; margin-bottom: 0px;">
+                <b>Select your prefered Environment</b>
+                <div class="input-group">
+                    <select class="custom-select" onChange="changeEnv()" id="environmentSelection">
+                    <option selected>Choose your preferred environment</option>
+                    <option value="Chat-POC">Chat-POC</option>
+                    <option value="GE3">GE3</option>
+                    </select>
+                    <div class="input-group-append">
+                    <button style="background-color: #007bff; color:#fff" class="btn btn-outline-primary" type="button" onclick="updateEnvCookie()">Update Now</button>
+                    </div>
+                </div>
+            </div>
+  
+            <div class="modal-body config" id="Chat-POC" style="display:none">
+                <div class="form-group">
+                    <h5>Chat-POC Environment Settings</h5>
+                </div>
+                <div class="form-group">
+                    <label for="usr">baseLiveAgentContentURL:</label>
+                    <input type="text" class="form-control" data-id="baseLiveAgentContentURL" value="https://c.la2-c1cs-ia2.salesforceliveagent.com/content">
+                </div>
+				<div class="form-group">
+                    <label for="usr">deploymentId:</label>
+                    <input type="text" class="form-control" data-id="deploymentId" value="5720b000000GneC">
+                </div>
+                <div class="form-group">
+                    <label for="usr">buttonId:</label>
+                    <input type="text" class="form-control" data-id="buttonId" value="5730b000000CbhT">
+                </div>
+				<div class="form-group">
+                    <label for="usr">baseLiveAgentURL:</label>
+                    <input type="text" class="form-control" data-id="baseLiveAgentURL" value="https://d.la2-c1cs-ia2.salesforceliveagent.com/chat">
+                </div>
+				<div class="form-group">
+                    <label for="usr">LiveAgentDevName:</label>
+                    <input type="text" class="form-control" data-id="LiveAgentDevName" value="EmbeddedServiceLiveAgent_Parent04I0b000000blJJEAY_16520d15b68">
+                </div>
+				<div class="form-group">
+                    <label for="usr">componentName:</label>
+                    <input type="text" class="form-control" data-id="componentName" value="Snap_Ins_Chat_Deployment">
+                </div>
+				<div class="form-group">
+                    <label for="usr">organizationId:</label>
+                    <input type="text" class="form-control" data-id="organizationId" value="00D7A0000009Lip">
+                </div>
+				<div class="form-group">
+                    <label for="usr">serviceForceURL:</label>
+                    <input type="text" class="form-control" data-id="serviceForceURL" value="https://service.force.com">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInInitURL:</label>
+                    <input type="text" class="form-control" data-id="snapInInitURL" value="https://dellservices--chat.my.salesforce.com">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInJs:</label>
+                    <input type="text" class="form-control" data-id="snapInJs" value="https://dellservices--chat.my.salesforce.com/embeddedservice/5.0/esw.min.js">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInLAURL:</label>
+                    <input type="text" class="form-control" data-id="snapInLAURL" value="https://chat-dellservices.cs44.force.com/LASnapIn">
+                </div>
+            </div>
+
+
+            <div class="modal-body config" id="GE3" style="display:none">
+                <div class="form-group">
+                    <h5>GE3 Environment Settings</h5>
+                </div>
+                <div class="form-group">
+                    <label for="usr">baseLiveAgentContentURL:</label>
+                    <input type="text" class="form-control" data-id="baseLiveAgentContentURL" value="https://c.la1-c1cs-ia4.salesforceliveagent.com/content">
+                </div>
+				<div class="form-group">
+                    <label for="usr">deploymentId:</label>
+                    <input type="text" class="form-control" data-id="deploymentId" value="5720b000000GneC">
+                </div>
+                <div class="form-group">
+                    <label for="usr">buttonId:</label>
+                    <input type="text" class="form-control" data-id="buttonId" value="5730b000000CbhT">
+                </div>
+				<div class="form-group">
+                    <label for="usr">baseLiveAgentURL:</label>
+                    <input type="text" class="form-control" data-id="baseLiveAgentURL" value="https://d.la1-c1cs-ia4.salesforceliveagent.com/chat">
+                </div>
+				<div class="form-group">
+                    <label for="usr">LiveAgentDevName:</label>
+                    <input type="text" class="form-control" data-id="LiveAgentDevName" value="EmbeddedServiceLiveAgent_Parent04I3C0000008OnrUAE_179d205a44e">
+                </div>
+				<div class="form-group">
+                    <label for="usr">componentName:</label>
+                    <input type="text" class="form-control" data-id="componentName" value="SDL_SnapIn_Test">
+                </div>
+				<div class="form-group">
+                    <label for="usr">organizationId:</label>
+                    <input type="text" class="form-control" data-id="organizationId" value="00D3C00000052wH">
+                </div>
+				<div class="form-group">
+                    <label for="usr">serviceForceURL:</label>
+                    <input type="text" class="form-control" data-id="serviceForceURL" value="https://service.force.com">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInInitURL:</label>
+                    <input type="text" class="form-control" data-id="snapInInitURL" value="https://dellservices--ge3.my.salesforce.com">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInJs:</label>
+                    <input type="text" class="form-control" data-id="snapInJs" value="https://dellservices--ge3.my.salesforce.com/embeddedservice/5.0/esw.min.js">
+                </div>
+				<div class="form-group">
+                    <label for="usr">snapInLAURL:</label>
+                    <input type="text" class="form-control" data-id="snapInLAURL" value="https://ge3-dellservices.cs60.force.com/LASnapIn">
+                </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+
+      
+      <script type='text/javascript'>
+        function initEmbeddedMessaging() {
+                        try {
+                                        embeddedservice_bootstrap.settings.language = 'en_US'; // For example, enter 'en' or 'en-US'
+
+                                        embeddedservice_bootstrap.init(
+                                                        '00D8J0000008jF8',
+                                                        'Test_MIAW_Chat_Deployment',
+                                                        'https://dellservices--ge2.sandbox.my.site.com/ESWTestMIAWChatDeploym1705831764305',
+                                                        {
+                                                                        scrt2URL: 'https://dellservices--ge2.sandbox.my.salesforce-scrt.com'
+                                                        }
+                                        );
+                        } catch (err) {
+                                        console.error('Error loading Embedded Messaging: ', err);
+                        }
+        };
+</script>
+<script type='text/javascript' src='https://dellservices--ge2.sandbox.my.site.com/ESWTestMIAWChatDeploym1705831764305/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script>
+
+    
+</body>
+>>>>>>> 4dad5e5de726a04209cc3ad2e9b1967fa2bf50ac
 </html>
